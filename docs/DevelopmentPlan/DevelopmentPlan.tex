@@ -101,17 +101,25 @@ likely change throughout the year.}
 
 \section{Workflow Plan}
 
-\begin{itemize}
+% \begin{itemize}
+	
+	% \item How will you be using git, including branches, pull request, etc.?
+	% \item How will you be managing issues, including template issues, issue
+	% classification, etc.?
+  % \item Use of CI/CD
+  
+  Our project will be using GitHub for version control and issue tracking. It will be setup with a main branch that is always stable and
+  a dev branch will be used for integration of new features. Each feature or fix will first be developed in a separate branch off of dev. 
+  Once the feature is complete and tested, a pull request will be created to merge the feature branch into dev. The pull request will be 
+  reviewed by at least one other team member before being merged. For smaller changes such as text changes, we will just be using the dev 
+  branch directly. The dev branch will be periodically merged into main after thorough testing to ensure stability. 
 
-	\item Work in individual branches for each new issue/change. 
-	\item Merge with pull requests followed by reviews.
-	\item Use issues for work.
-	\item Use automated tests. 
-	\item How will you be using git, including branches, pull request, etc.?
-	\item How will you be managing issues, including template issues, issue
-	classification, etc.?
-  \item Use of CI/CD
-\end{itemize}
+  % \item Work in individual branches for each new issue/change. 
+	% \item Merge with pull requests followed by reviews.
+	% \item Use issues for work.
+	% \item Use automated tests. 
+
+% \end{itemize}
 
 \section{Project Decomposition and Scheduling}
 
