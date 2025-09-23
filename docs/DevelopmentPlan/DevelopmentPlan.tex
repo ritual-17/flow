@@ -107,17 +107,17 @@ likely change throughout the year.}
 	% classification, etc.?
   % \item Use of CI/CD
   
-  Our project will be using GitHub for version control and issue tracking. It will be setup with a main branch that is always stable and
-  a dev branch will be used for integration of new features. Each feature or fix will first be developed in a separate branch off of dev. 
-  Once the feature is complete and tested, a pull request will be created to merge the feature branch into dev. The pull request will be 
-  reviewed by at least one other team member before being merged. For smaller changes such as text changes, we will just be using the dev 
-  branch directly. The dev branch will be periodically merged into main after thorough testing to ensure stability. 
+  The project will be using GitHub for version control and issue tracking. It will be setup with a main branch that is always stable and
+  a dev branch shall be used for integration of new features. Each feature or fix will first be developed in a separate branch off of dev. 
+  Once the feature is complete and tested, a pull request shall be created to merge the feature branch into dev. The pull request would be 
+  reviewed by at least one other team member before being merged. For smaller changes, the dev branch may just be used directly. The dev 
+  branch will be periodically merged into main after thorough testing to ensure stability. 
   \\
   \\
   The GitHub Issues will be used to track the various tasks and features that need to be completed, as well as any meetings that are held.
   Templates are to be used for each issue to ensure relevant information is included. Issues will also be labeled based on their type, 
-  such as bug, feature, meeting, etc. This will help in organizing and prioritizing the work that needs to be done. Assigning of issues will
-  be done where necessary to track who is responsible for what.
+  such as bug, feature, meeting, etc, where applicable. This will help in organizing and prioritizing the work that needs to be done. 
+  Assigning of issues will be done where necessary to track who is responsible for what.
   \\
   \\
   GitHub Actions will be used for CI/CD mainly for linting and running tests. Whenever a pull request is created, the CI/CD pipeline will 
@@ -133,19 +133,25 @@ likely change throughout the year.}
 
 \section{Project Decomposition and Scheduling}
 
-\begin{itemize}
-  \item Project will be done on GitHub at https://github.com/ritual-17/flow.
-  \item The Project is planned to be finished at the end February 
-  \item GitHub Projects will be used to help organize issues and assign them to developers. 
-  \item How will you be using GitHub projects?
+% \begin{itemize}
+  % \item How will you be using GitHub projects?
+  % \item Include a link to your GitHub project
   
-  \item Include a link to your GitHub project
+  We will use GitHub projects in the Kanban board format to organize our issue items. To begin, the columns will be "To Do", "In Progress", 
+  and "Done". As we work the the project, more columns may be added to better suit our workflow. Each issue will be added to the "To Do" column,
+  and when a team member starts working on it, it will be moved to "In Progress". Once the issue is completed and reviewed, it will be moved to
+  "Done". This will help us keep track of what needs to be done, what is currently being worked on, and what has been completed. The project 
+  board can be found at \url{https://github.com/users/ritual-17/projects/1/views/2}.
   
-\end{itemize}
+  % \item GitHub Projects will be used to help organize issues and assign them to developers. 
+  % \item Project will be done on GitHub at https://github.com/ritual-17/flow.
+  % \item The Project is planned to be finished at the end February 
 
-\wss{How will the project be scheduled?  This is the big picture schedule, not
-details. You will need to reproduce information that is in the course outline
-for deadlines.}
+% \end{itemize}
+
+% \wss{How will the project be scheduled?  This is the big picture schedule, not
+% details. You will need to reproduce information that is in the course outline
+% for deadlines.}
 
 \section{Proof of Concept Demonstration Plan}
 
@@ -153,7 +159,13 @@ What is the main risk, or risks, for the success of your project?  What will you
 demonstrate during your proof of concept demonstration to convince yourself that
 you will be able to overcome this risk?
 
-The main risk of the project is that our Proof of Concept will not be less efficient and flexible than other existing note taking software. Alternately, we could compare our software to analogy note taking methods. To demonstrate the risk we can compare them to other notes, either analog or digital. 
+The main risks for the success of the project have to do with factors adding to the time it takes to take a note down, making it longer than
+taking notes by other means. As the project involves making and rendering geometry in a GUI, there is a risk that the performance of the 
+application may be too slow to be practical. Another risk is that users may also find the syntax of the application too cumbersome or 
+unintuitive to use effectively. To mitigate these risks, the proof of concept demonstration will focus on showing that notes can be taken 
+down quickly and easily using the application. It will involve having someone technically proficient testing writing different notes using our 
+application and comparing the time it takes to write the same notes using handwriting. A successful demonstration will show that notes can be 
+taken down in faster or comparable time to handwriting, while still being legible and well formatted.
 
 \section{Expected Technology}
 
