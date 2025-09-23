@@ -120,9 +120,10 @@ likely change throughout the year.}
   Assigning of issues will be done where necessary to track who is responsible for what.
   \\
   \\
-  GitHub Actions will be used for CI/CD mainly for linting and running tests. Whenever a pull request is created, the CI/CD pipeline will 
-  automatically run the linter and any tests that have been written. This will help catch any problems early, making sure any code merged is
-  the correct format.
+  GitHub Actions will be used for CI/CD mainly for linting and running tests, as well as updating the pdfs from the tex files. Whenever a 
+  pull request is created, the CI/CD pipeline will automatically run the actions which would include linter and any tests that have been 
+  written. This will help catch any problems early, making sure any code merged is the correct format. Testing will most likely be setup
+  later on as the project progresses and more code is written.
 
   % \item Work in individual branches for each new issue/change. 
 	% \item Merge with pull requests followed by reviews.
@@ -169,43 +170,52 @@ taken down in faster or comparable time to handwriting, while still being legibl
 
 \section{Expected Technology}
 
-\wss{What programming language or languages do you expect to use?  What external
-libraries?  What frameworks?  What technologies.  Are there major components of
-the implementation that you expect you will implement, despite the existence of
-libraries that provide the required functionality.  For projects with machine
-learning, will you use pre-trained models, or be training your own model?  }
+% \wss{What programming language or languages do you expect to use?  What external
+% libraries?  What frameworks?  What technologies.  Are there major components of
+% the implementation that you expect you will implement, despite the existence of
+% libraries that provide the required functionality.  For projects with machine
+% learning, will you use pre-trained models, or be training your own model?  }
 
-\wss{The implementation decisions can, and likely will, change over the course
-of the project.  The initial documentation should be written in an abstract way;
-it should be agnostic of the implementation choices, unless the implementation
-choices are project constraints.  However, recording our initial thoughts on
-implementation helps understand the challenge level and feasibility of a
-project.  It may also help with early identification of areas where project
-members will need to augment their training.}
+% \wss{The implementation decisions can, and likely will, change over the course
+% of the project.  The initial documentation should be written in an abstract way;
+% it should be agnostic of the implementation choices, unless the implementation
+% choices are project constraints.  However, recording our initial thoughts on
+% implementation helps understand the challenge level and feasibility of a
+% project.  It may also help with early identification of areas where project
+% members will need to augment their training.}
 
-Topics to discuss include the following:
+% Topics to discuss include the following:
 
-\begin{itemize}
-\item Specific programming language : Electron \& TypeScript (Subject to Change)
-\item Specific libraries : TBD
-\item Pre-trained models : N/A
-\item Specific linter tool (if appropriate) : TBD
-\item Specific unit testing framework : TBD
-\item Investigation of code coverage measuring tools : TBD
-\item Specific plans for Continuous Integration (CI), or an explanation that CI
-  is not being done : Github and GitHub Projects
-\item Specific performance measuring tools (like Valgrind), if
-  appropriate : N/A
-\item Tools you will likely be using? : Discord (to communicate)
-\end{itemize}
+% \begin{itemize}
+% \item Specific programming language : Electron \& TypeScript (Subject to Change)
+% \item Specific libraries : TBD
+% \item Pre-trained models : N/A
+% \item Specific linter tool (if appropriate) : TBD
+% \item Specific unit testing framework : TBD
+% \item Investigation of code coverage measuring tools : TBD
+% \item Specific plans for Continuous Integration (CI), or an explanation that CI
+%   is not being done : Github and GitHub Projects
+% \item Specific performance measuring tools (like Valgrind), if
+%   appropriate : N/A
+% \item Tools you will likely be using? : Discord (to communicate)
+% \end{itemize}
 
-\wss{git, GitHub and GitHub projects should be part of your technology.}
+% \wss{git, GitHub and GitHub projects should be part of your technology.}
+
+The programming language we expect to use is Electron with TypeScript. These languages are chosen due to their ability to create cross-platform 
+desktop applications with graphical user interfaces, which is essential for our note-taking application. Some libraries we may use include React 
+for building the user interface components, and others for rendering shapes. GitHub and GitHub Projects will be used for version control and 
+project management, respectively. Testing and linting are important aspects of our development process. Jest and ESLint are potential choices 
+for unit testing and linting, respectively, but these decisions will be finalized as the project progresses. As previously mentioned, GitHub 
+Actions will be used for CI/CD to automate testing and linting processes, as well as updating documentation.
 
 \section{Coding Standard}
 
-\wss{What coding standard will you adopt?}
+% \wss{What coding standard will you adopt?}
 
-TBD once coding starts 
+The Standard JavaScript Style Guide will be used as the coding standard for this project. This guide provides a simplistic and easy to follow
+set of rules for writing clean and consistent code. It covers various aspects of coding style, including naming, variables, functions and more.
+The standard style can also be integrated with ESLint, which may be used for linting the code to ensure it adheres to the coding standard.
 
 \newpage{}
 
