@@ -35,7 +35,8 @@ Date2 & Name(s) & Description of changes\\
 what is contained in the report.}
 
 \wss{Additional information on the development plan can be found in the
-\href{https://gitlab.cas.mcmaster.ca/courses/capstone/-/blob/main/Lectures/L02b_POCAndDevPlan/POCAndDevPlan.pdf?ref_type=heads}
+\href{https://gitlab.cas.mcmaster.ca/courses/capstone/-/blob/main/Lectures/
+L02b_POCAndDevPlan/POCAndDevPlan.pdf?ref_type=heads}
 {lecture slides}.}
 
 \section{Confidential Information?}
@@ -67,7 +68,11 @@ repo.}
 
 \wss{How often will you meet? where?}
 
-The team will meet 1-3 times per week with one in person meeting reoccurring at the same time every week. The meeting will be at a previously agreed upon location that will be discussed privately. Alternatively the meeting may be done virtually. We will meet with industry advisers and  other experts on a scheduled basis. These meetings will be announced beforehand. 
+The team will meet 1-3 times per week with one in person meeting reoccurring at 
+the same time every week. The meeting will be at a previously agreed upon 
+location that will be discussed privately. Alternatively the meeting may be 
+done virtually. We will meet with industry advisers and  other experts on a 
+scheduled basis. These meetings will be announced beforehand. 
 
 \wss{If the meeting is a physical location (not virtual), out of an abundance of
 caution for safety reasons you shouldn't put the location online}
@@ -80,18 +85,28 @@ caution for safety reasons you shouldn't put the location online}
 in-person.}
 
 
-\wss{How will the meetings be structured?  There should be a chair for all meetings.  There should be an agenda for all meetings.}
+\wss{How will the meetings be structured?  There should be a chair for all
+meetings.  There should be an agenda for all meetings.}
 
 \section{Team Communication Plan}
 
 \wss{Issues on GitHub should be part of your communication plan.}
 
-The team will use a private discord server along with GitHub for communication. Team members are expected to check both of these daily for updates to meeting times or other milestones.  
+The team will use a private discord server along with GitHub for communication. 
+Team members are expected to check both of these daily for updates to meeting 
+times or other milestones.  
 
 \section{Team Member Roles}
 
-We will need a dedicated Team Lead, Keynoter, Team Liaison, Reviewer, Meeting chair.
-The team lead is in charge of scheduling meetings and other events that may be needed to complete the project. They Keynoter is in charge of taking notes on any meetings for later use. The Team Liaison is in charge of communicating with the Professor and other external helpers for the project. The reviewer is in charge of reviewing work to ensure it is of high standard. The meeting chair is in charge of managing meeting topics and making sure that the meeting stays productive and relevant. 
+We will need a dedicated Team Lead, Keynoter, Team Liaison, Reviewer, Meeting 
+chair.
+The team lead is in charge of scheduling meetings and other events that may be 
+needed to complete the project. They Keynoter is in charge of taking notes on 
+any meetings for later use. The Team Liaison is in charge of communicating with
+ the Professor and other external helpers for the project. The reviewer is in
+ charge of reviewing work to ensure it is of high standard. The meeting chair 
+ is in charge of managing meeting topics and making sure that the meeting stays
+ productive and relevant. 
 
 \wss{You should identify the types of roles you anticipate, like notetaker,
 leader, meeting chair, reviewer.  Assigning specific people to those roles is
@@ -107,23 +122,35 @@ likely change throughout the year.}
 	% classification, etc.?
   % \item Use of CI/CD
   
-  The project will be using GitHub for version control and issue tracking. It will be setup with a main branch that is always stable and
-  a dev branch shall be used for integration of new features. Each feature or fix will first be developed in a separate branch off of dev. 
-  Once the feature is complete and tested, a pull request shall be created to merge the feature branch into dev. The pull request would be 
-  reviewed by at least one other team member before being merged. For smaller changes, the dev branch may just be used directly. The dev 
-  branch will be periodically merged into main after thorough testing to ensure stability. 
+  The project will be using GitHub for version control and issue tracking. 
+  It will be setup with a main branch that is always stable and
+  a dev branch shall be used for integration of new features. Each feature 
+  or fix will first be developed in a separate branch off of dev. 
+  Once the feature is complete and tested, a pull request shall be created 
+  to merge the feature branch into dev. The pull request would be 
+  reviewed by at least one other team member before being merged. 
+  For smaller changes, the dev branch may just be used directly. 
+  The dev branch will be periodically merged into main after 
+  thorough testing to ensure stability. 
   \\
   \\
-  The GitHub Issues will be used to track the various tasks and features that need to be completed, as well as any meetings that are held.
-  Templates are to be used for each issue to ensure relevant information is included. Issues will also be labeled based on their type, 
-  such as bug, feature, meeting, etc, where applicable. This will help in organizing and prioritizing the work that needs to be done. 
-  Assigning of issues will be done where necessary to track who is responsible for what.
+  The GitHub Issues will be used to track the various tasks and features 
+  that need to be completed, as well as any meetings that are held.
+  Templates are to be used for each issue to ensure relevant 
+  information is included. Issues will also be labeled based on their type, 
+  such as bug, feature, meeting, etc, where applicable. This will help in 
+  organizing and prioritizing the work that needs to be done. 
+  Assigning of issues will be done where necessary to track who is responsible 
+  for what.
   \\
   \\
-  GitHub Actions will be used for CI/CD mainly for linting and running tests, as well as updating the pdfs from the tex files. Whenever a 
-  pull request is created, the CI/CD pipeline will automatically run the actions which would include linter and any tests that have been 
-  written. This will help catch any problems early, making sure any code merged is the correct format. Testing will most likely be setup
-  later on as the project progresses and more code is written.
+  GitHub Actions will be used for CI/CD mainly for linting and running tests, 
+  as well as updating the pdfs from the tex files. Whenever a pull request is 
+  created, the CI/CD pipeline will automatically run the actions which would 
+  include linter and any tests that have been written. This will help catch 
+  any problems early, making sure any code merged is the correct format. 
+  Testing will most likely be setuplater on as the project progresses and 
+  more code is written.
 
   % \item Work in individual branches for each new issue/change. 
 	% \item Merge with pull requests followed by reviews.
@@ -138,13 +165,19 @@ likely change throughout the year.}
   % \item How will you be using GitHub projects?
   % \item Include a link to your GitHub project
   
-  We will use GitHub projects in the Kanban board format to organize our issue items. To begin, the columns will be "To Do", "In Progress", 
-  and "Done". As we work the the project, more columns may be added to better suit our workflow. Each issue will be added to the "To Do" column,
-  and when a team member starts working on it, it will be moved to "In Progress". Once the issue is completed and reviewed, it will be moved to
-  "Done". This will help us keep track of what needs to be done, what is currently being worked on, and what has been completed. The project 
-  board can be found at \url{https://github.com/users/ritual-17/projects/1/views/2}.
+  We will use GitHub projects in the Kanban board format to organize our 
+  issue items. To begin, the columns will be "To Do", "In Progress", 
+  and "Done". As we work the the project, more columns may be added to 
+  better suit our workflow. Each issue will be added to the "To Do" column,
+  and when a team member starts working on it, it will be moved to "In Progress"
+  . Once the issue is completed and reviewed, it will be moved to
+  "Done". This will help us keep track of what needs to be done, what is 
+  currently being worked on, and what has been completed. The project 
+  board can be found at 
+  \url{https://github.com/users/ritual-17/projects/1/views/2}.
   
-  % \item GitHub Projects will be used to help organize issues and assign them to developers. 
+  % \item GitHub Projects will be used to 
+  help organize issues and assign them to developers. 
   % \item Project will be done on GitHub at https://github.com/ritual-17/flow.
   % \item The Project is planned to be finished at the end February 
 
@@ -160,13 +193,20 @@ What is the main risk, or risks, for the success of your project?  What will you
 demonstrate during your proof of concept demonstration to convince yourself that
 you will be able to overcome this risk?
 
-The main risks for the success of the project have to do with factors adding to the time it takes to take a note down, making it longer than
-taking notes by other means. As the project involves making and rendering geometry in a GUI, there is a risk that the performance of the 
-application may be too slow to be practical. Another risk is that users may also find the syntax of the application too cumbersome or 
-unintuitive to use effectively. To mitigate these risks, the proof of concept demonstration will focus on showing that notes can be taken 
-down quickly and easily using the application. It will involve having someone technically proficient testing writing different notes using our 
-application and comparing the time it takes to write the same notes using handwriting. A successful demonstration will show that notes can be 
-taken down in faster or comparable time to handwriting, while still being legible and well formatted.
+The main risks for the success of the project have to do with factors adding 
+to the time it takes to take a note down, making it longer than
+taking notes by other means. As the project involves making and rendering 
+geometry in a GUI, there is a risk that the performance of the 
+application may be too slow to be practical. Another risk is that users may 
+also find the syntax of the application too cumbersome or 
+unintuitive to use effectively. To mitigate these risks, the proof of concept 
+demonstration will focus on showing that notes can be taken 
+down quickly and easily using the application. It will involve having someone
+ technically proficient testing writing different notes using our 
+application and comparing the time it takes to write the same notes using 
+handwriting. A successful demonstration will show that notes can be 
+taken down in faster or comparable time to handwriting, while still being 
+legible and well formatted.
 
 \section{Expected Technology}
 
@@ -202,20 +242,29 @@ taken down in faster or comparable time to handwriting, while still being legibl
 
 % \wss{git, GitHub and GitHub projects should be part of your technology.}
 
-The programming language we expect to use is Electron with TypeScript. These languages are chosen due to their ability to create cross-platform 
-desktop applications with graphical user interfaces, which is essential for our note-taking application. Some libraries we may use include React 
-for building the user interface components, and others for rendering shapes. GitHub and GitHub Projects will be used for version control and 
-project management, respectively. Testing and linting are important aspects of our development process. Jest and ESLint are potential choices 
-for unit testing and linting, respectively, but these decisions will be finalized as the project progresses. As previously mentioned, GitHub 
-Actions will be used for CI/CD to automate testing and linting processes, as well as updating documentation.
+The programming language we expect to use is Electron with TypeScript. 
+These languages are chosen due to their ability to create cross-platform 
+desktop applications with graphical user interfaces, which is essential 
+for our note-taking application. Some libraries we may use include React 
+for building the user interface components, and others for rendering shapes.
+ GitHub and GitHub Projects will be used for version control and 
+project management, respectively. Testing and linting are important aspects
+ of our development process. Jest and ESLint are potential choices 
+for unit testing and linting, respectively, but these decisions will be 
+finalized as the project progresses. As previously mentioned, GitHub 
+Actions will be used for CI/CD to automate testing and linting processes,
+ as well as updating documentation.
 
 \section{Coding Standard}
 
 % \wss{What coding standard will you adopt?}
 
-The Standard JavaScript Style Guide will be used as the coding standard for this project. This guide provides a simplistic and easy to follow
-set of rules for writing clean and consistent code. It covers various aspects of coding style, including naming, variables, functions and more.
-The standard style can also be integrated with ESLint, which may be used for linting the code to ensure it adheres to the coding standard.
+The Standard JavaScript Style Guide will be used as the coding standard for
+ this project. This guide provides a simplistic and easy to follow
+set of rules for writing clean and consistent code. It covers various aspects
+ of coding style, including naming, variables, functions and more.
+The standard style can also be integrated with ESLint, which may be used for
+ linting the code to ensure it adheres to the coding standard.
 
 \newpage{}
 
@@ -231,28 +280,47 @@ The standard style can also be integrated with ESLint, which may be used for lin
 	\begin{itemize}
 		\item Jeff:
 		\item Ethan:
-		\item Oliver:
+		\item Oliver: A development plan is important since it helps organize 
+    the project and break it down into manageable pieces. It also helps 
+    identify potential risks and challenges early on, allowing the team 
+    to plan for them and mitigate them. 
 		\item Hussain: Creating a development plan is important because it allows all stakeholders of the project to be on the same page, and to have a clear understanding of the goals and objectives of the project. It also ensures that the resources needed for the project are available and allocated properly. A development plan also highligths any problems that you may run into during the project, allowing you to plan around and mitigate them before they arise.
-		\item Kevin: Having a thought out development plan is important as the rest of the projects development will follow the plan. If the plan covers all possible issues the development will be smooth as all the issues have been accounted for and will be worked around. 
+		\item Kevin: Having a thought out development plan is important as the 
+        rest of the projects development will follow the plan. If the plan 
+        covers all possible issues the development will be smooth as all the 
+        issues have been accounted for and will be worked around. 
 	\end{itemize}
     \item In your opinion, what are the advantages and disadvantages of using
     CI/CD?
 	\begin{itemize}
 		\item Jeff:
 		\item Ethan:
-		\item Oliver:
+		\item Oliver: The advantages of CI/CD are that it allows for 
+    faster and more frequent releases, as well as improved collaboration 
+    among team members. It also helps catch bugs and issues early on in the 
+    development process, leading to higher quality software. The disadvantages 
+    include the initial setup and configuration can be time-consuming and 
+    complex, and it may require additional resources and infrastructure to 
+    maintain.
 		\item Hussain: CI/CD has many advantages. Having an effective CI/CD pipeline set up allows for faster development and deployment of code as it automates many of the tasks that would be done manually. This allows developers to focus on more complex tasks of the project. The disadvantages of CI/CD is that it can be difficult to initially set up as developers may not know what is to be automated and what is not. It can also become difficult to fix constantly breaking pipelines if the code is not properly reviewed.
-		\item Kevin: The advantages of CI/CD are that if any issues arises with the project, as it is constantly being deployed, these issues can be found and fixed quickly. This prevents said issues from propagating, causing other issues that make the project bad.
+		\item Kevin: The advantages of CI/CD are that if any issues arises with 
+        the project, as it is constantly being deployed, these issues can be 
+        found and fixed quickly. This prevents said issues from propagating, 
+        causing other issues that make the project bad.
 		
-		The disadvantage is that it can requires proper planning, and is more costly in terms of time and money. This is as each development must be vetted (requires time and money) before development can continue, slowing down project development. 
-
+		The disadvantage is that it can requires proper planning, and is more 
+        costly in terms of time and money. This is as each development must 
+        be vetted (requires time and money) before development can continue, 
+        slowing down project development. 
 
 	\end{itemize}
     \item What disagreements did your group have in this deliverable, if any,
     and how did you resolve them?
     
    \begin{itemize}
-		\item The group did not have any disagreements for this deliverable. The group did their work smoothly and decided in meetings on elements of this document and the Problem Statement.
+		\item The group did not have any disagreements for this deliverable. 
+        The group did their work smoothly and decided in meetings on elements 
+        of this document and the Problem Statement.
 	\end{itemize}
 \end{enumerate}
 
@@ -272,8 +340,17 @@ goals on what the team wishes to achieve with the project.  Potential goals are
 to win a prize at the Capstone EXPO, or to have something to talk about in
 interviews, or to get an A+, etc.}
 
-Our team has many external goals for this capstone. It would go without saying that we would like to achieve a high grade for our work in this course; however, there are many other factors as to why we are trying to succeed with this project. First off, as engineering students, we understand the hardships of having to take notes in class and not being able to smoothly incorporate diagrams. As we continue our careers and education, we would like to have an application that allows us to execute exactly what we wished we had in our previous undergraduate years.
-Additionally, as some of us are graduating and moving on to new career opportunities, it would be a great benefit to us if we had a successful project to give us leverage when applying for new graduate positions. 
+Our team has many external goals for this capstone. It would go without saying 
+that we would like to achieve a high grade for our work in this course; 
+however, there are many other factors as to why we are trying to succeed with 
+this project. First off, as engineering students, we understand the hardships 
+of having to take notes in class and not being able to smoothly incorporate 
+diagrams. As we continue our careers and education, we would like to have an 
+application that allows us to execute exactly what we wished we had in our 
+previous undergraduate years.
+Additionally, as some of us are graduating and moving on to new career 
+opportunities, it would be a great benefit to us if we had a successful
+ project to give us leverage when applying for new graduate positions. 
 
 
 \subsection*{Attendance}
@@ -283,13 +360,21 @@ Additionally, as some of us are graduating and moving on to new career opportuni
 \wss{What are your team's expectations regarding meeting attendance (being on
 time, leaving early, missing meetings, etc.)?}
 
-Our team expects all members to show up to every scheduled meeting unless they have an acceptable reason for not being able to attend. The specifics on what constitutes an acceptable excuse will be discussed in the next section.
+Our team expects all members to show up to every scheduled meeting unless they
+ have an acceptable reason for not being able to attend. The specifics on what 
+ constitutes an acceptable excuse will be discussed in the next section.
 
 \subsubsection*{Acceptable Excuse}
 
 \wss{What constitutes an acceptable excuse for missing a meeting or a deadline?}
 
-For in-person meetings, the team understands that some members may have issues commuting and will not be able to physically attend. In this case, members will be allowed to attend online; however, this should not be a regular occurrence, and members should make an effort to attend in person. Moreover, the team believes that there is no acceptable excuse for missing a deadline other than for emergencies. This is further elaborated in the coming sections. 
+For in-person meetings, the team understands that some members may have issues
+ commuting and will not be able to physically attend. In this case, members 
+ will be allowed to attend online; however, this should not be a regular 
+ occurrence, and members should make an effort to attend in person. 
+ Moreover, the team believes that there is no acceptable excuse for missing
+ a deadline other than for emergencies. 
+ This is further elaborated in the coming sections. 
 
 \wss{What types of excuses will not be considered acceptable?}
 \\Excuses that involve prioritizing extracurriculars or recreational activities will not be tolerated.
@@ -304,7 +389,17 @@ We all understand the busy schedule of an engineering student; however, it is ex
 attend a team meeting or complete their individual work promised for a team
 deliverable?}
 
-Group members may be met with unexpected issues, which will prevent them from attending a meeting or potentially miss a deadline. For meetings, if a member is not able to attend due to an emergency, they are expected to communicate that and follow up with the team on what they missed. They are expected to also review the meeting minutes before reaching out to the team about what they missed. Moreover, if a member is met with an emergency that prevents them from finishing work for a team deliverable, the team will be understanding and assist to the best of their capabilities. Depending on the situation, the member should follow the proper McMaster procedure for these emergencies and reach out to the TA/Instructor to discuss the potential use of an MSAF.
+Group members may be met with unexpected issues, which will prevent them 
+from attending a meeting or potentially miss a deadline. For meetings, 
+if a member is not able to attend due to an emergency, they are expected 
+to communicate that and follow up with the team on what they missed. 
+They are expected to also review the meeting minutes before reaching 
+out to the team about what they missed. Moreover, if a member is met 
+with an emergency that prevents them from finishing work for a team 
+deliverable, the team will be understanding and assist to the best 
+of their capabilities. Depending on the situation, the member should 
+follow the proper McMaster procedure for these emergencies and reach 
+out to the TA/Instructor to discuss the potential use of an MSAF.
 
 \subsection*{Accountability and Teamwork}
 
@@ -313,8 +408,10 @@ Group members may be met with unexpected issues, which will prevent them from at
 \wss{What are your team's expectations regarding the quality
 of team members' preparation for team meetings and the quality of the
 deliverables that members bring to the team?}
-Team mates should have proper tools for meetings to discuss and work on the project.
-Code will be reviewed by other team-mates and code of poor quality will be rewritten  until it is of proper quality.
+Team mates should have proper tools for meetings to discuss and work 
+on the project.
+Code will be reviewed by other team-mates and code of poor quality 
+will be rewritten  until it is of proper quality.
 
 \subsubsection*{Attitude}
 
@@ -323,23 +420,39 @@ interactions with the team, cooperation, attitudes, and anything else regarding
 team member contributions?  Do you want to introduce a code of conduct?  Do you
 want a conflict resolution plan?  Can adopt existing codes of conduct.}
 
-Each team member is expected to treat all other members with respect and professionalism. Members should feel comfortable sharing ideas and interacting with each other. Members should come into meetings with a positive attitude and a willingness to actively cooperate. Members should also be considerate of each other’s time and should stay on track during meetings and work periods.\\
+Each team member is expected to treat all other members with respect and 
+professionalism. Members should feel comfortable sharing ideas and 
+interacting with each other. Members should come into meetings with a
+ positive attitude and a willingness to actively cooperate. 
+ Members should also be considerate of each other’s time and 
+ should stay on track during meetings and work periods.\\
 
-Additionally, we will be incorporating the already exisitng "Contributor Covenant" as our code of conduct. The exact code of conduct can be found \href{https://www.contributor-covenant.org/version/2/1/code_of_conduct/}{here}. \\
+Additionally, we will be incorporating the already exisitng 
+"Contributor Covenant" as our code of conduct. 
+The exact code of conduct can be found 
+\href{https://www.contributor-covenant.org/version/2/1/code_of_conduct/}
+{here}. \\
 
 In terms of conflict resolution plan, we decdied to implement a short and decisive process: \\
 \begin{enumerate}
   \item Direct Communication
   \begin{itemize}
-    \item Members directly involved in the conflict should try to resolve the issue on their own first. 
+    \item Members directly involved in the conflict should 
+    try to resolve the issue on their own first. 
   \end{itemize}
   \item Team Discussion
   \begin{itemize}
-    \item If the issue remains unresolved, the team may hold a brief meeting to resolve said conflict. The meeting will be used to dicuss the concerns and work towards a solution approved by the majority of the group.
+    \item If the issue remains unresolved, the team may hold a brief
+    meeting to resolve said conflict. The meeting will be used to dicuss
+    the concerns and work towards a solution 
+    approved by the majority of the group.
   \end{itemize}
   \item Seek Support from Advisor / Instructor
   \begin{itemize}
-    \item If a resolution still cannot be reached after the previous steps, the team should schedule a meeting with the TA or Instructor and ask for guidance on how to resolve the conflict. Note, this will only be used as a last resort after exhausting all options.
+    \item If a resolution still cannot be reached after the previous steps,
+    the team should schedule a meeting with the TA or Instructor and ask for 
+    guidance on how to resolve the conflict. Note, this will only be used as
+    a last resort after exhausting all options.
   \end{itemize}
 \end{enumerate}
 
@@ -359,26 +472,67 @@ consequences if someone doesn't hit their targets?  Do they need to bring the
 coffee to the next team meeting?  Does the team need to make an appointment with
 their TA, or the instructor?  Are there incentives for reaching targets early?} \\
 
-Keeping a team on track is very important when working on a long-term project, such as this capstone. To ensure that the team stays on track, we decided to consider implementing methods such as using project management tools, setting up regular update meetings, and defining clear roles and responsibilities at the beginning of each deliverable. The regular update meetings and assigned responsibilities will help ensure that members contribute their fair share and that the team is performing as expected. Each member will hold the others accountable for their share of the deliverables, which will allow our team to perform as expected. \\
+Keeping a team on track is very important when working on a long-term project,
+ such as this capstone. To ensure that the team stays on track, we decided to
+ consider implementing methods such as using project management tools, setting
+ up regular update meetings, and defining clear roles and responsibilities at
+ the beginning of each deliverable. The regular update meetings and assigned
+ responsibilities will help ensure that members contribute their fair share 
+ and that the team is performing as expected. Each member will hold the others
+ accountable for their share of the deliverables, which will allow our team 
+ to perform as expected. \\
 
-It is understandable that some members may not feel motivated or may not be performing as expected, even with all the previous methods in place. To prevent this, we will be incorporating fun consequences, such as having these members bring hot chocolate, cookies, or other food items/treats to the next meeting. If the team member continues to underperform despite the above methods being in place, the other members will discuss potentially meeting with a TA or instructor to resolve this issue. Please note that this will only be used as a last resort after exhausting all other options. \\
+It is understandable that some members may not feel motivated or may not be
+ performing as expected, even with all the previous methods in place.
+ To prevent this, we will be incorporating fun consequences,
+ such as having these members bring hot chocolate, cookies,
+ or other food items/treats to the next meeting.
+ If the team member continues to underperform despite the above
+ methods being in place, the other members will discuss potentially 
+ meeting with a TA or instructor to resolve this issue. 
+ Please note that this will only be used as a last
+ resort after exhausting all other options. \\
 
-Contrarily, if a member does exceptionally well or contributes more than their fair share, we’ve decided to reward these members by having the rest of the team split their cost at the next team event. For instance, the other members could contribute to the cost of that member’s next meal during a team lunch or dinner. \\
+Contrarily, if a member does exceptionally well or contributes more 
+than their fair share, we’ve decided to reward these members by having 
+the rest of the team split their cost at the next team event. 
+For instance, the other members could contribute to the cost of 
+that member’s next meal during a team lunch or dinner. \\
 
-Additionally, if members complete their targets early, they won’t be assigned any more work and can focus on their other responsibilities. Incentives for finishing deliverables and tasks are viewed more as a team-building activity. These are discussed in the following section. \\
+Additionally, if members complete their targets early, 
+they won’t be assigned any more work and can focus on 
+their other responsibilities. 
+Incentives for finishing deliverables and tasks are 
+viewed more as a team-building activity. 
+These are discussed in the following section. \\
 
 
 \subsubsection*{Team Building}
 
 \wss{How will you build team cohesion (fun time, group rituals, etc.)? }
 
-As engineering students, we understand that there are many stressors when working on a major project, such as a capstone. These stresses can have a big effect on productivity and overall work quality. To combat this issue, we’ve decided to partake in a group activity or outing for each major goal/milestone we accomplish. For instance, after a stressful deliverable, we’ll try to wind down by enjoying online games together. If we accomplish a tough goal together, we think it’s a good idea to celebrate with a lunch/dinner to acknowledge our hard work. By doing this, we hope to build team cohesion throughout this project.
+As engineering students, 
+we understand that there are many stressors when working on a major project,
+ such as a capstone. 
+ These stresses can have a big effect on productivity and overall work quality.
+ To combat this issue, we’ve decided to partake in a group activity or outing
+ for each major goal/milestone we accomplish. For instance, after a stressful 
+ deliverable, we’ll try to wind down by enjoying online games together. 
+ If we accomplish a tough goal together, we think it’s a good idea to
+ celebrate with a lunch/dinner to acknowledge our hard work. 
+ By doing this, we hope to build team cohesion throughout this project.
 
 \subsubsection*{Decision Making} 
 
 \wss{How will you make decisions in your group? Consensus?  Vote? How will you
 handle disagreements? }
 
-We believe that decisions should be made as a group and not by one individual. From this, we decided that we should discuss with all members present when making decisions or handling disagreements. From that discussion, we will hold a vote where the majority rules. We all agree to handle these discussions/meetings professionally and with respect for each other. That way, we can hold a responsible and respected discussion when disagreements arise. 
+We believe that decisions should be made as a group and not by one individual.
+ From this, we decided that we should discuss with all members present when 
+ making decisions or handling disagreements. From that discussion, 
+ we will hold a vote where the majority rules. 
+ We all agree to handle these discussions/meetings professionally
+ and with respect for each other. That way, we can hold a responsible
+ and respected discussion when disagreements arise. 
 
 \end{document}
