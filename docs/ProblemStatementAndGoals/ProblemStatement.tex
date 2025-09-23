@@ -40,11 +40,49 @@ information.}
 
 \subsection{Problem}
 
+The speed of thought should be the limiting factor in efficiency when typing or
+taking notes. Editors like Vim and Emacs follow this philosophy for text
+through keyboard driven shortcuts and commands. However, users can be limited
+in applying a similar approach to creating simple diagrams and drawings
+alongside text. This would be particularly useful when creating documents that
+need to be completed in a timely manner, such as taking notes in a lecture. For
+example, disciplines like engineering require taking notes with a combination
+of text and diagrams, whether it be simple tables, state machines, or circuits.
+\vspace{1em}
+
+\noindent Familiar solutions exist for taking notes involving both text and diagrams, but
+each have some limitations:
+\begin{itemize}
+  \item \textbf{Taking notes with pen and paper/tablet.} While this gives the
+    freedom of drawing diagrams the way you want, you are forced to print text
+    rather than type it. There is also no option for copy/pasting repetitive
+    parts of a diagram. Writing out longer thoughts or sentences can take a
+    while, and potentially lead to falling behind. Correcting mistakes or
+    repositioning diagrams/text can also be timely.
+  \item \textbf{Taking notes with your computer and keyboard.} While this can
+    allow for faster speeds with typing, options for inserting diagrams are
+    limited and/or slow. Existing diagram description domain-specific languages
+    exist such as (PlantUML, Mermaid.js). However, they focus
+    specifically and only on diagram creation, which requires definition,
+    rendering, and then insertion into your note document. Beyond this,
+    manipulating text rather than the visual objects themselves can lead to
+    inefficiencies when forgetting syntax and lack immediate feedback from
+    changes. Other options embedded in OneNote or Draw.io follow a mouse-based
+    workflow, which can be cumbersome for various reasons (e.g. navigating to
+    the menu for a given shape you would like to select).
+  \item \textbf{Hybrid approach.} It is possible to use both of the above approaches
+    together, switching between drawing and typing. This carries its own
+    cognitive load for swapping context between two media. Swapping between a
+    computer and pencil and paper means the notes will be stored in different
+    places. Swapping between a computer and drawing tablet also means
+    purchasing another device.
+\end{itemize}
+
+\noindent The overarching problem is that no unified digital platform exists for
+efficiently taking notes involving text and diagrams using a keyboard-driven
+approach.
+
 \subsection{Inputs and Outputs}
-
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.  
-Use abstraction so that you can avoid details.}
-
 
 \subsubsection{Inputs}
 \begin{itemize}
