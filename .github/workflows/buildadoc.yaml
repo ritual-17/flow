@@ -2,19 +2,11 @@ name: Build and Push AsciiDoctor Docs
 
 on:
   push:
-    branches:
-      # - main
-      - "**"
-    paths:
-      - '**/*.adoc'
-      - 'docs/**'
+    branches: main
+    paths: [docs/**]
   pull_request:
-    branches:
-      # - main
-      - "**"
-    paths:
-      - '**/*.adoc'
-      - 'docs/**'
+    branches: main
+    paths: [docs/**]
   workflow_dispatch:
 
 permissions:
@@ -47,17 +39,12 @@ jobs:
           cd docs/SRS-Meyer
           make
 
-      - name: Commit and push generated docs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git commit -m "Auto-build docs from Asciidoctor"
-          git push origin HEAD:${GITHUB_REF#refs/heads/}
+      - name: Commit and push PDFs
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Add/Update PDF${{ env.PLURAL_S }} for changed asciidoctor file${{ env.PLURAL_S }}'
+          file_pattern: 'docs/*.pdf'
+          branch: main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
