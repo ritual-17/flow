@@ -39,11 +39,7 @@ jobs:
         run: |
           gem install asciidoctor asciidoctor-pdf asciidoctor-diagram
           sudo apt-get update
-          sudo apt-get install -y graphviz default-jre  # for PlantUML
-          sudo wget -O /usr/local/bin/plantuml https://github.com/plantuml/plantuml/releases/latest/download/plantuml.jar
-          echo '#!/bin/sh' | sudo tee /usr/local/bin/plantuml.sh
-          echo 'java -jar /usr/local/bin/plantuml "$@"' | sudo tee -a /usr/local/bin/plantuml.sh
-          sudo chmod +x /usr/local/bin/plantuml.sh
+          sudo apt-get install -y plantuml graphviz
 
       - name: Build docs using Makefile
         run: |
