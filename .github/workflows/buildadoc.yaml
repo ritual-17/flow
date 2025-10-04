@@ -40,7 +40,9 @@ jobs:
           sudo chmod +x /usr/local/bin/plantuml.sh
 
       - name: Build docs using Makefile
-        run: make
+        run: |
+          cd docs/SRS-Meyer
+          make
 
       - name: Commit and push generated docs
         run: |
