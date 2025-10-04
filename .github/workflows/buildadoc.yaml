@@ -7,7 +7,13 @@ on:
       - "**"
     paths:
       - '**/*.adoc'
-      - 'Makefile'
+      - 'docs/**'
+  pull_request:
+    branches:
+      # - main
+      - "**"
+    paths:
+      - '**/*.adoc'
       - 'docs/**'
   workflow_dispatch:
 
