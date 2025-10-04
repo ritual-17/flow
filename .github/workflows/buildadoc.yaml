@@ -1,0 +1,50 @@
+name: Build and Push AsciiDoctor Docs
+
+on:
+  push:
+    branches: main
+    paths: [docs/**]
+  pull_request:
+    branches: main
+    paths: [docs/**]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2'
+
+      - name: Install Asciidoctor tools
+        run: |
+          gem install asciidoctor asciidoctor-pdf asciidoctor-diagram
+          sudo apt-get update
+          sudo apt-get install -y plantuml graphviz
+
+      - name: Build docs using Makefile
+        run: |
+          cd docs/SRS-Meyer
+          make
+
+      - name: Commit and push PDFs
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'Add/Update PDF${{ env.PLURAL_S }} for changed asciidoctor file${{ env.PLURAL_S }}'
+          file_pattern: 'docs/*.pdf'
+          branch: main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
