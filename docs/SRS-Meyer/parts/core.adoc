@@ -4,6 +4,8 @@ include::./integrity.adoc[]
 
 include::control.adoc[]
 
+include::./glossary.adoc[]
+
 include::./goals/index.adoc[]
 
 include::./environment/index.adoc[]

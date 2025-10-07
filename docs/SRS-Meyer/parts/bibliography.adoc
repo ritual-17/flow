@@ -3,3 +3,4 @@
 
 * [[[BM22,1]]] Bertrand Meyer. _Handbook of Requirements and Business Analysis_. Springer. 2022.
 * [[[RE97,2]]] Ian Sommerville and Peter Sawyer. _Requirements Engineering: A good Practice Guide_. Wiley. 1997.
+* [[[VI25,3]]] Vim - the ubiquitous text editor. 2025. https://www.vim.org/
