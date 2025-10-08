@@ -63,14 +63,18 @@ potential risks that could impact the safety or usability of the system. By
 conducting a hazard analysis before development, we can take proactive measures
 to mitigate these risks, and design preventative measures to ensure the system
 operates as intended.
+\\
+\\
 For our note-taking system (\progname), this analysis focuses on hazards that 
 may lead to data loss, perfomance issues, and security vulnerabilities. As 
-\progname{} aims to procide fast keyword-based editing with real-time diagram
+\progname aims to procide fast keyword-based editing with real-time diagram
 rendering, it introduces potential risks in different areas including rendering
 performance, data integrity, and user experience.
+\\
+\\
 The following sections of the document define the scope and objectives of the 
 hazard analysis, describe the system boundaries and main components of 
-\progname{}, and outline key assumptions that may influence saftey considerations.
+\progname, and outline key assumptions that may influence saftey considerations.
 The core of the document presents a detailed Failure Mode and Effect Analysis
 (FMEA) table, which identifies potential hazards, their causes and effects.
 Finally, the document concludes with a summary of safety and security
@@ -79,8 +83,46 @@ future development phases.
 
 \section{Scope and Purpose of Hazard Analysis}
 
-\wss{You should say what \textbf{loss} could be incurred because of the
-hazards.}
+% \wss{You should say what \textbf{loss} could be incurred because of the hazards.}
+The purpose of this hazard analysis is to identify and evaluate the potential 
+risks that could impact the safety, security, and usability of \progname. 
+Conducting this analysis in the early stages of development allows for us to 
+anticipate possible failure points in the system and implement design strategies
+to prevent data loss, ensure stable performance, and maintain user confidence.
+\\
+\\
+The text-editing interface, diagram rendering engine, and file storage system all 
+make up the core components of \progname. This analysis will focus on both 
+software related hazards, such as crashes, performance issues, and 
+synchronization errors, as well as user-related risks, including data loss, 
+security vulnerabilities, and non-intuitive user interactions.
+\\
+\\
+Losses that may be incurred due as a result of these hazards include:
+\begin{itemize}
+    \item \textbf{Loss of user data} from failed saves, corruption, or unexpected
+    application closures
+    \item \textbf{Loss of productivity} due to lag, unresponsiveness or
+    non-intuitive interface or command design
+    \item \textbf{Loss of reliability and maintainability} if the application 
+    is developed with technical dept or poor coding practices
+    \item \textbf{Loss of user trust} due to repeated bugs, confusing features,
+    or inconsistent behavior
+    \item \textbf{Loss of security or privacy} if data is not properly protected
+    or stored securely
+\end{itemize}
+\\
+\\
+The hazard analysis focuses on factors in the software domain only. While
+hardware failures (e.g., device crashes, power loss), as well as operating
+system issues (e.g., file system corruption, OS crashes) can impact the
+performance and reliability of \progname, these are outside the scope of this
+analysis. \progname will be running in the user space and any potential
+problems occuring at the kernal level or below are will therefore not be 
+considered. The analysis will assume that the underlying hardware and OS
+are functioning correctly, and will focus on hazards that can be directly
+attributed to the design and implementation of \progname itself.
+
 
 \section{System Boundaries and Components}
 
