@@ -6,3 +6,31 @@ TIP: _Any a priori choices binding the project to specific tools, hardware, lang
 endif::[]
 
 {emptysec}
+* Hardware Binding Technical Choices
+    **Must be used on a laptop, desktop, and/or personal computer
+    **Must mainly run using a keyboard with minimal to zero mouse/trackpad involvment
+    **Must be usable without requiring a dGPU
+    **Minimal System Requirments:
+        ***CPU:
+        ***GPU:
+        ***Memory:
+        ***Storage:.
+
+* Hardware Binding Justification:
+    **The application must be easily accessible. Having {project-title} run on a variety of devices aligns with the company's goal of having an easily accessible note taking application for all students in technical disciplines.
+    Having lower system requirments ensures that the application reaches a wider group of students who usually cannot afford expensive setups and/or devices.
+    **The binding constraint of having mostly if not only keyboard involvment stems from the project's goal of developing a note taking application which allows students to easily take notes and construct diagrams in class seemlessly using a keyboard.
+
+
+* Software Binding Technical Choices
+    **Must be a standalone application
+    **Must not be an extension to a pre-exisiting note taking application
+    **Must be usable on IOS, Windows, and Linux operated devices
+    **Must be written in ___________
+
+*Software Binding Justification:
+    **Having a standalone application and not an extension is an imposed technical choice as it is contributes the capstone's requirment of meeting a set complexity level.
+    This technical choice also aligns with the group's goal of having more freedom in the software's UI and keybindings. Being an extension restricts the available bindings
+    accessible to our program.
+    **Having the software run on multiple operating systems aligns with the company's goal of reaching a wider audience of students and making the application more accessible.
+    **The coding language technical choice stems from how comfortable each member of this team is with the language
