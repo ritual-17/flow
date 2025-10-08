@@ -6,3 +6,40 @@ TIP: _Main responsibilities in the project; required project staff and their nee
 endif::[]
 
 {emptysec}
+Aside from every member contributing as Software Developers / Software Engineering Students, each person is responsible for a team/admin role.
+* Team Lead - Ethan
+    ** Qualifications
+        ***Must have past leadership experience in a technical environment
+        ***Familiar with meeting tools (i.e., When2Meet, Google Calendar, Teams)
+        ***Experience with task delegation
+    ** Responsibilities
+        ***Schedules meetings and events
+        ***Organizes tasks and deliverables
+* Keynoter - Jeffrey
+    ** Qualifications
+        ***Good organizational skills
+        ***Familiar with note taking applications (i.e., Google Drive, OneNote, Noteability)
+    ** Responsibilities
+        ***Takes notes for meetings
+        ***Keeps track of information for later use
+* Lead Reviewer - Chengze
+    ** Qualifications
+        ***Excellent knowledge on coding languages
+        ***Experience with code reviews and Github
+    ** Responsibilities
+        ***Default reviewer on Github if no other member is available
+        ***Ensures all PRs are reviewed properly
+* Team Liaison - Hussain
+    ** Qualifications
+        ***Good communication skills
+        ***Good organizational skills regarding emails and updates
+    ** Responsibilities
+        ***Main communication point between the team and external parties
+        ***Primary point of contact for TAs and the Professor
+* Meeting Chair - Kevin
+    ** Qualifications
+        ***Good time managment skills
+        ***Experience with leading technical meetings
+    ** Responsibilities
+        ***Manages meeting topics and agenda
+        ***Ensures meetings stay on task and members are focused
