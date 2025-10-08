@@ -5,4 +5,21 @@ ifdef::env-draft[]
 TIP: _Overall structure expressed by the list of major software and, if applicable, hardware parts._  <<BM22>>
 endif::[]
 
-{emptysec}
+
+The *Flow* system relies on the following software components:
+
+* **Frontend User Interface:** The component responsible for displaying the text editor and diagram workspace. It captures user keyboard input, renders text and shapes in real time, and ensures smooth, responsive interaction. The frontend aims to provide a minimal, distraction-free editing environment inspired by text-based editors like Vim.
+
+* **Shortcut Command Processor:** The component that interprets user keystrokes and translates them into commands. It enables users to perform editing, formatting, and drawing actions entirely through the keyboard. This processor ensures fast and consistent command handling for an efficient note-taking experience.
+
+* **Rendering Engine:** The component responsible for converting text-based diagram syntax into visual shapes and connections. It dynamically updates the diagram view as users type, ensuring that the graphical representation always matches the underlying text model.
+
+* **Backend Logic and API Layer:** The component that manages communication between the frontend and storage layers. It validates user actions, coordinates data synchronization, and ensures that both text and diagram data remain consistent throughout editing sessions.
+
+* **Data Management and Storage:** The component responsible for saving, retrieving, and updating user notes and diagrams. It ensures data persistence and reliability, allowing users to continue from where they left off across sessions.
+
+* **Configuration and Customization:** The component that handles user preferences such as theme selection, shortcut customization, and editor layout. It provides flexibility and personalization, enhancing user comfort and accessibility.
+
+* **Testing and Quality Assurance:** The component responsible for maintaining system stability through automated testing and debugging. It verifies that new features and changes do not introduce regressions, supporting long-term maintainability.
+
+Together, these components enable *Flow* to transform text-based commands into structured, interactive diagrams while maintaining a smooth and efficient keyboard-driven workflow.
