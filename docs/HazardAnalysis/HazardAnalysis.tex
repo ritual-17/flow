@@ -238,13 +238,20 @@ during the development and use of \progname. These assumptions include:
 \centering
 \small
 \caption{Failure Mode and Effect Analysis (FMEA) for \progname} 
-\begin{tabularx}{\textwidth}{l l X X l X l}
+\begin{tabularx}{\textwidth}{X X X X X X X}
 \toprule
-\textbf{Design Function} & \textbf{Failure Modes} & \textbf{Effect}
- & \textbf{Causes} & \textbf{Detection} & \textbf{Recommended actions} 
+\textbf{Design Function} & \textbf{Failure Modes} & \textbf{Effect of failure} &
+ \textbf{Causes for failure} & \textbf{Detection} & \textbf{Recommended actions} 
  & \textbf{SR}\\
 \midrule
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Diagram rendering and layout & Overlapping shapes, unreadable layout, slow 
+rendering & Reduced usability, user spending more time rearranging rather 
+than note taking & Poor algorithm layout, too large graphics & Creation shows
+long frame times, UI freezes, user complaints, perfomance test threshold time 
+limit exceeded & Have Unit tests performance tests for frame time; Use worker 
+threads for rendering; Set rendering performance limits (e.g. < 100ms per 
+update); Implement partial rendering (e.g. rendering visual portion first); 
+Potentially user to pin diagram positions & SR-RENDER-1 \\
 Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
 Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
 Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
