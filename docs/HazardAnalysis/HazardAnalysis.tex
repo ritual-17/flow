@@ -126,19 +126,96 @@ attributed to the design and implementation of \progname itself.
 
 \section{System Boundaries and Components}
 
-\wss{Dividing the system into components will help you brainstorm the hazards.
-You shouldn't do a full design of the components, just get a feel for the major
-ones.  For projects that involve hardware, the components will typically include
-each individual piece of hardware.  If your software will have a database, or an
-important library, these are also potential components.}
+% \wss{Dividing the system into components will help you brainstorm the hazards.
+% You shouldn't do a full design of the components, just get a feel for the major
+% ones.  For projects that involve hardware, the components will typically include
+% each individual piece of hardware.  If your software will have a database, or an
+% important library, these are also potential components.}
+\progname is a note-taking application that allows users to create, edit, and
+visualize text-based diagrams using only keyboard inputs. The boundaries of
+the system include all components directly related to the core functionality of
+the application, including taking user input, rendering diagrams, and file 
+management. The system boundary does not include external dependencies such as 
+the user's operating system, device hardware, or third-party file storage services 
+such as cloud storage providers.
+\\
+\\
+The main components of \progname include:
+\begin{enumerate}
+    \item \textbf{User Interface (UI) Layer}
+    \begin{itemize}
+        \item Handling user interactions, keyboard inputs, displaying updates
+        \item Showing live view of notes and diagrams
+        \item Providing feedback on actions (e.g., error messages)
+    \end{itemize}
+    \item \textbf{Command Processing Engine}
+    \begin{itemize}
+        \item Parsing and interpreting user commands
+        \item Managing application state based on user inputs
+        \item Sending structured actions to the rendering and storage layers
+    \end{itemize}
+    \item \textbf{Diagram Rendering Engine}
+    \begin{itemize}
+        \item Converting text-based diagram descriptions into visual formats
+        \item Handling shape layout, positioning, and connection to the rest of
+        the note content
+    \end{itemize}
+    \item \textbf{File Management and Storage Layer}
+    \begin{itemize}
+        \item Saving and loading notes and diagrams to/from disk
+        \item Managing file formats and data serialization
+        \item Ensuring data integrity during read/write operations
+    \end{itemize}\
+    \item \textbf{Error Handling and State Management Module}
+    \begin{itemize}
+        \item Detecting, logging, and managing errors across all components
+        \item Implementing recovery mechanisms and stability after crashes or
+        unexpected shutdowns
+    \end{itemize}
+    % \item \textbf{Configuration/Customization Module} %potential future 
+    % component
+    % \begin{itemize}
+    %     \item Storing and Managing user preferences and application settings
+    % \end{itemize}
+\end{enumerate}
+\\
+\\
+In addition to these core components, \progname may also depend on external
+libraries for specific functionalities, such as diagram rendering or parsing.
+To generate and display diagrams, the application may utilize a graphics 
+library to allow for efficient rendering and manipulation of visual elements.
+For parsing user commands, a parsing library may be employed to simplify the
+interpretation of complex inputs. State management libraries may also be used
+to help maintain application state and ensure consistency across different
+components.
+
 
 \section{Critical Assumptions}
 
-\wss{These assumptions that are made about the software or system.  You should
-minimize the number of assumptions that remove potential hazards.  For instance,
-you could assume a part will never fail, but it is generally better to include
-this potential failure mode.}
+% \wss{These assumptions that are made about the software or system.  You should
+% minimize the number of assumptions that remove potential hazards.  For instance,
+% you could assume a part will never fail, but it is generally better to include
+% this potential failure mode.}
+Certain key assumptions will be made regarding the user and operating environment
+during the development and use of \progname. These assumptions include:
 
+\begin{enumerate}
+    \item \textbf{User Competency:} It is assumed that users have a basic level
+    of computer literacy and is familiar with computer opertations such as using
+    a keyboard and mouse. Users are expected to follow reasonable usage patterns
+    (e.g. not shutting down the application abruptly or attempting to
+    manipulate internal files directly).
+    \item \textbf{File Access and Storage:} It is assumed that the file system
+    used for storing notes and diagrams is reliable and free from corruption.
+    Users are expected to have sufficient permissions to read/write files in
+    the designated storage locations.
+    \item \textbf{Operating Environment:} It is assumed that \progname will be
+    run on a supported operating system without unexpected interruptions such
+    as forced shutdowns, crashes, or power failures. The system is expected to
+    have adequate disk space and memory to run the application smoothly.
+    \item \textbf{Software Dependencies:} It is assumed that any third-party
+    libraries or frameworks used by \progname are stable, compatible, and
+    function as intended on the target operating systems. 
 \section{Failure Mode and Effect Analysis}
 
 \wss{Include your FMEA table here. This is the most important part of this document.}
