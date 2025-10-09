@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage[paper=portrait,pagesize]{typearea}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -111,8 +112,7 @@ Losses that may be incurred due as a result of these hazards include:
     \item \textbf{Loss of security or privacy} if data is not properly protected
     or stored securely
 \end{itemize}
-\\
-\\
+
 The hazard analysis focuses on factors in the software domain only. While
 hardware failures (e.g., device crashes, power loss), as well as operating
 system issues (e.g., file system corruption, OS crashes) can impact the
@@ -178,8 +178,7 @@ The main components of \progname include:
     %     \item Storing and Managing user preferences and application settings
     % \end{itemize}
 \end{enumerate}
-\\
-\\
+
 In addition to these core components, \progname may also depend on external
 libraries for specific functionalities, such as diagram rendering or parsing.
 To generate and display diagrams, the application may utilize a graphics 
@@ -198,7 +197,8 @@ components.
 % this potential failure mode.}
 Certain key assumptions will be made regarding the user and operating environment
 during the development and use of \progname. These assumptions include:
-
+\\
+\\
 \begin{enumerate}
     \item \textbf{User Competency:} It is assumed that users have a basic level
     of computer literacy and is familiar with computer opertations such as using
@@ -216,16 +216,52 @@ during the development and use of \progname. These assumptions include:
     \item \textbf{Software Dependencies:} It is assumed that any third-party
     libraries or frameworks used by \progname are stable, compatible, and
     function as intended on the target operating systems. 
+\end{enumerate}
+
+% Make new landscape page for FMEA table
+\newpage
+\KOMAoptions{paper=landscape,DIV=8,pagesize}
+\recalctypearea
+
 \section{Failure Mode and Effect Analysis}
 
-\wss{Include your FMEA table here. This is the most important part of this document.}
-\wss{The safety requirements in the table do not have to have the prefix SR.
-The most important thing is to show traceability to your SRS. You might trace to
-requirements you have already written, or you might need to add new
-requirements.}
-\wss{If no safety requirement can be devised, other mitigation strategies can be
-entered in the table, including strategies involving providing additional
-documentation, and/or test cases.}
+% \wss{Include your FMEA table here. This is the most important part of this 
+% document.}
+% \wss{The safety requirements in the table do not have to have the prefix SR.
+% The most important thing is to show traceability to your SRS. You might trace 
+% to requirements you have already written, or you might need to add new
+% requirements.}
+% \wss{If no safety requirement can be devised, other mitigation strategies can 
+% be entered in the table, including strategies involving providing additional
+% documentation, and/or test cases.}
+\begin{table}[htbp]
+\centering
+\small
+\caption{Failure Mode and Effect Analysis (FMEA) for \progname} 
+\begin{tabularx}{\textwidth}{l l X X l X l}
+\toprule
+\textbf{Design Function} & \textbf{Failure Modes} & \textbf{Effect}
+ & \textbf{Causes} & \textbf{Detection} & \textbf{Recommended actions} 
+ & \textbf{SR}\\
+\midrule
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+% Revert back to portrait for the rest of the document
+\newpage
+\KOMAoptions{paper=portrait,pagesize}
+\recalctypearea
 
 \section{Safety and Security Requirements}
 
