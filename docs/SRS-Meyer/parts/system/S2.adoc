@@ -5,4 +5,103 @@ ifdef::env-draft[]
 TIP: _**This is the bulk of the System book, describing elements of functionality (behaviors)**. This chapter corresponds to the traditional view of requirements as defining "**what the system does**”. It is organized as one section, S.2.n, for each of the components identified in <<s1>>, describing the corresponding behaviors (functional and non-functional properties)._  <<BM22>>
 endif::[]
 
-{emptysec}
+==== (S.2.1) Editor
+
+===== Functional Requirements
+
+. [[F211]] **Create and edit notes**: The Editor shall allow users to create, open, edit, save, and delete notes. (F211)
+. [[F212]] **Organize notes**: The Editor shall allow users to organize notes into folders and subfolders for better management. (F212)
+. [[F213]] **Format text**: The Editor shall support text formatting (bold, italics, underline) and list creation (bulleted and numbered). (F213)
+. [[F214]] **Insert text boxes**: The Editor shall allow users to create and move text boxes within the canvas. (F214)
+. [[F215]] **Insert shapes**: The Editor shall allow users to insert predefined geometric shapes (circle, rectangle, triangle, hexagon, octagon, star, arrow). (F215)
+. [[F216]] **Reposition and resize elements**: The Editor shall allow text boxes and shapes to be freely moved and resized within the canvas. (F216)
+. [[F217]] **Canvas navigation**: The Editor shall allow users to pan across the workspace in all directions. (F217)
+
+===== Non-Functional Requirements
+
+. [[NF211]] **Usability**: The Editor shall maintain a clean and intuitive layout to minimize user confusion. (NF211)
+. [[NF212]] **Responsiveness**: Canvas interactions (e.g., drag, resize, type) shall respond with less than 50ms latency. (NF212)
+. [[NF213]] **Accessibility**: The interface shall comply with WCAG accessibility standards, including keyboard-only navigation. (NF213)
+
+---
+
+==== (S.2.2) Shortcut Command Processor
+
+===== Functional Requirements
+
+. [[F221]] **Command handling**: The Shortcut Processor shall interpret keyboard commands to perform editor actions. (F221)
+. [[F222]] **Custom keybindings**: Users shall be able to define custom keybindings for supported actions. (F222)
+. [[F223]] **Conflict detection**: The system shall detect and alert users when keybinding conflicts occur. (F223)
+. [[F224]] **Macro support**: The system shall support macros for chaining multiple actions into a single shortcut. (F224)
+
+===== Non-Functional Requirements
+
+. [[NF221]] **Low latency**: Command input shall execute within 30ms of user keypress. (NF221)
+. [[NF222]] **Determinism**: Shortcut actions shall always yield consistent results. (NF222)
+. [[NF223]] **Discoverability**: The system shall provide a reference menu or help overlay for all available shortcuts. (NF223)
+
+---
+
+==== (S.2.3) Rendering Engine
+
+===== Functional Requirements
+
+. [[F231]] **Render text**: The Rendering Engine shall display formatted text accurately within text boxes. (F231)
+. [[F232]] **Render shapes**: The Rendering Engine shall render all supported geometric shapes with smooth scaling and edges. (F232)
+. [[F233]] **Layer management**: The Rendering Engine shall manage draw order for overlapping elements (text, shapes). (F233)
+. [[F234]] **Viewport control**: The Rendering Engine shall maintain a consistent visual experience while panning or zooming. (F234)
+. [[F235]] **Real-time updates**: Rendering updates shall occur seamlessly as the user types, moves, or resizes elements. (F235)
+
+===== Non-Functional Requirements
+
+. [[NF231]] **Performance**: Rendering shall maintain a minimum of 60 frames per second under typical workloads. (NF231)
+. [[NF232]] **Consistency**: Shapes and text shall retain consistent proportions and alignment across devices. (NF232)
+. [[NF233]] **Scalability**: Rendering shall handle up to 500 on-canvas elements without major performance degradation. (NF233)
+
+---
+
+==== (S.2.4) Document Management
+
+===== Functional Requirements
+
+. [[F241]] **File operations**: The system shall allow users to save, open, rename, and delete notes. (F241)
+. [[F242]] **Autosave**: The system shall autosave changes at regular intervals (≤60 seconds). (F242)
+. [[F243]] **Export/Import**: The system shall support exporting notes to standard formats (e.g., PDF, Markdown) and importing from compatible sources. (F243)
+. [[F244]] **Version history**: The system shall maintain previous versions of a note for rollback. (F244)
+. [[F245]] **Folder synchronization**: The system shall maintain logical consistency between folder hierarchies and saved note structures. (F245)
+
+===== Non-Functional Requirements
+
+. [[NF241]] **Data integrity**: Files shall be protected from corruption or loss during save operations. (NF241)
+. [[NF242]] **Storage efficiency**: Notes shall use minimal disk space through compression and text-based storage. (NF242)
+. [[NF243]] **Compatibility**: Exported documents shall remain visually consistent across standard PDF viewers. (NF243)
+
+---
+
+==== (S.2.5) Configuration and Customization
+
+===== Functional Requirements
+
+. [[F251]] **User preferences**: The system shall store preferences such as theme, layout, and keybindings. (F251)
+. [[F252]] **Profile management**: The system shall allow users to reset preferences or restore defaults. (F252)
+. [[F253]] **Session persistence**: The system shall remember the last open note and workspace view between sessions. (F253)
+
+===== Non-Functional Requirements
+
+. [[NF251]] **Security**: Preference data shall be stored locally and securely. (NF251)
+. [[NF252]] **Consistency**: Preferences shall be consistently applied across all sessions. (NF252)
+
+---
+
+==== (S.2.6) Collaboration and Export
+
+===== Functional Requirements
+
+. [[F261]] **Sharing**: The system shall allow users to share notes by exporting and sending files. (F261)
+. [[F262]] **Clipboard operations**: The system shall support standard clipboard functions (copy, cut, paste) for both text and shapes. (F262)
+. [[F263]] **Integration hooks**: The system shall provide a basic API for external extensions (e.g., plugins or synchronization services). (F263)
+
+===== Non-Functional Requirements
+
+. [[NF261]] **Fidelity**: Exported and shared notes shall retain accurate formatting and positioning. (NF261)
+. [[NF262]] **Portability**: Shared files shall be viewable on other supported devices without requiring modification. (NF262)
