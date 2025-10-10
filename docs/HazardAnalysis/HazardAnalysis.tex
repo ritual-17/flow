@@ -96,7 +96,7 @@ The text-editing interface, diagram rendering engine, and file storage system al
 make up the core components of \progname. This analysis will focus on both 
 software related hazards, such as crashes, performance issues, and 
 synchronization errors, as well as user-related risks, including data loss, 
-security vulnerabilities, and non-intuitive user interactions.
+security vulnerabilities, and unintuitive user interactions.
 \\
 \\
 Losses that may be incurred due as a result of these hazards include:
@@ -104,7 +104,7 @@ Losses that may be incurred due as a result of these hazards include:
     \item \textbf{Loss of user data} from failed saves, corruption, or unexpected
     application closures
     \item \textbf{Loss of productivity} due to lag, unresponsiveness or
-    non-intuitive interface or command design
+    unintuitive interface or command design
     \item \textbf{Loss of reliability and maintainability} if the application 
     is developed with technical dept or poor coding practices
     \item \textbf{Loss of user trust} due to repeated bugs, confusing features,
@@ -252,15 +252,70 @@ limit exceeded & Have Unit tests performance tests for frame time; Use worker
 threads for rendering; Set rendering performance limits (e.g. < 100ms per 
 update); Implement partial rendering (e.g. rendering visual portion first); 
 Potentially user to pin diagram positions & SR-RENDER-1 \\
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
-Date1 & Name(s) & Description of changes & ... & ... & ... & ...\\
+Command parsing & Parser misinterprets or fails to parse user input & 
+Unexpected or no diagram output, lost note, user confusion/frustration & 
+Unintuitive grammar, improper user input, unhandled exceptions & Parser 
+exception and logs, failed rendering, regression tests failing on inputs & 
+Define simple, well-documented grammar and implement intuitive parser with
+proper error message handling; Provide immediate syntax validation (e.g. 
+highlight errors); Fuzz unit tests to handle any and all errors; On parse 
+error, preserve raw text and do not delete it & SR-PARSE-1 \\
+Load/Open note & Note fails to load, note partially loads, note produces 
+wrong rendering & User cannot access previous work, user confusion/frustration,
+loss of user trust & Incompatible/invalid file format, deserialization 
+error & Load exceptions, visual regression tests, user reports & File format 
+version tag with schema validation during load; Save raw text of error log,
+tests for loading after saving & SR-LOAD-1 \\
+Save note & File not saved, save interrupted & File missing or corrupted, 
+Loss of notes or diagrams, decrease in user productivity, loss of user trust 
+in application & Power loss mid-save, app crash during write, full file 
+storage & Exceptions logged, file hash value (or checksum) mismatch, 
+unexpected file size, user reported missing file & Implement autosaving or 
+atomic saving (save to temp file and rename it); Verify with checksumes on 
+save and load; Inform user of insufficient disk space before save; Unit 
+tests for save routines & SR-SAVE-1 \\
+Keybinding Commands & Key conflicts, lost keystrokes (commands done
+unexpectedly) & Inability to create note, user frustration, potential data
+loss from unintended commands done (e.g. Alt+F4) & Global shortcut 
+overlapping (e.g. Ctrl+C natively means copy), race conditions in input 
+handling & Unit tests for commands, integration tests under different 
+environments, user reports & Allow for remappable keybinding (with safe
+default set); Expose preview of keybinds; Provide undo command/option &
+SR-INPUT-1 \\
+Interacting with shapes/diagrams (Edit/Add Text/Move/Delete) & Edit commands 
+behave incorrectly, loss of shape selection, text addition is 
+inconsistent/undesired & Wrong edits made, user frustration, loss of user trust,
+possible data corruption if partial edits made or deletes of inccorect item & 
+Text and visual model not in sync, race conditions in input handling, 
+undo stack not properly managed & Unit tests for edit commands and sequences
+of commands, user reports & Implement robust undo/redo stack; Integration 
+testing simulating keyboard macros; Sync checks for text and visual model;
+Provide visual feedback on selection and edits; & SR-INTERACT-1 \\
+Custom Geometry creation (user-defined shapes) & Custom shapes fail to render, 
+Shapes cannot be reusedd reliably & User time wasted recreating shapes, loss of
+user trust in customization features & Improper serialization/deserialization,
+ambiguous grammar for custom shapes, render limitations & Save/load of custom
+shapes fails, unit tests for custom shape rendering and serialization, user 
+reports & Define clear grammar for custom shapes; Test creating, saving,
+loading, and rendering custom shapes; Initially limit complexity of custom
+shapes (e.g. no nested shapes); & SR-CUSTOM-1 \\
+Save custom geometry as reusable commands/macros & Macro/command fails to save,
+Macro/command working incorrectly & Loss of user productivity, Macro/command
+produces wrong output, parse crashes, user frustration & Poor macro 
+serialization, grammar/syntax collisions, improper parsing & Macro creation 
+errors logged, regression tests for macros application, user reports & Isolate
+macro syntax from normal command syntax; Provide clear error messages on
+macro creation; Unit tests for macro creation, saving, loading, and execution;
+& SR-MACRO-1 \\
+Overall performance/responsiveness vs alternatives & Easier and more intuitive 
+to take notes on other apps, app feels slower than existing tools (e.g. laggy
+rendering) & Users revert to other tools, poor doption of app & Inefficient
+algorithms, full rendering on every change, blocking main thread & User 
+performance testing, user feedback, collecting performance metrics & 
+Incrementally render (diagram first, then text); If document becomes large, 
+only render visible portion; Use worker threads for rendering; Performance 
+budgets for each operation (e.g. <100ms for rendering update); Measure 
+against alternative apps in user tests & SR-PERF-1 \\
 \bottomrule
 \end{tabularx}
 \end{table}
