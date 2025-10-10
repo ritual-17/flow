@@ -6,7 +6,7 @@ TIP: _Overall structure expressed by the list of major software and, if applicab
 endif::[]
 
 
-The *Flow* system relies on the following software components:
+The {project-title} system relies on the following software components:
 
 * **Frontend User Interface** – Provides an interactive canvas-based workspace where users can create, edit, and navigate notes. Supports text formatting, folder organization, and insertion of geometric shapes.
 
