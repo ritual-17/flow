@@ -5,19 +5,4 @@ ifdef::env-draft[]
 TIP: _Overall structure expressed by the list of major software and, if applicable, hardware parts._  <<BM22>>
 endif::[]
 
-
-The {project-title} system relies on the following software components:
-
-* **Frontend User Interface** – Provides an interactive canvas-based workspace where users can create, edit, and navigate notes. Supports text formatting, folder organization, and insertion of geometric shapes.
-
-* **Canvas Manager** – Handles spatial organization and user interaction for note elements (text boxes and shapes). Supports panning, positioning, resizing, and movement of objects on the canvas.
-
-* **Rendering Engine** – Renders text and geometric shapes in real time, maintaining visual accuracy during edits, movements, and scaling. Ensures smooth visual updates and consistent element alignment.
-
-* **Shortcut Command Processor** – Interprets keyboard inputs to trigger editing, navigation, and formatting actions. Supports customizable keybindings, macros, and command conflict detection.
-
-* **Data Management and Storage** – Manages creation, retrieval, autosave, and deletion of notes. Maintains version history and folder hierarchies while ensuring data integrity.
-
-* **Configuration and Customization** – Stores and applies user preferences such as layout, theme, and shortcut mappings. Provides mechanisms to reset or restore default settings.
-
-* **Backend Logic and API Layer** – Handles local persistence and, where applicable, provides an interface for synchronization or external service integration. Ensures consistent behavior across user sessions.
+{emptysec}
