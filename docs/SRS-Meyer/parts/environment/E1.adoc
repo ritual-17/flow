@@ -9,7 +9,7 @@ endif::[]
 [[Vim]]
 *	*Vim*: Vim is a highly configurable, keyboard-driven text editor built to make creating and changing any kind of text very efficient. [VI25]
 
-[[UIUX]]
+[#UI/UX]]
 *	*UI/UX*: User Interface/User Experience. 
 
 [[PoC]] 
@@ -19,7 +19,7 @@ endif::[]
 [[UML]]
 *	*UML*: Unified Modeling Language. Modeling language used for diagrams to standardize modeling and minimize confusion from differences in models. 
 
-[[VV]]
+[#V&V]
 *   *V&V*: Verification and validation. Testing that will be done to check if the project fulfills the requiremnts. 
 
 [[SRS]]
