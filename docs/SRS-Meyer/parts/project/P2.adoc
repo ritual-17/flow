@@ -13,8 +13,8 @@ endif::[]
   - CPU: 1.6 GHz or faster, 2-core processor OR Apple Silicon (M1/M2/M3)
   - GPU: DirectX 9 or later WITH WDDM 2.0 DRIVER
   - Memory (RAM):
-      - 4 GB RAM (64-bit)
-      - 2 GB RAM (32-bit)
+    - 4 GB RAM (64-bit)
+    - 2 GB RAM (32-bit)
   - Storage: At least 5 GB of available disk space
 
 ==== Hardware Binding Justification
