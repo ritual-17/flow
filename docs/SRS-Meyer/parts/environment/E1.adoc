@@ -6,4 +6,15 @@ TIP: _Clear and precise definitions of all the vocabulary specific to the applic
 endif::[]
 
 
-{emptysec}
+[[Vim]]
+*	*Vim*: Vim is a highly configurable, keyboard-driven text editor built to make creating and changing any kind of text very efficient. [VI25]
+
+[[UIUX]]
+*	*UI/UX*: User Interface/User Experience. 
+
+[[PoC]] 
+[[POC]]
+*   *PoC*: Proof of concept. Used to show feasibility of the project. 
+
+[[UML]]
+*	*UML*: Unified Modeling Language. Modeling language used for diagrams to standardize modeling and minimize confusion from differences in models. 

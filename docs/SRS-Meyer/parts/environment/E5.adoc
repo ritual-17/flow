@@ -6,4 +6,4 @@ TIP: _Elements and properties of the environment that the system will affect. It
 endif::[]
 
 
-{emptysec}
+*	*Requires storage space from computer (Lower computer storage space).*: The program will require space on the computer drive to both store the program and any notes that are taken. If the computer does not have the required space than the program may not work properly. 
