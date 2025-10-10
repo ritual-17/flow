@@ -54,7 +54,7 @@ endif::[]
 
 ===== Non-Functional Requirements
 
-. [[NF231]] **Performance**: Rendering shall maintain a minimum of 60 frames per second under typical workloads. (NF231)
+. [[NF231]] **Performance**: Rendering shall maintain a minimum of 60 frames per second for at least 95% of the active usage time under typical workloads. (NF231)
 . [[NF232]] **Consistency**: Shapes and text shall retain consistent proportions and alignment across devices. (NF232)
 . [[NF233]] **Scalability**: Rendering shall handle up to 500 on-canvas elements without major performance degradation. (NF233)
 
