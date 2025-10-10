@@ -1,36 +1,37 @@
 [#p2,reftext=P.2]
-=== (P.2) Imposed technical choices
+=== (P.2) Imposed Technical Choices
 
 ifdef::env-draft[]
-TIP: _Any a priori choices binding the project to specific tools, hardware, languages or other technical parameters. Not all technical choices in projects derive from a pure technical analysis; some result from company policies. While some project members may dislike non-strictly-technical decisions, they are a fact of project life and must be documented, in particular for the benefit of one of the quality factors for requirements: "requirements must be justified"._  <<BM22>>
+TIP: _Any a priori choices binding the project to specific tools, hardware, languages or other technical parameters. Not all technical choices in projects derive from a pure technical analysis; some result from company policies. While some project members may dislike non-strictly-technical decisions, they are a fact of project life and must be documented, in particular for the benefit of one of the quality factors for requirements: "requirements must be justified"._ <<BM22>>
 endif::[]
 
-{emptysec}
-* Hardware Binding Technical Choices
-    **Must be used on a laptop, desktop, and/or personal computer
-    **Must mainly run using a keyboard with minimal to zero mouse/trackpad involvement
-    **Must be usable without requiring a dGPU
-    **Minimal System Requirements:
-        ***CPU:
-        ***GPU:
-        ***Memory:
-        ***Storage:.
+==== Hardware Binding Technical Choices
 
-* Hardware Binding Justification:
-    **The application must be easily accessible. Having {project-title} run on a variety of devices aligns with the company's goal of having an easily accessible note-taking application for all students in technical disciplines.
-    Having lower system requirments ensures that the application reaches a wider group of students who usually cannot afford expensive setups and/or devices.
-    **The binding constraint of having mostly, if not only, keyboard involvement stems from the project's goal of developing a note-taking application which allows students to easily take notes and construct diagrams in class seamlessly using a keyboard.
+- Must be used on a laptop, desktop, and/or personal computer
+- Must mainly run using a keyboard with minimal to zero mouse/trackpad involvement
+- Minimal System Requirements:
+  - CPU: 1.6 GHz or faster, 2-core processor OR Apple Silicon (M1/M2/M3)
+  - GPU: DirectX 9 or later WITH WDDM 2.0 DRIVER
+  - Memory (RAM):
+      - 4 GB RAM (64-bit)
+      - 2 GB RAM (32-bit)
+  - Storage: At least 5 GB of available disk space
 
+==== Hardware Binding Justification
 
-* Software Binding Technical Choices
-    **Must be a standalone application
-    **Must not be an extension to a pre-existing note-taking application
-    **Must be usable on IOS, Windows, and Linux-operated devices
-    **Must be written in ___________
+- The application must be easily accessible. Having {project-title} run on a variety of devices aligns with the company's goal of having an easily accessible note-taking application for all students in technical disciplines.
+- Having lower system requirements ensures that the application reaches a wider group of students who usually cannot afford expensive setups and/or devices.
+- The binding constraint of having mostly, if not only, keyboard involvement stems from the project's goal of developing a note-taking application which allows students to easily take notes and construct diagrams in class seamlessly using a keyboard.
 
-*Software Binding Justification:
-    **Having a standalone application and not an extension is an imposed technical choice as it contributes to the capstone's requirement of meeting a set complexity level.
-    This technical choice also aligns with the group's goal of having more freedom in the software's UI and keybindings. Being an extension restricts the available bindings
-    accessible to our program.
-    **Having the software run on multiple operating systems aligns with the company's goal of reaching a wider audience of students and making the application more accessible.
-    **The coding language technical choice stems from how comfortable each member of this team is with the language
+==== Software Binding Technical Choices
+
+- Must be a standalone application
+- Must not be an extension to a pre-existing note-taking application
+- Must be usable on iOS, Windows, and Linux-operated devices
+
+==== Software Binding Justification
+
+- Having a standalone application and not an extension is an imposed technical choice as it contributes to the capstone's requirement of meeting a set complexity level.
+- This technical choice also aligns with the group's goal of having more freedom in the software's UI and keybindings. Being an extension restricts the available bindings accessible to our program.
+- Having the software run on multiple operating systems aligns with the company's goal of reaching a wider audience of students and making the application more accessible.
+- The coding language technical choice stems from how comfortable each member of this team is with the language.
