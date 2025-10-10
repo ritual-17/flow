@@ -18,3 +18,9 @@ endif::[]
 
 [[UML]]
 *	*UML*: Unified Modeling Language. Modeling language used for diagrams to standardize modeling and minimize confusion from differences in models. 
+
+[[VV]]
+*   *V&V*: Verification and validation. Testing that will be done to check if the project fulfills the requiremnts. 
+
+[[SRS]]
+*   *SRS* Software Requirements Specification. Document that contains requirements that will be used for the develoment of the project.
