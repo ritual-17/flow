@@ -5,4 +5,64 @@ ifdef::env-draft[]
 TIP: _Classification of the behaviors, interfaces and scenarios (<<s2>>, <<s3>> and <<s4>>) by their degree of criticality. It is useful in particular if during the course of the project various pressures force the team to drop certain functions._  <<BM22>>
 endif::[]
 
-{emptysec}
+==== (S.5.1) Functional Requirements Prioritization
+
+|===
+| Requirement ID | Description | Priority | Rationale
+
+| F211 | Create, open, edit, and delete notes | **High** | Fundamental to all system operations; without it, the app cannot fulfill its main purpose.  
+| F212 | Organize notes into folders and subfolders | **High** | Core for content management and navigation.  
+| F213 | Insert text boxes and edit content | **High** | Enables primary user interaction for note-taking.  
+| F214 | Insert predefined geometric shapes (circle, rectangle, etc.) | **High** | Core to diagramming capability and differentiates the app from plain text editors.  
+| F215 | Move, resize, and position text boxes or shapes | **High** | Essential for flexible diagram creation.  
+| F216 | Pan and zoom canvas | **Medium** | Important for large diagrams but not critical to minimal function.  
+| F217 | Save and load notes from local storage | **High** | Data persistence and continuity.  
+| F218 | Export notes (PDF, PNG, Markdown) | **Medium** | Important for sharing, but not needed for MVP.  
+| F219 | Undo/redo editing actions | **Medium** | Improves usability; can be implemented incrementally.  
+| F220 | Optional: sync or backup to cloud | **Low** | Value-add feature, non-critical for core offline operation.  
+|===
+
+==== (S.5.2) Non-Functional Requirements Prioritization
+
+|===
+| Requirement ID | Description | Priority | Rationale
+
+| NF211 | Low-latency input and rendering (≤30ms response) | **High** | Critical for responsiveness and user satisfaction.  
+| NF212 | Local data persistence and autosave | **High** | Prevents data loss; essential for reliability.  
+| NF213 | Cross-platform support (Windows/macOS/Linux) | **Medium** | Important for accessibility, can be phased after MVP.  
+| NF214 | Accessible keyboard shortcuts and discoverable command palette | **High** | Core to product identity and usability.  
+| NF215 | File integrity during save/export (atomic operations) | **High** | Ensures stability and prevents corruption.  
+| NF216 | Security of local data (no background network traffic) | **Medium** | Supports user privacy, non-blocking for MVP.  
+| NF217 | Visual consistency and intuitive UI layout | **Medium** | Improves user experience, can evolve iteratively.  
+| NF218 | Performance at scale (500+ elements) | **Low** | Optimization target for later releases.  
+|===
+
+==== (S.5.3) Interface and Scenario Prioritization
+
+|===
+| Interface / Scenario | Priority | Rationale
+
+| User interface for note editing (canvas, text boxes, shapes) | **High** | Central to all use cases.  
+| File I/O interface (open/save/export) | **High** | Necessary for persistence.  
+| Keyboard command interface | **High** | Defining feature of {project-title}; critical for workflow efficiency.  
+| Shape palette and geometry insertion interface | **Medium** | Adds value but not blocking to MVP.  
+| Optional sign-in/sync interface | **Low** | Useful enhancement but out of scope for current build.  
+|===
+
+==== (S.5.4) Prioritization Summary
+
+* **High Priority (Core MVP)**  
+  * Text and diagram creation/editing (F211–F215, NF211–NF214)  
+  * Local save/load and autosave (F217, NF212, NF215)  
+  * Keyboard command interface and discoverability  
+
+* **Medium Priority (Enhancement)**  
+  * Canvas navigation and export features (F216, F218)  
+  * Cross-platform optimizations and UI refinement (NF213, NF217)
+
+* **Low Priority (Future Work)**  
+  * Cloud sync, user profiles (F220)  
+  * Large document optimization (NF218)  
+  * Extended collaboration or plugin system
+
+This prioritization ensures that initial development delivers a **fully functional, locally stored, keyboard-driven note and diagram editor**, while leaving performance tuning, export polish, and optional connectivity to later iterations.
