@@ -5,5 +5,14 @@ ifdef::env-draft[]
 TIP: _High-level view of the project: organizational context and reason for building a system. It explains why the project is needed, recalls the business context, and presents the general business objectives._  <<BM22>>
 endif::[]
 
-{emptysec}
+{project-title} is designed to address gaps in existing note-taking systems,
+which lack efficient methods for integrating text and diagrams through a
+unified keyboard-driven workflow. Current solutions impose trade-offs in speed,
+flexibility, and workflow continuity, as explored in <<G.2>>.
+
+The goal of {project-title} is to create an intuitive system that allows for
+keyboard-driven creation and editing of notes involving text and diagrams.
+Although there is an expectation that there will be a learning curve to become
+proficient with the system, the intended benefit is that the user will be able
+to create and edit notes more quickly than with existing systems.
 
