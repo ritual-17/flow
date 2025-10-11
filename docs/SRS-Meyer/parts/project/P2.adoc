@@ -17,9 +17,12 @@ endif::[]
 
 ==== Hardware Binding Justification
 
-- The application must be easily accessible. Having {project-title} run on a variety of devices aligns with the company's goal of having an easily accessible note-taking application for all students in technical disciplines.
-- Having lower system requirements ensures that the application reaches a wider group of students who usually cannot afford expensive setups and/or devices.
-- The binding constraint of having mostly, if not only, keyboard involvement stems from the project's goal of developing a note-taking application which allows students to easily take notes and construct diagrams in class seamlessly using a keyboard.
+- The application must be easily accessible. Having {project-title} run on a variety of devices aligns with the company's 
+goal of having an easily accessible note-taking application for all students in technical disciplines.
+- Having lower system requirements ensures that the application reaches a wider group of students who usually cannot 
+afford expensive setups and/or devices.
+- The binding constraint of having mostly, if not only, keyboard involvement stems from the project's goal of developing
+a note-taking application which allows students to easily take notes and construct diagrams in class seamlessly using a keyboard.
 
 ==== Software Binding Technical Choices
 
@@ -29,7 +32,9 @@ endif::[]
 
 ==== Software Binding Justification
 
-- Having a standalone application and not an extension is an imposed technical choice as it contributes to the capstone's requirement of meeting a set complexity level.
-- This technical choice also aligns with the group's goal of having more freedom in the software's UI and keybindings. Being an extension restricts the available bindings accessible to our program.
-- Having the software run on multiple operating systems aligns with the company's goal of reaching a wider audience of students and making the application more accessible.
-- The coding language technical choice stems from how comfortable each member of this team is with the language.
+- Having a standalone application and not an extension is an imposed technical choice as it contributes to the
+capstone's requirement of meeting a set complexity level.
+- This technical choice also aligns with the group's goal of having more freedom in the software's 
+UI and keybindings. Being an extension restricts the available bindings accessible to our program.
+- Having the software run on multiple operating systems aligns with the company's goal of reaching
+a wider audience of students and making the application more accessible.
