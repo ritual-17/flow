@@ -4,4 +4,4 @@ Author 1 <a1@mcmaster.ca>; Author 2 <a2@mcmaster.ca>; Author 3 <a3@mcmaster.ca>
 :course-term: Fall
 :revnumber: 1
 :milestone: 4
-:env-draft: // Comment this variable to disable draft mode
+// :env-draft: // Comment this variable to disable draft mode
