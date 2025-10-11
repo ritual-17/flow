@@ -1,7 +1,5 @@
 == (P) Project
 
-include::control.adoc[]
-
 include::P1.adoc[]
 
 include::P2.adoc[]
