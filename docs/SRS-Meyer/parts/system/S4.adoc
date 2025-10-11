@@ -28,3 +28,8 @@ Together, these components ensure that user inputs are processed efficiently, do
 
 The following figure illustrates the high-level architecture of {project-title}, showing major subsystems and data/control flow.
 
+image::models/S.4.png[width=80%, align="center", title=" Activity diagram for {project-title} user interaction flow"]
+
+.Activity Diagram for {project-title} User Interaction Flow
+[.caption]
+
