@@ -5,4 +5,8 @@ ifdef::env-draft[]
 TIP: _Obligations and limits imposed on the project and system by the environment. This chapter defines non-negotiable restrictions coming from the environment (business rules, physical laws, engineering decisions), which the development will have to take into account._  <<BM22>>
 endif::[]
 
-{emptysec}
+*	*Must be compatible with at least Windows/MacOS/Linux.*: Windows/Mac/Linux are the main operating systems used by computers and correspondingly are the systems that the program must be able to run on. Priority will be given to the operating system that is the most popular, Windows then MacOS then Linux.
+
+*	*Must not need unauthorized modifications to data and other systems on device.*: Data and systems may require authorization to view or modify. To prevent errors or distrust in the program it is best to not modify files for other programs. 
+
+*	*Must not break any laws (Copyrights, Digital security, etc).*: As software, this program needs to follow all laws and regulations relating to laws. These will typically be Copyright/Licensing laws and Digital Security laws. This means that actions such as collecting personal information or using other code must be checked for following the regulation for where we intend to distribute this software. 
