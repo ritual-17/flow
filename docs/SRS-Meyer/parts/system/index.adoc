@@ -11,3 +11,5 @@ include::S4.adoc[]
 include::S5.adoc[]
 
 include::S6.adoc[]
+
+include::S7.adoc[]

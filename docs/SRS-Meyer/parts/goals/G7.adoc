@@ -5,4 +5,62 @@ ifdef::env-draft[]
 TIP: _Groups of people who can affect the project or be affected by it, and other places to consider for information about the project and system. It lists stakeholders and other requirements sources. It should define stakeholders as categories of people, not individuals, even if such individuals are known at the time of writing. The main goal of chapter <<g7>> is to avoid forgetting any category of people whose input is relevant to the project. It also lists documents and other information that the project, aside from soliciting input from stakeholders, can consult for requirements information._  <<BM22>>
 endif::[]
 
-{emptysec}
+Broadly, the stakeholders for this project will all fall into a group of more
+technically savvy individuals who are likely comfortable using keyboard
+shortcuts in other familiar software programs. The target users should be able
+to memorize a combination of shortcuts and commands to align with the keyboard
+based usage.
+
+* People who use keyboard based workflows and prefer not to use their
+mouse to take notes that involve simple diagrams.
+* People who do not have access to a drawing tablet, but would like to take
+digital notes involving diagrams in an efficient way.
+* People who often take notes on a computer and see value in learning a
+new system to improve their note taking efficiency.
+
+These stakeholders may include students, software engineers, technical writers,
+and other professionals who frequently take notes that involve both text and
+diagrams. These stakeholders are the direct users of the system and
+characterized by the personas of <<john>> and <<alice>> below.
+
+==== Direct Stakeholders
+
+[#john,reftext=John]
+
+John (Direct User):: John is a second year computer science student. He is
+familar with text editors and IDEs, as well as the the concept of keyboard
+shortcuts. He currently uses Google Docs on his computer to take notes during
+lectures. Recently his classes have involved more diagrams and visual elements,
+which he finds difficult to create in Google Docs. He is looking for a more
+efficient way to take notes that include both text and diagrams, ideally using
+his existing computer as he cannot afford to buy a new tablet device. He has
+configured his IDE with custom keyboard shortcuts and memorized preset
+shortcuts to speed up his coding. He would be open to learning a new system
+with similar functionality in a note taking application.
+
+[#alice,reftext=Alice]
+
+Alice (Direct User):: Alice is a senior software engineer. She often works on
+complex projects that involve multiple components that are documented with
+diagrams. She currently uses <<Vim>> and diagram description languages to create
+and manage her documentation notes. However, she finds it cumbersome to
+constantly rerender and then preview documents with her mouse in another
+window. She finds that it breaks from her preferred keyboard-driven workflow.
+She is extremely comfortable with modal editing and keyboard shortcuts, and
+would be willing to learn a new system if it could improve her efficiency and
+align with her existing workflow.
+
+
+==== Indirect Stakeholders
+- *Colleagues of direct users* - Colleagues of direct users may be affected by
+  the system as they may need to collaborate on notes created by direct users
+  or share notes with direct users.
+
+==== Other Requirements Sources
+- *Existing note taking applications* - Existing note taking applications can
+  provide insights into the features and functionalities that users expect from
+  a note taking system.
+- *User feedback and reviews* - User feedback and reviews of existing note
+  taking applications can provide insights into the strengths and weaknesses of
+  these applications.
+
