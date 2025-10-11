@@ -2,10 +2,10 @@
 
 [cols="^1,^2,^2,^2,^2"]
 |===
-.2+| *Version* 2+| *Delivery* 2+| *Feedback*
-| _Deadline_ | _Delivered_ | _Received_ | _Integrated_ 
+.2+| *Version* 2+| *Delivery* 2+| *Info*
+| _Deadline_ | _Delivered_ | Developers | Change
 
-| **V1** | | | |
+| **V1** | Oct 10, 2025 | Oct 10, 2025 | Hussain, Oliver, Jeff, Kevin, Ethan | Initial release
 | **V2** | | | |
 | **V3** | | | |
 |===
