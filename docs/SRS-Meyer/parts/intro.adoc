@@ -1,5 +1,7 @@
 == Introduction
-We have chosen the Meyer template for our Software Requirements Specification document. While our document uses the provided template for the most part, the follow changes were made:
+We have chosen the Meyer template for our Software Requirements Specification
+document. While our document follows the provided template for the most part, the
+following changes were made:
 
 * Added this Introduction section.
 * Removed individual section control info. We removed these because we felt it
