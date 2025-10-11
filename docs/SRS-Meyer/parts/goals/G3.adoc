@@ -10,14 +10,14 @@ There are two main expected benefits that will be delivered by {project-title}.
 The first is that the system will provide a new interface for creating multimedia
 (i.e. text and diagrams) notes using only a keyboard. This will include both
 the creation of note files from the user interface perspective and the content
-in a note. This benefits the user as it provides a keyboard only interface for
+in a note. This benefits the user as it provides a keyboard-only interface for
 creating and managing multimedia notes, which does not currently exist for this
 type of system.
 
 By extension of the first, the second expected benefit is to provide the user a
 potential boost to their note taking speed due to the keyboard-driven nature of
 the system and the support for shortcuts. This assumes that at full
-proficiency, a user can expect to be quicker taking simple notes with
+proficiency, a user can expect to be quicker at taking simple notes with
 {project-title} than with other existing solutions outlined in <<G.1>>. For our
 purposes, proficiency can be defined as completion of the user manual and 10+
 hours of usage. An example of a simple note can be described as a finite state
