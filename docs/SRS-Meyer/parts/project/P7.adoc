@@ -5,4 +5,13 @@ ifdef::env-draft[]
 TIP: _Initially, description of what the requirements process will be; later, report on its steps. It starts out as a plan for conducting the requirements elicitation process, but is meant to be updated as part of that process so that it includes the key lessons of elicitation._  <<BM22>>
 endif::[]
 
-{emptysec}
+**Requirements Process**
+The requirements elicitation process was conducted in a simplified and collaborative manner, reflecting the project's scope and resources. The team collectively engaged in discussions to identify and document the essential features, goals, and requirements for the project. 
+
+The process involved the following steps:
+* **Brainstorming Sessions**: Initial brainstorming sessions to gather the main ideas and requirements. Each member contributed their perspectives on what the project should achieve. Factors considered included key stakeholders, user needs, technical feasibility, and project risks.
+* **Informal Discussions**: Ongoing informal discussions to refine and clarify the requirements. This included addressing any ambiguities and ensuring a shared understanding among team members. Finer details, including specific requirements and project scope were discussed and agreed upon.
+* **Documentation**: The requirements were documented in a collaborative manner, with team members contributing to the creation of this Software Requirements Specification (SRS) document. The document was reviewed and updated as needed to reflect any changes or new insights gained during the process.
+* **Feedback Integration**: Although formal stakeholder feedback was limited, the team acted as both developers and stakeholders, ensuring that the requirements aligned with the project's goals and constraints. Further feedback from peers and mentors will be sought in future iterations.
+
+For future iterations, a more structured elicitation process may be adopted, including user research, prototyping, and systematic requirements validation to ensure comprehensive coverage of user needs and project goals.
