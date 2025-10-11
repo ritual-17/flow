@@ -5,4 +5,4 @@ ifdef::env-draft[]
 TIP: _Properties of the environment that the system's operation must preserve, i.e., properties of the environment that operations of the system may assume to hold when they start, and must maintain._  <<BM22>>
 endif::[]
 
-{emptysec}
+*	*The system must preserve notes unless the user requests they be deleted.*: As notes are the primary goal of the system any notes created should stay open unless they are saved or the user decides that they can be deleted. 

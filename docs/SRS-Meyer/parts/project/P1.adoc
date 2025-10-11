@@ -1,8 +1,59 @@
 [#p1,reftext=P.1]
-=== (P.1) Roles and personnel
+=== (P.1) Roles and Personnel
 
 ifdef::env-draft[]
-TIP: _Main responsibilities in the project; required project staff and their needed qualifications. It defines the roles (as a human responsibility) involved in the project._  <<BM22>>
+TIP: _Main responsibilities in the project; required project staff and their needed qualifications. It defines the roles (as a human responsibility) involved in the project._ <<BM22>>
 endif::[]
 
-{emptysec}
+Aside from every member contributing as Software Developers / Software Engineering Students, each person is responsible for a team/admin role.
+
+==== Team Lead - Ethan
+
+*Qualifications*
+- Must have past leadership experience in a technical environment
+- Familiar with meeting tools (i.e., When2Meet, Google Calendar, Teams)
+- Experience with task delegation
+
+*Responsibilities*
+- Schedules meetings and events
+- Organizes tasks and deliverables
+
+==== Keynoter - Jeffrey
+
+*Qualifications*
+- Good organizational skills
+- Familiar with note-taking applications (i.e., Google Drive, OneNote, Notability)
+
+*Responsibilities*
+- Takes notes for meetings
+- Keeps track of information for later use
+
+==== Lead Reviewer - Chengze
+
+*Qualifications*
+- Excellent knowledge of coding languages
+- Experience with code reviews and GitHub
+
+*Responsibilities*
+- Default reviewer on GitHub if no other member is available
+- Ensures all PRs are reviewed properly
+
+==== Team Liaison - Hussain
+
+*Qualifications*
+- Good communication skills
+- Good organizational skills regarding emails and updates
+
+*Responsibilities*
+- Main communication point between the team and external parties
+- Primary point of contact for TAs and the Professor
+
+==== Meeting Chair - Kevin
+
+*Qualifications*
+- Good time management skills
+- Experience with leading technical meetings
+
+*Responsibilities*
+- Manages meeting topics and agenda
+- Ensures meetings stay on task and members are focused

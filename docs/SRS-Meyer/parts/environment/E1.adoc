@@ -5,5 +5,22 @@ ifdef::env-draft[]
 TIP: _Clear and precise definitions of all the vocabulary specific to the application domain, including technical terms, words from ordinary language used in a special meaning, and acronyms. It introduces the terminology of the project; not just of the environment in the strict sense, but of all its parts._  <<BM22>>
 endif::[]
 
+[[Vim]]
+*	*Vim*: Vim is a highly configurable, keyboard-driven text editor built to make creating and changing any kind of text very efficient. 
+<<VI25>>
 
-{emptysec}
+[#UI/UX]]
+*	*UI/UX*: User Interface/User Experience. 
+
+[[PoC]] 
+[[POC]]
+*   *PoC*: Proof of concept. Used to show feasibility of the project. 
+
+[[UML]]
+*	*UML*: Unified Modeling Language. Modeling language used for diagrams to standardize modeling and minimize confusion from differences in models. 
+
+[#V&V]
+*   *V&V*: Verification and validation. Testing that will be done to check if the project fulfills the requiremnts. 
+
+[[SRS]]
+*   *SRS* Software Requirements Specification. Document that contains requirements that will be used for the develoment of the project.

@@ -6,4 +6,41 @@ TIP: _Potential obstacles to meeting the schedule of <<p4>>, and measures for ad
 endif::[]
 
 
-{emptysec}
+Just like any other software project, the Flow project faces potential risks that could impact its schedule, performance, or overall success. Identifying these risks early and developing mitigation strategies is crucial to make sure the project stays on track. The following are some of the key risks and their corresponding mitigation strategies:
+
+[cols="1,1"]
+|===
+| **Risk** | **Mitigation Strategy**
+
+| **Technical Challenges**: As we work through complex features, we might encounter unforeseen technical difficulties and may find it hard to implement certain functionalities (such as integrating diagrams with text seamlessly). This could affect and extend Milestone 6 and/or Milestone 7 as seen in <<p4>> as these are the major development phases of the project. | **Prototyping and Research**: We will allocate time for prototyping and research in the early stages of development to explore potential technical challenges, such as the one mentioned, and their solutions. This will help us identify and address issues before they become major roadblocks.
+
+| **Team Coordination and Workload Balance**: With a team of multiple members, there is a risk of miscommunication or poor distribution of work, which could lead to delays or inconsistencies in the project. | **Regular Meetings and Clear Communication Channels**: Version control systems (e.g., GitHub) will be used to manage code contributions and track changes. Regular team meetings will be held to discuss progress, address any issues, and ensure everyone is aligned with the project goals.
+
+| **Time constraints**: Team members may have other commitments (e.g., academic, personal) that could limit their availability to work on the project, potentially leading to delays. | **Flexible Scheduling and Prioritization**: We will attempt to create a flexible schedule that leaves room for adjustments based on team members' availability. Prioritizing tasks and focusing on critical features (following the order of the tasks, as mentioned in <<p4>>) will help ensure that essential components are completed on time.
+
+| **Scope Creep**: There is a risk of adding new features or changing requirements during the development process, which could lead to delays and increased complexity. | **Follow Requirements Document**: When facilitating the development process, we will adhere to the requirements outlined in this document. Any changes or additions to the project scope will be carefully evaluated and approved by the team before being implemented.
+
+| **Project Quality Assurance**: There is a risk that the final product may not meet the desired quality standards (e.g. latency is higher than mentioned in <<NF211>>), leading to user dissatisfaction or the need for extensive rework. | **Testing and Feedback Loops**: We will implement a robust testing process, including unit tests, integration tests, and user acceptance testing. Regular feedback loops with potential users will help us identify and address issues early in the development process.
+
+|===
+
+By proactively identifying these risks and implementing the corresponding mitigation strategies, we aim to minimize potential disruptions and ensure the successful completion of the Flow project.
+
+**SWOT Analysis**
+[cols="1,1"]
+|===
+| **Strengths** | **Weaknesses**
+a|
+* Innovative solution to a common problem, which is the difficulty of integrating diagrams with text seamlessly. This unique feature can provide users a more efficient way to create and manage their documents.
+* Strong potential user base, as many students and professionals require tools for creating documents with integrated diagrams.
+a| 
+* Limited initial resources, as the project is being developed by a small team of students, who may also have other academic commitments, which could impact the project's timeline and quality.
+* Potential technical challenges in implementing the seamless integration of diagrams with text, which may require significant research and development effort.
+| **Opportunities** | **Threats**
+a|
+* Growing demand for productivity tools, as more people are working remotely and require efficient ways to create and manage their documents.
+* Potential for integration with other popular tools and platforms, which could enhance the functionality and reach of the Flow project.
+a|
+* Competition from established players (e.g., Draw.io, Lucidchart) in the diagramming and document creation space, which may have more resources and a larger user base.
+* Technical challenges that could delay the project timeline or impact the quality of the final product.
+|===

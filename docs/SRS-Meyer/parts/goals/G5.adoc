@@ -5,9 +5,52 @@ ifdef::env-draft[]
 TIP: _Fundamental usage paths through the system. It presents the main scenarios (use cases) that the system should cover. The scenarios chosen for appearing here, in the Goals book, should only be the **main usage patterns**, without details such as special and erroneous cases; they should be stated in user terms only, independently of the system's structure. Detailed usage scenarios, taking into account system details and special cases, will appear in the System book (<<s4>>)._  <<BM22>>
 endif::[]
 
-.High Level use cases diagram
-image::models/use_case.svg[scale=70%,align="center"]
+==== User creates a new note
 
-{emptysec}
+1. User opens the actions menu
+2. User selects new note action
+3. User inputs a name for the new note
+4. System creates a new note file in the current working directory of the user
+5. User receives new note confirmation and blank note is displayed
 
+==== User adds a text box
+1. User opens the insert menu
+2. User selects add text box action
+3. System adds a new text box to the note at the current cursor position
+4. User receives confirmation that text box has been added as it is now
+   viewable and editable
+
+==== User modifies a text box
+1. User selects a text box in the note
+2. User modifies the text content of the text box
+3. System updates the text box with the new content
+4. User views the updated text box content
+
+==== User adds a shape
+1. User opens the insert menu
+2. User selects shape option
+3. System adds a new shape to the note at the current cursor position
+4. User receives confirmation that shape has been added as it is now
+   viewable and editable
+
+==== User modifies a shape/group of shapes
+1. User selects a shape/group of shapes in the note
+2. User opens the edit menu
+3. User selects edit action (e.g. resize, recolor, move)
+4. System updates the selected shapes with the new properties
+5. User views the updated shapes
+
+==== User links two shapes in a diagram with an arrow
+1. User selects the first shape in the note
+2. User opens the insert menu
+3. User selects add arrow action
+4. User selects the second shape in the note
+5. System adds an arrow linking the two shapes
+6. User views the updated diagram with the new arrow
+
+==== User saves a note
+1. User opens the actions menu
+2. User selects save note action
+3. System saves the current state of the note to the file system
+4. User receives confirmation that the note has been saved
 
