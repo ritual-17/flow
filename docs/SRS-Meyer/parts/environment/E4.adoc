@@ -10,7 +10,7 @@ endif::[]
 
 *	*User understands basic computer I/O (Keyboard, mouse, screen).*: To properly intact with the program users would be expected to know how to use their keyboard and mouse to navigate the program. This would include keyboard shortcuts. 
 
-*	*User not needlessly interact with Files in the system.*: The Program will store taken note files on the computer.it is assumed that the user will not do changes to files that may cause issues when reading the files. 
+*	*User not needlessly interact with Files in the system.*: The Program will store taken note files on the computer. It is assumed that the user will not do changes to files that may cause issues when reading the files. 
 
 *	*Device being run on has proper libraries or user can install them when provided with redists.*: If our program uses other libraries, they need to install for it to work. If the user can install the program than it is assumed that the user can also install required libraires. These libraries need to be provided either as a list or as redistributable files. 
 
