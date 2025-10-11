@@ -3,6 +3,8 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{ltablex}
+\usepackage[paper=portrait,pagesize]{typearea}
 
 \hypersetup{
     colorlinks=true,       % false: boxed links; true: colored links
@@ -51,42 +53,290 @@ Date2 & Name(s) & Description of changes\\
 
 \pagenumbering{arabic}
 
-\wss{You are free to modify this template.}
+% \wss{You are free to modify this template.}
 
 \section{Introduction}
 
-\wss{You can include your definition of what a hazard is here.}
+% \wss{You can include your definition of what a hazard is here.}
+
+Analyzing the hazards associated with a system is an important step in
+developing a safe and reliable product. It helps identify and evaluate
+potential risks that could impact the safety or usability of the system. By
+conducting a hazard analysis before development, we can take proactive measures
+to mitigate these risks, and design preventative measures to ensure the system
+operates as intended.
+\\
+\\
+For our note-taking system (\progname), this analysis focuses on hazards that 
+may lead to data loss, perfomance issues, and security vulnerabilities. As 
+\progname aims to procide fast keyword-based editing with real-time diagram
+rendering, it introduces potential risks in different areas including rendering
+performance, data integrity, and user experience.
+\\
+\\
+The following sections of the document define the scope and objectives of the 
+hazard analysis, describe the system boundaries and main components of 
+\progname, and outline key assumptions that may influence saftey considerations.
+The core of the document presents a detailed Failure Mode and Effect Analysis
+(FMEA) table, which identifies potential hazards, their causes and effects.
+Finally, the document concludes with a summary of safety and security
+requirements, and provides a roadmap for implementing these requirements in
+future development phases.
 
 \section{Scope and Purpose of Hazard Analysis}
 
-\wss{You should say what \textbf{loss} could be incurred because of the
-hazards.}
+% \wss{You should say what \textbf{loss} could be incurred because of the hazards.}
+The purpose of this hazard analysis is to identify and evaluate the potential 
+risks that could impact the safety, security, and usability of \progname. 
+Conducting this analysis in the early stages of development allows for us to 
+anticipate possible failure points in the system and implement design strategies
+to prevent data loss, ensure stable performance, and maintain user confidence.
+\\
+\\
+The text-editing interface, diagram rendering engine, and file storage system all 
+make up the core components of \progname. This analysis will focus on both 
+software related hazards, such as crashes, performance issues, and 
+synchronization errors, as well as user-related risks, including data loss, 
+security vulnerabilities, and unintuitive user interactions.
+\\
+\\
+Losses that may be incurred due as a result of these hazards include:
+\begin{itemize}
+    \item \textbf{Loss of user data} from failed saves, corruption, or unexpected
+    application closures
+    \item \textbf{Loss of productivity} due to lag, unresponsiveness or
+    unintuitive interface or command design
+    \item \textbf{Loss of reliability and maintainability} if the application 
+    is developed with technical dept or poor coding practices
+    \item \textbf{Loss of user trust} due to repeated bugs, confusing features,
+    or inconsistent behavior
+    \item \textbf{Loss of security or privacy} if data is not properly protected
+    or stored securely
+\end{itemize}
+
+The hazard analysis focuses on factors in the software domain only. While
+hardware failures (e.g., device crashes, power loss), as well as operating
+system issues (e.g., file system corruption, OS crashes) can impact the
+performance and reliability of \progname, these are outside the scope of this
+analysis. \progname will be running in the user space and any potential
+problems occuring at the kernal level or below are will therefore not be 
+considered. The analysis will assume that the underlying hardware and OS
+are functioning correctly, and will focus on hazards that can be directly
+attributed to the design and implementation of \progname itself.
+
 
 \section{System Boundaries and Components}
 
-\wss{Dividing the system into components will help you brainstorm the hazards.
-You shouldn't do a full design of the components, just get a feel for the major
-ones.  For projects that involve hardware, the components will typically include
-each individual piece of hardware.  If your software will have a database, or an
-important library, these are also potential components.}
+% \wss{Dividing the system into components will help you brainstorm the hazards.
+% You shouldn't do a full design of the components, just get a feel for the major
+% ones.  For projects that involve hardware, the components will typically include
+% each individual piece of hardware.  If your software will have a database, or an
+% important library, these are also potential components.}
+\progname is a note-taking application that allows users to create, edit, and
+visualize text-based diagrams using only keyboard inputs. The boundaries of
+the system include all components directly related to the core functionality of
+the application, including taking user input, rendering diagrams, and file 
+management. The system boundary does not include external dependencies such as 
+the user's operating system, device hardware, or third-party file storage services 
+such as cloud storage providers.
+\\
+\\
+The main components of \progname include:
+\begin{enumerate}
+    \item \textbf{User Interface (UI) Layer}
+    \begin{itemize}
+        \item Handling user interactions, keyboard inputs, displaying updates
+        \item Showing live view of notes and diagrams
+        \item Providing feedback on actions (e.g., error messages)
+    \end{itemize}
+    \item \textbf{Command Processing Engine}
+    \begin{itemize}
+        \item Parsing and interpreting user commands
+        \item Managing application state based on user inputs
+        \item Sending structured actions to the rendering and storage layers
+    \end{itemize}
+    \item \textbf{Diagram Rendering Engine}
+    \begin{itemize}
+        \item Converting text-based diagram descriptions into visual formats
+        \item Handling shape layout, positioning, and connection to the rest of
+        the note content
+    \end{itemize}
+    \item \textbf{File Management and Storage Layer}
+    \begin{itemize}
+        \item Saving and loading notes and diagrams to/from disk
+        \item Managing file formats and data serialization
+        \item Ensuring data integrity during read/write operations
+    \end{itemize}\
+    \item \textbf{Error Handling and State Management Module}
+    \begin{itemize}
+        \item Detecting, logging, and managing errors across all components
+        \item Implementing recovery mechanisms and stability after crashes or
+        unexpected shutdowns
+    \end{itemize}
+    % \item \textbf{Configuration/Customization Module} %potential future 
+    % component
+    % \begin{itemize}
+    %     \item Storing and Managing user preferences and application settings
+    % \end{itemize}
+\end{enumerate}
+
+In addition to these core components, \progname may also depend on external
+libraries for specific functionalities, such as diagram rendering or parsing.
+To generate and display diagrams, the application may utilize a graphics 
+library to allow for efficient rendering and manipulation of visual elements.
+For parsing user commands, a parsing library may be employed to simplify the
+interpretation of complex inputs. State management libraries may also be used
+to help maintain application state and ensure consistency across different
+components.
+
 
 \section{Critical Assumptions}
 
-\wss{These assumptions that are made about the software or system.  You should
-minimize the number of assumptions that remove potential hazards.  For instance,
-you could assume a part will never fail, but it is generally better to include
-this potential failure mode.}
+% \wss{These assumptions that are made about the software or system.  You should
+% minimize the number of assumptions that remove potential hazards.  For instance,
+% you could assume a part will never fail, but it is generally better to include
+% this potential failure mode.}
+Certain key assumptions will be made regarding the user and operating environment
+during the development and use of \progname. These assumptions include:
+\\
+\\
+\begin{enumerate}
+    \item \textbf{User Competency:} It is assumed that users have a basic level
+    of computer literacy and is familiar with computer opertations such as using
+    a keyboard and mouse. Users are expected to follow reasonable usage patterns
+    (e.g. not shutting down the application abruptly or attempting to
+    manipulate internal files directly).
+    \item \textbf{File Access and Storage:} It is assumed that the file system
+    used for storing notes and diagrams is reliable and free from corruption.
+    Users are expected to have sufficient permissions to read/write files in
+    the designated storage locations.
+    \item \textbf{Operating Environment:} It is assumed that \progname will be
+    run on a supported operating system without unexpected interruptions such
+    as forced shutdowns, crashes, or power failures. The system is expected to
+    have adequate disk space and memory to run the application smoothly.
+    \item \textbf{Software Dependencies:} It is assumed that any third-party
+    libraries or frameworks used by \progname are stable, compatible, and
+    function as intended on the target operating systems. 
+\end{enumerate}
+
+% Make new landscape page for FMEA table
+\newpage
+\KOMAoptions{paper=landscape,DIV=12,pagesize}
+\recalctypearea
 
 \section{Failure Mode and Effect Analysis}
 
-\wss{Include your FMEA table here. This is the most important part of this document.}
-\wss{The safety requirements in the table do not have to have the prefix SR.
-The most important thing is to show traceability to your SRS. You might trace to
-requirements you have already written, or you might need to add new
-requirements.}
-\wss{If no safety requirement can be devised, other mitigation strategies can be
-entered in the table, including strategies involving providing additional
-documentation, and/or test cases.}
+% \wss{Include your FMEA table here. This is the most important part of this 
+% document.}
+% \wss{The safety requirements in the table do not have to have the prefix SR.
+% The most important thing is to show traceability to your SRS. You might trace 
+% to requirements you have already written, or you might need to add new
+% requirements.}
+% \wss{If no safety requirement can be devised, other mitigation strategies can 
+% be entered in the table, including strategies involving providing additional
+% documentation, and/or test cases.}
+\small
+\newcolumntype{A}{>{\hsize=.5\hsize}X}
+\newcolumntype{B}{>{\hsize=.8\hsize}X}
+\newcolumntype{C}{>{\hsize=1.4\hsize}X}
+\newcolumntype{D}{>{\hsize=.7\hsize}X}
+\begin{tabularx}{\textwidth}{A B B B B C A}
+\caption{Failure Mode and Effect Analysis (FMEA) for \progname}  \\
+\toprule
+\textbf{Design Function} & \textbf{Failure Modes} & \textbf{Effect of failure} &
+ \textbf{Causes for failure} & \textbf{Detection} & \textbf{Recommended actions} 
+ & \textbf{SR}\\
+\midrule
+
+\endfirsthead
+\caption{Failure Mode and Effect Analysis (FMEA) for \progname}  \\
+\toprule
+\textbf{Design Function} & \textbf{Failure Modes} & \textbf{Effect of failure} &
+ \textbf{Causes for failure} & \textbf{Detection} & \textbf{Recommended actions} 
+ & \textbf{SR}\\
+\midrule
+\endhead
+
+Diagram rendering and layout & Overlapping shapes, unreadable layout, slow 
+rendering & Reduced usability, user spending more time rearranging rather 
+than note taking & Poor algorithm layout, too large graphics & Creation shows
+long frame times, UI freezes, user complaints, perfomance test threshold time 
+limit exceeded & Have Unit tests performance tests for frame time; Use worker 
+threads for rendering; Set rendering performance limits (e.g. <100ms per 
+update); Implement partial rendering (e.g. rendering visual portion first); 
+Potentially user to pin diagram positions & (F232, NF231) \\ \midrule
+Command parsing & Parser misinterprets or fails to parse user input & 
+Unexpected or no diagram output, lost note, user confusion/frustration & 
+Unintuitive grammar, improper user input, unhandled exceptions & Parser 
+exception and logs, failed rendering, regression tests failing on inputs & 
+Define simple, well-documented grammar and implement intuitive parser with
+proper error message handling; Provide immediate syntax validation (e.g. 
+highlight errors); Fuzz unit tests to handle any and all errors; On parse 
+error, preserve raw text and do not delete it & (F221, NF221) \\ \midrule
+Load/Open note & Note fails to load, note partially loads, note produces 
+wrong rendering & User cannot access previous work, user confusion/frustration,
+loss of user trust & Incompatible or invalid file format, deserialization 
+error & Load exceptions, visual regression tests, user reports & File format 
+version tag with schema validation during load; Save raw text of error log,
+tests for loading after saving & (F241, F243, F244, NF241) \\ \midrule
+Save note & File not saved, save interrupted & File missing or corrupted, 
+Loss of notes or diagrams, decrease in user productivity, loss of user trust 
+in application & Power loss mid-save, app crash during write, full file 
+storage & Exceptions logged, file hash value (or checksum) mismatch, 
+unexpected file size, user reported missing file & Implement autosaving or 
+atomic saving (save to temp file and rename it); Verify with checksumes on 
+save and load; Inform user of insufficient disk space before save; Unit 
+tests for save routines & (F241, F243, F244, NF241) \\ \midrule
+Keybinding Commands & Key conflicts, lost keystrokes (commands done
+unexpectedly) & Inability to create note, user frustration, potential data
+loss from unintended commands done (e.g. Alt+F4) & Global shortcut 
+overlapping (e.g. Ctrl+C natively means copy), race conditions in input 
+handling & Unit tests for commands, integration tests under different 
+environments, user reports & Allow for remappable keybinding (with safe
+default set); Expose preview of keybinds; Provide undo command / option &
+(F222, NF223) \\ \midrule
+Interacting with shapes or diagrams (Add Text, Move, etc) & Edit commands 
+behave incorrectly, loss of shape selection, text addition is 
+inconsistent/undesired & Wrong edits made, user frustration, 
+possible data corruption if partial edits made or deletes of inccorect item & 
+Text and visual model not in sync, race conditions in input handling, 
+undo stack not properly managed & Unit tests for edit commands and sequences
+of commands, user reports & Implement robust undo/redo stack; Integration 
+testing simulating keyboard macros; Sync checks for text and visual model;
+Provide visual feedback on selection and edits; & (F216, NF212) \\ 
+\midrule
+Custom Geometry creation (user-defined shapes) & Custom shapes fail to render, 
+Shapes cannot be reusedd reliably & User time wasted recreating shapes, loss of
+user trust in customization features & Improper serialization or 
+deserialization, ambiguous grammar for custom shapes, render limitations & 
+Save or load of custom shapes fails, unit tests for custom shape rendering and 
+serialization, user reports & Define clear grammar for custom shapes; Test 
+creating, saving, loading, and rendering custom shapes; Initially limit 
+complexity of custom shapes (e.g. no nested shapes); & (F215) \\
+\midrule
+Save custom geometry as reusable commands & Command fails to save, Command 
+working incorrectly & Loss of user productivity, Command produces wrong output, 
+parse crashes, user frustration & Poor macro serialization, syntax collisions, 
+improper parsing & Macro creation errors logged, regression tests for macros, 
+user reports & Isolate macros syntax from normal command syntax; Provide clear
+error messages on macro creation; Unit tests for macro creation, saving, 
+loading, and execution; & (F251) \\ \midrule
+Overall performance / responsiveness vs alternatives & Easier and more 
+intuitive to take notes on other apps, app feels slower than existing tools 
+(e.g. laggy rendering) & Users revert to other tools, poor adoption of app & 
+Inefficient algorithms, full rendering on every change, blocking main thread & 
+User performance testing, user feedback, collecting performance metrics & 
+Incrementally render (diagram first, then text); If document becomes large, 
+only render visible portion; Use worker threads for rendering; Performance 
+budgets for each operation (e.g. <100ms for rendering update); Measure 
+against alternative apps in user tests & (NF 211, NF212) \\
+\bottomrule
+\end{tabularx}
+
+% Revert back to portrait for the rest of the document
+\newpage
+\KOMAoptions{paper=portrait,DIV=8,pagesize}
+\recalctypearea
 
 \section{Safety and Security Requirements}
 
