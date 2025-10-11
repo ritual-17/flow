@@ -1,24 +1,24 @@
 [#s7,reftext=S.7]
 === (S.7) Security and Safety Requirements
 
-== 7.1 Access Requirements
+==== 7.1 Access Requirements
 
 *ACR1.* *Users will not be able to access documents and notes written by other users.*
 
-== 7.2 Storage Requirements
+==== 7.2 Storage Requirements
 
 *SR1.* *Users’ notes will be stored locally on their devices.*
 
-== 7.3 Upload Requirements
+==== 7.3 Upload Requirements
 
 *UR1.* *Users will not be able to upload specific file types (i.e., .exe, .js, .bat, .sh) to prevent malicious file uploads.*  
 *UR2.* *Uploads will be stored in a secure directory that is not publicly accessible.*
 
-== 7.4 Integrity Requirements
+==== 7.4 Integrity Requirements
 
 *IR1.* *The application will not modify any user-written data unnecessarily.*
 
-== 7.5 Code Requirements
+==== 7.5 Code Requirements
 
 *CR1.* *Code dependencies will be kept up to date.*  
 *CR2.* *Debug logs and stack traces will not be exposed and will produce generic error messages instead.*
