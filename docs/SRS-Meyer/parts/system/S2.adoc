@@ -105,3 +105,37 @@ endif::[]
 
 . [[NF261]] **Fidelity**: Exported and shared notes shall retain accurate formatting and positioning. (NF261)
 . [[NF262]] **Portability**: Shared files shall be viewable on other supported devices without requiring modification. (NF262)
+
+==== (S.2.7) Basis for Design and Requirements Stability
+
+This section makes inputs/outputs explicit and classifies requirements by likelihood of change so an external team could design, build, and test from this document.
+
+===== Inputs and Outputs (Overview)
+
+|===
+| Component | Inputs | Outputs
+
+| Editor | Keyboard shortcuts, text entry, pointer events | Updated canvas model (text blocks, shapes), selection state, feedback messages
+| Shortcut Command Processor | Key events, user keybinding config | Dispatched editor actions, conflict warnings/help overlay
+| Rendering Engine | Canvas model, viewport (pan/zoom), style/theme | On-screen frames, redraw events
+| Document Management | File paths, save/load/export/version requests | Persisted files, autosave snapshots, exported PDFs/PNGs/Markdown, version IDs
+| Configuration & Customization | Preference changes (theme, keybindings), session state | Stored settings, applied themes/keymaps, restored workspace
+| Collaboration & Export | Share/export requests, clipboard ops | Shared/exported artifacts, clipboard content
+|===
+
+===== Unlikely to Change (Stable Baseline)
+
+* **Core editing & layout:** <<F211>>, <<F212>>, <<F214>>, <<F215>>, <<F216>>  
+* **Navigation & rendering basics:** <<F217>>, <<F231>>–<<F235>>  
+* **File operations & autosave:** <<F241>>, <<F242>>, <<F243>>  
+* **Reliability & integrity:** <<NF241>>, <<NF215>> (via <<F241>>–<<F244>>)  
+* **Responsiveness & usability:** <<NF211>>, <<NF212>>, <<NF214>>  
+These define the essential product behavior and quality bar and are expected to remain stable across the project.
+
+===== Likely to Change (Evolving / Context-Dependent)
+
+* **Advanced commands & customization:** <<F222>>, <<F223>>, <<F224>>, <<F252>>  
+* **Export surface & integration hooks:** <<F243>>, <<F261>>, <<F263>> (formats/APIs may evolve with feedback)  
+* **Versioning policy & folder sync details:** <<F244>>, <<F245>>  
+* **Security & scalability targets (if sync or large docs expand):** <<NF216>>, <<NF233>>, <<NF218>>, cross-platform polish <<NF213>>  
+These items depend on user feedback, platform constraints, or future scope and may be refined iteratively.
