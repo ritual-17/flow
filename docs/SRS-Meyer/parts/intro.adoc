@@ -9,3 +9,6 @@ following changes were made:
   was too granular for the changes and rounds of feedback we will be using for
   this document. The overall document control info is still included, but it
   was updated to include the "Developers" and "Change" columns.
+* Added an S7.adoc under the system directory. This addition corresponds to the
+  request made in the Hazard Analysis document to include the additional 
+  safety and security requirements made there into the SRS. 
