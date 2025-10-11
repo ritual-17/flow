@@ -5,4 +5,61 @@ ifdef::env-draft[]
 TIP: _How the system makes the functionality of <<s2>> available to the rest of the world, particularly user interfaces and program interfaces (APIs). It specifies how that functionality will be made available to the rest of the world, including people (users) and other systems. These are interfaces provided by the system to the outside; the other way around, interfaces from other systems, which the system may use, are specified in <<e2>>._  <<BM22>>
 endif::[]
 
-{emptysec}
+==== (S.3.1) Editor Interface
+The Editor serves as the main user interaction layer, capturing keyboard input and reflecting changes on the canvas. It connects with the Shortcut Processor to interpret keystrokes and the Canvas Manager to handle spatial arrangement.
+
+- Communicates with the **Shortcut Processor** to receive command execution signals (e.g., insert text, create shape).  
+- Interacts with the **Canvas Manager** for element positioning, resizing, and movement.  
+- Sends update requests to the **Rendering Engine** to refresh visual content on screen.  
+
+==== (S.3.2) Shortcut Command Processor Interface
+The Shortcut Processor translates user keystrokes into actionable commands for other modules. It ensures that all user actions can be performed through keyboard interactions.
+
+- Receives raw key inputs from the **Editor** and interprets them based on predefined command bindings.  
+- Issues editing and transformation commands to the **Canvas Manager** and **Editor**.  
+- Reads configuration settings (e.g., shortcut customization) from the **Configuration module**.  
+
+==== (S.3.3) Rendering Engine Interface
+The Rendering Engine is responsible for visually displaying both text and diagram elements on the canvas.
+
+- Receives the scene graph and layout information from the **Canvas Manager**.  
+- Communicates with the **Editor** to reflect real-time updates (e.g., text entry, shape manipulation).  
+- Returns rendering feedback such as layout dimensions or bounding boxes to support editing operations.  
+
+==== (S.3.4) Canvas Manager Interface
+The Canvas Manager controls element layout and manages spatial operations within the canvas.
+
+- Receives editing and movement commands from the **Editor** and **Shortcut Processor**.  
+- Sends structured layout and positioning data to the **Rendering Engine** for drawing.  
+- Interacts with **Data Management** to store and retrieve geometric and positional data.  
+
+==== (S.3.5) Data Management Interface
+The Data Management module stores all user data including notes, diagrams, and folder structures. It provides a consistent API for data access and persistence.
+
+- Provides read/write access to documents for the **Editor** and **Canvas Manager**.  
+- Exposes an API for file operations such as create, open, save, delete, and export.  
+- Retrieves configuration and user profile data from the **Configuration module**.  
+
+==== (S.3.6) Configuration Interface
+The Configuration component manages user preferences such as theme, keybindings, and autosave intervals.
+
+- Provides user preferences and settings to the **Editor**, **Shortcut Processor**, and **Rendering Engine**.  
+- Receives updates from **Data Management** to persist modified configuration values.  
+
+==== (S.3.7) External Interfaces
+Flow interacts with several external systems to enhance usability and persistence.
+
+- **User Interface:** Keyboard-centric interaction; supports optional pointer input for selection and navigation.  
+- **File System:** Enables saving, opening, and exporting notes to supported formats (e.g., `.flow`, `.pdf`, `.png`).  
+- **Clipboard:** Allows copying and pasting of text and shape objects both within the app and across other applications.  
+- **Operating System:** Manages window resizing, DPI scaling, and accessibility features such as high-contrast mode.  
+
+
+*Filesystem*
+- **Read/Write Access**: open/save documents, export artifacts (PDF/PNG/Markdown), import existing files.
+
+*Clipboard*
+- **Inter-app Copy/Paste**: text (UTF-8/RTF) and images for exported selections; intra-app copy/paste for shapes and groups.
+
+*Operating System*
+- **Windowing & Display**: resize, DPI scaling, high-contrast settings propagated to Rendering/Editor.
