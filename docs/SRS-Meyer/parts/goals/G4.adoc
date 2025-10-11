@@ -5,5 +5,20 @@ ifdef::env-draft[]
 TIP: _Overview of the functions (behavior) of the system. Principal properties only (details are in the System book). It is a short overview of the functions of the future system, a kind of capsule version of book S, skipping details but enabling readers to get a quick grasp of what the system will do._  <<BM22>>
 endif::[]
 
-{emptysec}
+Firstly, {project-title} will allow users to do standard note-taking
+application operations such as creating, opening, editing, saving, and deleting
+notes. Additionally, users will be able to organize their notes into folders
+and subfolders for better management. Notes can contain both text and diagrams,
+and users will be able to format text (e.g. bold, italics, underline) and
+create lists (e.g. bullet points, numbered lists).
 
+Notes will be viewable as a canvas that the user can pan in all four directions
+(i.e. left, right, up, down). Text will live in designated text boxes where the
+user can insert/update/delete text. The text boxes can be moved around the
+canvas.
+
+The user can insert predefined geometry as outlined in <<S.3>>. Geometry can be moved and resized. The basic
+"line" geometry can be used to create a sort of custom geometry in combination with other predefined geometry and lines. A
+combination of geometry can be selected and saved for reuse by the user. Users
+can define custom keyboard shortcuts mapped to custom geometry for quick
+insertion.
