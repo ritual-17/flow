@@ -2,14 +2,14 @@
 === (P.4) Tasks and deliverables
 
 ifdef::env-draft[]
-TIP: _**This is the core of the Project book**. It details the individual tasks listed under <<p3>> and their expected outcomes. It define the project's main activities and the results they must produce, associated with the milestone dates defined in <<p3>>._  <<BM22>>
+TIP: _**This is the core of the Project book**. It details the individual tasks listed under <<p3>> and their expected outcomes. It defines the project's main activities and the results they must produce, associated with the milestone dates defined in <<p3>>._  <<BM22>>
 endif::[]
 
 {emptysec}
 
-Note: The tasks listed under each milstone are listed in order of importance/priority.
-These tasks also include their keydates which is an important factor we considered when figuring out priority.
-Additionally, the requirements associated with specific tasks are also listed as a sub-bullet and is linked to the respective requirement.
+Note: The tasks listed under each milestone are listed in order of importance/priority.
+These tasks also include their key dates, which is an important factor we considered when figuring out priority.
+Additionally, the requirements associated with specific tasks are also listed as a sub-bullet and are linked to the respective requirement.
 
 == Milestone 1: Project Proposal & Team Formation (Week 1-4)
 * Team Introduction
