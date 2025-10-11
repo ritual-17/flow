@@ -5,4 +5,22 @@ ifdef::env-draft[]
 TIP: _Specification of the conditions under which an implementation will be deemed satisfactory. Here, "verification" as shorthand for what is more explicitly called "Verification & Validation" (V&V), covering several levels of testing — module testing, integration testing, system testing, user acceptance testing — as well as other techniques such as static analysis and, when applicable, program proving._  <<BM22>>
 endif::[]
 
-{emptysec}
+Verification ensures that {project-title} meets the requirements defined in <<s2>> and <<s3>>, while acceptance confirms the system fulfills user expectations. Testing will be conducted through the following methods:
+
+* **Unit Testing** – verify that each core module (e.g., note management, canvas engine, geometry rendering) works as intended.
+* **Integration Testing** – ensure that modules interact correctly, such as between the text editor and the file system.
+* **System Testing** – validate end-to-end workflows like creating, editing, and saving notes.
+* **User Acceptance Testing (UAT)** – confirm usability and responsiveness meet project expectations.
+
+==== Acceptance Criteria
+
+|===
+| Category | Criteria
+
+| Functional Requirements | All listed functionalities in <<s2>> perform correctly without errors or data loss.  
+| Non-Functional Requirements | Application runs smoothly, responds within acceptable delay, and maintains usability.  
+| Interfaces | User interface is consistent with design and intuitive to operate.  
+| Reliability | The system preserves data correctly between sessions.  
+|===
+
+The project will be considered accepted when all core functions operate without critical issues, usability testing is satisfactory, and the implemented features align with user expectations and requirements.

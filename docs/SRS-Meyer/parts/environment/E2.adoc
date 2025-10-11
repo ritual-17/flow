@@ -5,4 +5,11 @@ ifdef::env-draft[]
 TIP: _List of elements of the environment that may affect or be affected by the system and project. It includes other systems to which the system must be interfaced. These components may include existing systems, particularly software systems, with which the system will interact — by using their APIs (program interfaces), or by providing APIs to them, or both. These are interfaces provided to the system from the outside world. They are distinct from both: interfaces provided by the system to the outside world (<<s3>>); and technology elements that the system's development will require (<<p5>>)._  <<BM22>>
 endif::[]
 
-{emptysec}
+
+*	*File system*: The system needs a to installed on a system with a file system to store files needed for the application. It will also store files holding notes, letting the user access them later. 
+
+
+*	*Keyboard/Mouse/Trackpad/Touchscreen*: The system will use keyboard and mouse for input. These are the standard and primary input for computers. Other methods such as trackpad and touchscreen will be considered similar to mouse input and not prioritized.
+
+
+*	*Display*: As a computer program, the system will display its outputs with a corresponding screen. It should be able to use this display to show the user anything it need, ex current note, errors, tools, etc.

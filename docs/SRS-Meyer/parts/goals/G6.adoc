@@ -5,4 +5,15 @@ ifdef::env-draft[]
 TIP: _Aspects that the system need not address. It states what the system will not do. This chapter addresses a key quality attribute of good requirements: the requirements must be delimited (or “scoped”). <<g6>> is not, however, the place for an analysis of risks and obstacles, which pertain to the project rather than the goals and correspondingly appears in chapter <<p6>>._  <<BM22>>
 endif::[]
 
-{emptysec}
+While {project-title} is designed to increase note taking efficiency, it will
+not be responsible for actual note taking. That is, automated methods for note
+taking such as speech to text, image recognition, or AI (artificial
+intelligence) support are out of scope for this project. The system is designed
+to assist users in taking notes, but the actual content of the notes will be
+provided by the user.
+
+Managing the hosting of notes is out of scope for this project. That is, the
+system will not be responsible for hosting notes on a server or cloud service.
+The system is designed to create and manage notes locally on the user's device,
+but the sharing of notes between other users or devices will be handled by the
+user through other means.
