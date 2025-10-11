@@ -1,8 +1,35 @@
 [#s4,reftext=S.4]
 === (S.4) Detailed usage scenarios
 
-ifdef::env-draft[]
-TIP: _Examples of interaction between the environment (or human users) and the system, expressed as user stories. Such scenarios are not by themselves a substitute for precise descriptions of functionality (<<s3>>), but provide an important complement by specifying cases that these behavior descriptions must support; they also serve as a basis for developing test cases. The scenarios most relevant for stakeholders are given in chapter <<g5>> in the Goals book, at a general level, as use cases; in contrast, <<s4>> can refer to system components and functionality (from other chapters of the System book) as well as special and erroneous cases, and introduce more specific scenarios._  <<BM22>>
-endif::[]
+{project-title} follows a modular, layered architecture that separates user interaction, core logic, and data management to support extensibility, maintainability, and responsive performance. The system consists entirely of software components, and all user operations occur within the text-based diagramming interface.
 
-{emptysec}
+The architecture can be divided into three main layers:
+
+* **Frontend Layer**  
+  This layer manages all user interactions. It includes:
+  - *Editor Interface*: Displays the workspace where users type, draw, and manipulate diagrams.  
+  - *Canvas Manager*: Handles graphical positioning, panning, and zooming of text and shapes.  
+  - *Shortcut Processor*: Captures keyboard input, interprets commands, and routes them to the correct subsystems.
+
+* **Core Processing Layer**  
+  The middle layer contains the system logic that manages document data and rendering. It includes:
+  - *Rendering Engine*: Converts text and geometric descriptions into visible diagrams on the canvas.  
+  - *Data Manager*: Handles creation, update, deletion, and organization of notes, shapes, and folders.  
+  - *Configuration Manager*: Stores user preferences, key bindings, and editor layout settings.
+
+* **Storage and Integration Layer**  
+  This layer manages persistence and external communication:
+  - *Local File System*: Responsible for reading/writing files (e.g., saving and loading notes).  
+  - *Cloud Sync* (future extension): Allows sharing and synchronization of documents across devices.
+
+Together, these components ensure that user inputs are processed efficiently, documents are rendered accurately, and all data is persistently stored.
+
+==== System Diagram
+
+The following figure illustrates a finite state machine representation of the mode and action states a user transitions through when creating and editing elements such as shapes or text boxes. The actual keys or triggers for these transitions may vary, and certain side effects—like rendering the completed element after input is processed—are not explicitly depicted.
+
+image::models/S.4.png[width=80%, align="center", title=" Activity diagram for {project-title} user interaction flow"]
+
+.Activity Diagram for {project-title} User Interaction Flow
+[.caption]
+

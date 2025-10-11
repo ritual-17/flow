@@ -1,6 +1,0 @@
-== Glossary
-
-[glossary]
-[[vim]]Vim::
-  Vim is a highly configurable, keyboard-driven text editor built to make creating and changing any kind of text very efficient.<<VI25>>
-
