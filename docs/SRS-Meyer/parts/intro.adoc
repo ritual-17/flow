@@ -6,4 +6,5 @@ following changes were made:
 * Added this Introduction section.
 * Removed individual section control info. We removed these because we felt it
   was too granular for the changes and rounds of feedback we will be using for
-  this document. The overall document control info is still included.
+  this document. The overall document control info is still included, but it
+  was updated to include the "Developers" and "Change" columns.
