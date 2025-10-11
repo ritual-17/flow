@@ -26,7 +26,7 @@ Together, these components ensure that user inputs are processed efficiently, do
 
 ==== System Diagram
 
-The following figure illustrates the high-level architecture of {project-title}, showing major subsystems and data/control flow.
+The following figure illustrates a finite state machine representation of the mode and action states a user transitions through when creating and editing elements such as shapes or text boxes. The actual keys or triggers for these transitions may vary, and certain side effects—like rendering the completed element after input is processed—are not explicitly depicted.
 
 image::models/S.4.png[width=80%, align="center", title=" Activity diagram for {project-title} user interaction flow"]
 
