@@ -51,18 +51,63 @@ endif::[]
 
 ==== (S.5.4) Prioritization Summary
 
-* **High Priority (Core MVP)**  
-  * Text and diagram creation/editing (F211–F215, NF211–NF214)  
-  * Local save/load and autosave (F217, NF212, NF215)  
-  * Keyboard command interface and discoverability  
+===== High Priority
+Core functionality necessary for a minimal viable product:
 
-* **Medium Priority (Enhancement)**  
-  * Canvas navigation and export features (F216, F218)  
-  * Cross-platform optimizations and UI refinement (NF213, NF217)
+* Text and diagram creation/editing — F211–F215, NF211–NF214
+* Local save/load and autosave — F217, NF212, NF215
+* Keyboard command interface and discoverability
 
-* **Low Priority (Future Work)**  
-  * Cloud sync, user profiles (F220)  
-  * Large document optimization (NF218)  
-  * Extended collaboration or plugin system
+===== Medium Priority
+Enhancements that improve usability and reach:
 
-This prioritization ensures that initial development delivers a **fully functional, locally stored, keyboard-driven note and diagram editor**, while leaving performance tuning, export polish, and optional connectivity to later iterations.
+* Canvas navigation and export features — F216, F218
+* Cross-platform compatibility and UI refinement — NF213, NF217
+
+===== Low Priority
+Future or extended features beyond MVP:
+
+* Cloud sync and user profiles — F220
+* Large document optimization — NF218
+* Extended collaboration or plugin systems
+
+
+
+==== (S.5.5) Requirement Traceability Summary
+
+The following table summarizes cross-references between functional (F) and non-functional (NF) requirements, showing how system behaviors rely on supporting qualities such as performance, usability, and reliability.
+
+|===
+| Requirement ID | Related Requirements | Relationship Type
+
+| F211 | NF211, NF214 | Functional editing depends on responsive input and accessible keyboard controls.
+| F212 | NF217 | Folder organization relies on consistent and intuitive UI layout.
+| F213 | NF211, NF214 | Text editing requires low-latency input and keyboard shortcut support.
+| F214 | NF211, NF217 | Shape insertion depends on responsive rendering and consistent visuals.
+| F215 | NF211 | Moving and resizing objects depend on smooth frame updates and responsiveness.
+| F216 | NF211, NF217 | Canvas navigation performance linked to input responsiveness and UI clarity.
+| F217 | NF212, NF215 | Save/load operations depend on autosave and file integrity guarantees.
+| F218 | NF215 | Exporting notes depends on reliable file handling.
+| F219 | NF211, NF215 | Undo/redo relies on efficient rendering and reliable state management.
+| F220 | NF216 | Cloud sync depends on secure and private local data handling.
+
+| NF211 | F213–F219 | Input latency affects all core editing functions.
+| NF212 | F217 | Autosave directly supports data persistence.
+| NF214 | F211, F213 | Keyboard accessibility enhances main editing workflow.
+| NF215 | F217–F219 | File integrity underpins all save/export functions.
+| NF217 | F212, F214, F216 | UI layout consistency supports organizational and diagramming tasks.
+|===
+
+This matrix shows that nearly all functional behaviors are reinforced by one or more non-functional properties, ensuring a cohesive and reliable user experience for {project-title}.
+
+
+
+
+
+
+
+
+
+
+
+
