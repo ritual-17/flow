@@ -9,7 +9,7 @@ Note: The tasks listed under each milestone are listed in order of importance/pr
 These tasks also include their key dates, which is an important factor we considered when figuring out priority.
 Additionally, the requirements associated with specific tasks are also listed as a sub-bullet and are linked to the respective requirement.
 
-== Milestone 1: Project Proposal & Team Formation (Week 1-4)
+==== Milestone 1: Project Proposal & Team Formation (Week 1-4)
 * Team Introduction
 ** Sept 15th 2025
 * Project Proposal
@@ -19,13 +19,13 @@ Additionally, the requirements associated with specific tasks are also listed as
 * Peer Review for this milestone
 ** Sept 24th 2025
 
-== Milestone 2: Requirements and Analysis (Week 5-6)
+==== Milestone 2: Requirements and Analysis (Week 5-6)
 * Create Software Requirements Specification (SRS)
 ** Oct 10th 2025
 * Conduct Hazard Analysis and document hazards
 ** Oct 10th 2025
 
-== Milestone 3: System Design, V&V + PoC Plan (Week 7-8)
+==== Milestone 3: System Design, V&V + PoC Plan (Week 7-8)
 * Define app architecture
 ** Oct 21st 2025
 * PoC implementation timeline
@@ -35,18 +35,18 @@ Additionally, the requirements associated with specific tasks are also listed as
 * Create UML diagrams and data models
 ** Oct 31st 2025
 
-== Milestone 4: UI/UX Design and Design Document (Week 9-10)
+==== Milestone 4: UI/UX Design and Design Document (Week 9-10)
 * Submit the design document with a feedback loop
 ** Nov 10th 2025
 * Mock up UI/UX designs with navigation flow
 ** Nov 14th 2025
 
-== Milestone 5: PoC Demos (Week 11-12)
+==== Milestone 5: PoC Demos (Week 11-12)
 * Work on PoC and have a working demo prototype
 ** i.e., note creation, keyboard shortcuts, storage, retrieval
 ** Nov 17th, 19th, 20th, 24th, 26th, & 27th
 
-== Milestone 6: UI Development + Authentication (Week 13-14)
+==== Milestone 6: UI Development + Authentication (Week 13-14)
 * Build UI based on the design from Milestone 4
 ** Aligns with the requirements listed under <<F251, S.2.5 Configuration and Customization>>
 ** Nov 5th 2025
@@ -54,7 +54,7 @@ Additionally, the requirements associated with specific tasks are also listed as
 ** Aligns with the requirements listed under <<F231, S.2.3 Rendering Engine>> and <<F241, S.2.4 Document Management>>
 ** Jan 9th 2026
 
-== Milestone 7: Feature Implementation + Design Documentation (Week 15-17)
+==== Milestone 7: Feature Implementation + Design Documentation (Week 15-17)
 * Submit the finalized design documentation
 ** Jan 19th 2026
 * Implement core features
@@ -64,7 +64,7 @@ Additionally, the requirements associated with specific tasks are also listed as
 ** Aligns with the requirements listed under <<F251, S.2.5 Configuration and Customizations>> and <<F261, S.2.6 Collaboration and Export>>
 ** Jan 30th 2026
 
-== Milestone 8: Final Polishing (Week 18-22)
+==== Milestone 8: Final Polishing (Week 18-22)
 * UI polish & bug fixing
 ** Feb 11th 2026
 * Finalize demo day logistics and prepare for dry runs
@@ -74,7 +74,7 @@ Additionally, the requirements associated with specific tasks are also listed as
 * Final regression testing and documentation polish
 ** Mar 13th 2026
 
-== Milestone 9: Final Demo and Expo Preparation (Week 23-24)
+==== Milestone 9: Final Demo and Expo Preparation (Week 23-24)
 * Final demo run-through and practice sessions
 ** Mar 20th 2026
 * Present final demo
@@ -82,7 +82,7 @@ Additionally, the requirements associated with specific tasks are also listed as
 * Create a poster and a video for the Capstone Expo
 ** Apr 2nd 2026
 
-== Milestone 10: Project Closure and Capstone Expo (Week 26)
+==== Milestone 10: Project Closure and Capstone Expo (Week 26)
 * Submit final documentation
 ** Apr 6th 2026
 * Submit course evaluation

@@ -7,7 +7,7 @@ endif::[]
 
 {emptysec}
 
-== Milestone 1: Project Proposal & Team Formation (Week 1–4)
+==== Milestone 1: Project Proposal & Team Formation (Week 1–4)
 
 *Task:*
 - Begin introductory functions for the project, such as the proposal and basic team formation.
@@ -17,7 +17,7 @@ endif::[]
 - Problem Statement, Goals, and Development Plan due — *Sept 22nd, 2025*
 - Peer Review (Problem Statement, <<PoC>>, <<V&V>>, Development Plan) due — *Sept 24th, 2025*
 
-== Milestone 2: Requirements and Analysis (Week 5–6)
+==== Milestone 2: Requirements and Analysis (Week 5–6)
 
 *Task:*
 - Complete the requirements documentation
@@ -25,7 +25,7 @@ endif::[]
 *Key Dates:*
 - <<SRS>> + Hazard Analysis due — *Oct 10th, 2025*
 
-== Milestone 3: System Design, V&V + PoC Plan (Week 7–8)
+==== Milestone 3: System Design, V&V + PoC Plan (Week 7–8)
 
 *Task:*
 - Begin technical planning for the application and PoC
@@ -33,7 +33,7 @@ endif::[]
 *Key Dates:*
 - <<V&V>> Plan due — *Oct 27th, 2025*
 
-== Milestone 4: UI/UX Design and Design Document (Week 9–10)
+==== Milestone 4: UI/UX Design and Design Document (Week 9–10)
 
 *Task:*
 - Begin UI/UX design (interface and front-end mockups) and design documentation
@@ -41,7 +41,7 @@ endif::[]
 *Key Dates:*
 - Design Document due — *Nov 10th, 2025*
 
-== Milestone 5: PoC Demos (Week 11–12)
+==== Milestone 5: PoC Demos (Week 11–12)
 
 *Task:*
 - Develop and demo a <<PoC>>
@@ -49,7 +49,7 @@ endif::[]
 *Key Dates:*
 - <<PoC>> demo dates — *Nov 17th, 19th, 20th, 24th, 26th, and 27th, 2025*
 
-== Milestone 6: UI Development + Authentication (Week 13–14)
+==== Milestone 6: UI Development + Authentication (Week 13–14)
 
 *Task:*
 - UI build and basic user authentication
@@ -57,7 +57,7 @@ endif::[]
 *Key Dates:*
 - Classes begin — *Jan 5th, 2026*
 
-== Milestone 7: Feature Implementation + Design Documentation (Week 15–17)
+==== Milestone 7: Feature Implementation + Design Documentation (Week 15–17)
 
 *Task:*
 - Implement core features
@@ -66,7 +66,7 @@ endif::[]
 *Key Dates:*
 - Design Document due — *Jan 19th, 2026*
 
-== Milestone 8: Final Polishing (Week 18–22)
+==== Milestone 8: Final Polishing (Week 18–22)
 
 *Task:*
 - UI polish & bug fixing
@@ -77,7 +77,7 @@ endif::[]
 *Key Dates:*
 - Extras and <<V&V>> due — *Mar 9th, 2026*
 
-== Milestone 9: Final Demo and Expo Preparation (Week 23–25)
+==== Milestone 9: Final Demo and Expo Preparation (Week 23–25)
 
 *Task:*
 - Prepare for final demo and Capstone Expo
@@ -86,7 +86,7 @@ endif::[]
 - Final Demos — *Mar 23rd, 25th, 26th, 28th, 29th, 2026*
 - Poster and Video due — *Apr 2nd, 2026*
 
-== Milestone 10: Project Closure and Capstone Expo (Week 26)
+==== Milestone 10: Project Closure and Capstone Expo (Week 26)
 
 *Task:*
 - Submit final documentation
