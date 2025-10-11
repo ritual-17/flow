@@ -340,13 +340,39 @@ against alternative apps in user tests & (NF 211, NF212) \\
 
 \section{Safety and Security Requirements}
 
-\wss{Newly discovered requirements.  These should also be added to the SRS.  (A
-rationale design process how and why to fake it.)}
+\subsection{Access Requirements}
+\begin{list}{}{\leftmargin=3em}
+    \item \textbf{ACR1. Users will not be able to access documents and notes written by other users.}
+\end{list}
+
+\subsection{Storage Requirements}
+\begin{list}{}{\leftmargin=3em}
+    \item \textbf{SR1. Users' notes will be stored locally on their devices.}
+\end{list}
+
+\subsection{Upload Requirements}
+\begin{list}{}{\leftmargin=3em}
+    \item \textbf{UR1. Users will not be able to upload specific file types (i.e., .exe, .js, .bat, .sh) to prevent malicious file uploads.}
+    \item \textbf{UR2. Uploads will be stored in a secure directory that is not publicly accessible.}
+\end{list}
+
+\subsection{Integrity Requirements}
+\begin{list}{}{\leftmargin=3em}
+    \item \textbf{IR1. The application will not modify any user-written data unnecessarily.}
+\end{list}
+
+\subsection{Code Requirements}
+\begin{list}{}{\leftmargin=3em}
+    \item \textbf{CR1. Code dependencies will be kept up to date.}
+    \item \textbf{CR2. Debug logs and stack traces will not be exposed and will produce generic error messages instead.}
+\end{list}
+
 
 \section{Roadmap}
 
-\wss{Which safety requirements will be implemented as part of the capstone timeline?
-Which requirements will be implemented in the future?}
+All the safety requirements listed in the FMEA table will be implemented as part of the capstone timeline. Contrarily, in regards to the 
+above section 6. Safety and Security Requirements, all will be implemeneted as part of the capstone timeline with the exception  
+of the Access Requirements as cloud save is not part of our capstone timeline.
 
 \newpage{}
 
