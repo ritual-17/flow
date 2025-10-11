@@ -5,4 +5,36 @@ ifdef::env-draft[]
 TIP: _Current state of processes to be addressed by the project and the resulting system. It describes the current situation, upon which the system is expected to improve_  <<BM22>>
 endif::[]
 
-{emptysec}
+{project-title} arises from the fact that students, especially in technical
+disciplines such as engineering, often need to create notes containing both
+structured text and quick sketches of diagrams like state machines, circuits,
+or tables. Often times these notes also need to be created in a timely manner,
+as lectures can move quickly.
+
+There are many existing options for taking notes, each with their own trade-offs:
+
+* Pen and paper
+  ** Not easily editable or shareable
+  ** Handwriting may be slower than typing
+* Tablets with stylus support (e.g. iPad with Apple Pencil)
+  ** Can be expensive
+  ** Handwriting may be slower than typing
+* Traditional text editors (e.g. Microsoft Word, Google Docs)
+  ** Limited support for creating diagrams within the app
+* Mouse-driven editors (e.g. Draw.io, OneNote)
+  ** Can be slow to navigate menus for specific geometry
+  ** Limited keyboard shortcut support for creating and editing geometry
+  ** May require exporting and importing images into a separate text editor for note-taking (e.g. Draw.io)
+* Text-based diagram languages (e.g. Mermaid, PlantUML)
+  ** Separate definition from rendering, forcing users to manage an inefficient write-compile-insert cycle
+  ** Requires integration with another text editor for note-taking text
+* Document markup languages (e.g. LaTeX, Typst)
+  ** Limited to a more traditional page format rather than infinite workspace like OneNote for example
+  ** Editing underlying text rather than geometry itself
+
+On top of inefficiencies to workflow, an important note is that none of these
+solutions are fully keyboard-driven. This is a key aspect of the <<vim,Vim>>
+ideology that {project-title} aims to embody by providing a unified system for
+creation and editing of notes involving both text and diagrams exclusively
+through the keyboard.
+
