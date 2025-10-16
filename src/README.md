@@ -14,6 +14,8 @@
 If using [asdf](https://asdf-vm.com/guide/getting-started.html) or [mise](https://mise.jdx.dev/installing-mise.html), run
 
 ```bash
+$ asdf plugin add nodejs
+$ asdf plugin add pnpm
 $ asdf install
 # or
 $ mise install
