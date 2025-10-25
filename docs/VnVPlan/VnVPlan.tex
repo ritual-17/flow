@@ -188,6 +188,53 @@ verified.  Techniques for this include review and mutation testing.}
 walkthrough.  There is also a possibility of using the final presentation (in
 CAS741) for a partial usability survey.}
 
+Firstly, the tests outlined in the System Tests (and eventually the Unit Test
+Description) section will be used for verification. The purpose of these tests
+are to ensure the system behaves as expected given the specification, which
+naturally assists in verification of the implemented system. It is expected
+that not every individual unit test will be specified in the unit testing plan
+and devs should not withhold from writing a useful unit test just because it is
+not specified in this document. An example is writing a new unit test to cover
+the expected functionality of a newly discovered bug. Devs are expected to
+write tests that cover their code at the specified coverage rate of
+\textit{TEST\_COVERAGE\_RATE}.\\
+
+Beyond the specified test cases, the product will be test driven by members
+of the team for taking notes during lectures. All members of the team are
+expected to know the general expected functionality of the system, so having
+the team test the product as a user would greatly benefits verifying the
+product. Additionally, this is a feasible plan given the time frame and
+resources of the project. All team members attend classes on a daily basis and
+have the opportunity to use Flow during their lecture time.\\
+
+While manual and automated dynamic tests are essential for verification of the
+product, non-dynamic testing approaches can also be extremely effective and be
+used throughout the development process. Typical static testing approaches
+include static code analyzers, code walkthroughs, and code review. These three
+approaches will be used by the team as part of the verification process.\\
+
+A linting tool will be selected and each team member will be required to use it
+when developing locally. To enforce its use, a new workflow step will be added
+to the GitHub actions that will run the linting tool on an opened pull request.\\
+
+Code review is expected to conducted on every pull request before it can be
+approved and merged. To keep the plan realistic, only one review will be
+required per PR, but more are encouraged if possible. In the case of looming
+hard deadlines that must be met in a timely manner, the team may come to a
+collective decision to skip a rigorous review process on a PR if they deem the
+change to be small enough. However, the GitHub actions pipeline is still
+expected to be run and pass before merging to main.\\
+
+Lastly, synchronous code walkthrough may be conducted per a dev's request. This
+is expected to supplement a code review if a reviewer requests it. It may also
+be proposed by the code owner if they feel knowledge sharing and familiarity of
+the code/architecture will be beneficial for the team. Examples include a new
+module that will be reused by other devs for other parts of the codebase or
+some critical functionality that would benefit from group review/verification.
+Since there is more overhead with this approach due to there needing to be a
+scheduled time, this is more of an option that is open to the team rather than
+a strictly enforced testing plan approach.
+
 \subsection{Automated Testing and Verification Tools}
 
 \wss{What tools are you using for automated testing.  Likely a unit testing
@@ -488,7 +535,11 @@ This is where you can place additional information.
 \subsection{Symbolic Parameters}
 
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
+Their values are defined in this section for easy maintenance.\\
+
+\begin{description}
+  \item[TEST\_COVERAGE\_RATE] - 70\%. Ideally this value would be 100\%, but 70\% was chosen as a realistic balance between time constraints and verification quality.
+\end{description}
 
 \subsection{Usability Survey Questions?}
 
