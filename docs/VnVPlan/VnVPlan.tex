@@ -17,10 +17,10 @@
 
 \begin{document}
 
-\title{System Verification and Validation Plan for \progname{}} 
+\title{System Verification and Validation Plan for \progname{}}
 \author{\authname}
 \date{\today}
-	
+
 \maketitle
 
 \pagenumbering{roman}
@@ -65,10 +65,10 @@ in.}
 \section{Symbols, Abbreviations, and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
+\begin{tabular}{l l}
+  \toprule
   \textbf{symbol} & \textbf{description}\\
-  \midrule 
+  \midrule
   T & Test\\
   \bottomrule
 \end{tabular}\\
@@ -100,15 +100,15 @@ This document ... \wss{provide an introductory blurb and roadmap of the
   ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
   just those that are most important.}
 
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
+\wss{You should also list the objectives that are out of scope.  You don't have
+the resources to do everything, so what will you be leaving out.  For instance,
+if you are not going to verify the quality of usability, state this.  It is also
 worthwhile to justify why the objectives are left out.}
 
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
+\wss{The objectives are important because they highlight that you are aware of
+limitations in your resources for verification and validation.  You can't do everything,
+so what are you going to prioritize?  As an example, if your system depends on an
+external library, you can explicitly state that you will assume that external library
 has already been verified by its implementation team.}
 
 \subsection{Extras}
@@ -130,7 +130,7 @@ Repos.csv) if your plan changes as a result of the VnV planning exercise.}
 
 \citet{SRS}
 
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
+\wss{Don't just list the other documents.  You should explain why they are relevant and
 how they relate to your VnV efforts.}
 
 \section{Plan}
@@ -215,12 +215,12 @@ that document.}
 the requirements document captures the right requirements.  Maybe task based
 inspection?}
 
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
+\wss{For those capstone teams with an external supervisor, the Rev 0 demo should
+be used as an opportunity to validate the requirements.  You should plan on
+demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.
 The feedback from your supervisor will be very useful for improving your project.}
 
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
+\wss{For teams without an external supervisor, user testing can serve the same purpose
 as a Rev 0 demo for the supervisor.}
 
 \wss{This section might reference back to the SRS verification section.}
@@ -245,7 +245,7 @@ the contents of the subsections.}
   cover the requirements.  References to the SRS would be good here.  If a section
   covers tests for input constraints, you should reference the data constraints
   table in the SRS.}
-		
+
 \paragraph{Title for Test}
 
 \begin{enumerate}
@@ -253,32 +253,32 @@ the contents of the subsections.}
 \item{test-id1\\}
 
 Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
+
+Initial State:
+
+Input:
+
 Output: \wss{The expected result for the given inputs.  Output is not how you
 are going to return the results of the test.  The output is the expected
 result.}
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
+
+How test will be performed:
+
 \item{test-id2\\}
 
 Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
+
+Initial State:
+
+Input:
+
 Output: \wss{The expected result for the given inputs}
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
+How test will be performed:
 
 \end{enumerate}
 
@@ -310,7 +310,7 @@ How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
 \subsubsection{Area of Testing1}
-		
+
 \paragraph{Title for Test}
 
 \begin{enumerate}
@@ -318,26 +318,26 @@ be involved? Be specific.}
 \item{test-id1\\}
 
 Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
+
+Initial State:
+
+Input/Condition:
+
+Output/Result:
+
+How test will be performed:
+
 \item{test-id2\\}
 
 Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+
+Initial State:
+
+Input:
+
+Output:
+
+How test will be performed:
 
 \end{enumerate}
 
@@ -356,14 +356,14 @@ How test will be performed:
   document) has been completed.}
 
 \wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
+philosophy for test case selection.}
 
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
+\wss{To save space and time, it may be an option to provide less detail in this section.
+For the unit tests you can potentially layout your testing strategy here.  That is, you
+can explain how tests will be selected for each module.  For instance, your test building
+approach could be test cases for each access program, including one test for normal behaviour
+and as many tests as needed for edge cases.  Rather than create the details of the input
+and output here, you could point to the unit testing code.  For this to work, you code
 needs to be well-documented, with meaningful names for all of the tests.}
 
 \subsection{Unit Testing Scope}
@@ -393,34 +393,34 @@ needs to be well-documented, with meaningful names for all of the tests.}
 
 Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
   be automatic}
-					
-Initial State: 
-					
-Input: 
-					
+
+Initial State:
+
+Input:
+
 Output: \wss{The expected result for the given inputs}
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
-					
+How test will be performed:
+
 \item{test-id2\\}
 
 Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
   be automatic}
-					
-Initial State: 
-					
-Input: 
-					
+
+Initial State:
+
+Input:
+
 Output: \wss{The expected result for the given inputs}
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
 
-How test will be performed: 
+How test will be performed:
 
 \item{...\\}
-    
+
 \end{enumerate}
 
 \subsubsection{Module 2}
@@ -437,33 +437,33 @@ How test will be performed:
   mentioned functional tests.}
 
 \subsubsection{Module ?}
-		
+
 \begin{enumerate}
 
 \item{test-id1\\}
 
 Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
   be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
+
+Initial State:
+
+Input/Condition:
+
+Output/Result:
+
+How test will be performed:
+
 \item{test-id2\\}
 
 Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
+
+Initial State:
+
+Input:
+
+Output:
+
+How test will be performed:
 
 \end{enumerate}
 
@@ -474,7 +474,7 @@ How test will be performed:
 \subsection{Traceability Between Test Cases and Modules}
 
 \wss{Provide evidence that all of the modules have been considered.}
-				
+
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
@@ -505,7 +505,7 @@ graduate attribute of Lifelong Learning.
 \input{../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable?
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
   \item What knowledge and skills will the team collectively need to acquire to
