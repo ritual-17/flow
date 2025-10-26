@@ -15,6 +15,9 @@
 \input{../Comments}
 \input{../Common}
 
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{8pt}
+
 \begin{document}
 
 \title{System Verification and Validation Plan for \progname{}}
@@ -197,7 +200,7 @@ and devs should not withhold from writing a useful unit test just because it is
 not specified in this document. An example is writing a new unit test to cover
 the expected functionality of a newly discovered bug. Devs are expected to
 write tests that cover their code at the specified coverage rate of
-\textit{TEST\_COVERAGE\_RATE}.\\
+\textit{TEST\_COVERAGE\_RATE}.
 
 Beyond the specified test cases, the product will be test driven by members
 of the team for taking notes during lectures. All members of the team are
@@ -205,17 +208,17 @@ expected to know the general expected functionality of the system, so having
 the team test the product as a user would greatly benefits verifying the
 product. Additionally, this is a feasible plan given the time frame and
 resources of the project. All team members attend classes on a daily basis and
-have the opportunity to use Flow during their lecture time.\\
+have the opportunity to use Flow during their lecture time.
 
 While manual and automated dynamic tests are essential for verification of the
 product, non-dynamic testing approaches can also be extremely effective and be
 used throughout the development process. Typical static testing approaches
 include static code analyzers, code walkthroughs, and code review. These three
-approaches will be used by the team as part of the verification process.\\
+approaches will be used by the team as part of the verification process.
 
 A linting tool will be selected and each team member will be required to use it
 when developing locally. To enforce its use, a new workflow step will be added
-to the GitHub actions that will run the linting tool on an opened pull request.\\
+to the GitHub actions that will run the linting tool on an opened pull request.
 
 Code review is expected to conducted on every pull request before it can be
 approved and merged. To keep the plan realistic, only one review will be
@@ -223,7 +226,7 @@ required per PR, but more are encouraged if possible. In the case of looming
 hard deadlines that must be met in a timely manner, the team may come to a
 collective decision to skip a rigorous review process on a PR if they deem the
 change to be small enough. However, the GitHub actions pipeline is still
-expected to be run and pass before merging to main.\\
+expected to be run and pass before merging to main.
 
 Lastly, synchronous code walkthrough may be conducted per a dev's request. This
 is expected to supplement a code review if a reviewer requests it. It may also
@@ -251,6 +254,35 @@ that document.}
 
 \wss{The details of this section will likely evolve as you get closer to the
   implementation.}
+
+Firstly, the planned tech stack for the project is an Electron app with a
+React frontend using TypeScript.
+
+For automated unit testing, we will use the \href{https://jestjs.io/}{Jest}
+framework, which is a JavaScript testing framework that can be used with
+TypeScript and React. For more end-to-end feature testing, we will use
+\href{https://playwright.dev/}{Playwright}, which is built for end-to-end
+testing web apps, but also has support for Electron apps.
+
+For profiling and debugging, since Electron is built on top of Chromium, we can
+use Chrome DevTools to measure the performance and memory usage of our app.
+
+For static analysis and linting we will use ESLint with the TypeScript and
+React plugins, which will enforce coding rules and find anti-patterns.
+Additionally, Prettier will be used for formatting. The combination of these
+tools will lead to a higher quality codebase with consistent styling.
+
+Pnpm will be our build system. We can define pnpm scripts for running,
+building, linting, and testing our app.
+
+GitHub Actions will be used for continuous integration. The pipeline will
+compile the app, run the automated tests, linting step, and formatting step on
+each PR and main merge.
+
+Jest has a built in feature for measuring and summarizing code test coverage,
+simply by passing the `--coverage` flag. This report will then be integrated
+into the CI pipeline through Coveralls, which is free for public GitHub repos
+and has built in GitHub integration.
 
 \subsection{Software Validation}
 
