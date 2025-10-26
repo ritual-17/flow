@@ -82,34 +82,98 @@ in.}
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+\noindent This Verification and Validation (VnV) plan outlines the strategies that 
+will be employed to ensure that \progname{} meets its specified requirements
+and functions correctly. This document covers the methods and criteria used
+to confirm that the software is built in a way that satisfies the outlined
+requirements, and that fulfills its intended purpose.
+
+% \wss{provide an introductory blurb and roadmap of the
+%   Verification and Validation plan}
 
 \section{General Information}
 
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+% \wss{Say what software is being tested.  Give its name and a brief overview of
+  % its general functions.}
 
+\progname{} is a note-taking application designed to convert keyboard input into
+visual diagrams and structured graphical representations. In addition to basic
+note-taking software features, such as creating, opening, editing, saving, and
+deleting notes, \progname{} aims to enhance user productivity by allowing users
+to quickly generate visual content from text input. 
+
+\vspace{1em}
+
+\noindent Each note will be represented as a scrollable canvas where users can insert,
+edit, or delete text within text boxes. \progname{} will also support the insertion of
+predefined geometric shapes, as well as custom workflow shapes that users can
+define. The Verification and Validation (VnV) process will focus on ensuring
+that these core features function as specified, user interface elements work
+efficiently and intuitively, and that user interactions meet the outlined 
+requirements.
+noindent
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+% \wss{State what is intended to be accomplished.  The objective will be around
+%   the qualities that are most important for your project.  You might have
+%   something like: ``build confidence in the software correctness,''
+%   ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
+%   just those that are most important.}
 
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
+% \wss{You should also list the objectives that are out of scope.  You don't have 
+% the resources to do everything, so what will you be leaving out.  For instance, 
+% if you are not going to verify the quality of usability, state this.  It is also 
+% worthwhile to justify why the objectives are left out.}
 
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+% \wss{The objectives are important because they highlight that you are aware of 
+% limitations in your resources for verification and validation.  You can't do everything, 
+% so what are you going to prioritize?  As an example, if your system depends on an 
+% external library, you can explicitly state that you will assume that external library 
+% has already been verified by its implementation team.}
+
+The primary objective of this Verification and Validation (VnV) plan is to
+ensure that \progname{} meets the specified requirements outlined in the Software
+Requirements Specification (SRS) document. This process aims to build confidence
+that the system functions correctly, is reliable, and provides a user-friendly
+experience. 
+
+\vspace{1em}
+
+\noindent Specifically, the VnV plan focuses on the following objectives:
+\begin{itemize}
+  \item \textbf{Document Management Correctness}: Verifying that file related operations,
+  such as creating, opening, saving, deleting and file organization of notes, 
+  function as intended without data loss or corruption.
+  \item \textbf{Note and Diagram Manipulation Correctness}: Ensuring that editing features
+  related to note-taking and diagram creation work as specified. This includes
+  textbox and geometric diagram manipulation (inserting, resizing, moving, and 
+  deleting), as well as text formatting capabilities (bolding, italicizing,
+  underlining, etc).
+  \item \textbf{Data Integrity}: Confirming that all user inputs and modifications are saved
+  accurately and can be retrieved without corruption or loss.
+  \item \textbf{Performance and Responisiveness}: Verifying that the user interactions occur 
+  within acceptable time frames, ensuring a smooth and efficient user experience.
+  \item \textbf{System reliability}: Confirming that the system operates consistently in
+  different sessions without crashes or unexpected behavior.
+
+\end{itemize}
+\vspace{1em}
+
+\noindent Objectives that are out of scope for this VnV plan include:
+\begin{itemize}
+  \item \textbf{Formal Usability Testing}: Due to resource constraints, formal usability testing
+  with a large user base will not be conducted. Instead, informal feedback from 
+  team members within the development team will be used as these members fall into
+  the target user demographic.
+  \item \textbf{Security Testing}: Given the nature of \progname{} being a local note-taking
+noindent  application, security testing is not prioritized in this VnV plan. The focus
+  will be on functionality and usability rather than security vulnerabilities.
+  \item \textbf{External Library Verification}: Any third-party libraries or frameworks used
+  for rendering or GUI components will be assumed to have been verified by their
+  respective development teams. 
+\end{itemize}  
 
 \subsection{Extras}
 
