@@ -317,6 +317,10 @@ as they are discovered.
 \wss{There should be text between all headings, even if it is just a roadmap of
 the contents of the subsections.}
 
+This section defines the system-level tests that will verify the correctness of the system’s 
+functional requirements as specified in the SRS (Section S.2). Each test case focuses on validating 
+user-facing behaviors and ensuring that the system performs as expected under normal and boundary conditions.
+
 \subsection{Tests for Functional Requirements}
 
 \wss{Subsets of the tests may be in related, so this section is divided into
@@ -326,52 +330,106 @@ the contents of the subsections.}
 \wss{Include a blurb here to explain why the subsections below
   cover the requirements.  References to the SRS would be good here.}
 
-\subsubsection{Area of Testing1}
+The following subsections group tests into functional areas that align with the SRS:  
+1. **Editing and Canvas Operations** – covering note creation, editing, and manipulation (SRS F211–F216).  
+2. **File Management and Persistence** – covering saving, loading, and export functions (SRS F217–F243).  
+
+\subsubsection{Area of Testing1 — Editing and Canvas Operations}
 
 \wss{It would be nice to have a blurb here to explain why the subsections below
   cover the requirements.  References to the SRS would be good here.  If a section
   covers tests for input constraints, you should reference the data constraints
   table in the SRS.}
 
-\paragraph{Title for Test}
+This area tests core editing functions that define the user experience — creating, modifying, and visually 
+managing elements on the canvas. Successful execution validates that the system’s interactive core behaves 
+as specified in the SRS functional requirements F211–F216.
+
+\paragraph{Note Creation and Editing}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{test-F211\\}
 
-Control: Manual versus Automatic
+Control: Automatic.
 
-Initial State:
+Initial State: Application launched with no open document.
 
-Input:
+Input: User creates a new note and types text content.
 
 Output: \wss{The expected result for the given inputs.  Output is not how you
 are going to return the results of the test.  The output is the expected
 result.}
+A new note file is created and displayed in the editor window. Typed content appears 
+immediately in the canvas with no delay.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
+The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.  
+The test verifies that note objects are correctly instantiated and rendered without performance issues.
 
-How test will be performed:
+How test will be performed: Automated UI testing via simulated input sequence that triggers note creation, typing, 
+and real-time rendering validation.
 
-\item{test-id2\\}
+\item{test-F214\\}
 
-Control: Manual versus Automatic
+Control: Automatic
 
-Initial State:
+Initial State: Canvas open with editing mode enabled.
 
-Input:
+Input: User inserts a shape (rectangle) and moves it across the canvas.
 
 Output: \wss{The expected result for the given inputs}
+The shape appears correctly and follows the user’s movement without lag or distortion.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.  
+The expected value is that the object’s final position and dimensions match those in the test specification.
 
-How test will be performed:
+How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of 
+expected versus rendered object placement.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Area of Testing2 — File Management and Persistence}
 
-...
+This area validates system behavior related to file operations such as saving, loading, and exporting notes.  
+It ensures compliance with SRS functional requirements F217–F243, verifying that user data is properly stored and retrieved.
+
+\paragraph{Saving and Loading Notes}
+
+\begin{enumerate}
+
+\item{test-F217\\}
+
+Control: Automatic
+
+Initial State: A note with unsaved text and shape content exists in the editor.
+
+Input: User selects “Save” and then “Open” from the menu.
+
+Output: The note reopens with all previously entered text and shapes intact.
+
+Test Case Derivation: Expected results come from SRS F217 and F241, which require data persistence and accurate file recovery.  
+The test verifies successful serialization and deserialization of notes.
+
+How test will be performed: Automated file I/O comparison between pre-save and post-load content to confirm identical state restoration.
+
+\item{test-F243\\}
+
+Control: Manual
+
+Initial State: A completed note is open in the editor.
+
+Input: User selects “Export as PDF.”
+
+Output: A PDF file is generated containing the correct layout, formatting, and graphical content.
+
+Test Case Derivation: Derived from F243, which specifies export functionality for interoperability.  
+Expected outcome is that the exported file visually matches the on-screen content with no missing or altered elements.
+
+How test will be performed: Manual verification by comparing the exported PDF output to the in-application rendering.
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
