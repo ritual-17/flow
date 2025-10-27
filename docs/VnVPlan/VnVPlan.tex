@@ -437,6 +437,26 @@ How test will be performed:
 \wss{Provide a table that shows which test cases are supporting which
   requirements.}
 
+\begin{table}[htbp]
+\centering
+\caption{Traceability Matrix for Functional Requirements}
+\begin{tabular}{|p{2.5cm}|p{6cm}|p{6cm}|}
+\hline
+\textbf{Requirement ID} & \textbf{Requirement Description} & \textbf{Related Test(s)} \\
+\hline
+F211 & The system shall allow users to create and edit notes. & Test-F211: Verify that users can successfully create new notes and edit existing ones. \\
+\hline
+F212 & The system shall allow users to organize notes into folders and subfolders. & Test-F212: Verify that note organization functions correctly, allowing drag-and-drop or selection into designated folders. \\
+\hline
+F217 & The system shall allow users to view and pan across different notes and sections within the workspace. & Test-F217: Verify panning functionality and proper rendering of note sections during navigation. \\
+\hline
+F241 & The system shall support file management operations (save, rename, delete). & Test-F241: Confirm file management operations perform as expected, including proper updates to the note directory. \\
+\hline
+F242 & The system shall autosave changes at regular intervals (smaller than or equal to 60 seconds). & Test-F242: Check that autosave triggers correctly and saves the latest note content within the defined time frame. \\
+\hline
+\end{tabular}
+\end{table}
+
 \section{Unit Test Description}
 
 \wss{This section should not be filled in until after the MIS (detailed design
