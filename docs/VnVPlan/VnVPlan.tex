@@ -138,45 +138,187 @@ how they relate to your VnV efforts.}
 
 \section{Plan}
 
-\wss{Introduce this section.  You can provide a roadmap of the sections to
-  come.}
-
 \subsection{Verification and Validation Team}
 
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
+\begin{enumerate}
+    \item \textbf{Ethan} --- Team Lead / Test Manager
+    \begin{itemize}
+        \item Develop test plan, testing strategies, and test timelines
+    \end{itemize}
+
+    \item \textbf{Hussain} --- Test Analyst
+    \begin{itemize}
+        \item Create and review detailed tests for functional, non-functional, and edge cases required for the project
+    \end{itemize}
+
+    \item \textbf{Oliver} --- Quality Assurance Tester
+    \begin{itemize}
+        \item Conduct tests to verify that all features work as expected according to the SRS
+    \end{itemize}
+
+    \item \textbf{Jeffrey} --- Automation Tester
+    \begin{itemize}
+        \item Design, develop, and maintain most of the automated test scripts used for repetitive and regression testing
+    \end{itemize}
+
+    \item \textbf{Kevin} --- Document Specialist
+    \begin{itemize}
+        \item Write and maintain most of the documentation, referring to any test plans, test cases, reports, or defect logs
+    \end{itemize}
+\end{enumerate}
+
 
 \subsection{SRS Verification}
 
-\wss{List any approaches you intend to use for SRS verification.  This may
-  include ad hoc feedback from reviewers, like your classmates (like your
-  primary reviewer), or you may plan for something more rigorous/systematic.}
+\begin{enumerate}
+\item Internal Review and Cross-Check
+\begin{enumerate}
+\item This is the first level of verification for the SRS. The team will conduct a review as a whole, reviewing each member’s contribution and giving feedback. Additionally, this will help members confirm consistency between each individually worked on part.
+\item Moreover, the team will also be given the opportunity to cross-check with the requirements listed in any previous documents to ensure there is consistency between documentation.
+\end{enumerate}
 
-\wss{If you have a supervisor for the project, you shouldn't just say they will
-read over the SRS.  You should explain your structured approach to the review.
-Will you have a meeting?  What will you present?  What questions will you ask?
-Will you give them instructions for a task-based inspection?  Will you use your
-issue tracker?}
+\item Peer Review
+\begin{enumerate}
+\item This verification process will allow our team to seek assistance from a peer capstone team. This portion will allow another team to verify that the SRS is filled to completion and is error-free, ready for validation and development.
+\item Additionally, this gives our team a chance to review another capstone’s SRS, which will allow us to cross-reference with our SRS, verifying that both documents adhere to the Myers SRS convention and include every necessary portion.
+\end{enumerate}
 
-\wss{Maybe create an SRS checklist?}
+\item Check List Review
+\begin{enumerate}
+\item This level of verification will have the team review and cross-reference the SRS checklist once again after the deliverable has been completed.
+\item This is an extensive SRS checklist provided by our course instructor and is a professional way to ensure that our SRS contains everything required of us.
+\item Going over this as a team once the document has been completed allows us to verify that all members adhered to the checklist when creating their portion of the SRS document.
+\end{enumerate}
+\end{enumerate}
 
 \subsection{Design Verification}
 
-\wss{Plans for design verification}
+\begin{enumerate}
+\item Purpose:
+\begin{enumerate}
+\item We will use this to ensure that the design of our application meets the specifications and user needs outlined in the SRS.
+\end{enumerate}
 
-\wss{The review will include reviews by your classmates}
+\item Design Verification Scope:
+\begin{enumerate}
+\item This plan will cover the verification of the following components:
+\begin{enumerate}
+\item User Interface (UI): Verify that the UI is intuitive and is minimized to accommodate a more keyboard-friendly environment, which would not require any mouse involvement.
+\item Diagram Creation: Verify that the diagram creation feature works using only a keyboard and no mouse/trackpad. Ensure that diagrams are created with the same freedom and range as writing on a piece of paper or using a mouse.
+\item Accessibility and Usability: Verify that users can efficiently use the application without the need for other external tools aside from a keyboard.
+\item Performance: Verify that the system performs well even when generating multiple objects or diagrams.
+\end{enumerate}
+\end{enumerate}
 
-\wss{Create a checklists?}
+\item Verification Objectives:
+\begin{enumerate}
+\item Comply with Functional Requirements: Verify that the design supports all key features and complies with the functional requirements listed in all past documents, such as the SRS.
+\item Verify Performance: Verify that the application can handle multiple diagrams and object elements.
+\end{enumerate}
+
+\item Design Verification Methodology:
+\begin{enumerate}
+\item Verification through Design Reviews:
+\begin{enumerate}
+\item Internal Design Review:
+\begin{enumerate}
+\item The development team will conduct an internal review of the application to ensure that we are complying with all the functional requirements specified in the SRS and other related documents.
+\item The team will also verify that the application is user-friendly by using past knowledge on product usability and referencing existing note-taking applications.
+\end{enumerate}
+\item Design Walkthrough
+\begin{enumerate}
+\item The development team will conduct walkthroughs with other team members who may not have been involved in specific feature development. Additionally, peers and friends may be used to conduct a proper walkthrough session.
+\item During the walkthrough, ensure that users are able to navigate the application and create diagrams using the keyboard as intended.
+\end{enumerate}
+\end{enumerate}
+
+\item Functional Testing:
+\begin{enumerate}
+\item Test Case Development:
+\begin{enumerate}
+\item Develop test cases that focus on verifying key design features, such as keyboard navigation or the creation of diagrams or objects using shortcuts.
+\end{enumerate}
+\end{enumerate}
+
+\item Performance Testing:
+\begin{enumerate}
+\item Load Testing:
+\begin{enumerate}
+\item Perform tests that will create strain on a system through the creation of multiple objects or diagrams that are being manipulated. Verify that the application is able to perform well under this load with the system requirements specified in the SRS.
+\end{enumerate}
+\item Speed Test:
+\begin{enumerate}
+\item Verify that all interactions (i.e., diagram/object creation and manipulation) are quick and responsive with minimal lag or delay.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+\item Design Verification Criteria:
+\begin{enumerate}
+\item Usability Criteria:
+\begin{enumerate}
+\item Users can create diagrams using only keyboard shortcuts.
+\item Users can navigate the user interface without relying on a mouse.
+\item No critical keyboard shortcut conflict, and functionality across all supported platforms.
+\end{enumerate}
+\item Functional Criteria:
+\begin{enumerate}
+\item All diagram creation features are functional. This includes adding shapes, manipulating elements, connecting existing objects, and deleting components, without the use of a mouse.
+\end{enumerate}
+\item Compliance with Requirements:
+\begin{enumerate}
+\item The design must meet all requirements outlined in the Software Requirements Specification (SRS).
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
 
 \subsection{Verification and Validation Plan Verification}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
+\begin{enumerate}
+\item Purpose:
+\begin{enumerate}
+\item To verify that the VnV Plan is complete, correct, and meets the standards for verifying and validating our application.
+\end{enumerate}
 
-\wss{The review will include reviews by your classmates}
+\item VnV Plan Verification Scope:
+\begin{enumerate}
+\item Completeness: Verify that all necessary sections and objectives are included.
+\item Clarity and Precision: Verify that the plan is clearly written and unambiguous.
+\item Feasibility: Verify that all techniques and processes described to be used in the verification and validation process are practical and achievable.
+\end{enumerate}
 
-\wss{Create a checklists?}
+\item VnV Plan Verification Objectives:
+\begin{enumerate}
+\item Verify that the VnV Plan is comprehensive and covers all necessary portions required of a complete verification and validation plan.
+\item Verify that the techniques outlined for verification are appropriate for validating the functional requirements listed in the SRS.
+\item Verify that the plan can realistically be executed and will assist and result in the resolution of any defects found in our application.
+\end{enumerate}
+
+\item Verification Techniques:
+\begin{enumerate}
+\item Internal Verification Plan Review:
+\begin{enumerate}
+\item The entire capstone team will collectively review the document once finished. This is to verify that all members have completed each task to a standard that the team can agree on.
+\item The team will also be utilizing the checklist provided by the course instructor. This will help in verifying that the VnV Plan is completed correctly and incorporates all the main features and sections required of a proper VnV Plan.
+\end{enumerate}
+
+\item Peer Review:
+\begin{enumerate}
+\item The VnV Plan will also be reviewed by another project team that has also been tasked to work on a similar VnV Plan for their capstone. This will help verify that our team has completed the document properly by comparing sections and content with another completed VnV document in the same cohort.
+\item Moreover, while our team also reviews the partnered team’s VnV Plan, we can cross-reference ours with theirs to verify that both teams have incorporated all the necessary sections and techniques required for this deliverable.
+\end{enumerate}
+
+\item Mutation Testing:
+\begin{enumerate}
+\item Our team will incorporate mutation testing to verify that our VnV Plan is working as intended. In order to do this, we will be incorporating small changes or “mutants” and testing to see if the verification and validation process noted would catch them. If the plan catches these changes, it will help confirm that the VnV plan is comprehensive and effective.
+\item Example of possible mutations:
+\begin{enumerate}
+\item Mutation 1: Remove a key verification step (e.g., Usability Verification) and see if the VnV process identifies this omission.
+\item Mutation 2: Add an unnecessary or incorrect verification technique (e.g., testing mouse object creation) and see if the VnV process can identify that the new technique is unsuitable or conflicts with other requirements.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
 
 \subsection{Implementation Verification}
 
