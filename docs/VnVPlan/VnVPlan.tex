@@ -72,7 +72,7 @@ in.}
   \toprule
   \textbf{symbol} & \textbf{description}\\
   \midrule
-  T & Test\\
+  PR & Pull request\\
   \bottomrule
 \end{tabular}\\
 
@@ -495,6 +495,26 @@ How test will be performed:
 \wss{Provide a table that shows which test cases are supporting which
   requirements.}
 
+\begin{table}[htbp]
+\centering
+\caption{Traceability Matrix for Functional Requirements}
+\begin{tabular}{|p{2.5cm}|p{6cm}|p{6cm}|}
+\hline
+\textbf{Requirement ID} & \textbf{Requirement Description} & \textbf{Related Test(s)} \\
+\hline
+F211 & The system shall allow users to create and edit notes. & Test-F211: Verify that users can successfully create new notes and edit existing ones. \\
+\hline
+F212 & The system shall allow users to organize notes into folders and subfolders. & Test-F212: Verify that note organization functions correctly, allowing drag-and-drop or selection into designated folders. \\
+\hline
+F217 & The system shall allow users to view and pan across different notes and sections within the workspace. & Test-F217: Verify panning functionality and proper rendering of note sections during navigation. \\
+\hline
+F241 & The system shall support file management operations (save, rename, delete). & Test-F241: Confirm file management operations perform as expected, including proper updates to the note directory. \\
+\hline
+F242 & The system shall autosave changes at regular intervals (smaller than or equal to 60 seconds). & Test-F242: Check that autosave triggers correctly and saves the latest note content within the defined time frame. \\
+\hline
+\end{tabular}
+\end{table}
+
 \section{Unit Test Description}
 
 \wss{This section should not be filled in until after the MIS (detailed design
@@ -655,17 +675,67 @@ graduate attribute of Lifelong Learning.
 
 \begin{enumerate}
   \item What went well while writing this deliverable?
+  \begin{itemize}
+    \item Chengze -
+    \item Ethan -
+    \item Hussain -
+    \item Jeffrey -
+    \item Kevin -
+  \end{itemize}
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
+  \begin{itemize}
+    \item Chengze -
+    \item Ethan -
+    \item Hussain -
+    \item Jeffrey -
+    \item Kevin -
+  \end{itemize}
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
   Examples of possible knowledge and skills include dynamic testing knowledge,
   static testing knowledge, specific tool usage, Valgrind etc.  You should look to
   identify at least one item for each team member.
+
+    Collectively, the team will need to learn a variety of skills to complete
+    the verification process. Five new skills include building an automated
+    testing pipeline with GitHub actions, writing unit tests for frontend
+    components, writing end-to-end tests, integrating code coverage metrics,
+    and performance testing/verification. Firstly, while some of the team is
+    familiar with CI/CD pipelines, none of us have created and maintained one
+    ourselves before. We have already tweaked our GitHub workflows for managing
+    the building for our latex and adoc files, but setting up the pipeline for
+    more complex steps like testing, linting, etc will require more learning.
+    Secondly, while we all have experience writing unit tests in some form,
+    writing tests for React and component testing will be a new concept.
+    Additionally, writing end-to-end tests and setting up the infrastructure
+    for running them will also be new for most of the team. Both of these
+    testing approaches will involve learning to use Jest and Playwright, the
+    testing frameworks we have decided to use. Some of us also have experience
+    with using Coveralls for code coverage metrics, but again we will need to
+    learn how to set it up ourselves. Lastly, performance testing to verify
+    nonfunctional requirements is another new concept for most of the team, and
+    using Chrome Dev Tools will be required to complete that.
+
+    Generally, the team will need to collectively learn more about and improve
+    test writing skills. This includes writing better software that is
+    testable, which has not always been a focus in our course work. Developing
+    the habit of writing tests to cover the code you write is important and
+    will be new for some of us.
+
+    As mentioned, validation is not as much of a concern for this project.
+
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
   member pursue, and why did they make this choice?
+  \begin{itemize}
+    \item Chengze -
+    \item Ethan -
+    \item Hussain -
+    \item Jeffrey -
+    \item Kevin -
+  \end{itemize}
 \end{enumerate}
 
 \end{document}
