@@ -60,6 +60,7 @@ in.}
 \listoftables
 \wss{Remove this section if it isn't needed}
 
+
 \listoffigures
 \wss{Remove this section if it isn't needed}
 
@@ -797,10 +798,14 @@ How test will be performed: Manual verification by comparing the exported PDF ou
 
 \subsection{Tests for Nonfunctional Requirements}
 
+
+
 \wss{The nonfunctional requirements for accuracy will likely just reference the
   appropriate functional tests from above.  The test cases should mention
   reporting the relative error for these tests.  Not all projects will
   necessarily have nonfunctional requirements related to accuracy.}
+
+
 
 \wss{For some nonfunctional tests, you won't be setting a target threshold for
 passing the test, but rather describing the experiment you will do to measure
@@ -818,46 +823,120 @@ format for the tests given below.}
 How will they be done?  In cases like code (or document) walkthroughs, who will
 be involved? Be specific.}
 
-\subsubsection{Area of Testing1}
+The following section splits the tests into sections based on the Non-Functional requirements.:
 
-\paragraph{Title for Test}
+1. \textbf{Performance.}  - Covers the performance of the app while making and editing notes. (SRS NF211, NF218)
+
+2. \textbf{Usability and Accessibility.} - Covers the users interactions with the note taking system. (SRS NF213-NF214, NF217)
+
+3. \textbf{Consistency of Open and Closed Notes.} - Covers data not being lost or corrupted.  (SRS NF212, NF215, NF216)
+
+
+
+\subsubsection{Area of Testing1 - Perfomance of Editing and Canvas Operations}
+
+\paragraph{Latency Test}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{test-NF211}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Dynamic, Manual.
 
-Initial State:
+Initial State: Application launched with an empty open note and a flag to show latency.
 
-Input/Condition:
+Input/Condition: Adding shapes and text 
 
-Output/Result:
+Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms. 
 
-How test will be performed:
+How test will be performed: The tester will open a note and then attempt to add a shape and a text box, noting the latency for each. 
 
-\item{test-id2\\}
+\item{test-NF218}
 
-Type: Functional, Dynamic, Manual, Static etc.
+Type: Dynamic, Manual.
 
-Initial State:
+Initial State: Application launched with a flag to show latency and an open note that contains \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes.
 
-Input:
+Input/Condition: Adding shapes and text to the current note. 
 
-Output:
+Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms. 
 
-How test will be performed:
+How test will be performed: The tester will open a pre-made note with \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes note and then attempt to add another shape, taking note of the latency. 
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Area of Testing2 - Usability and Accessibility}
 
-...
+\begin{enumerate}
+
+\item{test-NF213}
+
+Type: Dynamic, Manual.
+
+Initial State: Empty Linux, Windows, Mac computer.
+
+Input/Condition: Creating and opening note, adding shapes and text.
+
+Output/Result: Shapes or text are shown on screen  
+
+How test will be performed: The tester will open the program on various different operating systems to test if they function on each platform. 
+
+\item{test-NF214}
+
+Type: Dynamic, Manual.
+
+Initial State: Application launched with an open empty note.
+
+Input/Condition: Adding shapes and text via keyboard short cuts
+
+Output/Result: Shapes or text are shown on screen when short cuts are used. 
+
+How test will be performed: The tester will open a note and then attempt to add a note and a shape and a text box via the corresponding short cut. 
+
+\item{test-NF217}
+
+Type:  Dynamic, Manual, Usability Survey.
+
+Initial State: Application launched without a note.
+
+Input: Have and external user try to create a note without Mouse and survey them.
+
+Output: Survey results and screen recording that will provide insight to user habits. 
+
+How test will be performed: We will have an external user create a note and then try to add multiple shapes, text and formatted text to the note. All of this should be done without the user using the mouse. We will record their actions and ask them some survey questions once they are done. 
+
+\end{enumerate}
+
+\subsubsection{Area of Testing3 - Consistency of Open and Closed Notes.}
+
+\begin{enumerate}
+
+\item{test-NF212,215}
+
+Type: Dynamic, Manual.
+
+Initial State: Application launched with an open empty note.
+
+Input/Condition: Adding shapes and text via keyboard short cuts
+
+How test will be performed: See (test-F217, F243). We then compare it after opening to the one that was saved to see if there any differences. Additionally, we will attempt to close a note without saving and check it the autosave catches it 
+
+\item{test-NF216}
+
+Type: Manual, Static .
+
+How test will be performed: Code review on all parts that may use the network data, making sure each cant run in the background.
+
+\end{enumerate}
+
 
 \subsection{Traceability Between Test Cases and Requirements}
 
 \wss{Provide a table that shows which test cases are supporting which
   requirements.}
+
+
+
 
 \begin{table}[htbp]
 \centering
@@ -878,6 +957,32 @@ F242 & The system shall autosave changes at regular intervals (smaller than or e
 \hline
 \end{tabular}
 \end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Traceability Matrix for Non-Functional Requirements}
+\begin{tabular}{|p{2.5cm}|p{6cm}|p{6cm}|}
+\hline
+NF211 & Low-latency input and rendering (less than \textit{DISPLAY\_LATENCY}. ms response). & Test-NF211: Verify that users can successfully make changes and have them appear within the allowed time. \\
+\hline
+NF218 & Performance at scale (\textit{SHAPE\_LOAD\_TEST\_COUNT}.+ elements). & Test-NF211,Test-NF218: Verify that the program still functions and is responsive with large amounts of data in notes. \\
+\hline
+NF213 & Cross-platform support (Windows/macOS/Linux). & Test-NF213: Verify program functionality on multiple different platforms. \\
+\hline
+NF214 & Accessible keyboard shortcuts and discoverable command palette. & Test-NF214: Ensure users can find and use shortcuts provided by the program. \\
+\hline
+NF217 & Visual consistency and intuitive UI layout. & Test-NF217: Run a usability survey with another user to check if the program is intuitive. \\
+\hline
+NF212 & Local data persistence and autosave. & Test-NF212,215: Check that auto save  create notes that are identical to he ones saved. \\
+\hline
+NF215 & File integrity during save/export (atomic operations). & Test-NF212,215: Check that exports to different file formats properly display and regular saving. \\
+\hline
+NF216 & Security of local data (no background network traffic). & Test-F216: Check that all code related to network traffic will not run in the background. \\
+\hline
+\end{tabular}
+\end{table}
+
+
 
 \section{Unit Test Description}
 
@@ -1016,6 +1121,16 @@ This is where you can place additional information.
 
 \subsection{Symbolic Parameters}
 
+: 
+\begin{description}
+  \item[DISPLAY\_LATENCY] - 30. Expected Latency in milliseconds. 
+\end{description}
+
+\begin{description}
+  \item[SHAPE\_LOAD\_TEST\_COUNT] - 500.  Amount of shapes used for stress testing.: 
+\end{description}
+
+
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.\\
 
@@ -1026,6 +1141,20 @@ Their values are defined in this section for easy maintenance.\\
 \subsection{Usability Survey Questions?}
 
 \wss{This is a section that would be appropriate for some projects.}
+
+1. How difficult was it to find the short-cuts you needed?
+
+2. What short-cuts felt the least intuitive? 
+
+3. What short-cuts felt the most intuitive? 
+
+4. Are their any missing short-cuts that you would want to have?
+
+5. Are their any short-cuts that feel to burdensome or require too many inputs to execute?
+
+6. Are any short-cuts that you accidentally pressed when you didn't want them?
+
+7. How would you compare this to other note taking methods?
 
 \newpage{}
 \section*{Appendix --- Reflection}
