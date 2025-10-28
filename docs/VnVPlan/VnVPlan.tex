@@ -375,10 +375,15 @@ How test will be performed:
 
 \subsection{Tests for Nonfunctional Requirements}
 
+\newcommand{\DISPLAYLATENCY}{30}
+\newcommand{\SHAPELOADTESTCOUNT}{500}
+
 \wss{The nonfunctional requirements for accuracy will likely just reference the
   appropriate functional tests from above.  The test cases should mention
   reporting the relative error for these tests.  Not all projects will
   necessarily have nonfunctional requirements related to accuracy.}
+
+
 
 \wss{For some nonfunctional tests, you won't be setting a target threshold for
 passing the test, but rather describing the experiment you will do to measure
@@ -404,6 +409,8 @@ The following section splits the tests into sections based on the Non-Functional
 
 3. \textbf{Consistency of Open and Closed Notes.} - Covers data not being lost or corrupted.  (SRS NF212, NF215, NF216)
 
+
+
 \subsubsection{Area of Testing1 - Perfomance of Editing and Canvas Operations}
 
 \paragraph{Latency Test}
@@ -414,25 +421,25 @@ The following section splits the tests into sections based on the Non-Functional
 
 Type: Dynamic, Manual.
 
-Initial State: Application launched with an empty open note.
+Initial State: Application launched with an empty open note and a flag to show latency.
 
 Input/Condition: Adding shapes and text 
 
-Output/Result: Shapes or text are shown on screen within 30 ms. 
+Output/Result: Shapes or text are shown on screen within $\DISPLAYLATENCY$ ms. 
 
-How test will be performed: The tester will open a note and then attempt to add a shape and a text box
+How test will be performed: The tester will open a note and then attempt to add a shape and a text box, noting the latency for each. 
 
 \item{test-NF218}
 
 Type: Dynamic, Manual.
 
-Initial State: Application launched with an open note that contains 500 shapes.
+Initial State: Application launched with a flag to show latency and an open note that contains $\SHAPELOADTESTCOUNT$ shapes.
 
 Input/Condition: Adding shapes and text to the current note. 
 
-Output/Result: Shapes or text are shown on screen within 30 ms. 
+Output/Result: Shapes or text are shown on screen within $\DISPLAYLATENCY$ ms. 
 
-How test will be performed: The tester will open a pre-made note with 500 shapes note and then attempt to add another shape. 
+How test will be performed: The tester will open a pre-made note with $\SHAPELOADTESTCOUNT$ shapes note and then attempt to add another shape, taking note of the latency. 
 
 \end{enumerate}
 
@@ -474,11 +481,11 @@ Input: Have and external user try to create a note without Mouse and survey them
 
 Output: Survey results and screen recording that will provide insight to user habits. 
 
-How test will be performed: We will have an external user create a note and then try to add multiple shapes, text and formatted text to the note. All of this should be done without the user using the mouse. e will record their actions and ask them some survey questions once they are done. 
+How test will be performed: We will have an external user create a note and then try to add multiple shapes, text and formatted text to the note. All of this should be done without the user using the mouse. We will record their actions and ask them some survey questions once they are done. 
 
 \end{enumerate}
 
-\subsubsection{Area of Testing3}
+\subsubsection{Area of Testing3 - Consistency of Open and Closed Notes.}
 
 \begin{enumerate}
 
@@ -515,9 +522,9 @@ How test will be performed: Code review on all parts that may use the network da
 \hline
 \textbf{Requirement ID} & \textbf{Requirement Description} & \textbf{Related Test(s)} \\
 \hline
-NF211 & Low-latency input and rendering (less than 30ms response). & Test-NF211: Verify that users can successfully make changes and have them appear within the allowed time. \\
+NF211 & Low-latency input and rendering (less than $\DISPLAYLATENCY$ ms response). & Test-NF211: Verify that users can successfully make changes and have them appear within the allowed time. \\
 \hline
-NF218 & Performance at scale (500+ elements). & Test-NF218: Verify that the program still functions properly with large amounts of data in notes. . \\
+NF218 & Performance at scale ($\SHAPELOADTESTCOUNT$+ elements). & Test-NF211,Test-NF218: Verify that the program still functions and is responsive with large amounts of data in notes. \\
 \hline
 NF213 & Cross-platform support (Windows/macOS/Linux). & Test-NF213: Verify program functionality on multiple different platforms. \\
 \hline
@@ -673,6 +680,12 @@ How test will be performed:
 This is where you can place additional information.
 
 \subsection{Symbolic Parameters}
+
+DISPLAYLATENCY: Expected Latency. Defined at the top of 4.2
+
+SHAPELOADTESTCOUNT: Amount of shapes used for stress testing. Defined at the top of 4.2
+
+
 
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.\\
