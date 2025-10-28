@@ -561,8 +561,8 @@ as they are discovered.
 \wss{There should be text between all headings, even if it is just a roadmap of
 the contents of the subsections.}
 
-This section defines the system-level tests that will verify the correctness of the system’s 
-functional requirements as specified in the SRS (Section S.2). Each test case focuses on validating 
+This section defines the system-level tests that will verify the correctness of the system’s
+functional requirements as specified in the SRS (Section S.2). Each test case focuses on validating
 user-facing behaviors and ensuring that the system performs as expected under normal and boundary conditions.
 
 \subsection{Tests for Functional Requirements}
@@ -574,9 +574,9 @@ user-facing behaviors and ensuring that the system performs as expected under no
 \wss{Include a blurb here to explain why the subsections below
   cover the requirements.  References to the SRS would be good here.}
 
-The following subsections group tests into functional areas that align with the SRS:  
-1. **Editing and Canvas Operations** – covering note creation, editing, and manipulation (SRS F211–F216).  
-2. **File Management and Persistence** – covering saving, loading, and export functions (SRS F217–F243).  
+The following subsections group tests into functional areas that align with the SRS:
+1. **Editing and Canvas Operations** – covering note creation, editing, and manipulation (SRS F211–F216).
+2. **File Management and Persistence** – covering saving, loading, and export functions (SRS F217–F243).
 
 \subsubsection{Area of Testing1 — Editing and Canvas Operations}
 
@@ -585,8 +585,8 @@ The following subsections group tests into functional areas that align with the 
   covers tests for input constraints, you should reference the data constraints
   table in the SRS.}
 
-This area tests core editing functions that define the user experience — creating, modifying, and visually 
-managing elements on the canvas. Successful execution validates that the system’s interactive core behaves 
+This area tests core editing functions that define the user experience — creating, modifying, and visually
+managing elements on the canvas. Successful execution validates that the system’s interactive core behaves
 as specified in the SRS functional requirements F211–F216.
 
 \paragraph{Note Creation and Editing}
@@ -604,14 +604,14 @@ Input: User creates a new note and types text content.
 Output: \wss{The expected result for the given inputs.  Output is not how you
 are going to return the results of the test.  The output is the expected
 result.}
-A new note file is created and displayed in the editor window. Typed content appears 
+A new note file is created and displayed in the editor window. Typed content appears
 immediately in the canvas with no delay.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
-The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.  
+The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.
 The test verifies that note objects are correctly instantiated and rendered without performance issues.
 
-How test will be performed: Automated UI testing via simulated input sequence that triggers note creation, typing, 
+How test will be performed: Automated UI testing via simulated input sequence that triggers note creation, typing,
 and real-time rendering validation.
 
 \item{test-F214\\}
@@ -626,17 +626,17 @@ Output: \wss{The expected result for the given inputs}
 The shape appears correctly and follows the user’s movement without lag or distortion.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
-Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.  
+Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.
 The expected value is that the object’s final position and dimensions match those in the test specification.
 
-How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of 
+How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of
 expected versus rendered object placement.
 
 \end{enumerate}
 
 \subsubsection{Area of Testing2 — File Management and Persistence}
 
-This area validates system behavior related to file operations such as saving, loading, and exporting notes.  
+This area validates system behavior related to file operations such as saving, loading, and exporting notes.
 It ensures compliance with SRS functional requirements F217–F243, verifying that user data is properly stored and retrieved.
 
 \paragraph{Saving and Loading Notes}
@@ -653,7 +653,7 @@ Input: User selects “Save” and then “Open” from the menu.
 
 Output: The note reopens with all previously entered text and shapes intact.
 
-Test Case Derivation: Expected results come from SRS F217 and F241, which require data persistence and accurate file recovery.  
+Test Case Derivation: Expected results come from SRS F217 and F241, which require data persistence and accurate file recovery.
 The test verifies successful serialization and deserialization of notes.
 
 How test will be performed: Automated file I/O comparison between pre-save and post-load content to confirm identical state restoration.
@@ -668,7 +668,7 @@ Input: User selects “Export as PDF.”
 
 Output: A PDF file is generated containing the correct layout, formatting, and graphical content.
 
-Test Case Derivation: Derived from F243, which specifies export functionality for interoperability.  
+Test Case Derivation: Derived from F243, which specifies export functionality for interoperability.
 Expected outcome is that the exported file visually matches the on-screen content with no missing or altered elements.
 
 How test will be performed: Manual verification by comparing the exported PDF output to the in-application rendering.
@@ -923,7 +923,13 @@ graduate attribute of Lifelong Learning.
     \item Chengze -
     \item Ethan -
     \item Hussain -
-    \item Jeffrey -
+    \item Jeffrey - During this deliverable, I found that writing sections
+    that referenced or related to the SRS and Hazard Analysis went very well.
+    Since we put in extensive work into our SRS and Hazard Analysis, I found
+    that working on the VnV (which builds on the SRS and other relating
+    documents a bit) was very smooth. Since the SRS was well organized and
+    most of the members were familiar with it's contents, we were able to
+    efficiently reference it and complete the VnV Plan at a good pace.
     \item Kevin -
   \end{itemize}
   \item What pain points did you experience during this deliverable, and how
@@ -932,7 +938,17 @@ graduate attribute of Lifelong Learning.
     \item Chengze -
     \item Ethan -
     \item Hussain -
-    \item Jeffrey -
+    \item Jeffrey - During this deliverable, I found that coordinating with
+    the team was a little more difficult that usual. This is due to the fact
+    that a lot of us had other course work and midterms happening during
+    the creation of our VnV Plan. In order to resolve this issue, the team
+    decided that each member should list their availability and schedules
+    so we could properly organize a date and time that works best for
+    everyone. In the past, it was a bit easier where we could
+    propose a day and see if the team is available. This time around, we
+    had to check availability first before proposing a day to meet. I found
+    this solution to be very effective and will definetely use this
+    when our schedules get busier.
     \item Kevin -
   \end{itemize}
   \item What knowledge and skills will the team collectively need to acquire to
@@ -977,7 +993,29 @@ graduate attribute of Lifelong Learning.
     \item Chengze -
     \item Ethan -
     \item Hussain -
-    \item Jeffrey -
+    \item Jeffrey - I would like to focus on becoming more
+    familiar with CI/CD. Since most of us have not created or
+    maintained one before, I feel like it's an important
+    skill to develop, seeing as we cannot rely on any
+    one member who already has expertise in this field. An approach
+    that I plan on using to acquire the knowledge for this
+    skill is to leverage my internship connections. During my co-op
+    I worked closely with CI/CD team members in my department.
+    While I never specifically worked on CI/CD, I was able to keep
+    in touch with members from that time. For this capstone, I plan
+    on leveraging these connections to gain the skills
+    that would benefit this capstone project. Additionally, I plan
+    on improving my automation skills by developing a better
+    understanding of how to build an automated test pipeline with
+    GitHub actions. This is because I was assigned the role of
+    Automation Tester when working on the Verification and
+    Validation team. Since I was assigned this role,
+    I feel inclined to learn this skill to contribute and fulfill
+    my responsibilities as an Automation Tester. To acquire this
+    skill, I've found many resources regarding how to build
+    automated testing pipelines with GitHub actions. Since this
+    isn't a niche skill or topic, there are many resources, such as
+    guides or videos, that will assist me in acquiring this skill.
     \item Kevin -
   \end{itemize}
 \end{enumerate}
