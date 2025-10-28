@@ -72,7 +72,7 @@ in.}
   \toprule
   \textbf{symbol} & \textbf{description}\\
   \midrule
-  T & Test\\
+  PR & Pull request\\
   \bottomrule
 \end{tabular}\\
 
@@ -561,6 +561,10 @@ as they are discovered.
 \wss{There should be text between all headings, even if it is just a roadmap of
 the contents of the subsections.}
 
+This section defines the system-level tests that will verify the correctness of the system’s 
+functional requirements as specified in the SRS (Section S.2). Each test case focuses on validating 
+user-facing behaviors and ensuring that the system performs as expected under normal and boundary conditions.
+
 \subsection{Tests for Functional Requirements}
 
 \wss{Subsets of the tests may be in related, so this section is divided into
@@ -570,52 +574,106 @@ the contents of the subsections.}
 \wss{Include a blurb here to explain why the subsections below
   cover the requirements.  References to the SRS would be good here.}
 
-\subsubsection{Area of Testing1}
+The following subsections group tests into functional areas that align with the SRS:  
+1. **Editing and Canvas Operations** – covering note creation, editing, and manipulation (SRS F211–F216).  
+2. **File Management and Persistence** – covering saving, loading, and export functions (SRS F217–F243).  
+
+\subsubsection{Area of Testing1 — Editing and Canvas Operations}
 
 \wss{It would be nice to have a blurb here to explain why the subsections below
   cover the requirements.  References to the SRS would be good here.  If a section
   covers tests for input constraints, you should reference the data constraints
   table in the SRS.}
 
-\paragraph{Title for Test}
+This area tests core editing functions that define the user experience — creating, modifying, and visually 
+managing elements on the canvas. Successful execution validates that the system’s interactive core behaves 
+as specified in the SRS functional requirements F211–F216.
+
+\paragraph{Note Creation and Editing}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{test-F211\\}
 
-Control: Manual versus Automatic
+Control: Automatic.
 
-Initial State:
+Initial State: Application launched with no open document.
 
-Input:
+Input: User creates a new note and types text content.
 
 Output: \wss{The expected result for the given inputs.  Output is not how you
 are going to return the results of the test.  The output is the expected
 result.}
+A new note file is created and displayed in the editor window. Typed content appears 
+immediately in the canvas with no delay.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
+The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.  
+The test verifies that note objects are correctly instantiated and rendered without performance issues.
 
-How test will be performed:
+How test will be performed: Automated UI testing via simulated input sequence that triggers note creation, typing, 
+and real-time rendering validation.
 
-\item{test-id2\\}
+\item{test-F214\\}
 
-Control: Manual versus Automatic
+Control: Automatic
 
-Initial State:
+Initial State: Canvas open with editing mode enabled.
 
-Input:
+Input: User inserts a shape (rectangle) and moves it across the canvas.
 
 Output: \wss{The expected result for the given inputs}
+The shape appears correctly and follows the user’s movement without lag or distortion.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
+Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.  
+The expected value is that the object’s final position and dimensions match those in the test specification.
 
-How test will be performed:
+How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of 
+expected versus rendered object placement.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Area of Testing2 — File Management and Persistence}
 
-...
+This area validates system behavior related to file operations such as saving, loading, and exporting notes.  
+It ensures compliance with SRS functional requirements F217–F243, verifying that user data is properly stored and retrieved.
+
+\paragraph{Saving and Loading Notes}
+
+\begin{enumerate}
+
+\item{test-F217\\}
+
+Control: Automatic
+
+Initial State: A note with unsaved text and shape content exists in the editor.
+
+Input: User selects “Save” and then “Open” from the menu.
+
+Output: The note reopens with all previously entered text and shapes intact.
+
+Test Case Derivation: Expected results come from SRS F217 and F241, which require data persistence and accurate file recovery.  
+The test verifies successful serialization and deserialization of notes.
+
+How test will be performed: Automated file I/O comparison between pre-save and post-load content to confirm identical state restoration.
+
+\item{test-F243\\}
+
+Control: Manual
+
+Initial State: A completed note is open in the editor.
+
+Input: User selects “Export as PDF.”
+
+Output: A PDF file is generated containing the correct layout, formatting, and graphical content.
+
+Test Case Derivation: Derived from F243, which specifies export functionality for interoperability.  
+Expected outcome is that the exported file visually matches the on-screen content with no missing or altered elements.
+
+How test will be performed: Manual verification by comparing the exported PDF output to the in-application rendering.
+
+\end{enumerate}
 
 \subsection{Tests for Nonfunctional Requirements}
 
@@ -680,6 +738,26 @@ How test will be performed:
 
 \wss{Provide a table that shows which test cases are supporting which
   requirements.}
+
+\begin{table}[htbp]
+\centering
+\caption{Traceability Matrix for Functional Requirements}
+\begin{tabular}{|p{2.5cm}|p{6cm}|p{6cm}|}
+\hline
+\textbf{Requirement ID} & \textbf{Requirement Description} & \textbf{Related Test(s)} \\
+\hline
+F211 & The system shall allow users to create and edit notes. & Test-F211: Verify that users can successfully create new notes and edit existing ones. \\
+\hline
+F212 & The system shall allow users to organize notes into folders and subfolders. & Test-F212: Verify that note organization functions correctly, allowing drag-and-drop or selection into designated folders. \\
+\hline
+F217 & The system shall allow users to view and pan across different notes and sections within the workspace. & Test-F217: Verify panning functionality and proper rendering of note sections during navigation. \\
+\hline
+F241 & The system shall support file management operations (save, rename, delete). & Test-F241: Confirm file management operations perform as expected, including proper updates to the note directory. \\
+\hline
+F242 & The system shall autosave changes at regular intervals (smaller than or equal to 60 seconds). & Test-F242: Check that autosave triggers correctly and saves the latest note content within the defined time frame. \\
+\hline
+\end{tabular}
+\end{table}
 
 \section{Unit Test Description}
 
@@ -841,17 +919,67 @@ graduate attribute of Lifelong Learning.
 
 \begin{enumerate}
   \item What went well while writing this deliverable?
+  \begin{itemize}
+    \item Chengze -
+    \item Ethan -
+    \item Hussain -
+    \item Jeffrey -
+    \item Kevin -
+  \end{itemize}
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
+  \begin{itemize}
+    \item Chengze -
+    \item Ethan -
+    \item Hussain -
+    \item Jeffrey -
+    \item Kevin -
+  \end{itemize}
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
   Examples of possible knowledge and skills include dynamic testing knowledge,
   static testing knowledge, specific tool usage, Valgrind etc.  You should look to
   identify at least one item for each team member.
+
+    Collectively, the team will need to learn a variety of skills to complete
+    the verification process. Five new skills include building an automated
+    testing pipeline with GitHub actions, writing unit tests for frontend
+    components, writing end-to-end tests, integrating code coverage metrics,
+    and performance testing/verification. Firstly, while some of the team is
+    familiar with CI/CD pipelines, none of us have created and maintained one
+    ourselves before. We have already tweaked our GitHub workflows for managing
+    the building for our latex and adoc files, but setting up the pipeline for
+    more complex steps like testing, linting, etc will require more learning.
+    Secondly, while we all have experience writing unit tests in some form,
+    writing tests for React and component testing will be a new concept.
+    Additionally, writing end-to-end tests and setting up the infrastructure
+    for running them will also be new for most of the team. Both of these
+    testing approaches will involve learning to use Jest and Playwright, the
+    testing frameworks we have decided to use. Some of us also have experience
+    with using Coveralls for code coverage metrics, but again we will need to
+    learn how to set it up ourselves. Lastly, performance testing to verify
+    nonfunctional requirements is another new concept for most of the team, and
+    using Chrome Dev Tools will be required to complete that.
+
+    Generally, the team will need to collectively learn more about and improve
+    test writing skills. This includes writing better software that is
+    testable, which has not always been a focus in our course work. Developing
+    the habit of writing tests to cover the code you write is important and
+    will be new for some of us.
+
+    As mentioned, validation is not as much of a concern for this project.
+
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
   member pursue, and why did they make this choice?
+  \begin{itemize}
+    \item Chengze -
+    \item Ethan -
+    \item Hussain -
+    \item Jeffrey -
+    \item Kevin -
+  \end{itemize}
 \end{enumerate}
 
 \end{document}
