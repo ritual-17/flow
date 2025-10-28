@@ -85,7 +85,7 @@ in.}
 
 \pagenumbering{arabic}
 
-\noindent This Verification and Validation (VnV) plan outlines the strategies that 
+\noindent This Verification and Validation (VnV) plan outlines the strategies that
 will be employed to ensure that \progname{} meets its specified requirements
 and functions correctly. This document covers the methods and criteria used
 to confirm that the software is built in a way that satisfies the outlined
@@ -105,7 +105,7 @@ requirements, and that fulfills its intended purpose.
 visual diagrams and structured graphical representations. In addition to basic
 note-taking software features, such as creating, opening, editing, saving, and
 deleting notes, \progname{} aims to enhance user productivity by allowing users
-to quickly generate visual content from text input. 
+to quickly generate visual content from text input.
 
 \vspace{1em}
 
@@ -114,7 +114,7 @@ edit, or delete text within text boxes. \progname{} will also support the insert
 predefined geometric shapes, as well as custom workflow shapes that users can
 define. The Verification and Validation (VnV) process will focus on ensuring
 that these core features function as specified, user interface elements work
-efficiently and intuitively, and that user interactions meet the outlined 
+efficiently and intuitively, and that user interactions meet the outlined
 requirements.
 noindent
 \subsection{Objectives}
@@ -125,15 +125,15 @@ noindent
 %   ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
 %   just those that are most important.}
 
-% \wss{You should also list the objectives that are out of scope.  You don't have 
-% the resources to do everything, so what will you be leaving out.  For instance, 
-% if you are not going to verify the quality of usability, state this.  It is also 
+% \wss{You should also list the objectives that are out of scope.  You don't have
+% the resources to do everything, so what will you be leaving out.  For instance,
+% if you are not going to verify the quality of usability, state this.  It is also
 % worthwhile to justify why the objectives are left out.}
 
-% \wss{The objectives are important because they highlight that you are aware of 
-% limitations in your resources for verification and validation.  You can't do everything, 
-% so what are you going to prioritize?  As an example, if your system depends on an 
-% external library, you can explicitly state that you will assume that external library 
+% \wss{The objectives are important because they highlight that you are aware of
+% limitations in your resources for verification and validation.  You can't do everything,
+% so what are you going to prioritize?  As an example, if your system depends on an
+% external library, you can explicitly state that you will assume that external library
 % has already been verified by its implementation team.}
 
 The primary objective of this Verification and Validation (VnV) plan is to
@@ -149,16 +149,16 @@ robust and can handle potential failure scenarios gracefully.
 \noindent Specifically, the VnV plan focuses on the following objectives:
 \begin{itemize}
   \item \textbf{Document Management Correctness}: Verifying that file related operations,
-  such as creating, opening, saving, deleting and file organization of notes, 
+  such as creating, opening, saving, deleting and file organization of notes,
   function as intended without data loss or corruption.
   \item \textbf{Note and Diagram Manipulation Correctness}: Ensuring that editing features
   related to note-taking and diagram creation work as specified. This includes
-  textbox and geometric diagram manipulation (inserting, resizing, moving, and 
+  textbox and geometric diagram manipulation (inserting, resizing, moving, and
   deleting), as well as text formatting capabilities (bolding, italicizing,
   underlining, etc).
   \item \textbf{Data Integrity}: Confirming that all user inputs and modifications are saved
   accurately and can be retrieved without corruption or loss.
-  \item \textbf{Performance and Responisiveness}: Verifying that the user interactions occur 
+  \item \textbf{Performance and Responisiveness}: Verifying that the user interactions occur
   within acceptable time frames, ensuring a smooth and efficient user experience.
   \item \textbf{System reliability}: Confirming that the system operates consistently in
   different sessions without crashes or unexpected behavior.
@@ -169,7 +169,7 @@ robust and can handle potential failure scenarios gracefully.
 \noindent Objectives that are out of scope for this VnV plan include:
 \begin{itemize}
   \item \textbf{Formal Usability Testing}: Due to resource constraints, formal usability testing
-  with a large user base will not be conducted. Instead, an informal usability test from 
+  with a large user base will not be conducted. Instead, an informal usability test from
   team members within the development team will be used as these members fall into
   the target user demographic.
   \item \textbf{Security Testing}: Given the nature of \progname{} being a local note-taking
@@ -177,8 +177,8 @@ noindent  application, security testing is not prioritized in this VnV plan. The
   will be on functionality and usability rather than security vulnerabilities.
   \item \textbf{External Library Verification}: Any third-party libraries or frameworks used
   for rendering or GUI components will be assumed to have been verified by their
-  respective development teams. 
-\end{itemize}  
+  respective development teams.
+\end{itemize}
 
 \subsection{Extras}
 
@@ -189,27 +189,27 @@ noindent  application, security testing is not prioritized in this VnV plan. The
 % You can use a pull request to update your extras (in TeamComposition.csv or
 % Repos.csv) if your plan changes as a result of the VnV planning exercise.}
 
-\noindent As part of the VnV prcess for \progname{}, the project will include the 
+\noindent As part of the VnV prcess for \progname{}, the project will include the
 following two approved extras: Usability Testing and a User Manual.
 
 \begin{itemize}
-  \item \textbf{Usability Testing}: An informal, but structured test will be 
-  conducted with team members who fall within the target user demographic. It 
+  \item \textbf{Usability Testing}: An informal, but structured test will be
+  conducted with team members who fall within the target user demographic. It
   will be done to evaluate the intuitiveness and efficiency of the user interface
-  and workflows of \progname{}. Methods will be made as systematic and objective 
+  and workflows of \progname{}. Methods will be made as systematic and objective
   as possible, to help closely identify areas for improvement. Participants will
   complete a set of predefined tasks (e.g. creating and organizing notes, inserting
   and editing diagrams, etc.) while their performance and completion times are
   recorded (although participants are team members, they will not be involved in
   the elicitation of the specific details of the set tasks to avoid bias).
-  Afterwards, participants will be given an opportunity to provide feedback on 
-  their experience, including any difficulties encountered and suggestions for 
+  Afterwards, participants will be given an opportunity to provide feedback on
+  their experience, including any difficulties encountered and suggestions for
   enhancements.
   \item \textbf{User Manual}: A comprehensive user manual will be created to
   guide new users through the features and functionalities of \progname{}. The
-  manual will include step-by-step instructions for creating, editing, and 
+  manual will include step-by-step instructions for creating, editing, and
   managing notes and diagrams. It will also have explanations of various tools
-  and keyboard shortcuts. The user manual will serve as both a user support 
+  and keyboard shortcuts. The user manual will serve as both a user support
   resource and a validation tool to ensure that all features are accessible and
   understandable to users.
 \end{itemize}
@@ -224,37 +224,37 @@ following two approved extras: Usability Testing and a User Manual.
 
 % \citet{SRS}
 
-% \wss{Don't just list the other documents.  You should explain why they are relevant and 
+% \wss{Don't just list the other documents.  You should explain why they are relevant and
 % how they relate to your VnV efforts.}
 
 \noindent The following documents are relevant and closely linked to the Verification
-and Validation (VnV) document. These documents define and guide the development of 
+and Validation (VnV) document. These documents define and guide the development of
 \progname{}:
 
 \begin{itemize}
-  \item \textbf{Software Requirements Specification (SRS)}: 
+  \item \textbf{Software Requirements Specification (SRS)}:
   The SRS establishes the functional and non-functional requirements for \progname{},
-  forming the foundation for the VnV activities. Sections such as the Functional 
+  forming the foundation for the VnV activities. Sections such as the Functional
   Overview (G.4), High-Level Usage Scenarios (G.5), and System Components (S.1) were
   referenced to ensure the testing objectives and procedures align with \progname{}'s
   specified features and structure.
   \item \textbf{Problem Statement}:
   The Problem Statement outlines the project's goals and motivations. It was referenced
-  to ensure that the VnV objectives align with the intended purpose of \progname{}. The 
-  Extras section of the Problem Statement was also used to identify the approved extras 
+  to ensure that the VnV objectives align with the intended purpose of \progname{}. The
+  Extras section of the Problem Statement was also used to identify the approved extras
   for the project, which are included in this VnV plan.
   \item \textbf{Design Documents (MG, MIS)}:
   The Module Guide (MG) and Module Interface Specification (MIS) will provide detailed
   descriptions of the system's architecture and module interactions. During develpoment
-  phases of the project, as well as development of unit and integration testing, the 
+  phases of the project, as well as development of unit and integration testing, the
   MG and MIS will be referenced to ensure that each component performs as intended and
   that the interactions between modules function correctly.
   \item \textbf{Hazard Analysis}:
   The Hazard Analysis document identifies potential risks and failure areas within
-  \progname{}. This document was referenced to inform the VnV plan's objectives. Key 
-  risks and such as data loss, rendering lag, and unreliability were identified and 
-  considered. This aims to ensure that testing activities address these risks and 
-  validate the system's robustness against potential hazards. 
+  \progname{}. This document was referenced to inform the VnV plan's objectives. Key
+  risks and such as data loss, rendering lag, and unreliability were identified and
+  considered. This aims to ensure that testing activities address these risks and
+  validate the system's robustness against potential hazards.
 \end{itemize}
 \section{Plan}
 
@@ -681,8 +681,8 @@ as they are discovered.
 \wss{There should be text between all headings, even if it is just a roadmap of
 the contents of the subsections.}
 
-This section defines the system-level tests that will verify the correctness of the system’s 
-functional requirements as specified in the SRS (Section S.2). Each test case focuses on validating 
+This section defines the system-level tests that will verify the correctness of the system’s
+functional requirements as specified in the SRS (Section S.2). Each test case focuses on validating
 user-facing behaviors and ensuring that the system performs as expected under normal and boundary conditions.
 
 \subsection{Tests for Functional Requirements}
@@ -694,9 +694,9 @@ user-facing behaviors and ensuring that the system performs as expected under no
 \wss{Include a blurb here to explain why the subsections below
   cover the requirements.  References to the SRS would be good here.}
 
-The following subsections group tests into functional areas that align with the SRS:  
-1. **Editing and Canvas Operations** – covering note creation, editing, and manipulation (SRS F211–F216).  
-2. **File Management and Persistence** – covering saving, loading, and export functions (SRS F217–F243).  
+The following subsections group tests into functional areas that align with the SRS:
+1. **Editing and Canvas Operations** – covering note creation, editing, and manipulation (SRS F211–F216).
+2. **File Management and Persistence** – covering saving, loading, and export functions (SRS F217–F243).
 
 \subsubsection{Area of Testing1 — Editing and Canvas Operations}
 
@@ -705,8 +705,8 @@ The following subsections group tests into functional areas that align with the 
   covers tests for input constraints, you should reference the data constraints
   table in the SRS.}
 
-This area tests core editing functions that define the user experience — creating, modifying, and visually 
-managing elements on the canvas. Successful execution validates that the system’s interactive core behaves 
+This area tests core editing functions that define the user experience — creating, modifying, and visually
+managing elements on the canvas. Successful execution validates that the system’s interactive core behaves
 as specified in the SRS functional requirements F211–F216.
 
 \paragraph{Note Creation and Editing}
@@ -724,14 +724,14 @@ Input: User creates a new note and types text content.
 Output: \wss{The expected result for the given inputs.  Output is not how you
 are going to return the results of the test.  The output is the expected
 result.}
-A new note file is created and displayed in the editor window. Typed content appears 
+A new note file is created and displayed in the editor window. Typed content appears
 immediately in the canvas with no delay.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
-The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.  
+The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.
 The test verifies that note objects are correctly instantiated and rendered without performance issues.
 
-How test will be performed: Automated UI testing via simulated input sequence that triggers note creation, typing, 
+How test will be performed: Automated UI testing via simulated input sequence that triggers note creation, typing,
 and real-time rendering validation.
 
 \item{test-F214\\}
@@ -746,17 +746,17 @@ Output: \wss{The expected result for the given inputs}
 The shape appears correctly and follows the user’s movement without lag or distortion.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
-Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.  
+Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.
 The expected value is that the object’s final position and dimensions match those in the test specification.
 
-How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of 
+How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of
 expected versus rendered object placement.
 
 \end{enumerate}
 
 \subsubsection{Area of Testing2 — File Management and Persistence}
 
-This area validates system behavior related to file operations such as saving, loading, and exporting notes.  
+This area validates system behavior related to file operations such as saving, loading, and exporting notes.
 It ensures compliance with SRS functional requirements F217–F243, verifying that user data is properly stored and retrieved.
 
 \paragraph{Saving and Loading Notes}
@@ -773,7 +773,7 @@ Input: User selects “Save” and then “Open” from the menu.
 
 Output: The note reopens with all previously entered text and shapes intact.
 
-Test Case Derivation: Expected results come from SRS F217 and F241, which require data persistence and accurate file recovery.  
+Test Case Derivation: Expected results come from SRS F217 and F241, which require data persistence and accurate file recovery.
 The test verifies successful serialization and deserialization of notes.
 
 How test will be performed: Automated file I/O comparison between pre-save and post-load content to confirm identical state restoration.
@@ -788,7 +788,7 @@ Input: User selects “Export as PDF.”
 
 Output: A PDF file is generated containing the correct layout, formatting, and graphical content.
 
-Test Case Derivation: Derived from F243, which specifies export functionality for interoperability.  
+Test Case Derivation: Derived from F243, which specifies export functionality for interoperability.
 Expected outcome is that the exported file visually matches the on-screen content with no missing or altered elements.
 
 How test will be performed: Manual verification by comparing the exported PDF output to the in-application rendering.
@@ -1041,14 +1041,21 @@ graduate attribute of Lifelong Learning.
   \item What went well while writing this deliverable?
   \begin{itemize}
     \item Chengze -
-    \item Ethan -
+    \item Ethan - I was responsible for writing out parts of the plan section
+      involving the verification plans and test tooling. Something that went
+      well while working on this was doing some more research and deciding the
+      technologies we would use for testing. This gave everyone a better idea
+      of the types of testing we would need to do, the infrastructure that will
+      need to be set up for them, and the frameworks we would use. It was also
+      good to discuss this plan with the team and make sure to set (realistic)
+      expectations for testing.
     \item Hussain - In this deliverable, I was tasked with writing the
         general information section of the VnV plan. To successfully write
-        this section, not only did I have to understand the purpose of the 
+        this section, not only did I have to understand the purpose of the
         VnV plan, but I had to review our previous documents such as the SRS,
-        Problem Statement, and Hazard Analysis, to ensure consistency across 
-        our project's documentation. This allowed me to see how different 
-        documents interrelate and reinforced my understanding of the 
+        Problem Statement, and Hazard Analysis, to ensure consistency across
+        our project's documentation. This allowed me to see how different
+        documents interrelate and reinforced my understanding of the
         project's overall structure and objectives.
     \item Jeffrey -
     \item Kevin -
@@ -1057,14 +1064,20 @@ graduate attribute of Lifelong Learning.
     did you resolve them?
   \begin{itemize}
     \item Chengze -
-    \item Ethan -
-    \item Hussain - When looking at the VnV plan, I was initially confused 
-    on a few of the sections, particularly on what symbolic parameters were 
-    and how challenge levels worked. To resolve this, I asked about these 
-    things in our initial TA meeting for the deliverable. Symbolic parameters 
-    were explained to us as any constants that we would want to define in one 
-    place for easy maintenance and used throughout the document. Challenge 
-    level was a previously used concept in past years' VnV plans that was 
+    \item Ethan - Honestly, this deliverable went pretty smoothly. There were
+      some issues that arose with the GitHub Actions build system that were
+      discovered while working on the last deliverable, but I took some time to
+      fix them. I had felt that I was doing a lot of "intro" type work in the
+      past deliverables so I wanted to switch to a different section. Hussain
+      gladly agreed to take on the intro section for this doc and I did
+      something different with the testing plan.
+    \item Hussain - When looking at the VnV plan, I was initially confused
+    on a few of the sections, particularly on what symbolic parameters were
+    and how challenge levels worked. To resolve this, I asked about these
+    things in our initial TA meeting for the deliverable. Symbolic parameters
+    were explained to us as any constants that we would want to define in one
+    place for easy maintenance and used throughout the document. Challenge
+    level was a previously used concept in past years' VnV plans that was
     not relevant for this year's deliverable.
     \item Jeffrey -
     \item Kevin -
@@ -1109,20 +1122,26 @@ graduate attribute of Lifelong Learning.
   member pursue, and why did they make this choice?
   \begin{itemize}
     \item Chengze -
-    \item Ethan -
-    \item Hussain - Writing unit tests and component testing is the skill 
+    \item Ethan - I will be picking up the code coverage metric integration
+      work. For acquiring this skill, two approaches would be reading the
+      Coveralls documentation and watching Youtube tutorials. I will likely go
+      the route of Youtube tutorials as I find them easier to follow. However,
+      I will definitely use the documentation as well if I feel it will give me
+      better/missing information.
+    \item Hussain - Writing unit tests and component testing is the skill
     mentioned in the previous question that I will be focusing on. To acquire
     knowledge in this area, researching specific elements of UI components that
-    need to be tested will be helpful, as our project is primarily a user 
+    need to be tested will be helpful, as our project is primarily a user
     interface and will most likely have standard components that require testing.
     Practicing writing unit tests different components is also a great way to
-    learn this skill. By picking a real react project and using the outlined 
+    learn this skill. By picking a real react project and using the outlined
     tools to write tests for its components, I can gain hands-on experience
-    and understand how to effectively test the components of our own project. 
+    and understand how to effectively test the components of our own project.
     If time permits, I will attempt to approach learning this skill through
     practicing writing the unit tests, as I believe applying the knowledge in a
-    practical manner will help me understand the concepts better than just 
+    practical manner will help me understand the concepts better than just
     researching them.
+    \item Hussain -
     \item Jeffrey -
     \item Kevin -
   \end{itemize}
