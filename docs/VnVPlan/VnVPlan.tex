@@ -60,6 +60,7 @@ in.}
 \listoftables
 \wss{Remove this section if it isn't needed}
 
+
 \listoffigures
 \wss{Remove this section if it isn't needed}
 
@@ -375,8 +376,7 @@ How test will be performed:
 
 \subsection{Tests for Nonfunctional Requirements}
 
-\newcommand{\DISPLAYLATENCY}{30}
-\newcommand{\SHAPELOADTESTCOUNT}{500}
+
 
 \wss{The nonfunctional requirements for accuracy will likely just reference the
   appropriate functional tests from above.  The test cases should mention
@@ -425,7 +425,7 @@ Initial State: Application launched with an empty open note and a flag to show l
 
 Input/Condition: Adding shapes and text 
 
-Output/Result: Shapes or text are shown on screen within $\DISPLAYLATENCY$ ms. 
+Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms. 
 
 How test will be performed: The tester will open a note and then attempt to add a shape and a text box, noting the latency for each. 
 
@@ -433,13 +433,13 @@ How test will be performed: The tester will open a note and then attempt to add 
 
 Type: Dynamic, Manual.
 
-Initial State: Application launched with a flag to show latency and an open note that contains $\SHAPELOADTESTCOUNT$ shapes.
+Initial State: Application launched with a flag to show latency and an open note that contains \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes.
 
 Input/Condition: Adding shapes and text to the current note. 
 
-Output/Result: Shapes or text are shown on screen within $\DISPLAYLATENCY$ ms. 
+Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms. 
 
-How test will be performed: The tester will open a pre-made note with $\SHAPELOADTESTCOUNT$ shapes note and then attempt to add another shape, taking note of the latency. 
+How test will be performed: The tester will open a pre-made note with \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes note and then attempt to add another shape, taking note of the latency. 
 
 \end{enumerate}
 
@@ -517,14 +517,15 @@ How test will be performed: Code review on all parts that may use the network da
 
 \begin{table}[htbp]
 \centering
+\label{4.2.2}
 \caption{Traceability Matrix for Non-Functional Requirements}
 \begin{tabular}{|p{2.5cm}|p{6cm}|p{6cm}|}
 \hline
 \textbf{Requirement ID} & \textbf{Requirement Description} & \textbf{Related Test(s)} \\
 \hline
-NF211 & Low-latency input and rendering (less than $\DISPLAYLATENCY$ ms response). & Test-NF211: Verify that users can successfully make changes and have them appear within the allowed time. \\
+NF211 & Low-latency input and rendering (less than \textit{DISPLAY\_LATENCY}. ms response). & Test-NF211: Verify that users can successfully make changes and have them appear within the allowed time. \\
 \hline
-NF218 & Performance at scale ($\SHAPELOADTESTCOUNT$+ elements). & Test-NF211,Test-NF218: Verify that the program still functions and is responsive with large amounts of data in notes. \\
+NF218 & Performance at scale (\textit{SHAPE\_LOAD\_TEST\_COUNT}.+ elements). & Test-NF211,Test-NF218: Verify that the program still functions and is responsive with large amounts of data in notes. \\
 \hline
 NF213 & Cross-platform support (Windows/macOS/Linux). & Test-NF213: Verify program functionality on multiple different platforms. \\
 \hline
@@ -681,10 +682,14 @@ This is where you can place additional information.
 
 \subsection{Symbolic Parameters}
 
-DISPLAYLATENCY: Expected Latency. Defined at the top of 4.2
+: 
+\begin{description}
+  \item[DISPLAY\_LATENCY] - 30. Expected Latency in milliseconds. 
+\end{description}
 
-SHAPELOADTESTCOUNT: Amount of shapes used for stress testing. Defined at the top of 4.2
-
+\begin{description}
+  \item[SHAPE\_LOAD\_TEST\_COUNT] - 500.  Amount of shapes used for stress testing.: 
+\end{description}
 
 
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
