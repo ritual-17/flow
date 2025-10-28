@@ -85,98 +85,462 @@ in.}
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+\noindent This Verification and Validation (VnV) plan outlines the strategies that
+will be employed to ensure that \progname{} meets its specified requirements
+and functions correctly. This document covers the methods and criteria used
+to confirm that the software is built in a way that satisfies the outlined
+requirements, and that fulfills its intended purpose.
+
+% \wss{provide an introductory blurb and roadmap of the
+%   Verification and Validation plan}
 
 \section{General Information}
 
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+% \wss{Say what software is being tested.  Give its name and a brief overview of
+  % its general functions.}
 
+\progname{} is a note-taking application designed to convert keyboard input into
+visual diagrams and structured graphical representations. In addition to basic
+note-taking software features, such as creating, opening, editing, saving, and
+deleting notes, \progname{} aims to enhance user productivity by allowing users
+to quickly generate visual content from text input.
+
+\vspace{1em}
+
+\noindent Each note will be represented as a scrollable canvas where users can insert,
+edit, or delete text within text boxes. \progname{} will also support the insertion of
+predefined geometric shapes, as well as custom workflow shapes that users can
+define. The Verification and Validation (VnV) process will focus on ensuring
+that these core features function as specified, user interface elements work
+efficiently and intuitively, and that user interactions meet the outlined
+requirements.
+noindent
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+% \wss{State what is intended to be accomplished.  The objective will be around
+%   the qualities that are most important for your project.  You might have
+%   something like: ``build confidence in the software correctness,''
+%   ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
+%   just those that are most important.}
 
-\wss{You should also list the objectives that are out of scope.  You don't have
-the resources to do everything, so what will you be leaving out.  For instance,
-if you are not going to verify the quality of usability, state this.  It is also
-worthwhile to justify why the objectives are left out.}
+% \wss{You should also list the objectives that are out of scope.  You don't have
+% the resources to do everything, so what will you be leaving out.  For instance,
+% if you are not going to verify the quality of usability, state this.  It is also
+% worthwhile to justify why the objectives are left out.}
 
-\wss{The objectives are important because they highlight that you are aware of
-limitations in your resources for verification and validation.  You can't do everything,
-so what are you going to prioritize?  As an example, if your system depends on an
-external library, you can explicitly state that you will assume that external library
-has already been verified by its implementation team.}
+% \wss{The objectives are important because they highlight that you are aware of
+% limitations in your resources for verification and validation.  You can't do everything,
+% so what are you going to prioritize?  As an example, if your system depends on an
+% external library, you can explicitly state that you will assume that external library
+% has already been verified by its implementation team.}
+
+The primary objective of this Verification and Validation (VnV) plan is to
+ensure that \progname{} meets the specified requirements outlined in the Software
+Requirements Specification (SRS) document. This process aims to build confidence
+that the system functions correctly, is reliable, and provides a user-friendly
+experience. The objectives also aims to test activities that mitigate the risks
+identified in the Hazard Analysis document. This will ensure that the system is
+robust and can handle potential failure scenarios gracefully.
+
+\vspace{1em}
+
+\noindent Specifically, the VnV plan focuses on the following objectives:
+\begin{itemize}
+  \item \textbf{Document Management Correctness}: Verifying that file related operations,
+  such as creating, opening, saving, deleting and file organization of notes,
+  function as intended without data loss or corruption.
+  \item \textbf{Note and Diagram Manipulation Correctness}: Ensuring that editing features
+  related to note-taking and diagram creation work as specified. This includes
+  textbox and geometric diagram manipulation (inserting, resizing, moving, and
+  deleting), as well as text formatting capabilities (bolding, italicizing,
+  underlining, etc).
+  \item \textbf{Data Integrity}: Confirming that all user inputs and modifications are saved
+  accurately and can be retrieved without corruption or loss.
+  \item \textbf{Performance and Responisiveness}: Verifying that the user interactions occur
+  within acceptable time frames, ensuring a smooth and efficient user experience.
+  \item \textbf{System reliability}: Confirming that the system operates consistently in
+  different sessions without crashes or unexpected behavior.
+
+\end{itemize}
+\vspace{1em}
+
+\noindent Objectives that are out of scope for this VnV plan include:
+\begin{itemize}
+  \item \textbf{Formal Usability Testing}: Due to resource constraints, formal usability testing
+  with a large user base will not be conducted. Instead, an informal usability test from
+  team members within the development team will be used as these members fall into
+  the target user demographic.
+  \item \textbf{Security Testing}: Given the nature of \progname{} being a local note-taking
+noindent  application, security testing is not prioritized in this VnV plan. The focus
+  will be on functionality and usability rather than security vulnerabilities.
+  \item \textbf{External Library Verification}: Any third-party libraries or frameworks used
+  for rendering or GUI components will be assumed to have been verified by their
+  respective development teams.
+\end{itemize}
 
 \subsection{Extras}
 
-\wss{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.
-You can use a pull request to update your extras (in TeamComposition.csv or
-Repos.csv) if your plan changes as a result of the VnV planning exercise.}
+% \wss{Summarize the extras (if any) that were tackled by this project.  Extras
+% can include usability testing, code walkthroughs, user documentation, formal
+% proof, GenderMag personas, Design Thinking, etc.  Extras should have already
+% been approved by the course instructor as included in your problem statement.
+% You can use a pull request to update your extras (in TeamComposition.csv or
+% Repos.csv) if your plan changes as a result of the VnV planning exercise.}
+
+\noindent As part of the VnV prcess for \progname{}, the project will include the
+following two approved extras: Usability Testing and a User Manual.
+
+\begin{itemize}
+  \item \textbf{Usability Testing}: An informal, but structured test will be
+  conducted with team members who fall within the target user demographic. It
+  will be done to evaluate the intuitiveness and efficiency of the user interface
+  and workflows of \progname{}. Methods will be made as systematic and objective
+  as possible, to help closely identify areas for improvement. Participants will
+  complete a set of predefined tasks (e.g. creating and organizing notes, inserting
+  and editing diagrams, etc.) while their performance and completion times are
+  recorded (although participants are team members, they will not be involved in
+  the elicitation of the specific details of the set tasks to avoid bias).
+  Afterwards, participants will be given an opportunity to provide feedback on
+  their experience, including any difficulties encountered and suggestions for
+  enhancements.
+  \item \textbf{User Manual}: A comprehensive user manual will be created to
+  guide new users through the features and functionalities of \progname{}. The
+  manual will include step-by-step instructions for creating, editing, and
+  managing notes and diagrams. It will also have explanations of various tools
+  and keyboard shortcuts. The user manual will serve as both a user support
+  resource and a validation tool to ensure that all features are accessible and
+  understandable to users.
+\end{itemize}
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.  You can create BibTeX entries for your
-  documents and within those entries include a hyperlink to the documents.}
+% \wss{Reference relevant documentation.  This will definitely include your SRS
+%   and your other project documents (design documents, like MG, MIS, etc).  You
+%   can include these even before they are written, since by the time the project
+%   is done, they will be written.  You can create BibTeX entries for your
+%   documents and within those entries include a hyperlink to the documents.}
 
-\citet{SRS}
+% \citet{SRS}
 
-\wss{Don't just list the other documents.  You should explain why they are relevant and
-how they relate to your VnV efforts.}
+% \wss{Don't just list the other documents.  You should explain why they are relevant and
+% how they relate to your VnV efforts.}
 
+\noindent The following documents are relevant and closely linked to the Verification
+and Validation (VnV) document. These documents define and guide the development of
+\progname{}:
+
+\begin{itemize}
+  \item \textbf{Software Requirements Specification (SRS)}:
+  The SRS establishes the functional and non-functional requirements for \progname{},
+  forming the foundation for the VnV activities. Sections such as the Functional
+  Overview (G.4), High-Level Usage Scenarios (G.5), and System Components (S.1) were
+  referenced to ensure the testing objectives and procedures align with \progname{}'s
+  specified features and structure.
+  \item \textbf{Problem Statement}:
+  The Problem Statement outlines the project's goals and motivations. It was referenced
+  to ensure that the VnV objectives align with the intended purpose of \progname{}. The
+  Extras section of the Problem Statement was also used to identify the approved extras
+  for the project, which are included in this VnV plan.
+  \item \textbf{Design Documents (MG, MIS)}:
+  The Module Guide (MG) and Module Interface Specification (MIS) will provide detailed
+  descriptions of the system's architecture and module interactions. During develpoment
+  phases of the project, as well as development of unit and integration testing, the
+  MG and MIS will be referenced to ensure that each component performs as intended and
+  that the interactions between modules function correctly.
+  \item \textbf{Hazard Analysis}:
+  The Hazard Analysis document identifies potential risks and failure areas within
+  \progname{}. This document was referenced to inform the VnV plan's objectives. Key
+  risks and such as data loss, rendering lag, and unreliability were identified and
+  considered. This aims to ensure that testing activities address these risks and
+  validate the system's robustness against potential hazards.
+\end{itemize}
 \section{Plan}
 
-\wss{Introduce this section.  You can provide a roadmap of the sections to
-  come.}
+This section will go over the Verification and Validation Team members and the techniques
+and methodology required for a VnV Plan's success.
 
 \subsection{Verification and Validation Team}
 
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
+\begin{enumerate}
+    \item \textbf{Ethan} --- Team Lead / Test Manager
+    \begin{itemize}
+        \item Develop test plan, testing strategies, and test timelines
+    \end{itemize}
+
+    \item \textbf{Hussain} --- Test Analyst
+    \begin{itemize}
+        \item Create and review detailed tests for functional, non-functional,
+         and edge cases required for the project
+    \end{itemize}
+
+    \item \textbf{Oliver} --- Quality Assurance Tester
+    \begin{itemize}
+        \item Conduct tests to verify that all features work as
+        expected according to the SRS
+    \end{itemize}
+
+    \item \textbf{Jeffrey} --- Automation Tester
+    \begin{itemize}
+        \item Design, develop, and maintain most of the automated
+        test scripts used for repetitive and regression testing
+    \end{itemize}
+
+    \item \textbf{Kevin} --- Document Specialist
+    \begin{itemize}
+        \item Write and maintain most of the documentation,
+        referring to any test plans, test cases, reports, or defect logs
+    \end{itemize}
+\end{enumerate}
+
 
 \subsection{SRS Verification}
 
-\wss{List any approaches you intend to use for SRS verification.  This may
-  include ad hoc feedback from reviewers, like your classmates (like your
-  primary reviewer), or you may plan for something more rigorous/systematic.}
+\begin{enumerate}
+\item Internal Review and Cross-Check
+\begin{enumerate}
+\item This is the first level of verification for the SRS. The team
+will conduct a review as a whole, reviewing each member’s contribution
+and giving feedback. Additionally, this will help members confirm
+consistency between each individually worked on part.
+\item Moreover, the team will also be given the opportunity to
+cross-check with the requirements listed in any previous documents
+to ensure there is consistency between documentation.
+\end{enumerate}
 
-\wss{If you have a supervisor for the project, you shouldn't just say they will
-read over the SRS.  You should explain your structured approach to the review.
-Will you have a meeting?  What will you present?  What questions will you ask?
-Will you give them instructions for a task-based inspection?  Will you use your
-issue tracker?}
+\item Peer Review
+\begin{enumerate}
+\item This verification process will allow our team to seek assistance from
+a peer capstone team. This portion will allow another team to verify that the
+SRS is filled to completion and is error-free, ready for validation
+and development.
+\item Additionally, this gives our team a chance to review another capstone’s
+SRS, which will allow us to cross-reference with our SRS, verifying that
+both documents adhere to the Myers SRS convention and include every necessary portion.
+\end{enumerate}
 
-\wss{Maybe create an SRS checklist?}
+\item Check List Review
+\begin{enumerate}
+\item This level of verification will have the team review
+ and cross-reference the SRS checklist once again after
+ the deliverable has been completed.
+\item This is an extensive SRS checklist provided by our
+course instructor and is a professional way to ensure
+that our SRS contains everything required of us.
+\item Going over this as a team once the document has
+been completed allows us to verify that all members
+adhered to the checklist when creating their portion
+of the SRS document.
+\end{enumerate}
+\end{enumerate}
 
 \subsection{Design Verification}
 
-\wss{Plans for design verification}
+\begin{enumerate}
+\item Purpose:
+\begin{enumerate}
+\item We will use this to ensure that the design of our application
+meets the specifications and user needs outlined in the SRS.
+By referencing the SRS, we can verify that our application
+is designed as intended and aligns with any goals or statements
+made during the planning process.
+\end{enumerate}
 
-\wss{The review will include reviews by your classmates}
+\item Design Verification Scope:
+\begin{enumerate}
+\item This plan will cover the verification of the following components:
+\begin{enumerate}
+\item User Interface (UI): Verify that the UI is intuitive
+and is minimized to accommodate a more keyboard-friendly
+environment, which would not require any mouse involvement.
+\item Diagram Creation: Verify that the diagram creation
+feature works using only a keyboard and no mouse/trackpad.
+Ensure that diagrams are created with the same freedom
+and range as writing on a piece of paper or using a mouse.
+\item Accessibility and Usability: Verify that users
+can efficiently use the application without the need
+for other external tools aside from a keyboard.
+\item Performance: Verify that the system works as
+intended even when generating multiple objects or diagrams.
+\end{enumerate}
+\end{enumerate}
 
-\wss{Create a checklists?}
+\item Verification Objectives:
+\begin{enumerate}
+\item Comply with Functional Requirements: Verify that
+the design supports all key features and complies with
+the functional requirements listed in all past
+documents, such as the SRS.
+\item Verify Performance: Verify that the
+application can handle multiple diagrams
+and object elements.
+\end{enumerate}
+
+\item Design Verification Methodology:
+\begin{enumerate}
+\item Verification through Design Reviews:
+\begin{enumerate}
+\item Internal Design Review:
+\begin{enumerate}
+\item The development team will conduct an internal
+review of the application to ensure that we are
+complying with all the functional requirements
+specified in the SRS and other related documents.
+\item The team will also verify that the
+application is user-friendly by using past knowledge
+on product usability and referencing
+existing note-taking applications.
+\end{enumerate}
+\item Design Walkthrough
+\begin{enumerate}
+\item The development team will conduct walkthroughs
+with other team members who may not have been involved
+in specific feature development. Additionally,
+peers and friends may be used to conduct a proper
+walkthrough session.
+\item During the walkthrough, ensure that users
+are able to navigate the application and create
+diagrams using the keyboard as intended.
+\end{enumerate}
+\end{enumerate}
+
+\item Functional Testing:
+\begin{enumerate}
+\item Test Case Development:
+\begin{enumerate}
+\item Develop test cases that focus on verifying key
+design features, such as keyboard navigation or
+the creation of diagrams or objects using shortcuts.
+\end{enumerate}
+\end{enumerate}
+
+\item Performance Testing:
+\begin{enumerate}
+\item Load Testing:
+\begin{enumerate}
+\item Perform tests that will create strain on a system
+through the creation of multiple objects or diagrams
+that are being manipulated. Verify that the application
+is able to perform well under this load with the
+system requirements specified in the SRS.
+\end{enumerate}
+\item Speed Test:
+\begin{enumerate}
+\item Verify that all interactions (i.e.,
+diagram/object creation and manipulation) are
+quick and responsive with minimal lag or delay.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+\item Design Verification Criteria:
+\begin{enumerate}
+\item Usability Criteria:
+\begin{enumerate}
+\item Users can create diagrams using only
+keyboard shortcuts.
+\item Users can navigate the user interface
+without relying on a mouse.
+\item No critical keyboard shortcut conflict,
+and functionality across all supported platforms.
+\end{enumerate}
+\item Functional Criteria:
+\begin{enumerate}
+\item All diagram creation features are functional.
+This includes adding shapes, manipulating elements,
+connecting existing objects, and deleting components,
+without the use of a mouse.
+\end{enumerate}
+\item Compliance with Requirements:
+\begin{enumerate}
+\item The design must meet all requirements outlined in the
+Software Requirements Specification (SRS).
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
 
 \subsection{Verification and Validation Plan Verification}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
+\begin{enumerate}
+\item Purpose:
+\begin{enumerate}
+\item To verify that the VnV Plan is complete, correct, and
+meets the standards for verifying and validating our application.
+\end{enumerate}
 
-\wss{The review will include reviews by your classmates}
+\item VnV Plan Verification Scope:
+\begin{enumerate}
+\item Completeness: Verify that all necessary sections
+and objectives are included.
+\item Clarity and Precision: Verify that the plan is
+clearly written and unambiguous.
+\item Feasibility: Verify that all techniques and
+processes described to be used in the verification and
+validation process are practical and achievable.
+\end{enumerate}
 
-\wss{Create a checklists?}
+\item VnV Plan Verification Objectives:
+\begin{enumerate}
+\item Verify that the VnV Plan is comprehensive and covers
+all necessary portions required of a complete verification
+and validation plan.
+\item Verify that the techniques outlined for verification
+are appropriate for validating the functional requirements
+listed in the SRS.
+\item Verify that the plan can realistically be executed and
+will assist and result in the resolution of any defects
+found in our application.
+\end{enumerate}
+
+\item Verification Techniques:
+\begin{enumerate}
+\item Internal Verification Plan Review:
+\begin{enumerate}
+\item The entire capstone team will collectively review the
+document once finished. This is to verify that all members
+have completed each task to a standard that the team can agree on.
+\item The team will also be utilizing the checklist provided
+by the course instructor. This will help in verifying that
+the VnV Plan is completed correctly and incorporates all
+the main features and sections required of a proper VnV Plan.
+\end{enumerate}
+
+\item Peer Review:
+\begin{enumerate}
+\item The VnV Plan will also be reviewed by another project
+team that has also been tasked to work on a similar VnV
+Plan for their capstone. This will help verify that our
+team has completed the document properly by comparing
+sections and content with another completed VnV document
+in the same cohort.
+\item Moreover, while our team also reviews the partnered
+team’s VnV Plan, we can cross-reference ours with theirs to
+verify that both teams have incorporated all the necessary
+sections and techniques required for this deliverable.
+\end{enumerate}
+
+\item Mutation Testing:
+\begin{enumerate}
+\item Our team will incorporate mutation testing to verify that
+our VnV Plan is working as intended. In order to do this,
+we will be incorporating small changes or “mutants” and testing
+to see if the verification and validation process noted would
+catch them. If the plan catches these changes, it will help
+confirm that the VnV plan is comprehensive and effective.
+\item Example of possible mutations:
+\begin{enumerate}
+\item Mutation 1: Remove a key verification step
+(e.g., Usability Verification) and see if the VnV
+process identifies this omission.
+\item Mutation 2: Add an unnecessary or incorrect
+verification technique (e.g., object creation via mouse)
+and see if the VnV process can identify that the new
+technique is unsuitable or conflicts with other requirements.
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
 
 \subsection{Implementation Verification}
 
@@ -317,8 +681,8 @@ as they are discovered.
 \wss{There should be text between all headings, even if it is just a roadmap of
 the contents of the subsections.}
 
-This section defines the system-level tests that will verify the correctness of the system’s 
-functional requirements as specified in the SRS (Section S.2). Each test case focuses on validating 
+This section defines the system-level tests that will verify the correctness of the system’s
+functional requirements as specified in the SRS (Section S.2). Each test case focuses on validating
 user-facing behaviors and ensuring that the system performs as expected under normal and boundary conditions.
 
 \subsection{Tests for Functional Requirements}
@@ -330,9 +694,9 @@ user-facing behaviors and ensuring that the system performs as expected under no
 \wss{Include a blurb here to explain why the subsections below
   cover the requirements.  References to the SRS would be good here.}
 
-The following subsections group tests into functional areas that align with the SRS:  
-1. **Editing and Canvas Operations** – covering note creation, editing, and manipulation (SRS F211–F216).  
-2. **File Management and Persistence** – covering saving, loading, and export functions (SRS F217–F243).  
+The following subsections group tests into functional areas that align with the SRS:
+1. **Editing and Canvas Operations** – covering note creation, editing, and manipulation (SRS F211–F216).
+2. **File Management and Persistence** – covering saving, loading, and export functions (SRS F217–F243).
 
 \subsubsection{Area of Testing1 — Editing and Canvas Operations}
 
@@ -341,8 +705,8 @@ The following subsections group tests into functional areas that align with the 
   covers tests for input constraints, you should reference the data constraints
   table in the SRS.}
 
-This area tests core editing functions that define the user experience — creating, modifying, and visually 
-managing elements on the canvas. Successful execution validates that the system’s interactive core behaves 
+This area tests core editing functions that define the user experience — creating, modifying, and visually
+managing elements on the canvas. Successful execution validates that the system’s interactive core behaves
 as specified in the SRS functional requirements F211–F216.
 
 \paragraph{Note Creation and Editing}
@@ -360,14 +724,14 @@ Input: User creates a new note and types text content.
 Output: \wss{The expected result for the given inputs.  Output is not how you
 are going to return the results of the test.  The output is the expected
 result.}
-A new note file is created and displayed in the editor window. Typed content appears 
+A new note file is created and displayed in the editor window. Typed content appears
 immediately in the canvas with no delay.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
-The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.  
+The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.
 The test verifies that note objects are correctly instantiated and rendered without performance issues.
 
-How test will be performed: Automated UI testing via simulated input sequence that triggers note creation, typing, 
+How test will be performed: Automated UI testing via simulated input sequence that triggers note creation, typing,
 and real-time rendering validation.
 
 \item{test-F214\\}
@@ -382,17 +746,17 @@ Output: \wss{The expected result for the given inputs}
 The shape appears correctly and follows the user’s movement without lag or distortion.
 
 Test Case Derivation: \wss{Justify the expected value given in the Output field}
-Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.  
+Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.
 The expected value is that the object’s final position and dimensions match those in the test specification.
 
-How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of 
+How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of
 expected versus rendered object placement.
 
 \end{enumerate}
 
 \subsubsection{Area of Testing2 — File Management and Persistence}
 
-This area validates system behavior related to file operations such as saving, loading, and exporting notes.  
+This area validates system behavior related to file operations such as saving, loading, and exporting notes.
 It ensures compliance with SRS functional requirements F217–F243, verifying that user data is properly stored and retrieved.
 
 \paragraph{Saving and Loading Notes}
@@ -409,7 +773,7 @@ Input: User selects “Save” and then “Open” from the menu.
 
 Output: The note reopens with all previously entered text and shapes intact.
 
-Test Case Derivation: Expected results come from SRS F217 and F241, which require data persistence and accurate file recovery.  
+Test Case Derivation: Expected results come from SRS F217 and F241, which require data persistence and accurate file recovery.
 The test verifies successful serialization and deserialization of notes.
 
 How test will be performed: Automated file I/O comparison between pre-save and post-load content to confirm identical state restoration.
@@ -424,7 +788,7 @@ Input: User selects “Export as PDF.”
 
 Output: A PDF file is generated containing the correct layout, formatting, and graphical content.
 
-Test Case Derivation: Derived from F243, which specifies export functionality for interoperability.  
+Test Case Derivation: Derived from F243, which specifies export functionality for interoperability.
 Expected outcome is that the exported file visually matches the on-screen content with no missing or altered elements.
 
 How test will be performed: Manual verification by comparing the exported PDF output to the in-application rendering.
@@ -682,9 +1046,29 @@ graduate attribute of Lifelong Learning.
     with the SRS document while writing the tests, which helped me understand the project better. After
     the previous deliverables, me and the team both got more comfortable with the LaTeX format and GitHub workflow,
     which made the writing process smoother.
-    \item Ethan -
-    \item Hussain -
-    \item Jeffrey -
+    \item Ethan - I was responsible for writing out parts of the plan section
+      involving the verification plans and test tooling. Something that went
+      well while working on this was doing some more research and deciding the
+      technologies we would use for testing. This gave everyone a better idea
+      of the types of testing we would need to do, the infrastructure that will
+      need to be set up for them, and the frameworks we would use. It was also
+      good to discuss this plan with the team and make sure to set (realistic)
+      expectations for testing.
+    \item Hussain - In this deliverable, I was tasked with writing the
+        general information section of the VnV plan. To successfully write
+        this section, not only did I have to understand the purpose of the
+        VnV plan, but I had to review our previous documents such as the SRS,
+        Problem Statement, and Hazard Analysis, to ensure consistency across
+        our project's documentation. This allowed me to see how different
+        documents interrelate and reinforced my understanding of the
+        project's overall structure and objectives.
+    \item Jeffrey - During this deliverable, I found that writing sections
+      that referenced or related to the SRS and Hazard Analysis went very well.
+      Since we put in extensive work into our SRS and Hazard Analysis, I found
+      that working on the VnV (which builds on the SRS and other relating
+      documents a bit) was very smooth. Since the SRS was well organized and
+      most of the members were familiar with it's contents, we were able to
+      efficiently reference it and complete the VnV Plan at a good pace.
     \item Kevin -
   \end{itemize}
   \item What pain points did you experience during this deliverable, and how
@@ -695,9 +1079,32 @@ graduate attribute of Lifelong Learning.
     on merge the pull requests when I need to make sure my branch is up to date with the main branch. I resolved this by
     learning how to rebase my branch onto the main branch before merging. Which is a result of smooth communication with 
     team lead Ethan.
-    \item Ethan -
-    \item Hussain -
-    \item Jeffrey -
+    \item Ethan - Honestly, this deliverable went pretty smoothly. There were
+      some issues that arose with the GitHub Actions build system that were
+      discovered while working on the last deliverable, but I took some time to
+      fix them. I had felt that I was doing a lot of "intro" type work in the
+      past deliverables so I wanted to switch to a different section. Hussain
+      gladly agreed to take on the intro section for this doc and I did
+      something different with the testing plan.
+    \item Hussain - When looking at the VnV plan, I was initially confused
+    on a few of the sections, particularly on what symbolic parameters were
+    and how challenge levels worked. To resolve this, I asked about these
+    things in our initial TA meeting for the deliverable. Symbolic parameters
+    were explained to us as any constants that we would want to define in one
+    place for easy maintenance and used throughout the document. Challenge
+    level was a previously used concept in past years' VnV plans that was
+    not relevant for this year's deliverable.
+    \item Jeffrey - During this deliverable, I found that coordinating with
+      the team was a little more difficult that usual. This is due to the fact
+      that a lot of us had other course work and midterms happening during
+      the creation of our VnV Plan. In order to resolve this issue, the team
+      decided that each member should list their availability and schedules
+      so we could properly organize a date and time that works best for
+      everyone. In the past, it was a bit easier where we could
+      propose a day and see if the team is available. This time around, we
+      had to check availability first before proposing a day to meet. I found
+      this solution to be very effective and will definetely use this
+      when our schedules get busier.
     \item Kevin -
   \end{itemize}
   \item What knowledge and skills will the team collectively need to acquire to
@@ -749,9 +1156,48 @@ graduate attribute of Lifelong Learning.
     test results. Since my role centers on maintaining the reliability and quality of the 
     product, these skills will help me ensure that our software performs as intended and 
     meets all functional requirements.
-    \item Ethan -
-    \item Hussain -
-    \item Jeffrey -
+    \item Ethan - I will be picking up the code coverage metric integration
+      work. For acquiring this skill, two approaches would be reading the
+      Coveralls documentation and watching Youtube tutorials. I will likely go
+      the route of Youtube tutorials as I find them easier to follow. However,
+      I will definitely use the documentation as well if I feel it will give me
+      better/missing information.
+    \item Hussain - Writing unit tests and component testing is the skill
+    mentioned in the previous question that I will be focusing on. To acquire
+    knowledge in this area, researching specific elements of UI components that
+    need to be tested will be helpful, as our project is primarily a user
+    interface and will most likely have standard components that require testing.
+    Practicing writing unit tests different components is also a great way to
+    learn this skill. By picking a real react project and using the outlined
+    tools to write tests for its components, I can gain hands-on experience
+    and understand how to effectively test the components of our own project.
+    If time permits, I will attempt to approach learning this skill through
+    practicing writing the unit tests, as I believe applying the knowledge in a
+    practical manner will help me understand the concepts better than just
+    researching them.
+    \item Jeffrey - I would like to focus on becoming more
+    familiar with CI/CD. Since most of us have not created or
+    maintained one before, I feel like it's an important
+    skill to develop, seeing as we cannot rely on any
+    one member who already has expertise in this field. An approach
+    that I plan on using to acquire the knowledge for this
+    skill is to leverage my internship connections. During my co-op
+    I worked closely with CI/CD team members in my department.
+    While I never specifically worked on CI/CD, I was able to keep
+    in touch with members from that time. For this capstone, I plan
+    on leveraging these connections to gain the skills
+    that would benefit this capstone project. Additionally, I plan
+    on improving my automation skills by developing a better
+    understanding of how to build an automated test pipeline with
+    GitHub actions. This is because I was assigned the role of
+    Automation Tester when working on the Verification and
+    Validation team. Since I was assigned this role,
+    I feel inclined to learn this skill to contribute and fulfill
+    my responsibilities as an Automation Tester. To acquire this
+    skill, I've found many resources regarding how to build
+    automated testing pipelines with GitHub actions. Since this
+    isn't a niche skill or topic, there are many resources, such as
+    guides or videos, that will assist me in acquiring this skill.
     \item Kevin -
   \end{itemize}
 \end{enumerate}
