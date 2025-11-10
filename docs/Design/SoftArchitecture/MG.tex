@@ -232,12 +232,18 @@ The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
 between requirements and modules is listed in Table~\ref{TblRT}.
 
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
+The design of our system stems directly from the key functional and non-functional 
+requirements outlined in the SRS. The requirements identified features such as note creation, 
+text editing, diagram integration, file management, and undo/redo functionality, all of 
+which influenced how we structured the system into distinct but interconnected modules. 
+For instance, the user interaction and data handling requirements motivated the separation 
+between interface-related modules and logic-handling components, ensuring maintainability 
+and scalability. Likewise, requirements emphasizing usability, responsiveness, and persistence 
+informed the decision to isolate rendering, state management, and data storage responsibilities 
+into separate layers. Overall, the transition from requirements to design aims to ensure that 
+each major function defined in the SRS is mapped to a cohesive part of the architecture, supporting 
+modular growth and clear boundaries between user interface, behavior logic, and data management layers.
+
 
 \section{Module Decomposition} \label{SecMD}
 
