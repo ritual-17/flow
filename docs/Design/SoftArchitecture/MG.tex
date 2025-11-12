@@ -157,16 +157,36 @@ adapted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+\item[\refstepcounter{acnum} \actheacnum \label{acOS}:] The specific operating 
+  system environment on which the software is running.
+\item[\refstepcounter{acnum} \actheacnum \label{asFramwork}:] The UI framework 
+  or technology used for the display of \progname{}.
+\item[\refstepcounter{acnum} \actheacnum \label{acFileFormat}:] The format used for 
+  saving and loading the note files and diagrams (e.g., XML, JSON, binary).
+\item [\refstepcounter{acnum} \actheacnum \label{acSyntax}:] The syntax used for
+  editing and navigating the note and diagrams.
+\item [\refstepcounter{acnum} \actheacnum \label{{acGeometry}:}] The internal
+  representation of geometric shapes and diagrams.
+\item [\refstepcounter{acnum} \actheacnum \label{acShapeManipulation}:] The 
+  rules as well as algorithms used for manipulating shapes (resizing, rotating, 
+  grouping, etc).
+\item [\refstepcounter{acnum} \actheacnum \label{acPreferences}:] The user 
+  preferences and configuration options available for the user to customize.
+\item [\refstepcounter{acnum} \actheacnum \label{acTextFormatting}:] The text 
+  formatting options available (e.g., font size, color, style).
+\item [\refstepcounter{acnum} \actheacnum \label{acImportExport}:] The formats 
+  and options available for importing or exporting notes (e.g., PDF, image formats).
+\item [\refstepcounter{acnum} \actheacnum \label{acUndoRedo}:] The implementation 
+  of the undo/redo functionality.
+\item [\refstepcounter{acnum} \actheacnum \label{acPersistence}:] The method used 
+  for saving user data and session state.
+\item [\refstepcounter{acnum} \actheacnum \label{acCanvasState}:] The implementation
+  of how the state of the canvas will be captured and restored.
 \end{description}
 
-\wss{Anticipated changes relate to changes that would be made in requirements,
-design or implementation choices.  They are not related to changes that are made
-at run-time, like the values of parameters.}
+% \wss{Anticipated changes relate to changes that would be made in requirements,
+% design or implementation choices.  They are not related to changes that are made
+% at run-time, like the values of parameters.}
 
 \subsection{Unlikely Changes} \label{SecUchange}
 
@@ -179,8 +199,11 @@ decisions will be changed.
 
 \begin{description}
 \item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+  (Input: File and/or keyboard, Output: Screen display and file storage).
+\item [\refstepcounter{ucnum} \uctheucnum \label{ucPlatform}:] The target platform
+  will be desktop computers (Windows, MacOS, Linux).
+\item [\refstepcounter{ucnum} \uctheucnum \label{ucStructure}:] The note structure
+  will remain a combination of text and geometric shapes. 
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
