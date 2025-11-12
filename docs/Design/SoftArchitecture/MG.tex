@@ -33,7 +33,7 @@
 
 \begin{document}
 
-\title{Module Guide for \progname{}} 
+\title{Module Guide for \progname{}}
 \author{\authname}
 \date{\today}
 
@@ -60,10 +60,10 @@ This section records information for easy reference.
 \subsection{Abbreviations and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
+\begin{tabular}{l l}
+  \toprule
   \textbf{symbol} & \textbf{description}\\
-  \midrule 
+  \midrule
   AC & Anticipated Change\\
   DAG & Directed Acyclic Graph \\
   M & Module \\
@@ -99,7 +99,7 @@ based on the principle of information hiding~\citep{Parnas1972a}.  This
 principle supports design for change, because the ``secrets'' that each module
 hides represent likely future changes.  Design for change is valuable in SC,
 where modifications are frequent, especially during initial development as the
-solution space is explored.  
+solution space is explored.
 
 Our design follows the rules layed out by \citet{ParnasEtAl1984}, as follows:
 \begin{itemize}
@@ -191,8 +191,20 @@ below, which are leaves in the hierarchy tree, are the modules that will
 actually be implemented.
 
 \begin{description}
-\item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mDI}:] Display Interface Module
+\item [\refstepcounter{mnum} \mthemnum \label{mII}:] Input Interface Module
+\item [\refstepcounter{mnum} \mthemnum \label{mFI}:] File Interface Module
+\item [\refstepcounter{mnum} \mthemnum \label{mGSP}:] Geometry State Parser Module
+\item [\refstepcounter{mnum} \mthemnum \label{mGSC}:] Geometry State Converter Module
+\item [\refstepcounter{mnum} \mthemnum \label{mCP}:] Commands Parser Module
+\item [\refstepcounter{mnum} \mthemnum \label{mMC}:] Mode Commands Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSI}:] Shape Interface Module
+\item [\refstepcounter{mnum} \mthemnum \label{mUPref}:] User Preference Module
+\item [\refstepcounter{mnum} \mthemnum \label{mTB}:] Text Buffer Module
+\item [\refstepcounter{mnum} \mthemnum \label{mGS}:] Geometry State Module
+\item [\refstepcounter{mnum} \mthemnum \label{mGSM}:] Geometry State Mutator Module
+\item [\refstepcounter{mnum} \mthemnum \label{mUR}:] Undo Redo Module
+\item [\refstepcounter{mnum} \mthemnum \label{mUPer}:] User Persistence Module
 \end{description}
 
 
@@ -203,22 +215,24 @@ actually be implemented.
 \textbf{Level 1} & \textbf{Level 2}\\
 \midrule
 
-{Hardware-Hiding Module} & ~ \\
+  \multirow{3}{0.3\textwidth}{Hardware-Hiding Module} & {Display Interface Module (\mref{mDI})}\\
+  & {Input Interface Module (\mref{mII})}\\
+  & {File Interface Module (\mref{mFI})}\\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+  \multirow{6}{0.3\textwidth}{Behaviour-Hiding Module} & {Geometry State Parser Module (\mref{mGSP})}\\
+  & {Geometry State Converter Module (\mref{mGSC})}\\
+& {Command Parser Module  (\mref{mCP})}\\
+& {Mode Commands Module (\mref{mMC})}\\
+& {Shape Interface Module (\mref{mSI})}\\
+& {User Preference Module (\mref{mUPref})}\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{5}{0.3\textwidth}{Software Decision Module} & {Text Buffer Module (\mref{mTB})}\\
+& {Geometry State Module (\mref{mGS})}\\
+& {Geometry State Mutator Module (\mref{mGSM})}\\
+  & {Undo Redo Module (\mref{mUR})}\\
+  & {User Persistence Module (\mref{mUPer})}\\
 \bottomrule
 
 \end{tabular}
@@ -255,57 +269,136 @@ Only the leaf modules in the hierarchy have to be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not have
 to be implemented.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Modules}
+
+\subsubsection{Display Interface Module (\mref{mDI})}
 
 \begin{description}
-\item[Secrets:]The data structure and algorithm used to implement the virtual
-  hardware.
-\item[Services:]Serves as a virtual hardware used by the rest of the
-  system. This module provides the interface between the hardware and the
-  software. So, the system can use it to display outputs or to accept inputs.
-\item[Implemented By:] OS
+\item[Secrets:] Implementation of rendering to the screen.
+\item[Services:] Provides API to render graphics and text to the
+  screen.
+\item[Implemented By:] [OS, Electron, React]
+\end{description}
+
+\subsubsection{Input Interface Module (\mref{mII})}
+
+\begin{description}
+\item[Secrets:] User input event handling.
+\item[Services:] Provides API to capture user input events (i.e. keyboard input).
+\item[Implemented By:] [OS, Electron]
+\end{description}
+
+\subsubsection{File Interface Module (\mref{mFI})}
+
+\begin{description}
+\item[Secrets:] File system interaction.
+\item[Services:] Provides API to read and write files (open, save).
+\item[Implemented By:] [OS]
 \end{description}
 
 \subsection{Behaviour-Hiding Module}
 
-\begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
-  the system as specified in the software requirements specification (SRS)
-  documents. This module serves as a communication layer between the
-  hardware-hiding module and the software decision module. The programs in this
-  module will need to change if there are changes in the SRS.
-\item[Implemented By:] --
-\end{description}
-
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{Geometry State Parser Module (\mref{mGSP})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:]Logic for parsing the input file format into internal geometry representation state.
+\item[Services:]Parses input files and converts them into the internal data structures used by the system.
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Object]
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Geometry State Converter Module (\mref{mGSC})}
 
+\begin{description}
+\item[Secrets:]Logic for converting internal geometry representation state into output file format.
+\item[Services:] Converts internal data structures into output files (e.g. xml for local saves, pdf for exporting).
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Object]
+\end{description}
+
+\subsubsection{Command Parser Module  (\mref{mCP})}
+
+\begin{description}
+\item[Secrets:]Mapping between raw input events to editor commands.
+\item[Services:]Converts keyboard input into internal commands.
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Object]
+\end{description}
+
+\subsubsection{Mode Commands Module (\mref{mMC})}
+
+\begin{description}
+\item[Secrets:]Mapping between active mode and available commands.
+\item[Services:]Provides the set of available commands based on the current mode.
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Record]
+\end{description}
+
+\subsubsection{Shape Interface Module (\mref{mSI})}
+
+\begin{description}
+  \item[Secrets:]Data structure containing shape properties and methods (e.g. size, position).
+\item[Services:] Provides an interface for creating and manipulating a shape in the system.
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Data Type]
+\end{description}
+
+\subsubsection{User Preference Module (\mref{mUPref})}
+
+\begin{description}
+  \item[Secrets:]Data structure containing user preferences (e.g. theme, shortcuts) and actions for creating them.
+\item[Services:] Provides an interface for creating and manipulating user preferences in the system.
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Object]
+\end{description}
 
 \subsection{Software Decision Module}
 
+\subsubsection{Text Buffer Module (\mref{mTB})}
+
 \begin{description}
-\item[Secrets:] The design decision based on mathematical theorems, physical
-  facts, or programming considerations. The secrets of this module are
-  \emph{not} described in the SRS.
-\item[Services:] Includes data structure and algorithms used in the system that
-  do not provide direct interaction with the user. 
-  % Changes in these modules are more likely to be motivated by a desire to
-  % improve performance than by externally imposed changes.
-\item[Implemented By:] --
+\item[Secrets:]Text data structure.
+\item[Services:]Provides editing functionality for text data.
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Data Type]
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Geometry State Module (\mref{mGS})}
+
+\begin{description}
+\item[Secrets:]Geometry state data structure.
+\item[Services:]Holds the current state of the geometry.
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Data Type]
+\end{description}
+
+\subsubsection{Geometry State Mutator Module (\mref{mGSM})}
+
+\begin{description}
+\item[Secrets:]Algorithms for updating geometry state.
+\item[Services:]Provides methods to mutate the geometry state (add, delete, modify shapes).
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Object]
+\end{description}
+
+\subsubsection{Undo Redo Module (\mref{mUR})}
+
+\begin{description}
+\item[Secrets:]Algorithms for managing undo and redo stacks.
+\item[Services:]Provides functionality to undo and redo actions performed on the geometry state.
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Object]
+\end{description}
+
+
+\subsubsection{User Persistence Module (\mref{mUPer})}
+
+\begin{description}
+\item[Secrets:]Mechanism for saving and loading user preferences and shortcuts.
+\item[Services:]Provides functionality for persisting user preferences and shortcuts.
+\item[Implemented By:] [\progname{}]
+\item[Type of Module:] [Abstract Object]
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
