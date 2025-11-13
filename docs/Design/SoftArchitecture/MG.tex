@@ -157,28 +157,28 @@ adapted here is called design for
 change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acOS}:] The specific operating 
+\item[\refstepcounter{acnum} \actheacnum \label{acOS}:] The specific operating
   system environment on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{asFramwork}:] The UI framework 
+\item[\refstepcounter{acnum} \actheacnum \label{asFramwork}:] The UI framework
   or technology used for the display of \progname{}.
-\item[\refstepcounter{acnum} \actheacnum \label{acFileFormat}:] The format used for 
+\item[\refstepcounter{acnum} \actheacnum \label{acFileFormat}:] The format used for
   saving and loading the note files and diagrams (e.g., XML, JSON, binary).
 \item [\refstepcounter{acnum} \actheacnum \label{acSyntax}:] The syntax used for
   editing and navigating the note and diagrams.
 \item [\refstepcounter{acnum} \actheacnum \label{{acGeometry}:}] The internal
   representation of geometric shapes and diagrams.
-\item [\refstepcounter{acnum} \actheacnum \label{acShapeManipulation}:] The 
-  rules as well as algorithms used for manipulating shapes (resizing, rotating, 
+\item [\refstepcounter{acnum} \actheacnum \label{acShapeManipulation}:] The
+  rules as well as algorithms used for manipulating shapes (resizing, rotating,
   grouping, etc).
-\item [\refstepcounter{acnum} \actheacnum \label{acPreferences}:] The user 
+\item [\refstepcounter{acnum} \actheacnum \label{acPreferences}:] The user
   preferences and configuration options available for the user to customize.
-\item [\refstepcounter{acnum} \actheacnum \label{acTextFormatting}:] The text 
+\item [\refstepcounter{acnum} \actheacnum \label{acTextFormatting}:] The text
   formatting options available (e.g., font size, color, style).
-\item [\refstepcounter{acnum} \actheacnum \label{acImportExport}:] The formats 
+\item [\refstepcounter{acnum} \actheacnum \label{acImportExport}:] The formats
   and options available for importing or exporting notes (e.g., PDF, image formats).
-\item [\refstepcounter{acnum} \actheacnum \label{acUndoRedo}:] The implementation 
+\item [\refstepcounter{acnum} \actheacnum \label{acUndoRedo}:] The implementation
   of the undo/redo functionality.
-\item [\refstepcounter{acnum} \actheacnum \label{acPersistence}:] The method used 
+\item [\refstepcounter{acnum} \actheacnum \label{acPersistence}:] The method used
   for saving user data and session state.
 \item [\refstepcounter{acnum} \actheacnum \label{acCanvasState}:] The implementation
   of how the state of the canvas will be captured and restored.
@@ -203,7 +203,7 @@ decisions will be changed.
 \item [\refstepcounter{ucnum} \uctheucnum \label{ucPlatform}:] The target platform
   will be desktop computers (Windows, MacOS, Linux).
 \item [\refstepcounter{ucnum} \uctheucnum \label{ucStructure}:] The note structure
-  will remain a combination of text and geometric shapes. 
+  will remain a combination of text and geometric shapes.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -510,8 +510,7 @@ arrows in the diagram typically correspond to the presence of import statement.}
 
 \section{User Interfaces}
 
-\wss{Design of user interface for software and hardware.  Attach an appendix if
-needed. Drawings, Sketches, Figma}
+A rough drawing / sketch of our basic functionaility of creating elements / diagrams:
 
 \section{Design of Communication Protocols}
 
@@ -519,9 +518,32 @@ needed. Drawings, Sketches, Figma}
 
 \section{Timeline}
 
-\wss{Schedule of tasks and who is responsible}
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{0.15\textwidth} p{0.18\textwidth} X p{0.22\textwidth} p{0.15\textwidth}}
+\toprule
+\textbf{Phase} & \textbf{Dates} & \textbf{Focus} & \textbf{Modules} & \textbf{Member(s)} \\
+\midrule
 
-\wss{You can point to GitHub if this information is included there}
+1 - Foundations & Oct 1 -- Nov 10 & Implement file I/O and basic note text storage & File Interface, Text Buffer & Ethan Hussain \\
+
+2 - Core Editing & Nov 10 -- Dec 15 & Adding editing operations, undo/redo stack & Undo Redo, Text Buffer & Ethan Hussain \\
+
+3 - UI Layer & Dec 1 -- Jan 20 & Create an editor window and input capture & Display Interface, Input Interface & Jeffrey Chengze \\
+
+4 - Command and Mode Logic & Jan 10 -- Feb 15 & Shortcuts, editing modes, keyboard mappings & Command Parser, Mode Commands & Jeffrey Chengze \\
+
+5 - Preferences & Feb 1 -- Mar 10 & Store and load user settings & User Preferences, User Persistence & Kevin \\
+
+6 - Optional Geometry and Drawing Tools & Feb 15 -- Apr 10 & Add diagram/sketch layer support & Geometry State, Mutator, Parser, Converter, Shape Interface & Chengze, Kevin, Ethan \\
+
+7 - Integration & Apr 1 -- Apr 25 & Full app integration, testing, and report write-ups & All Modules & All \\
+
+\bottomrule
+\end{tabularx}
+\caption{Development Timeline and Module Responsibilities}
+\label{tab:timeline}
+\end{table}
 
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}
