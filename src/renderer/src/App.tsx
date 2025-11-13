@@ -1,6 +1,6 @@
 import Canvas from '@renderer/components/canvas/Canvas'
 import { CanvasProvider } from '@renderer/context/CanvasContext'
-import React, { useState, MouseEvent, useEffect } from 'react'
+import React from 'react'
 
 function App(): React.JSX.Element {
   const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')

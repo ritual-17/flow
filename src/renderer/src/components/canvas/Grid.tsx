@@ -1,5 +1,3 @@
-import { useEffect, useRef } from 'react'
-
 type GridProps = {
   gridSize: number
   height: number
@@ -35,12 +33,6 @@ const Grid = ({ gridSize, height, width }: GridProps) => {
       <svg width={width} height={height} className="bg-white border border-gray-400" tabIndex={0}>
         {verticalLines}
         {horizontalLines}
-
-        {/* Circle at origin */}
-        {/* <circle cx={origin.x} cy={origin.y} r={radius} fill="rgba(0,0,255,0.3)" /> */}
-
-        {/* Origin marker */}
-        {/* <circle cx={origin.x} cy={origin.y} r={3} fill="red" /> */}
       </svg>
     </>
   )
