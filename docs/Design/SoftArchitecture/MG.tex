@@ -490,18 +490,28 @@ the modules. It can be seen that the graph is a directed acyclic graph
 system, and modules in the higher level of the hierarchy are essentially simpler
 because they use modules from the lower levels.
 
-\wss{The uses relation is not a data flow diagram.  In the code there will often
-be an import statement in module A when it directly uses module B.  Module B
-provides the services that module A needs.  The code for module A needs to be
-able to see these services (hence the import statement).  Since the uses
-relation is transitive, there is a use relation without an import, but the
-arrows in the diagram typically correspond to the presence of import statement.}
-
-\wss{If module A uses module B, the arrow is directed from A to B.}
+The uses hierarchy for our system organizes the modules into a clear, layered structure 
+that minimizes coupling and simplifies testing. At the top of the hierarchy are the user-facing 
+modules—Display Interface (M1) and Input Interface (M2)—which collect user input and present 
+output but perform no processing themselves. These modules rely on the Mode Commands Module (M7), 
+which acts as the central coordinator that interprets high-level interactions and dispatches tasks 
+to more specialized behavioural modules. M7 uses the Command Parser (M6), Shape Interface (M8), 
+and Text Buffer (M10) modules to interpret commands, manipulate shapes, and edit textual content. 
+None of these behavioural modules modify the document state directly; instead, they depend on the 
+Geometry State Mutator (M12), which centralizes all updates to the application’s data. M12 writes 
+changes to both the Geometry State Module (M11), which stores the current in-memory representation 
+of the document, and to the User Persistence Module (M14), which handles permanent storage tasks 
+such as saving, loading, and managing autosave or history information. User preferences (M9) are 
+also stored through this persistence layer. The Geometry State Module (M11) is then used by 
+lower-level utility modules—Geometry State Parser (M4), Geometry State Converter (M5), File Interface 
+(M3), and Undo Redo Module (M13)—each of which derives additional representations or services from 
+the core state. This structure forms a directed acyclic graph with a predominantly downward flow of 
+dependencies, ensuring that higher-level modules rely on simpler, stable, and easily testable 
+lower-level modules.
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.7\textwidth]{../DesignAssets/Module_Hierarchy_Figure.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
