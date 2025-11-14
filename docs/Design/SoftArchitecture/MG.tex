@@ -159,13 +159,13 @@ change.
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acOS}:] The specific operating
   system environment on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{asFramwork}:] The UI framework
+\item[\refstepcounter{acnum} \actheacnum \label{acFramwork}:] The UI framework
   or technology used for the display of \progname{}.
 \item[\refstepcounter{acnum} \actheacnum \label{acFileFormat}:] The format used for
   saving and loading the note files and diagrams (e.g., XML, JSON, binary).
 \item [\refstepcounter{acnum} \actheacnum \label{acSyntax}:] The syntax used for
   editing and navigating the note and diagrams.
-\item [\refstepcounter{acnum} \actheacnum \label{{acGeometry}:}] The internal
+\item [\refstepcounter{acnum} \actheacnum \label{acGeometry}:] The internal
   representation of geometric shapes and diagrams.
 \item [\refstepcounter{acnum} \actheacnum \label{acShapeManipulation}:] The
   rules as well as algorithms used for manipulating shapes (resizing, rotating,
@@ -442,17 +442,24 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+F211 & \mref{mDI}, \mref{mII}, \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mGSM}, \mref{mUPer}\\
+F212 & \mref{mDI}, \mref{mFI}, \mref{mUPer}\\
+F213 & \mref{mDI}, \mref{mII}, \mref{mTB}\\
+F214 & \mref{mDI}, \mref{mII}, \mref{mSI}, \mref{mGS}, \mref{mGSM}\\
+F215 & \mref{mSI}, \mref{mGS}, \mref{mGSM}\\
+F216 & \mref{mDI}, \mref{mMC}, \mref{mGS}\\
+F217 & \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mUPer}\\
+F218 & \mref{mFI}, \mref{mDI}, \mref{mGS}\\
+F219 & \mref{mUR}, \mref{mTB}, \mref{mGS}, \mref{mGSM}\\
+F220 & \mref{mUPer}\\
+NF211 & \mref{mDI}, \mref{mII}, \mref{mSI}, \mref{mTB}, \mref{mGS}, \mref{mGSM}\\
+NF212 & \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mUPer}, \mref{mUR}\\
+NF213 & \mref{mDI}, \mref{mII}, \mref{mFI}\\
+NF214 & \mref{mCP}, \mref{mMC}, \mref{mII}\\
+NF215 & \mref{mFI}, \mref{mUPer}\\
+NF216 & \mref{mFI}, \mref{mUPer}, \mref{mUPref}\\
+NF217 & \mref{mDI}, \mref{mSI}\\
+NF218 & \mref{mDI}, \mref{mGS}, \mref{mGSM}, \mref{mUR}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -465,18 +472,18 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acOS} & \mref{mDI}, \mref{mII} \\
+\acref{acFramwork} & \mref{mDI} \\
+\acref{acFileFormat} & \mref{mFI}, \mref{mUPer} \\
+\acref{acSyntax} & \mref{mCP}, \mref{mMC} \\
+\acref{acGeometry} & \mref{mGS}, \mref{mGSP}, \mref{mGSC} \\
+\acref{acShapeManipulation} & \mref{mGSM}, \mref{mSI}, \mref{mGS} \\
+\acref{acPreferences} & \mref{mUPref} \\
+\acref{acTextFormatting} & \mref{mTB}, \mref{mDI} \\
+\acref{acImportExport} & \mref{mFI}, \mref{mUPer} \\
+\acref{acUndoRedo} & \mref{mUR} \\
+\acref{acPersistence} & \mref{mUPer} \\
+\acref{acCanvasState} & \mref{mGS}, \mref{mUPer} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
