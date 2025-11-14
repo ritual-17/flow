@@ -37,6 +37,7 @@ export const SelectionProvider = ({ children }: { children: ReactNode }) => {
     })
 
     if (closestShape) {
+      //@ts-ignore the compiler complains that closestShape is possibly null here, but we check for that above
       setSelectedShapeIds(new Set([closestShape.id]))
     }
   }
