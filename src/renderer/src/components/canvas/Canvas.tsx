@@ -1,6 +1,7 @@
 import Cursor from '@renderer/components/canvas/Cursor'
 import Grid from '@renderer/components/canvas/Grid'
 import ShapesDisplay from '@renderer/components/shapes/ShapesDisplay'
+import LinesDisplay from '@renderer/components/customGeometry/LinesDisplay'
 import { useCanvas } from '@renderer/context/CanvasContext'
 import { useCommandHandler } from '@renderer/hooks/CommandHandler'
 import React, { useEffect } from 'react'
@@ -29,6 +30,7 @@ const Canvas: React.FC = () => {
       <Grid gridSize={gridSize} height={height} width={width} />
       <Cursor />
       <ShapesDisplay />
+      <LinesDisplay />
     </div>
   )
 }

@@ -13,7 +13,7 @@ export interface Shape {
 
 export interface Line {
   type: 'line' | 'arrow'
-  postion1: Point
-  postion2: Point
+  position1: Point
+  position2: Point
   size: number
 }

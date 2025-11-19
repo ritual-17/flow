@@ -5,8 +5,10 @@ import { Point } from '@renderer/types/types'
 export const useCommandHandler = () => {
   const { cursorPosition, setCursorPosition, gridSize, setGridSize, setShapes, setLines, setMode, mode } = useCanvas()
 
-  const [lineStart, setLineStart,] = useState<Point | null>(null)
-  const [lineEnd, setLineEnd,] = useState<Point | null>(null)
+  const [lineStart, setLineStart,] = useState<Point>({ x: 0, y: 0 })
+  const [isLineStartSet, setIsLineStartSet] = useState<boolean>(false);
+  const [lineEnd, setLineEnd,] = useState<Point>({ x: 0, y: 0 })
+  const [isLineEndSet, setIsLineEndSet] = useState<boolean>(false);
 
   const handleCommandKey = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     let { x, y } = cursorPosition
@@ -54,20 +56,24 @@ export const useCommandHandler = () => {
           setMode('line')
         }
         else if(mode === 'line'){
-          if(lineStart === null){
+          if(!isLineStartSet){
             setLineStart(cursorPosition)
+            setIsLineStartSet(true)
           }
-          else if (lineEnd === null){
+          else if (!isLineEndSet){
             setLineEnd(cursorPosition)
+            setIsLineEndSet(true)
             //const newLine = {type: 'line', position1: lineStart, position2: lineEnd, size: gridSize}
             setLines((prev) => [...prev, {type: 'line', position1: lineStart, position2: lineEnd, size: gridSize}])
             setLineStart(lineEnd)
-            setLineEnd(null)
+            setIsLineStartSet(true)
+            setIsLineEndSet(false)
           }
           else if (lineStart === cursorPosition){
-            setLineStart(null)
-            setLineEnd(null)
+            setIsLineStartSet(false)
+            setIsLineEndSet(false)
             setMode('shape')
+
           }
           /*
             Custom Geometry:
