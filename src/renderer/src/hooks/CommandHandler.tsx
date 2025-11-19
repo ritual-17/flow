@@ -6,7 +6,7 @@ export const useCommandHandler = () => {
   const { cursorPosition, setCursorPosition, gridSize, setGridSize, setShapes } = useCanvas()
   const [currentCommand, setCurrentCommand] = useState<string[]>([])
 
-  const { selectClosestShape } = useSelection()
+  const { selectClosestShape, selectedShapeIds } = useSelection()
 
   const handleCommandKey = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     let { x, y } = cursorPosition
@@ -14,29 +14,35 @@ export const useCommandHandler = () => {
 
     switch (e.key) {
       case 'h':
+        moveShape(-step, 0)
         x -= step
         setCursorPosition({ x, y })
         break
       case 'l':
+        moveShape(step, 0)
         x += step
         setCursorPosition({ x, y })
         break
       case 'j':
+        moveShape(0, step)
         y += step
         setCursorPosition({ x, y })
         break
       case 'k':
+        moveShape(0, -step)
         y -= step
         setCursorPosition({ x, y })
         break
-      case ']':
+      case ']': {
         const newGridSize = gridSize + 5
         setGridSize(newGridSize)
         return
-      case '[':
+      }
+      case '[': {
         const decreasedGridSize = Math.max(5, gridSize - 5)
         setGridSize(decreasedGridSize)
         return
+      }
       case 'c':
         setShapes((prev) => [
           ...prev,
@@ -73,6 +79,24 @@ export const useCommandHandler = () => {
     }
   }
 
+  const moveShape = (deltaX: number, deltaY: number) => {
+    if (selectedShapeIds.size === 0) return
+
+    const id = Array.from(selectedShapeIds)[0]
+    setShapes((prevShapes) =>
+      prevShapes.map((shape) =>
+        shape.id === id
+          ? {
+              ...shape,
+              position: {
+                x: shape.position.x + deltaX,
+                y: shape.position.y + deltaY
+              }
+            }
+          : shape
+      )
+    )
+  }
   return { handleCommandKey }
 }
 
