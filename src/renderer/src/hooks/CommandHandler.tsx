@@ -7,7 +7,7 @@ export const useCommandHandler = () => {
 
   const [lineStart, setLineStart,] = useState<Point>({ x: 0, y: 0 })
   const [isLineStartSet, setIsLineStartSet] = useState<boolean>(false);
-  const [lineEnd, setLineEnd,] = useState<Point>({ x: 0, y: 0 })
+  // const [lineEnd, setLineEnd,] = useState<Point>({ x: 0, y: 0 })
   const [isLineEndSet, setIsLineEndSet] = useState<boolean>(false);
 
   const handleCommandKey = (e: React.KeyboardEvent<HTMLDivElement>): void => {
@@ -40,16 +40,25 @@ export const useCommandHandler = () => {
         setGridSize(decreasedGridSize)
         return
       case 'c':
-        setShapes((prev) => [...prev, { type: 'circle', position: { x, y }, size: gridSize }])
+        if (mode === 'shape'){
+          setShapes((prev) => [...prev, { type: 'circle', position: { x, y }, size: gridSize }])
+        }
         return
       case 'r':
-        setShapes((prev) => [...prev, { type: 'rectangle', position: { x, y }, size: gridSize }])
+        if (mode === 'shape') {
+          {setShapes((prev) => [...prev, { type: 'rectangle', position: { x, y }, size: gridSize }])}
+        }
         return
       case 't':
-        setShapes((prev) => [...prev, { type: 'text-box', position: { x, y }, size: gridSize }])
+        if (mode === 'shape') {
+          {setShapes((prev) => [...prev, { type: 'text-box', position: { x, y }, size: gridSize }])}
+        }
         return
       case 'p':
-        setShapes((prev) => [...prev, { type: 'triangle', position: { x, y }, size: gridSize }])
+        if (mode === 'shape') {
+          {setShapes((prev) => [...prev, { type: 'triangle', position: { x, y }, size: gridSize }])
+          }
+        }
         return
       case 'g':
         if (mode === 'shape'){
@@ -60,26 +69,28 @@ export const useCommandHandler = () => {
             setLineStart(cursorPosition)
             setIsLineStartSet(true)
           }
-          else if (!isLineEndSet){
-            setLineEnd(cursorPosition)
-            setIsLineEndSet(true)
-            //const newLine = {type: 'line', position1: lineStart, position2: lineEnd, size: gridSize}
-            setLines((prev) => [...prev, {type: 'line', position1: lineStart, position2: lineEnd, size: gridSize}])
-            setLineStart(lineEnd)
-            setIsLineStartSet(true)
-            setIsLineEndSet(false)
-          }
-          else if (lineStart === cursorPosition){
+          else if (lineStart.x === cursorPosition.x && lineStart.y === cursorPosition.y){
             setIsLineStartSet(false)
             setIsLineEndSet(false)
             setMode('shape')
+          }
+          else if (isLineStartSet){
+            const start = lineStart
+            const end = cursorPosition
 
+            // setLineEnd(cursorPosition)
+            // setIsLineEndSet(true)
+            //const newLine = {type: 'line', position1: lineStart, position2: lineEnd, size: gridSize}
+            setLines((prev) => [...prev, {type: 'line', position1: start, position2: end, size: gridSize}])
+            setLineStart(end)
+            setIsLineStartSet(true)
+            // setIsLineEndSet(false)
           }
           /*
-            Custom Geometry:
-              - Pressing the first G key will enter the line mode state
-              - Pressing the second G again will place the start of the line
-              - Any subsequent Gs will place the end lines
+          Custom Geometry:
+          - Pressing the first G key will enter the line mode state
+          - Pressing the second G again will place the start of the line
+          - Any subsequent Gs will place the end lines
               - If G is pressed as a subsequent G without moving the cursor,  user will exist line mode
 
               Last Modified:
