@@ -1,5 +1,6 @@
 import Canvas from '@renderer/components/canvas/Canvas'
 import { CanvasProvider } from '@renderer/context/CanvasContext'
+import { SelectionProvider } from '@renderer/context/SelectionContext'
 import React from 'react'
 
 function App(): React.JSX.Element {
@@ -8,7 +9,9 @@ function App(): React.JSX.Element {
   return (
     <>
       <CanvasProvider>
-        <Canvas />
+        <SelectionProvider>
+          <Canvas />
+        </SelectionProvider>
       </CanvasProvider>
     </>
   )

@@ -29,23 +29,26 @@ export const CanvasProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const snapCursorToGrid = ({ x, y }: Point, gridSize?: number): void => {
+    let newX = x
+    let newY = y
+
     if (gridSize) {
       const diffX = x % gridSize
       if (diffX < gridSize / 2) {
-        x -= diffX
+        newX -= diffX
       } else {
-        x += gridSize - diffX
+        newX += gridSize - diffX
       }
 
       const diffY = y % gridSize
       if (diffY < gridSize / 2) {
-        y -= diffY
+        newY -= diffY
       } else {
-        y += gridSize - diffY
+        newY += gridSize - diffY
       }
     }
 
-    setCursorPosition({ x, y })
+    setCursorPosition({ x: newX, y: newY })
   }
   return (
     <CanvasContext.Provider

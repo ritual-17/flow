@@ -1,38 +1,44 @@
+import Circle from '@renderer/components/shapes/Circle'
+import Rectangle from '@renderer/components/shapes/Rectangle'
+import { Triangle } from '@renderer/components/shapes/Triangle'
 import { useCanvas } from '@renderer/context/CanvasContext'
+import { useSelection } from '@renderer/context/Hooks'
+
+const selectedStrokeColor = 'rgba(50, 132, 255, 1)'
 
 const ShapesDisplay = () => {
   const { shapes } = useCanvas()
+  const { selectedShapeIds } = useSelection()
 
   return (
     <>
       {shapes.map((shape, index) => {
+        const isSelected = selectedShapeIds.has(shape.id)
+
         if (shape.type === 'circle') {
           return (
-            <div
-              key={`shape-${index}`}
-              style={{
-                position: 'absolute',
-                left: shape.position.x - shape.size,
-                top: shape.position.y - shape.size,
-                width: shape.size * 2,
-                height: shape.size * 2,
-                borderRadius: '50%',
-                backgroundColor: 'rgba(255,0,0,0.3)'
-              }}
+            <Circle
+              key={shape.id}
+              id={shape.id}
+              type={shape.type}
+              position={shape.position}
+              size={shape.size}
+              fill="rgba(255,0,0,0.3)"
+              stroke={isSelected ? selectedStrokeColor : 'transparent'}
+              strokeWidth={isSelected ? 2 : 0}
             />
           )
         } else if (shape.type === 'rectangle') {
           return (
-            <div
-              key={`shape-${index}`}
-              style={{
-                position: 'absolute',
-                left: shape.position.x - shape.size,
-                top: shape.position.y - shape.size,
-                width: shape.size * 2,
-                height: shape.size * 2,
-                backgroundColor: 'rgba(0,255,0,0.3)'
-              }}
+            <Rectangle
+              key={shape.id}
+              id={shape.id}
+              type={shape.type}
+              position={shape.position}
+              size={shape.size}
+              fill="rgba(0,255,0,0.3)"
+              stroke={isSelected ? selectedStrokeColor : 'transparent'}
+              strokeWidth={isSelected ? 2 : 0}
             />
           )
         } else if (shape.type === 'text-box') {
@@ -45,7 +51,9 @@ const ShapesDisplay = () => {
                 top: shape.position.y - shape.size / 2,
                 width: shape.size * 2,
                 height: shape.size,
-                backgroundColor: 'rgba(255,255,0,0.3)'
+                backgroundColor: 'rgba(255,255,0,0.3)',
+                borderColor: isSelected ? selectedStrokeColor : 'transparent',
+                borderWidth: isSelected ? 2 : 0
               }}
               className="flex items-center justify-center"
             >
@@ -54,20 +62,15 @@ const ShapesDisplay = () => {
           )
         } else if (shape.type === 'triangle') {
           return (
-            // rotate this 90 degrees
-            <div
+            <Triangle
               key={`shape-${index}`}
-              style={{
-                position: 'absolute',
-                left: shape.position.x - shape.size,
-                top: shape.position.y - shape.size,
-                width: 0,
-                height: 0,
-                borderLeft: `${shape.size}px solid transparent`,
-                borderRight: `${shape.size}px solid transparent`,
-                borderBottom: `${shape.size * 2}px solid rgba(0,0,255,0.3)`,
-                rotate: '45deg'
-              }}
+              id={shape.id}
+              type={shape.type}
+              position={shape.position}
+              size={shape.size}
+              fill="rgba(0,0,255,0.3)"
+              stroke={isSelected ? selectedStrokeColor : 'transparent'}
+              strokeWidth={isSelected ? 2 : 0}
             />
           )
         }
