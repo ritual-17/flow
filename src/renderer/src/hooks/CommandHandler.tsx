@@ -6,7 +6,7 @@ export const useCommandHandler = () => {
   const { cursorPosition, setCursorPosition, gridSize, setGridSize, setShapes } = useCanvas()
   const [currentCommand, setCurrentCommand] = useState<string[]>([])
 
-  const { selectClosestShape, selectedShapeIds } = useSelection()
+  const { selectClosestShape, selectedShapeIds, setSelectedShapeIds } = useSelection()
 
   const handleCommandKey = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     let { x, y } = cursorPosition
@@ -69,10 +69,14 @@ export const useCommandHandler = () => {
         return
       case 'Escape':
         setCurrentCommand([])
+        setSelectedShapeIds(new Set())
         return
       case 's':
         setCurrentCommand((prev) => [...prev, 's'])
         selectClosestShape()
+        return
+      case 'd':
+        setShapes((prevShapes) => prevShapes.filter((shape) => !selectedShapeIds.has(shape.id)))
         return
       default:
         return
