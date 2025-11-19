@@ -12,6 +12,7 @@ export const useCommandHandler = () => {
     let { x, y } = cursorPosition
     const step = gridSize
 
+    setCurrentCommand([])
     switch (e.key) {
       case 'h':
         moveShape(-step, 0)
@@ -33,16 +34,22 @@ export const useCommandHandler = () => {
         y -= step
         setCursorPosition({ x, y })
         break
-      case ']': {
+      case 'I': {
         const newGridSize = gridSize + 5
         setGridSize(newGridSize)
         return
       }
-      case '[': {
+      case 'O': {
         const decreasedGridSize = Math.max(5, gridSize - 5)
         setGridSize(decreasedGridSize)
         return
       }
+      case ']':
+        resizeShape(5)
+        return
+      case '[':
+        resizeShape(-5)
+        return
       case 'c':
         setShapes((prev) => [
           ...prev,
@@ -72,11 +79,17 @@ export const useCommandHandler = () => {
         setSelectedShapeIds(new Set())
         return
       case 's':
-        setCurrentCommand((prev) => [...prev, 's'])
+        setCurrentCommand(() => ['s'])
         selectClosestShape()
         return
       case 'd':
         setShapes((prevShapes) => prevShapes.filter((shape) => !selectedShapeIds.has(shape.id)))
+        return
+      case '}':
+        rotateShape(15)
+        return
+      case '{':
+        rotateShape(-15)
         return
       default:
         return
@@ -101,7 +114,40 @@ export const useCommandHandler = () => {
       )
     )
   }
-  return { handleCommandKey }
+
+  const resizeShape = (deltaSize: number) => {
+    if (selectedShapeIds.size === 0) return
+
+    const id = Array.from(selectedShapeIds)[0]
+    setShapes((prevShapes) =>
+      prevShapes.map((shape) =>
+        shape.id === id
+          ? {
+              ...shape,
+              size: Math.max(5, shape.size + deltaSize)
+            }
+          : shape
+      )
+    )
+  }
+
+  const rotateShape = (deltaRotation: number) => {
+    if (selectedShapeIds.size === 0) return
+
+    const id = Array.from(selectedShapeIds)[0]
+    setShapes((prevShapes) =>
+      prevShapes.map((shape) =>
+        shape.id === id
+          ? {
+              ...shape,
+              rotation: (shape.rotation || 0) + deltaRotation
+            }
+          : shape
+      )
+    )
+  }
+
+  return { handleCommandKey, currentCommand }
 }
 
 // replace this with uuid v4 generator in the future

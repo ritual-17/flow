@@ -49,8 +49,6 @@ export const SelectionProvider = ({ children }: { children: ReactNode }) => {
     }
   }
 
-  console.log(`Selected Shape IDs: ${Array.from(selectedShapeIds).join(', ')}`)
-
   return (
     <SelectionContext.Provider
       value={{
