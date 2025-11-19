@@ -37,12 +37,17 @@ export const SelectionProvider = ({ children }: { children: ReactNode }) => {
     })
 
     if (closestShape) {
+      if (selectedShapeIds.has(closestShape.id)) {
+        // If the closest shape is already selected, deselect it
+        const newSelectedShapeIds = new Set(selectedShapeIds)
+        newSelectedShapeIds.delete(closestShape.id)
+        setSelectedShapeIds(newSelectedShapeIds)
+        return
+      }
       //@ts-ignore the compiler complains that closestShape is possibly null here, but we check for that above
       setSelectedShapeIds(new Set([closestShape.id]))
     }
   }
-
-  console.log(`Selected Shape IDs: ${Array.from(selectedShapeIds).join(', ')}`)
 
   return (
     <SelectionContext.Provider

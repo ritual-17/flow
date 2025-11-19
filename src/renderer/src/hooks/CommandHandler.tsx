@@ -6,36 +6,49 @@ export const useCommandHandler = () => {
   const { cursorPosition, setCursorPosition, gridSize, setGridSize, setShapes } = useCanvas()
   const [currentCommand, setCurrentCommand] = useState<string[]>([])
 
-  const { selectClosestShape } = useSelection()
+  const { selectClosestShape, selectedShapeIds, setSelectedShapeIds } = useSelection()
 
   const handleCommandKey = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     let { x, y } = cursorPosition
     const step = gridSize
 
+    setCurrentCommand([])
     switch (e.key) {
       case 'h':
+        moveShape(-step, 0)
         x -= step
         setCursorPosition({ x, y })
         break
       case 'l':
+        moveShape(step, 0)
         x += step
         setCursorPosition({ x, y })
         break
       case 'j':
+        moveShape(0, step)
         y += step
         setCursorPosition({ x, y })
         break
       case 'k':
+        moveShape(0, -step)
         y -= step
         setCursorPosition({ x, y })
         break
-      case ']':
+      case 'I': {
         const newGridSize = gridSize + 5
         setGridSize(newGridSize)
         return
-      case '[':
+      }
+      case 'O': {
         const decreasedGridSize = Math.max(5, gridSize - 5)
         setGridSize(decreasedGridSize)
+        return
+      }
+      case ']':
+        resizeShape(5)
+        return
+      case '[':
+        resizeShape(-5)
         return
       case 'c':
         setShapes((prev) => [
@@ -63,17 +76,78 @@ export const useCommandHandler = () => {
         return
       case 'Escape':
         setCurrentCommand([])
+        setSelectedShapeIds(new Set())
         return
       case 's':
-        setCurrentCommand((prev) => [...prev, 's'])
+        setCurrentCommand(() => ['s'])
         selectClosestShape()
+        return
+      case 'd':
+        setShapes((prevShapes) => prevShapes.filter((shape) => !selectedShapeIds.has(shape.id)))
+        return
+      case '}':
+        rotateShape(15)
+        return
+      case '{':
+        rotateShape(-15)
         return
       default:
         return
     }
   }
 
-  return { handleCommandKey }
+  const moveShape = (deltaX: number, deltaY: number) => {
+    if (selectedShapeIds.size === 0) return
+
+    const id = Array.from(selectedShapeIds)[0]
+    setShapes((prevShapes) =>
+      prevShapes.map((shape) =>
+        shape.id === id
+          ? {
+              ...shape,
+              position: {
+                x: shape.position.x + deltaX,
+                y: shape.position.y + deltaY
+              }
+            }
+          : shape
+      )
+    )
+  }
+
+  const resizeShape = (deltaSize: number) => {
+    if (selectedShapeIds.size === 0) return
+
+    const id = Array.from(selectedShapeIds)[0]
+    setShapes((prevShapes) =>
+      prevShapes.map((shape) =>
+        shape.id === id
+          ? {
+              ...shape,
+              size: Math.max(5, shape.size + deltaSize)
+            }
+          : shape
+      )
+    )
+  }
+
+  const rotateShape = (deltaRotation: number) => {
+    if (selectedShapeIds.size === 0) return
+
+    const id = Array.from(selectedShapeIds)[0]
+    setShapes((prevShapes) =>
+      prevShapes.map((shape) =>
+        shape.id === id
+          ? {
+              ...shape,
+              rotation: (shape.rotation || 0) + deltaRotation
+            }
+          : shape
+      )
+    )
+  }
+
+  return { handleCommandKey, currentCommand }
 }
 
 // replace this with uuid v4 generator in the future

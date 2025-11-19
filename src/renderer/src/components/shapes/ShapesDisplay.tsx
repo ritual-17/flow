@@ -39,6 +39,7 @@ const ShapesDisplay = () => {
               fill="rgba(0,255,0,0.3)"
               stroke={isSelected ? selectedStrokeColor : 'transparent'}
               strokeWidth={isSelected ? 2 : 0}
+              rotation={shape.rotation}
             />
           )
         } else if (shape.type === 'text-box') {
@@ -71,6 +72,7 @@ const ShapesDisplay = () => {
               fill="rgba(0,0,255,0.3)"
               stroke={isSelected ? selectedStrokeColor : 'transparent'}
               strokeWidth={isSelected ? 2 : 0}
+              rotation={shape.rotation}
             />
           )
         }
