@@ -60,7 +60,7 @@ const ShapesDisplay = () => {
               }}
               className="flex items-center justify-center"
             >
-              hi
+              Text_Box
             </textarea>
           )
         } else if (shape.type === 'triangle') {

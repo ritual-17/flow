@@ -181,7 +181,7 @@ export const useCommandHandler = () => {
   //     if (textarea != null) {
   //       textarea.blur()
   //       const canvas = document.getElementById('Canvas')
-  //       window.setTimeout(function () {  
+  //       window.setTimeout(function () {
   //         canvas?.focus()
   //         setIsTxtFocus(false)
   //       }, 0);
