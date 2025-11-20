@@ -12,11 +12,20 @@ export const useCommandHandler = () => {
   const [isLineEndSet, setIsLineEndSet] = useState<boolean>(false);
   const { selectClosestShape, selectedShapeIds, setSelectedShapeIds } = useSelection()
   const [currentCommand, setCurrentCommand] = useState<string[]>([])
+  const [isTxtFocus, setIsTxtFocus] = useState<boolean>(false);
 
   const handleCommandKey = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     let { x, y } = cursorPosition
     const step = gridSize
-
+    //if use is in a text box dont read inputs
+    if (isTxtFocus){
+      if (e.key === 'Tab'){
+        //unFocusTxt()
+        setIsTxtFocus(false)
+      } else {
+        return
+      }
+    }
     setCurrentCommand([])
     switch (e.key) {
       case 'h':
@@ -176,9 +185,14 @@ export const useCommandHandler = () => {
       case 's':
         setCurrentCommand(() => ['s'])
         selectClosestShape()
+
         return
       case 'd':
         setShapes((prevShapes) => prevShapes.filter((shape) => !selectedShapeIds.has(shape.id)))
+        return
+      case 'f':
+        setCurrentCommand(() => ['f'])
+        focusTxt()
         return
       case '}':
         rotateShape(15)
@@ -243,6 +257,34 @@ export const useCommandHandler = () => {
       )
     )
   }
+
+  //code for focusing on  text boxes to write text.
+  const focusTxt = () => {
+    const id = Array.from(selectedShapeIds)[0]
+    window.setTimeout(function () {
+      const textarea = document.querySelector<HTMLTextAreaElement>(`#${id}`);
+      if (textarea != null) {
+        textarea.focus()
+        textarea.select()
+        setIsTxtFocus(true)
+      }
+    }, 0);
+  }
+  // the unfocsuing was not working so we are using tab istead to cycle bck to the canvas
+  // const unFocusTxt = () => {
+  //   const id = Array.from(selectedShapeIds)[0]
+  //   window.setTimeout(function () {
+  //     const textarea = document.querySelector<HTMLTextAreaElement>(`#${id}`);
+  //     if (textarea != null) {
+  //       textarea.blur()
+  //       const canvas = document.getElementById('Canvas')
+  //       window.setTimeout(function () {
+  //         canvas?.focus()
+  //         setIsTxtFocus(false)
+  //       }, 0);
+  //     }
+  //   }, 0);
+  //}
 
   return { handleCommandKey, currentCommand }
 }
