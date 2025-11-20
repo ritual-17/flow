@@ -28,7 +28,7 @@ const LinesDisplay = () => {
               x2={line.position2.x}
               y2={line.position2.y}
               stroke="rgba(0,0,255,0.7)" // Line color, change as needed
-              strokeWidth={line.size-13} // You can customize the line thickness
+              strokeWidth={3} // You can customize the line thickness
               markerEnd={line.type === 'arrow' ? 'url(#arrowhead)' : undefined}
             />
           </svg>
