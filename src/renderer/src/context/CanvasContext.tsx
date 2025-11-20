@@ -12,8 +12,6 @@ interface CanvasContextType {
   setGridSize: (size: number) => void
   shapes: Shape[]
   setShapes: React.Dispatch<React.SetStateAction<Shape[]>>
-  focusCanvas(): void
-
 }
 
 const CanvasContext = createContext<CanvasContextType | undefined>(undefined)
