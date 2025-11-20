@@ -174,7 +174,9 @@ export const useCommandHandler = () => {
               Last Modified:
                   11/13/2025 - Jeffrey and Hussain
           */
-        } 
+        }
+        
+        return
       case 'Escape':
         setCurrentCommand([])
         setSelectedShapeIds(new Set())
