@@ -1,4 +1,4 @@
-import { Point, Shape } from '@renderer/types/types'
+import { Point, Mode, Shape, Line } from '@renderer/types/types'
 import React, { createContext, useContext, useState, ReactNode } from 'react'
 
 /*
@@ -12,6 +12,11 @@ interface CanvasContextType {
   setGridSize: (size: number) => void
   shapes: Shape[]
   setShapes: React.Dispatch<React.SetStateAction<Shape[]>>
+  lines: Line[]
+  setLines: React.Dispatch<React.SetStateAction<Line[]>>
+  mode: Mode
+  setMode: React.Dispatch<React.SetStateAction<Mode>>
+
 }
 
 const CanvasContext = createContext<CanvasContextType | undefined>(undefined)
@@ -22,6 +27,10 @@ export const CanvasProvider = ({ children }: { children: ReactNode }) => {
   const [gridSize, setGridSize] = useState<number>(20)
 
   const [shapes, setShapes] = useState<Shape[]>([])
+
+  const [lines, setLines] = useState<Line[]>([])
+
+  const [mode, setMode] = useState<Mode>('shape') //Setting shapes to default mode, can change later
 
   const updateGridSize = (size: number): void => {
     setGridSize(size)
@@ -58,7 +67,11 @@ export const CanvasProvider = ({ children }: { children: ReactNode }) => {
         gridSize,
         setGridSize: updateGridSize,
         shapes,
-        setShapes
+        setShapes,
+        lines,
+        setLines,
+        mode,
+        setMode
       }}
     >
       {children}
