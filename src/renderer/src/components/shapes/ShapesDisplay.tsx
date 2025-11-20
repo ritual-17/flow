@@ -44,8 +44,10 @@ const ShapesDisplay = () => {
           )
         } else if (shape.type === 'text-box') {
           return (
-            <div
+            <textarea
               key={`shape-${index}`}
+              id={shape.id}
+              tabIndex={-1}
               style={{
                 position: 'absolute',
                 left: shape.position.x - shape.size,
@@ -58,8 +60,8 @@ const ShapesDisplay = () => {
               }}
               className="flex items-center justify-center"
             >
-              Text Box
-            </div>
+              hi
+            </textarea>
           )
         } else if (shape.type === 'triangle') {
           return (
