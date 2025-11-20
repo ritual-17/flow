@@ -3,7 +3,7 @@ export interface Point {
   y: number
 }
 
-export type Mode = 'shape' | 'line'
+export type Mode = 'shape' | 'line' | 'arrow'
 
 export interface Shape {
   type: 'circle' | 'rectangle' | 'text-box' | 'triangle'

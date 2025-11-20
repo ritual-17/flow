@@ -9,7 +9,7 @@ import React, { useEffect } from 'react'
 const Canvas: React.FC = () => {
   const width = document.documentElement.clientWidth
   const height = document.documentElement.clientHeight
-  const { gridSize } = useCanvas()
+  const { gridSize, mode } = useCanvas()
 
   const canvasRef = React.useRef<HTMLDivElement | null>(null)
 
@@ -31,6 +31,10 @@ const Canvas: React.FC = () => {
       <Cursor />
       <ShapesDisplay />
       <LinesDisplay />
+      <div className="absolute bottom-4 left-4 px-3 py-1 bg-black/70 text-white text-sm rounded"
+        >
+          Mode: {mode === 'shape' ? 'Shape' : mode === 'line' ? 'Line' : 'Arrow'}
+      </div>
     </div>
   )
 }
