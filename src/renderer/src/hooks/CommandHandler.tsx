@@ -1,7 +1,8 @@
 import { useCanvas } from '@renderer/context/CanvasContext'
 import React, { useState } from 'react'
 import { Point } from '@renderer/types/types'
-
+import { useSelection } from '@renderer/context/Hooks'
+        
 export const useCommandHandler = () => {
   const { cursorPosition, setCursorPosition, gridSize, setGridSize, setShapes, setLines, setMode, mode } = useCanvas()
 
@@ -9,54 +10,81 @@ export const useCommandHandler = () => {
   const [isLineStartSet, setIsLineStartSet] = useState<boolean>(false);
   // const [lineEnd, setLineEnd,] = useState<Point>({ x: 0, y: 0 })
   const [isLineEndSet, setIsLineEndSet] = useState<boolean>(false);
+  const { selectClosestShape, selectedShapeIds, setSelectedShapeIds } = useSelection()
+  const [currentCommand, setCurrentCommand] = useState<string[]>([])
 
   const handleCommandKey = (e: React.KeyboardEvent<HTMLDivElement>): void => {
     let { x, y } = cursorPosition
     const step = gridSize
 
+    setCurrentCommand([])
     switch (e.key) {
       case 'h':
+        moveShape(-step, 0)
         x -= step
         setCursorPosition({ x, y })
         break
       case 'l':
+        moveShape(step, 0)
         x += step
         setCursorPosition({ x, y })
         break
       case 'j':
+        moveShape(0, step)
         y += step
         setCursorPosition({ x, y })
         break
       case 'k':
+        moveShape(0, -step)
         y -= step
         setCursorPosition({ x, y })
         break
-      case '+':
+      case 'I': {
         const newGridSize = gridSize + 5
         setGridSize(newGridSize)
         return
-      case '-':
+      }
+      case 'O': {
         const decreasedGridSize = Math.max(5, gridSize - 5)
         setGridSize(decreasedGridSize)
         return
+      }
+      case ']':
+        resizeShape(5)
+        return
+      case '[':
+        resizeShape(-5)
+        return
       case 'c':
         if (mode === 'shape'){
-          setShapes((prev) => [...prev, { type: 'circle', position: { x, y }, size: gridSize }])
+          setShapes((prev) => [
+          ...prev,
+          { id: generateId(), type: 'circle', position: { x, y }, size: gridSize }
+        ])
         }
         return
       case 'r':
         if (mode === 'shape') {
-          {setShapes((prev) => [...prev, { type: 'rectangle', position: { x, y }, size: gridSize }])}
+          setShapes((prev) => [
+          ...prev,
+          { id: generateId(), type: 'rectangle', position: { x, y }, size: gridSize }
+        ])
         }
         return
       case 't':
         if (mode === 'shape') {
-          {setShapes((prev) => [...prev, { type: 'text-box', position: { x, y }, size: gridSize }])}
+          setShapes((prev) => [
+          ...prev,
+          { id: generateId(), type: 'text-box', position: { x, y }, size: gridSize }
+        ])
         }
         return
       case 'p':
         if (mode === 'shape') {
-          {setShapes((prev) => [...prev, { type: 'triangle', position: { x, y }, size: gridSize }])}
+          setShapes((prev) => [
+          ...prev,
+          { id: generateId(), type: 'triangle', position: { x, y }, size: gridSize }
+        ])
         }
         return
       case 'g':
@@ -138,7 +166,25 @@ export const useCommandHandler = () => {
                   11/13/2025 - Jeffrey and Hussain
           */
         } 
-        
+      case 'Escape':
+        setCurrentCommand([])
+        setSelectedShapeIds(new Set())
+        setMode('shape')
+        setIsLineStartSet(false)
+        setIsLineEndSet(false)
+        return
+      case 's':
+        setCurrentCommand(() => ['s'])
+        selectClosestShape()
+        return
+      case 'd':
+        setShapes((prevShapes) => prevShapes.filter((shape) => !selectedShapeIds.has(shape.id)))
+        return
+      case '}':
+        rotateShape(15)
+        return
+      case '{':
+        rotateShape(-15)
         return
 
 
@@ -147,5 +193,61 @@ export const useCommandHandler = () => {
     }
   }
 
-  return { handleCommandKey }
+  const moveShape = (deltaX: number, deltaY: number) => {
+    if (selectedShapeIds.size === 0) return
+
+    const id = Array.from(selectedShapeIds)[0]
+    setShapes((prevShapes) =>
+      prevShapes.map((shape) =>
+        shape.id === id
+          ? {
+              ...shape,
+              position: {
+                x: shape.position.x + deltaX,
+                y: shape.position.y + deltaY
+              }
+            }
+          : shape
+      )
+    )
+  }
+
+  const resizeShape = (deltaSize: number) => {
+    if (selectedShapeIds.size === 0) return
+
+    const id = Array.from(selectedShapeIds)[0]
+    setShapes((prevShapes) =>
+      prevShapes.map((shape) =>
+        shape.id === id
+          ? {
+              ...shape,
+              size: Math.max(5, shape.size + deltaSize)
+            }
+          : shape
+      )
+    )
+  }
+
+  const rotateShape = (deltaRotation: number) => {
+    if (selectedShapeIds.size === 0) return
+
+    const id = Array.from(selectedShapeIds)[0]
+    setShapes((prevShapes) =>
+      prevShapes.map((shape) =>
+        shape.id === id
+          ? {
+              ...shape,
+              rotation: (shape.rotation || 0) + deltaRotation
+            }
+          : shape
+      )
+    )
+  }
+
+  return { handleCommandKey, currentCommand }
+}
+
+// replace this with uuid v4 generator in the future
+function generateId(): string {
+  return Math.random().toString(36).substr(2, 9)
 }

@@ -159,13 +159,13 @@ change.
 \begin{description}
 \item[\refstepcounter{acnum} \actheacnum \label{acOS}:] The specific operating
   system environment on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{asFramwork}:] The UI framework
+\item[\refstepcounter{acnum} \actheacnum \label{acFramwork}:] The UI framework
   or technology used for the display of \progname{}.
 \item[\refstepcounter{acnum} \actheacnum \label{acFileFormat}:] The format used for
   saving and loading the note files and diagrams (e.g., XML, JSON, binary).
 \item [\refstepcounter{acnum} \actheacnum \label{acSyntax}:] The syntax used for
   editing and navigating the note and diagrams.
-\item [\refstepcounter{acnum} \actheacnum \label{{acGeometry}:}] The internal
+\item [\refstepcounter{acnum} \actheacnum \label{acGeometry}:] The internal
   representation of geometric shapes and diagrams.
 \item [\refstepcounter{acnum} \actheacnum \label{acShapeManipulation}:] The
   rules as well as algorithms used for manipulating shapes (resizing, rotating,
@@ -269,12 +269,18 @@ The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
 between requirements and modules is listed in Table~\ref{TblRT}.
 
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
+The design of our system stems directly from the key functional and non-functional 
+requirements outlined in the SRS. The requirements identified features such as note creation, 
+text editing, diagram integration, file management, and undo/redo functionality, all of 
+which influenced how we structured the system into distinct but interconnected modules. 
+For instance, the user interaction and data handling requirements motivated the separation 
+between interface-related modules and logic-handling components, ensuring maintainability 
+and scalability. Likewise, requirements emphasizing usability, responsiveness, and persistence 
+informed the decision to isolate rendering, state management, and data storage responsibilities 
+into separate layers. Overall, the transition from requirements to design aims to ensure that 
+each major function defined in the SRS is mapped to a cohesive part of the architecture, supporting 
+modular growth and clear boundaries between user interface, behavior logic, and data management layers.
+
 
 \section{Module Decomposition} \label{SecMD}
 
@@ -436,17 +442,24 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+F211 & \mref{mDI}, \mref{mII}, \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mGSM}, \mref{mUPer}\\
+F212 & \mref{mDI}, \mref{mFI}, \mref{mUPer}\\
+F213 & \mref{mDI}, \mref{mII}, \mref{mTB}\\
+F214 & \mref{mDI}, \mref{mII}, \mref{mSI}, \mref{mGS}, \mref{mGSM}\\
+F215 & \mref{mSI}, \mref{mGS}, \mref{mGSM}\\
+F216 & \mref{mDI}, \mref{mMC}, \mref{mGS}\\
+F217 & \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mUPer}\\
+F218 & \mref{mFI}, \mref{mDI}, \mref{mGS}\\
+F219 & \mref{mUR}, \mref{mTB}, \mref{mGS}, \mref{mGSM}\\
+F220 & \mref{mUPer}\\
+NF211 & \mref{mDI}, \mref{mII}, \mref{mSI}, \mref{mTB}, \mref{mGS}, \mref{mGSM}\\
+NF212 & \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mUPer}, \mref{mUR}\\
+NF213 & \mref{mDI}, \mref{mII}, \mref{mFI}\\
+NF214 & \mref{mCP}, \mref{mMC}, \mref{mII}\\
+NF215 & \mref{mFI}, \mref{mUPer}\\
+NF216 & \mref{mFI}, \mref{mUPer}, \mref{mUPref}\\
+NF217 & \mref{mDI}, \mref{mSI}\\
+NF218 & \mref{mDI}, \mref{mGS}, \mref{mGSM}, \mref{mUR}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -459,18 +472,18 @@ R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
 \toprule
 \textbf{AC} & \textbf{Modules}\\
 \midrule
-\acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acOS} & \mref{mDI}, \mref{mII} \\
+\acref{acFramwork} & \mref{mDI} \\
+\acref{acFileFormat} & \mref{mFI}, \mref{mUPer} \\
+\acref{acSyntax} & \mref{mCP}, \mref{mMC} \\
+\acref{acGeometry} & \mref{mGS}, \mref{mGSP}, \mref{mGSC} \\
+\acref{acShapeManipulation} & \mref{mGSM}, \mref{mSI}, \mref{mGS} \\
+\acref{acPreferences} & \mref{mUPref} \\
+\acref{acTextFormatting} & \mref{mTB}, \mref{mDI} \\
+\acref{acImportExport} & \mref{mFI}, \mref{mUPer} \\
+\acref{acUndoRedo} & \mref{mUR} \\
+\acref{acPersistence} & \mref{mUPer} \\
+\acref{acCanvasState} & \mref{mGS}, \mref{mUPer} \\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -490,18 +503,28 @@ the modules. It can be seen that the graph is a directed acyclic graph
 system, and modules in the higher level of the hierarchy are essentially simpler
 because they use modules from the lower levels.
 
-\wss{The uses relation is not a data flow diagram.  In the code there will often
-be an import statement in module A when it directly uses module B.  Module B
-provides the services that module A needs.  The code for module A needs to be
-able to see these services (hence the import statement).  Since the uses
-relation is transitive, there is a use relation without an import, but the
-arrows in the diagram typically correspond to the presence of import statement.}
-
-\wss{If module A uses module B, the arrow is directed from A to B.}
+The uses hierarchy for our system organizes the modules into a clear, layered structure 
+that minimizes coupling and simplifies testing. At the top of the hierarchy are the user-facing 
+modules—Display Interface (M1) and Input Interface (M2)—which collect user input and present 
+output but perform no processing themselves. These modules rely on the Mode Commands Module (M7), 
+which acts as the central coordinator that interprets high-level interactions and dispatches tasks 
+to more specialized behavioural modules. M7 uses the Command Parser (M6), Shape Interface (M8), 
+and Text Buffer (M10) modules to interpret commands, manipulate shapes, and edit textual content. 
+None of these behavioural modules modify the document state directly; instead, they depend on the 
+Geometry State Mutator (M12), which centralizes all updates to the application’s data. M12 writes 
+changes to both the Geometry State Module (M11), which stores the current in-memory representation 
+of the document, and to the User Persistence Module (M14), which handles permanent storage tasks 
+such as saving, loading, and managing autosave or history information. User preferences (M9) are 
+also stored through this persistence layer. The Geometry State Module (M11) is then used by 
+lower-level utility modules—Geometry State Parser (M4), Geometry State Converter (M5), File Interface 
+(M3), and Undo Redo Module (M13)—each of which derives additional representations or services from 
+the core state. This structure forms a directed acyclic graph with a predominantly downward flow of 
+dependencies, ensuring that higher-level modules rely on simpler, stable, and easily testable 
+lower-level modules.
 
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.7\textwidth]{../DesignAssets/Module_Hierarchy_Figure.png}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
@@ -555,6 +578,7 @@ This section was not deemed appropriate for our project.
 
 \bibliographystyle {plainnat}
 \bibliography{../../../refs/References}
+
 
 \newpage{}
 
