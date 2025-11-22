@@ -2,9 +2,8 @@
 name: Lecture
 about: Track team details for lectures.
 title: 'Lecture - Date'
-labels: 'meeting'
+labels: 'lecture'
 assignees: ''
-
 ---
 
 **Topic**
