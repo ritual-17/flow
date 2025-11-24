@@ -1,4 +1,6 @@
 singleQuote: true
-semi: false
+jsxSingleQuote: true
+semi: true
 printWidth: 100
-trailingComma: none
+trailingComma: 'all'
+tabWidth: 2
