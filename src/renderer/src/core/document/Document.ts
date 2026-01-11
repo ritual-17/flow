@@ -60,4 +60,20 @@ function removeShapesFromDocument(document: DocumentModel, shapeIds: ShapeId[]):
   };
 }
 
-export { createNewDocument, updateDocumentMetadata, addShapesToDocument, removeShapesFromDocument };
+function updateShapesInDocument(document: DocumentModel, updatedShapes: Shape[]): DocumentModel {
+  const shapeMap = new Map<ShapeId, Shape>();
+  updatedShapes.forEach((shape) => shapeMap.set(shape.id, shape));
+
+  return {
+    ...document,
+    shapes: document.shapes.map((shape) => shapeMap.get(shape.id) || shape),
+  };
+}
+
+export {
+  createNewDocument,
+  updateDocumentMetadata,
+  addShapesToDocument,
+  removeShapesFromDocument,
+  updateShapesInDocument,
+};

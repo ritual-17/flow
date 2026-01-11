@@ -1,7 +1,8 @@
-import { ShapeId } from '@renderer/core/geometry/Shape';
+import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
 
-export interface ShapeCollection<T> {
+export interface ShapeCollection<T extends Shape> {
   addShape(shape: T): void;
+  updateShape(shape: T): void;
   removeShape(shape: T): void;
   getShapeIds(): ShapeId[];
   getShapes(): T[];
