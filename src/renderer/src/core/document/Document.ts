@@ -4,8 +4,8 @@
 // - metadata: document name, last edited, path
 // - shapes: shape info
 //
-
 import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { produce } from 'immer';
 
 export interface DocumentMetadata {
   name: string;
@@ -35,39 +35,35 @@ function updateDocumentMetadata(
   document: DocumentModel,
   updates: Partial<DocumentMetadata>,
 ): DocumentModel {
-  return {
-    ...document,
-    metadata: {
-      ...document.metadata,
-      ...updates,
-    },
-  };
+  return produce(document, (draft) => {
+    Object.assign(draft.metadata, updates);
+  });
 }
 
 function addShapesToDocument(document: DocumentModel, shapes: Shape[]): DocumentModel {
-  return {
-    ...document,
-    shapes: [...document.shapes, ...shapes],
-  };
+  return produce(document, (draft) => {
+    draft.shapes.push(...shapes);
+  });
 }
 
 function removeShapesFromDocument(document: DocumentModel, shapeIds: ShapeId[]): DocumentModel {
-  const idsToRemove = new Set(shapeIds);
-
-  return {
-    ...document,
-    shapes: document.shapes.filter((shape) => !idsToRemove.has(shape.id)),
-  };
+  return produce(document, (draft) => {
+    const idsToRemove = new Set(shapeIds);
+    draft.shapes = draft.shapes.filter((shape) => !idsToRemove.has(shape.id));
+  });
 }
 
 function updateShapesInDocument(document: DocumentModel, updatedShapes: Shape[]): DocumentModel {
-  const shapeMap = new Map<ShapeId, Shape>();
-  updatedShapes.forEach((shape) => shapeMap.set(shape.id, shape));
+  return produce(document, (draft) => {
+    const shapeMap = new Map(updatedShapes.map((s) => [s.id, s]));
 
-  return {
-    ...document,
-    shapes: document.shapes.map((shape) => shapeMap.get(shape.id) || shape),
-  };
+    for (let i = 0; i < draft.shapes.length; i++) {
+      const updated = shapeMap.get(draft.shapes[i].id);
+      if (updated) {
+        draft.shapes[i] = updated;
+      }
+    }
+  });
 }
 
 export {
