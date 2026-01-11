@@ -6,6 +6,7 @@ export interface Editor {
   cursorPosition: { x: number; y: number };
   commandBuffer: string;
   commandHistory: string[];
+  clipboard: ShapeId[];
 }
 
 export type Mode = 'insert' | 'normal' | 'visual' | 'command';
