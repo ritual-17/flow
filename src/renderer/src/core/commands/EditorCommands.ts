@@ -10,4 +10,22 @@ impact the state of the document.
 * Moving the cursor
 **/
 
-export {};
+import { Editor, updateEditorMode } from '@renderer/core/editor/Editor';
+
+function enterNormalMode(editor: Editor): Editor {
+  return updateEditorMode(editor, 'normal');
+}
+
+function enterInsertMode(editor: Editor): Editor {
+  return updateEditorMode(editor, 'insert');
+}
+
+function enterVisualMode(editor: Editor): Editor {
+  return updateEditorMode(editor, 'visual');
+}
+
+function enterCommandMode(editor: Editor): Editor {
+  return updateEditorMode(editor, 'command');
+}
+
+export { enterInsertMode, enterNormalMode, enterVisualMode, enterCommandMode };
