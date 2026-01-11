@@ -16,4 +16,11 @@ export type Point = IShapeBase & {
   type: 'point';
 };
 
-export type Shape = Circle | Point;
+export type TextBox = IShapeBase & {
+  type: 'textBox';
+  width: number;
+  height: number;
+  text: string;
+};
+
+export type Shape = Circle | Point | TextBox;
