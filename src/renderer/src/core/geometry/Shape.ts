@@ -1,9 +1,11 @@
 export interface IShapeBase {
-  id: string;
+  id: ShapeId;
   x: number;
   y: number;
   zIndex: number;
 }
+
+export type ShapeId = string;
 
 export type Circle = IShapeBase & {
   type: 'circle';
