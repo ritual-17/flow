@@ -16,7 +16,7 @@ export interface DocumentMetadata {
 
 export interface DocumentModel {
   metadata: DocumentMetadata;
-  shapes: Shape[];
+  shapes: Map<ShapeId, Shape>;
 }
 
 function createNewDocument(name: string): DocumentModel {
@@ -27,7 +27,7 @@ function createNewDocument(name: string): DocumentModel {
       isSaved: false,
       path: null,
     },
-    shapes: [],
+    shapes: new Map<ShapeId, Shape>(),
   };
 }
 
@@ -42,27 +42,23 @@ function updateDocumentMetadata(
 
 function addShapesToDocument(document: DocumentModel, shapes: Shape[]): DocumentModel {
   return produce(document, (draft) => {
-    draft.shapes.push(...shapes);
+    shapes.forEach((shape) => draft.shapes.set(shape.id, shape));
   });
 }
 
 function removeShapesFromDocument(document: DocumentModel, shapeIds: ShapeId[]): DocumentModel {
   return produce(document, (draft) => {
-    const idsToRemove = new Set(shapeIds);
-    draft.shapes = draft.shapes.filter((shape) => !idsToRemove.has(shape.id));
+    shapeIds.forEach((shapeIds) => draft.shapes.delete(shapeIds));
   });
 }
 
 function updateShapesInDocument(document: DocumentModel, updatedShapes: Shape[]): DocumentModel {
   return produce(document, (draft) => {
-    const shapeMap = new Map(updatedShapes.map((s) => [s.id, s]));
-
-    for (let i = 0; i < draft.shapes.length; i++) {
-      const updated = shapeMap.get(draft.shapes[i].id);
-      if (updated) {
-        draft.shapes[i] = updated;
+    updatedShapes.forEach((shape) => {
+      if (draft.shapes.has(shape.id)) {
+        draft.shapes.set(shape.id, shape);
       }
-    }
+    });
   });
 }
 
