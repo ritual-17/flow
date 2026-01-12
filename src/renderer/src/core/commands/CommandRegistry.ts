@@ -3,10 +3,13 @@
 
 import { addShapeToDocument } from '@renderer/core/commands/ManipulationCommands';
 
-function commandFromName(command: string): Function {
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+function commandFromName(command: string): Function | null {
   switch (command) {
     case 'addShape':
       return addShapeToDocument;
+    default:
+      return null;
   }
 }
 export { commandFromName };
