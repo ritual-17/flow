@@ -1,2 +1,12 @@
 // Maps command name to handler
-export {};
+//
+
+import { addShapeToDocument } from '@renderer/core/commands/ManipulationCommands';
+
+function commandFromName(command: string): Function {
+  switch (command) {
+    case 'addShape':
+      return addShapeToDocument;
+  }
+}
+export { commandFromName };
