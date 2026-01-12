@@ -12,6 +12,17 @@ export interface Editor {
 
 export type Mode = 'insert' | 'normal' | 'visual' | 'command';
 
+function createEditor(): Editor {
+  return {
+    mode: 'normal',
+    selectedShapeIds: [],
+    cursorPosition: { x: 0, y: 0 },
+    commandBuffer: '',
+    commandHistory: [],
+    clipboard: [],
+  };
+}
+
 function updateEditorMode(editor: Editor, mode: Mode): Editor {
   return produce(editor, (draft) => {
     draft.mode = mode;
@@ -49,6 +60,7 @@ function updateClipboard(editor: Editor, shapes: Shape[]): Editor {
 }
 
 export {
+  createEditor,
   updateEditorMode,
   selectShapes,
   updateCursorPosition,
