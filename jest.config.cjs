@@ -11,14 +11,40 @@ module.exports = {
       preset: 'ts-jest',
       testEnvironment: 'node',
       testMatch: ['**/test/unit/**/*.test.ts'],
-      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' }),
+      transform: {
+        '^.+\\.tsx?$': [
+          'ts-jest',
+          {
+            tsconfig: {
+              baseUrl: '.',
+              paths: compilerOptions.paths,
+              esModuleInterop: true,
+              resolveJsonModule: true,
+            },
+          },
+        ],
+      },
     },
     {
       displayName: 'react',
       preset: 'ts-jest',
       testEnvironment: 'jsdom',
       testMatch: ['**/test/react/**/*.test.tsx'],
-      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
+      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' }),
+      transform: {
+        '^.+\\.tsx?$': [
+          'ts-jest',
+          {
+            tsconfig: {
+              baseUrl: '.',
+              paths: compilerOptions.paths,
+              esModuleInterop: true,
+              jsx: 'react-jsx',
+            },
+          },
+        ],
+      },
     },
   ],
 };

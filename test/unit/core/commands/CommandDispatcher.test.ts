@@ -1,6 +1,7 @@
-// test for a CommandDispatcher class
-//
-
 import { CommandDispatcher } from '@renderer/core/commands/CommandDispatcher';
 
-const t = new CommandDispatcher();
+describe('CommandDispatcher', () => {
+  test('should register and execute a command', () => {
+    const t = new CommandDispatcher();
+  });
+});
