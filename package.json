@@ -22,7 +22,7 @@
     "build:linux": "electron-vite build && electron-builder --linux",
     "test": "jest",
     "test:unit": "jest --selectProjects unit",
-    "test:react": "jest --selectProjects react"
+    "test:ui": "jest --selectProjects ui"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.2",
