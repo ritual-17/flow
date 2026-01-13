@@ -1,0 +1,33 @@
+{
+  "normal": {
+    "j": "moveDown",
+    "k": "moveUp",
+    "h": "moveLeft",
+    "l": "moveRight",
+    "x": "deleteChar",
+    "i": "enterInsertMode",
+    "v": "enterVisualMode",
+    "dd": "deleteLine",
+    "yy": "yankLine",
+    "p": "pasteAfter",
+    "u": "undo",
+    "<C-r>": "redo",
+    ".": "repeatLastAction"
+  },
+  "insert": {
+    "<Esc>": "enterNormalMode",
+    "<C-s>": "saveFile"
+  },
+  "visual": {
+    "<Esc>": "enterNormalMode",
+    "d": "deleteSelection",
+    "y": "yankSelection",
+    "p": "pasteOverSelection"
+  },
+  "command": {
+    "w": "saveFile",
+    "q": "quitEditor",
+    "wq": "saveAndQuit",
+    "q!": "forceQuit"
+  }
+}
