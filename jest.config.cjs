@@ -2,29 +2,26 @@
 const { pathsToModuleNameMapper } = require('ts-jest');
 const { compilerOptions } = require('./tsconfig.web.json');
 
+const transform = {
+  '^.+\\.tsx?$': [
+    'ts-jest',
+    {
+      tsconfig: './tsconfig.web.json', // Tell jest to use tsconfig.web.json
+    },
+  ],
+};
+
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'node', // default for unit tests
+  testEnvironment: 'node',
   projects: [
     {
       displayName: 'unit',
       preset: 'ts-jest',
-      testEnvironment: 'node',
+      testEnvironment: 'jsdom',
       testMatch: ['**/test/unit/**/*.test.ts'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' }),
-      transform: {
-        '^.+\\.tsx?$': [
-          'ts-jest',
-          {
-            tsconfig: {
-              baseUrl: '.',
-              paths: compilerOptions.paths,
-              esModuleInterop: true,
-              resolveJsonModule: true,
-            },
-          },
-        ],
-      },
+      transform: transform,
     },
     {
       displayName: 'react',
@@ -32,19 +29,7 @@ module.exports = {
       testEnvironment: 'jsdom',
       testMatch: ['**/test/react/**/*.test.tsx'],
       moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' }),
-      transform: {
-        '^.+\\.tsx?$': [
-          'ts-jest',
-          {
-            tsconfig: {
-              baseUrl: '.',
-              paths: compilerOptions.paths,
-              esModuleInterop: true,
-              jsx: 'react-jsx',
-            },
-          },
-        ],
-      },
+      transform: transform,
     },
   ],
 };
