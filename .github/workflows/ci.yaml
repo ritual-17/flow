@@ -42,5 +42,5 @@ jobs:
       - name: Prettier format check
         run: pnpm format:check
 
-      # - name: Run tests (Jest)
-      #   run: pnpm jest --ci --runInBand
+      - name: Run tests (Jest)
+        run: pnpm run test
