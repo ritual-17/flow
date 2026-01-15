@@ -2,8 +2,9 @@ import { CommandParser, ParseResult } from '@renderer/core/commands/CommandParse
 import * as CommandRegistry from '@renderer/core/commands/CommandRegistry';
 import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
+import { VisualModeParser } from '@renderer/core/commands/parsers/VisualModeParser';
 import { DocumentModel } from '@renderer/core/document/Document';
-import { Editor, updateCommandBuffer } from '@renderer/core/editor/Editor';
+import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
 import { FlattenSpatialIndex } from '@renderer/core/geometry/shape/FlattenSpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
@@ -11,6 +12,8 @@ export class CommandDispatcher {
   private spatialIndex: SpatialIndex = new FlattenSpatialIndex();
   private normalModeParser: CommandParser = new NormalModeParser();
   private insertModeParser: CommandParser = new InsertModeParser();
+  private visualModeParser: CommandParser = new VisualModeParser();
+  private commandModeParser: CommandParser = new NormalModeParser();
 
   dispatchCommand(editor: Editor, document: DocumentModel): [Editor, DocumentModel] {
     const parser = this.getCommandParser(editor);
@@ -29,19 +32,19 @@ export class CommandDispatcher {
     const { command, newCommandBuffer } = parserResult;
 
     if (command === null) {
-      const updatedEditor = updateCommandBuffer(editor, newCommandBuffer);
+      const updatedEditor = setCommandBuffer(editor, newCommandBuffer);
       return [updatedEditor, document];
     }
 
     const commandFunc = CommandRegistry.commandFromName(command);
     if (commandFunc === null) {
-      const updatedEditor = updateCommandBuffer(editor, '');
+      const updatedEditor = setCommandBuffer(editor, '');
       return [updatedEditor, document];
     }
 
-    const [updatedEditor, updatedDocument] = commandFunc(editor, document, this.spatialIndex);
+    const [updatedEditor, updatedDocument] = commandFunc(this.toCommandArgs(editor, document));
 
-    const clearedCommandBufferEditor = updateCommandBuffer(updatedEditor, '');
+    const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
 
     return [clearedCommandBufferEditor, updatedDocument];
   }
@@ -52,9 +55,22 @@ export class CommandDispatcher {
         return this.normalModeParser;
       case 'insert':
         return this.insertModeParser;
+      case 'visual':
+        return this.visualModeParser;
+      case 'command':
+        return this.commandModeParser;
       default:
         // update this
-        return this.normalModeParser;
+        throw new Error(`Unknown editor mode: ${editor.mode}`);
     }
+  }
+
+  private toCommandArgs(editor: Editor, document: DocumentModel): CommandRegistry.CommandArgs {
+    return {
+      editor,
+      document,
+      spatialIndex: this.spatialIndex,
+      args: {},
+    };
   }
 }

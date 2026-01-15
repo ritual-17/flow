@@ -10,7 +10,7 @@ export interface Editor {
   clipboard: Shape[];
 }
 
-export type Mode = 'insert' | 'normal' | 'visual' | 'command';
+export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text';
 
 function createEditor(): Editor {
   return {
@@ -23,25 +23,25 @@ function createEditor(): Editor {
   };
 }
 
-function updateEditorMode(editor: Editor, mode: Mode): Editor {
+function setMode(editor: Editor, mode: Mode): Editor {
   return produce(editor, (draft) => {
     draft.mode = mode;
   });
 }
 
-function selectShapes(editor: Editor, shapeIds: ShapeId[]): Editor {
+function setSelectedShapes(editor: Editor, shapeIds: ShapeId[]): Editor {
   return produce(editor, (draft) => {
     draft.selectedShapeIds = shapeIds;
   });
 }
 
-function updateCursorPosition(editor: Editor, position: { x: number; y: number }): Editor {
+function setCursorPosition(editor: Editor, position: { x: number; y: number }): Editor {
   return produce(editor, (draft) => {
     draft.cursorPosition = position;
   });
 }
 
-function updateCommandBuffer(editor: Editor, command: string): Editor {
+function setCommandBuffer(editor: Editor, command: string): Editor {
   return produce(editor, (draft) => {
     draft.commandBuffer = command;
   });
@@ -53,7 +53,7 @@ function addToCommandHistory(editor: Editor, command: string): Editor {
   });
 }
 
-function updateClipboard(editor: Editor, shapes: Shape[]): Editor {
+function setClipboard(editor: Editor, shapes: Shape[]): Editor {
   return produce(editor, (draft) => {
     draft.clipboard = shapes;
   });
@@ -61,10 +61,10 @@ function updateClipboard(editor: Editor, shapes: Shape[]): Editor {
 
 export {
   createEditor,
-  updateEditorMode,
-  selectShapes,
-  updateCursorPosition,
-  updateCommandBuffer,
+  setMode,
+  setSelectedShapes,
+  setCursorPosition,
+  setCommandBuffer,
   addToCommandHistory,
-  updateClipboard,
+  setClipboard,
 };

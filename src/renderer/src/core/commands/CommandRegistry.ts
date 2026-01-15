@@ -1,13 +1,54 @@
 // Maps command name to handler
 //
 
-import { addShapeToDocument } from '@renderer/core/commands/ManipulationCommands';
+import {
+  cursorDown,
+  cursorLeft,
+  cursorRight,
+  cursorUp,
+  enterCommandMode,
+  enterInsertMode,
+  enterNormalMode,
+  enterVisualMode,
+} from '@renderer/core/commands/EditorCommands';
+import { addShapeToDocument, createCircle } from '@renderer/core/commands/ManipulationCommands';
+import { DocumentModel } from '@renderer/core/document/Document';
+import { Editor } from '@renderer/core/editor/Editor';
+import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
-function commandFromName(command: string): Function | null {
+export type CommandArgs = {
+  editor: Editor;
+  document: DocumentModel;
+  spatialIndex: SpatialIndex;
+  args: Record<string, unknown>;
+};
+
+export type CommandResult = [Editor, DocumentModel];
+
+export type CommandFunction = (args: CommandArgs) => CommandResult;
+
+function commandFromName(command: string): CommandFunction | null {
   switch (command) {
     case 'addShape':
       return addShapeToDocument;
+    case 'enterNormalMode':
+      return enterNormalMode;
+    case 'enterInsertMode':
+      return enterInsertMode;
+    case 'enterVisualMode':
+      return enterVisualMode;
+    case 'enterCommandMode':
+      return enterCommandMode;
+    case 'up':
+      return cursorUp;
+    case 'down':
+      return cursorDown;
+    case 'left':
+      return cursorLeft;
+    case 'right':
+      return cursorRight;
+    case 'createCircle':
+      return createCircle;
     default:
       return null;
   }
