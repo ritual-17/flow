@@ -13,6 +13,8 @@ impact the state of the document.
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { setCursorPosition, setMode } from '@renderer/core/editor/Editor';
 
+const CURSOR_MOVE_AMOUNT = 10;
+
 function enterNormalMode({ editor, document }: CommandArgs): CommandResult {
   return [setMode(editor, 'normal'), document];
 }
@@ -33,7 +35,7 @@ function cursorUp({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
       x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y - 1,
+      y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
     }),
     document,
   ];
@@ -43,7 +45,7 @@ function cursorDown({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
       x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y + 1,
+      y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
     }),
     document,
   ];
@@ -52,7 +54,7 @@ function cursorDown({ editor, document }: CommandArgs): CommandResult {
 function cursorLeft({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x - 1,
+      x: editor.cursorPosition.x - CURSOR_MOVE_AMOUNT,
       y: editor.cursorPosition.y,
     }),
     document,
@@ -62,7 +64,7 @@ function cursorLeft({ editor, document }: CommandArgs): CommandResult {
 function cursorRight({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x + 1,
+      x: editor.cursorPosition.x + CURSOR_MOVE_AMOUNT,
       y: editor.cursorPosition.y,
     }),
     document,
