@@ -11,7 +11,7 @@ import {
   enterNormalMode,
   enterVisualMode,
 } from '@renderer/core/commands/EditorCommands';
-import { addShapeToDocument } from '@renderer/core/commands/ManipulationCommands';
+import { addShapeToDocument, createCircle } from '@renderer/core/commands/ManipulationCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor } from '@renderer/core/editor/Editor';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
@@ -47,6 +47,8 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorLeft;
     case 'right':
       return cursorRight;
+    case 'createCircle':
+      return createCircle;
     default:
       return null;
   }

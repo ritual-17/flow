@@ -16,6 +16,7 @@
   },
   "insert": {
     "<Esc>": "enterNormalMode",
+    "cc": "createCircle",
     "<C-s>": "saveFile"
   },
   "visual": {
