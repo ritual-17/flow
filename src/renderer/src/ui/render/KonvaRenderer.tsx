@@ -9,11 +9,11 @@ function KonvaRenderer() {
 
   return (
     <>
-      <Cursor />
       {shapes.map((shape) => {
         const Component = getComponent(shape);
         return <Component key={shape.id} shape={shape} />;
       })}
+      <Cursor />
     </>
   );
 }
