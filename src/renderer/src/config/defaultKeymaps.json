@@ -1,9 +1,9 @@
 {
   "normal": {
-    "j": "moveDown",
-    "k": "moveUp",
-    "h": "moveLeft",
-    "l": "moveRight",
+    "j": "up",
+    "k": "down",
+    "h": "left",
+    "l": "right",
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",

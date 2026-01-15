@@ -2,6 +2,10 @@
 //
 
 import {
+  cursorDown,
+  cursorLeft,
+  cursorRight,
+  cursorUp,
   enterCommandMode,
   enterInsertMode,
   enterNormalMode,
@@ -35,6 +39,14 @@ function commandFromName(command: string): CommandFunction | null {
       return enterVisualMode;
     case 'enterCommandMode':
       return enterCommandMode;
+    case 'up':
+      return cursorUp;
+    case 'down':
+      return cursorDown;
+    case 'left':
+      return cursorLeft;
+    case 'right':
+      return cursorRight;
     default:
       return null;
   }
