@@ -3,7 +3,7 @@ import * as CommandRegistry from '@renderer/core/commands/CommandRegistry';
 import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
 import { DocumentModel } from '@renderer/core/document/Document';
-import { Editor, updateCommandBuffer } from '@renderer/core/editor/Editor';
+import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
 import { FlattenSpatialIndex } from '@renderer/core/geometry/shape/FlattenSpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
@@ -29,19 +29,19 @@ export class CommandDispatcher {
     const { command, newCommandBuffer } = parserResult;
 
     if (command === null) {
-      const updatedEditor = updateCommandBuffer(editor, newCommandBuffer);
+      const updatedEditor = setCommandBuffer(editor, newCommandBuffer);
       return [updatedEditor, document];
     }
 
     const commandFunc = CommandRegistry.commandFromName(command);
     if (commandFunc === null) {
-      const updatedEditor = updateCommandBuffer(editor, '');
+      const updatedEditor = setCommandBuffer(editor, '');
       return [updatedEditor, document];
     }
 
-    const [updatedEditor, updatedDocument] = commandFunc(editor, document, this.spatialIndex);
+    const [updatedEditor, updatedDocument] = commandFunc(this.toCommandArgs(editor, document));
 
-    const clearedCommandBufferEditor = updateCommandBuffer(updatedEditor, '');
+    const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
 
     return [clearedCommandBufferEditor, updatedDocument];
   }
@@ -56,5 +56,14 @@ export class CommandDispatcher {
         // update this
         return this.normalModeParser;
     }
+  }
+
+  private toCommandArgs(editor: Editor, document: DocumentModel): CommandRegistry.CommandArgs {
+    return {
+      editor,
+      document,
+      spatialIndex: this.spatialIndex,
+      args: {},
+    };
   }
 }
