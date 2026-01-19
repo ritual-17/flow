@@ -1,22 +1,44 @@
-import { createNewDocument } from '@renderer/core/document/Document';
-import { createEditor } from '@renderer/core/editor/Editor';
+import { CommandDispatcher } from '@renderer/core/commands/CommandDispatcher';
+import { createNewDocument, DocumentModel } from '@renderer/core/document/Document';
+import { createEditor, Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
 import { create } from 'zustand';
 
 export interface DocumentStore {
-  editor: ReturnType<typeof createEditor>;
-  document: ReturnType<typeof createNewDocument>;
-  update: (
-    newEditor: ReturnType<typeof createEditor>,
-    newDocument: ReturnType<typeof createNewDocument>,
-  ) => void;
-  updateEditor: (newEditor: ReturnType<typeof createEditor>) => void;
-  updateDocument: (newDocument: ReturnType<typeof createNewDocument>) => void;
+  editor: Editor;
+  document: DocumentModel;
+  commandDispatcher: CommandDispatcher;
+  update: (newEditor: Editor, newDocument: DocumentModel) => void;
+  updateEditor: (newEditor: Editor) => void;
+  updateDocument: (newDocument: DocumentModel) => void;
+  updateCommandBuffer: (command: string) => void;
+  appendCommandBuffer: (char: string) => void;
 }
 
-export const useDocumentStore = create<DocumentStore>((set) => ({
+export const useStore = create<DocumentStore>((set) => ({
   editor: createEditor(),
   document: createNewDocument('Untitled'),
+  commandDispatcher: new CommandDispatcher(),
   update: (newEditor, newDocument) => set({ editor: newEditor, document: newDocument }),
   updateEditor: (newEditor) => set({ editor: newEditor }),
   updateDocument: (newDocument) => set({ document: newDocument }),
+  updateCommandBuffer: (command: string) => {
+    const editor = useStore.getState().editor;
+    const commandEditor = setCommandBuffer(editor, command);
+
+    const document = useStore.getState().document;
+    const dispatcher = useStore.getState().commandDispatcher;
+
+    const [newEditor, newDocument] = dispatcher.dispatchCommand(commandEditor, document);
+    set({ editor: newEditor, document: newDocument });
+  },
+  appendCommandBuffer: (char: string) => {
+    const editor = useStore.getState().editor;
+    const commandEditor = setCommandBuffer(editor, editor.commandBuffer + char);
+
+    const document = useStore.getState().document;
+    const dispatcher = useStore.getState().commandDispatcher;
+
+    const [newEditor, newDocument] = dispatcher.dispatchCommand(commandEditor, document);
+    set({ editor: newEditor, document: newDocument });
+  },
 }));
