@@ -113,12 +113,36 @@ found at \url{https://github.com/ritual-17/flow}.
 %\end{center}
 
 \noindent
-The specification of \progname \ uses some derived data types: sequences, strings, and
-tuples. Sequences are lists filled with elements of the same data type. Strings
-are sequences of characters. Tuples contain a list of values, potentially of
-different types. In addition, \progname \ uses functions, which
-are defined by the data types of their inputs and outputs. Local functions are
-described by giving their type signature followed by their specification.
+The specification of \progname\ uses several derived data types, including
+sequences, strings, and tuples. Sequences are ordered lists containing elements
+of the same data type. Strings are sequences of characters. Tuples represent a
+finite collection of values, potentially of different types. Functions are
+described by specifying the data types of their inputs and outputs, and local
+functions are documented using their type signatures followed by their
+behavioural descriptions.
+
+\noindent
+Several modules, most notably the Shape Interface Module, operate on geometric
+objects that are placed on a two-dimensional canvas. Shapes are treated
+abstractly and are not tied to a specific rendering or user interface
+implementation. A shape is represented conceptually as a tuple consisting of a
+shape type and a finite set of parameters. The shape type is drawn from a
+predefined set of supported shapes (e.g., rectangle, circle, text box), while
+the parameters describe properties such as position, size, and orientation.
+
+\noindent
+Positions are expressed using Cartesian coordinates in a two-dimensional plane,
+typically represented as $(x, y)$ pairs of real numbers. The canvas may be
+conceptually overlaid with a uniform grid that provides a visual reference and
+optional alignment structure for placing and manipulating shapes. The grid does
+not impose semantic constraints on shape placement, but may be used to support
+consistent positioning, snapping behaviour, or alignment operations. Dimensions
+such as width, height, or radius are represented using real-valued quantities.
+Collections of shapes are represented as sequences of shape tuples. Operations
+on shapes, such as insertion, deletion, movement, resizing, or transformation,
+are described in terms of updates applied to these abstract representations.
+Any constraints on valid coordinates or dimensions are specified explicitly in
+the relevant module interfaces.
 
 \section{Module Decomposition}
 
@@ -160,7 +184,7 @@ described by giving their type signature followed by their specification.
 \newpage
 ~\newpage
 
-\section{MIS}} \label{Display Interface Module} 
+\section{MIS} \label{Display Interface Module} 
 %\wss{Use labels for  cross-referencing}
 
 %\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
