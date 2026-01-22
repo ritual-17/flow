@@ -166,7 +166,6 @@ the relevant module interfaces.
 & \ref{Mode Commands Module} {Mode Commands Module}\\
 & \ref{Shape Interface Module} {Shape Interface Module}\\
 & \ref{User Preference Module} {User Preference Module}\\
-& \ref{Geometry State Parser Module} {Geometry State Parser Module}\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision} & \ref{Text Buffer Module} {Text Buffer Module}\\
@@ -610,7 +609,7 @@ Command Parser, converts keyboard inputs into commands and passes them onto the 
 
 \subsubsection{Exported Constants}
 
-Command names/ids ex ctrl + s -> <C-s>, d + d -> "dd"
+Command names or ids e.g. ctrl + s -$>$ $<$C-s$>$, d + d -$>$ "dd"
 
 \subsubsection{Exported Access Programs}
 
@@ -960,7 +959,7 @@ None
 
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
-text : Map\<TextID, TextObject\>
+text : Map$<$TextID, TextObject$>$
 
 \noindent {Where TextObject contains:}
 \begin{itemize}
@@ -1051,11 +1050,11 @@ LineType = {Line, Arrow}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{getShapes} & - & Set\<Shape\> & - \\
+{getShapes} & - & Set$<$Shape$>$ & - \\
 \hline
-{getText} & - & Set\<TextBox\> & - \\
+{getText} & - & Set$<$TextBox$>$ & - \\
 \hline
-{getLines} & - & Set\<Line\> & - \\
+{getLines} & - & Set$<$Line$>$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1064,9 +1063,9 @@ LineType = {Line, Arrow}
 
 \subsubsection{State Variables}
 \begin{itemize}
-\item Shapes : Set\<Shape\>
-\item TextBoxes : Set\<TextBox\>
-\item Lines : Set\<Line\>
+\item Shapes : Set$<$Shape$>$
+\item TextBoxes : Set$<$TextBox$>$
+\item Lines : Set$<$Line$>$
 \end{itemize}
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
@@ -1261,8 +1260,8 @@ None
 
 \subsubsection{State Variables}
 \begin{itemize}
-\item undoStack : Stack\<Command\>
-\item redoStack : Stack\<Command\>
+\item undoStack : Stack$<$Command$>$
+\item redoStack : Stack$<$Command$>$
 \end{itemize}
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
