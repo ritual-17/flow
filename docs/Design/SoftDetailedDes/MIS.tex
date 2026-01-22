@@ -160,7 +160,7 @@ described by giving their type signature followed by their specification.
 \newpage
 ~\newpage
 
-\section{MIS}} \label{Display Interface Module} 
+\section{MIS of {Display Interface Module}} \label{Display Interface Module} 
 %\wss{Use labels for  cross-referencing}
 
 %\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
@@ -191,6 +191,8 @@ N/A
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 display & Shapes & Display to screen & - \\
+resize & width, length & Resize the screen as needed & - \\
+status &  & Show status & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -221,6 +223,18 @@ N/A
 \item output: Outputs Shapes visually on the screen 
 \end{itemize}
 
+\noindent {resize}(length,width):
+\begin{itemize}
+
+\item output: Outputs resized version of the current screen 
+\end{itemize}
+
+\noindent {status}():
+\begin{itemize}
+
+\item output: Outputs current status of the program ex waiting fr input, rendering etc. 
+\end{itemize}
+
 %\wss{A module without environment variables or state variables is unlikely to
 %  have a state transition.  In this case a state transition can only occur if
 %  the module is changing the state of another module.}
@@ -247,7 +261,7 @@ N/A
 
 \subsection{Module}
 
-Input Module. Deals with User inputs and passes them on to the \ref{Mode Commands Module}{Mode Commands Module} 
+Input Module. Deals with User inputs and passes them on to the \ref{Mode Commands Module} {Mode Commands Module} 
 
 \subsection{Uses}
 \ref{Mode Commands Module} {Mode Commands Module} 
@@ -294,12 +308,12 @@ Input Module. Deals with User inputs and passes them on to the \ref{Mode Command
 
 \noindent {get\_keyboard\_inputs}():
 \begin{itemize}
-\item output: Data Structure containing all current keyboard inputs. All keys will be off if the user is not using a keyboard. 
+\item output: Data containing all current keyboard inputs. All keys will be off if the user is not using a keyboard. 
 \end{itemize}
 
 \noindent {get\_mouse\_inputs}():
 \begin{itemize}
-\item output: Data Structure containing mouse location and inputs. All inputs are off if the user does not have a mouse.
+\item output: Data containing mouse location and inputs. All inputs are off if the user does not have a mouse.
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -346,7 +360,7 @@ N/A
 \hline
 {open} & file\_path & opened\_file & Invalid File \\
 \hline
-{save} & file\_path, opened\_note & success & - \\
+{save} & file\_path, opened\_note & success & Saving Error \\
 \hline
 \end{tabular}
 \end{center}
@@ -383,6 +397,7 @@ N/A
 
 \begin{itemize}
 \item output: If the Module was successful in saving opened\_note to file\_path
+\item exception: No Space if there is not enough space to save the file.
 
 \end{itemize}
 %\wss{A module without environment variables or state variables is unlikely to
@@ -410,12 +425,13 @@ N/A
 
 \subsection{Module}
 
-File parser takes the file input and parses it into data structure containing all shapes.
+File parser takes the file input and parses it into data structure containing all shapes which is then stored by the \ref{Geometry State Module} {Geometry State Module} which holds all shape data.
 %\wss{Short name for the module}
 
 \subsection{Uses}
-
-N/A
+ 
+\ref{Geometry State Module} {Geometry State Module}
+  
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -482,16 +498,20 @@ N/A
 
 \subsection{Module}
 
-Note converter that converts notes to files of different file types.
+Note converter that converts notes to files of different file types, sending it to the file interface module
 %\wss{Short name for the module}
 
 \subsection{Uses}
-N/A
+\ref{File Interface Module} {File Interface Module}
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+Legal file types
+\begin{itemize}
+\item{PDF}
+\item{fnote}
+\end{itemize}
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -560,12 +580,13 @@ convert\_*(opened\_note) functions that do the converting once the file type has
 Command Parser, converts keyboard inputs into commands and passes them onto the shape mutator. 
 
 \subsection{Uses}
-\ref{Geometry State Mutator Module}{Geometry State Mutator Module}
+\ref{Geometry State Mutator Module} {Geometry State Mutator Module}
 \ref{User Preference Module} {User Preference Module}
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+
+Command names/ids ex ctrl + s -> <C-s>, d + d -> "dd"
 
 \subsubsection{Exported Access Programs}
 
@@ -574,7 +595,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{parse\_commands} & keyboard\_inputs, mouse\_inputs & commands & - \\
+{parse\_commands} & keyboard\_inputs, mouse\_inputs & parsed_input & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -637,7 +658,17 @@ N/A
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+Modes:
+\begin{itemize}
+\item{normalMode}
+\item{insertMode}
+\item{visualMode}
+\item{commandMode}
+\item{lineMode}
+\item{textMode}
+\end{itemize}
+
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -706,7 +737,13 @@ Module that contains information about shapes.
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-Shapes: List of shapes
+Shapes: Types of shapes
+\begin{itemize}
+\item{Rectangle}
+\item{circle}
+\item{Triangle}
+\item{Text Box}
+\end{itemize}
 
 \subsubsection{Exported Access Programs}
 
@@ -791,7 +828,7 @@ N/A
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4.5cm} p{2cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
