@@ -901,15 +901,16 @@ Theme preferences: user theme prefrences
 %\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
-Text, Module for Text representation in notes. 
+TextBuffer
 %\wss{Short name for the module}
 
 \subsection{Uses}
-N/A
+Geometry State Module (\ref{Geometry State Module})
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None
 
 \subsubsection{Exported Access Programs}
 
@@ -918,11 +919,13 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{new\_text} & location,text,formatting & text\_box & Invalid Text, Invalid Location \\
+{createText} & location, text, formatting & TextID & Invalid Location \\
 \hline
-{modify\_text} & text\_box,text,formatting & - & Invalid Text  \\
+{modifyText} & TextID, text & - & Text Not Found  \\
 \hline
-{move\_text} & text\_box,location & - & Invalid Location \\
+{moveText} & TextID, newLocation & TextObject & Text Not Found \\
+\hline
+{deleteText} & TextID & - & Text Not Found \\
 \hline
 \end{tabular}
 \end{center}
@@ -933,36 +936,50 @@ N/A
 
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
-N/A
+text : Map\<TextID, TextObject\>
+
+\noindent {Where TextObject contains:}
+\begin{itemize}
+\item position : location
+\item content : string
+\end{itemize}
+
 \subsubsection{Environment Variables}
-N/A
+Screen (for rendering text)
+
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
-
+TextIDs are unique and immutable.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent {new\_text}(location,text,formatting):
+\noindent {createText}(location, text, formatting):
 \begin{itemize}
-\item output: Text box at location with text and formatting
-\item exception: Invalid Text, Invalid Location
-\end{itemize}
-
-\noindent {modify\_text}(text\_box,text,formatting):
-\begin{itemize}
-\item transition: Text in text\_box is modified to now contain text with formatting
-\item exception: Invalid Text
-\end{itemize}
-
-\noindent {move\_text}(text\_box,location):
-\begin{itemize}
-\item transition: text\_box is moved to location. 
+\item transition: Text box at location with text and formatting
+\item output: TextID of the created text box
 \item exception: Invalid Location
+\end{itemize}
+
+\noindent {modifyText}(TextID, text):
+\begin{itemize}
+\item transition: Text in text box is modified to now contain text with formatting
+\item exception: Text Not Found
+\end{itemize}
+
+\noindent {moveText}(TextID, newLocation):
+\begin{itemize}
+\item transition: text box is moved to location. 
+\item exception: Text Not Found
+\end{itemize}
+\noindent {deleteText}(TextID):
+\begin{itemize}
+\item transition: text box is removed from the text buffer
+\item exception: Text Not Found
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -974,7 +991,7 @@ N/A
 
 \subsubsection{Local Functions}
 
-N/A
+generateTextID() : TextID
 %\wss{As appropriate} \wss{These functions are for the purpose of specification.
 %  They are not necessarily something that is going to be implemented
 %  explicitly.  Even if they are implemented, they are not exported; they only
@@ -991,16 +1008,17 @@ N/A
 
 \subsection{Module}
 
-Geometry State, contains info on all current geometry 
+GeometryState (\ref{Geometry State Module})
 %\wss{Short name for the module}
 
 \subsection{Uses}
-\ref{Shape Interface Module} {Shape Interface Module}
-\ref{Text Buffer Module} {Text Buffer Module}
+None
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+ShapeType = {Circle, Rectangle, Triangle, TextBox} \\
+LineType = {Line, Arrow}
 
 \subsubsection{Exported Access Programs}
 
@@ -1009,9 +1027,11 @@ Geometry State, contains info on all current geometry
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{get\_shapes} & - & shapes & - \\
+{getShapes} & - & Set\<Shape\> & - \\
 \hline
-{get\_text} & - & text\_boxes & - \\
+{getText} & - & Set\<TextBox\> & - \\
+\hline
+{getLines} & - & Set\<Line\> & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1019,8 +1039,11 @@ Geometry State, contains info on all current geometry
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-Shapes: data structure holding all shapes
-Text\_Boxes: data structure holding all Text Boxes
+\begin{itemize}
+\item Shapes : Set\<Shape\>
+\item TextBoxes : Set\<TextBox\>
+\item Lines : Set\<Line\>
+\end{itemize}
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
 
@@ -1029,27 +1052,28 @@ Text\_Boxes: data structure holding all Text Boxes
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
-N/A
+None
 \subsubsection{Assumptions}
-N/A
+Geometry is immutable except via Geometry State Mutator Module (\ref{Geometry State Mutator Module}).
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent {get\_shapes}():
+\noindent {getShapes}():
 \begin{itemize}
 \item output: Data Structure containing all shapes
 \end{itemize}
 
-\noindent {get\_text}():
+\noindent {getText}():
 \begin{itemize}
-\item output:  Data structure containing all text boxes
+\item output: Data structure containing all text boxes
 \end{itemize}
 
-
-
-
+\noindent {getLines}():
+\begin{itemize}
+\item output: Data structure containing all lines
+\end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
 %  have a state transition.  In this case a state transition can only occur if
@@ -1059,7 +1083,7 @@ N/A
 %  will have one or the other.}
 
 \subsubsection{Local Functions}
-N/A
+None
 %\wss{As appropriate} \wss{These functions are for the purpose of specification.
 %  They are not necessarily something that is going to be implemented
 %  explicitly.  Even if they are implemented, they are not exported; they only
@@ -1075,15 +1099,13 @@ N/A
 %\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
-Geometry State Mutator Module, Provides methods to mutate the geometry state (add, delete, modify shapes).
+GeometryStateMutator (\ref{Geometry State Mutator Module})
 
 %\wss{Short name for the module}
 
 \subsection{Uses}
-\ref{Commands Parser Module} {Commands Parser Module}
-\ref{Shape Interface Module} {Shape Interface Module}
-\ref{Text Buffer Module} {Text Buffer Module}
-\ref{Geometry State Module} {Geometry State Module}
+{Undo Redo Module} \ref{Undo Redo Module}
+{Geometry State Module} \ref{Geometry State Module}
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -1095,17 +1117,15 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{delete\_text} & text\_box & - & - \\
+{addShape} & shapeSpec & GeometryID & Invalid Spec \\
 \hline
-{delete\_shapes} & shape & - & - \\
+{addLine} & lineSpec & GeometryID & Invalid Spec \\
 \hline
-{add\_text} & text\_box & - & - \\
+{delete} & GeometryID & - & Not Found \\
 \hline
-{add\_shape} & shape & - & - \\
+{resize} & GeometryID & - & Not Found \\
 \hline
-{modify\_text} & text\_box,text,formatting & - & Invalid Text  \\
-\hline
-{move\_shape} & shape, new\_points & - & Invalid Points \\
+{move} & GeometryID, location & - & Not Found, Invalid Transform \\
 \hline
 \end{tabular}
 \end{center}
@@ -1113,55 +1133,56 @@ N/A
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-Geometry\_State\_Module:Stores the info on the shapes and Text boxes
+None
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
 
 \subsubsection{Environment Variables}
-N/A
+None
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
-N/A
+Mutations must be recorded by Undo Redo Module.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent {add\_text}(text\_box):
+\noindent {addShape}(shapeSpec):
 \begin{itemize}
-\item transition: Adds the text\_box to Text\_Boxes
+\item transition: Adds the shape to the canvas 
+\item output: GeometryID of the added shape
+\item exception: Invalid Spec if the shapeSpec is invalid
 \end{itemize}
 
-\noindent {add\_shape}(shape):
+\noindent {addLine}(lineSpec):
 \begin{itemize}
-\item transition: Adds the shape to Shapes 
+\item transition: Adds the line to the canvas
+\item output: GeometryID of the added line  
+\item exception: Invalid Spec if the lineSpec is invalid
 \end{itemize}
 
-\noindent {delete\_text}(text\_box):
+\noindent {delete}(GeometryID):
 \begin{itemize}
-\item transition: Removes the text\_box to Text\_Boxes
+\item transition: Deletes the shape/line/textbox with the given GeometryID  
+\item exception: Not Found if the GeometryID does not exist
 \end{itemize}
 
-
-\noindent {delete\_shape}(shape):
+\noindent {resize}(GeometryID):
 \begin{itemize}
-\item transition: Removes the shape to Shapes 
+\item transition: Resizes the shape/line/textbox with the given GeometryID
+\item exception: Not Found if the GeometryID does not exist
 \end{itemize}
 
-\noindent {modify\_text}(text\_box,text,formatting):
+\noindent {move}(GeometryID, location):
 \begin{itemize}
-\item transition: Text in text\_box is modified to now contain text with formatting
-\item exception: Invalid Text
+\item transition: Moves the shape/line/textbox with the given GeometryID to location
+\item exception: Not Found if the GeometryID does not exist
+\item exception: Invalid Transform if the location is invalid
 \end{itemize}
 
-\noindent {move\_shape}():
-\begin{itemize}
-\item transition: changes the points of the shape to the new points
-\item exception: Invalid points if the points are not possible for the type of shape.
-\end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
 %  have a state transition.  In this case a state transition can only occur if
@@ -1171,7 +1192,7 @@ N/A
 %  will have one or the other.}
 
 \subsubsection{Local Functions}
-N/A
+None
 %\wss{As appropriate} \wss{These functions are for the purpose of specification.
 %  They are not necessarily something that is going to be implemented
 %  explicitly.  Even if they are implemented, they are not exported; they only
@@ -1187,17 +1208,15 @@ N/A
 %\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
-Undo/Redo Module: manages undo and redo commands.
+UndoRedoModule (\ref{Undo Redo Module})
 %\wss{Short name for the module}
 
 \subsection{Uses}
-\ref{Commands Parser Module} {Commands Parser Module}
-\ref{Geometry State Mutator Module} {Geometry State Mutator Module}
-\ref{File Interface Module} {File Interface Module} 
+{Geometry State Module} \ref{Geometry State Module}
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -1209,7 +1228,7 @@ N/A
 \hline
 {redo} & - & - & Cant Redo \\
 \hline
-{add\_command} & command & - & - \\
+{addCommand} & command & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1217,8 +1236,10 @@ N/A
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-Previous\_Commands: previous command that can be used for undo
-Redone\_Commands: commands that can be used for redo
+\begin{itemize}
+\item undoStack : Stack\<Command\>
+\item redoStack : Stack\<Command\>
+\end{itemize}
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
 
@@ -1227,9 +1248,9 @@ Redone\_Commands: commands that can be used for redo
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
-N/A
+None
 \subsubsection{Assumptions}
-N/A
+Commands fully capture inverse operations.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
@@ -1237,22 +1258,19 @@ N/A
 
 \noindent {undo}():
 \begin{itemize}
-\item transition: Uses the Geometry State mutator to undo a previous command.
+\item transition: Pops command from undoStack, executes its inverse, and pushes it onto redoStack
+\item exception: Cant Undo if undoStack is empty
 \end{itemize}
 
 \noindent {redo}():
 \begin{itemize}
-\item transition: Uses the Geometry State mutator to redo a previous command.
+\item transition: Pops command from redoStack, re-executes it, and pushes it onto undoStack
+\item exception: Cant Redo if redoStack is empty
 \end{itemize}
 
-\noindent {redo}():
+\noindent {addCommand}(command):
 \begin{itemize}
-\item transition: Uses the Geometry State mutator to redo a previous command.
-\end{itemize}
-
-\noindent {add\_command}(command):
-\begin{itemize}
-\item transition: Stores the command to use later in case of an undo.
+\item transition: Pushes command onto undoStack and clears redoStack
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -1279,16 +1297,17 @@ N/A
 %\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
-User Persistence Module: Module for saving and loading user preferences and short-cuts.
+UserPersistenceModule (\ref{User Persistence Module})
+
 %\wss{Short name for the module}
 
 \subsection{Uses}
-
+{User Preference Module} \ref{User Preference Module}
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -1296,11 +1315,9 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{save} & commands,theme & - & - \\
+{save} & FilePath & - & IOError \\
 \hline
-{get\_commands} & - & commands & - \\
-\hline
-{get\_theme} & - & theme & - \\
+{load} & FilePath & User Themes and Saves & IOError \\
 \hline
 \end{tabular}
 \end{center}
@@ -1308,19 +1325,19 @@ N/A
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-N/A
+None
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
 
 \subsubsection{Environment Variables}
-N/A
+File System
 
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
-N/A
+File format is versioned and backward compatible.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
@@ -1328,18 +1345,16 @@ N/A
 
 \noindent {save}(commands,theme):
 \begin{itemize}
-\item transition: Saves the commands and theme as a file
+\item transition: Saves user preferences to file at FilePath
+\item exception: IOError if there is an issue writing to the file
 \end{itemize}
 
-\noindent {get\_commands}():
+\noindent {load}(FilePath):
 \begin{itemize}
-\item output: User defined commands read from the file
+\item output: User Themes and Saves loaded from file at FilePath
+\item exception: IOError if there is an issue reading from the file
 \end{itemize}
 
-\noindent {get\_theme}():
-\begin{itemize}
-\item output: User preferred themes read from the file
-\end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
 %  have a state transition.  In this case a state transition can only occur if
@@ -1354,7 +1369,7 @@ N/A
 %  They are not necessarily something that is going to be implemented
 %  explicitly.  Even if they are implemented, they are not exported; they only
 %  have local scope.}
-N/A
+None
 \newpage
 
 
