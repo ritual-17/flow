@@ -13,7 +13,6 @@
 \usepackage{xfrac}
 \usepackage{tabularx}
 \usepackage{float}
-\usepackage{siunitx}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage[section]{placeins}
@@ -53,8 +52,8 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+10/11/25 & Rev -1 & \\
+21/01/26 & Rev 0 & \\
 \bottomrule
 \end{tabularx}
 
@@ -166,7 +165,6 @@ the relevant module interfaces.
 & \ref{Mode Commands Module} {Mode Commands Module}\\
 & \ref{Shape Interface Module} {Shape Interface Module}\\
 & \ref{User Preference Module} {User Preference Module}\\
-& \ref{Geometry State Parser Module} {Geometry State Parser Module}\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision} & \ref{Text Buffer Module} {Text Buffer Module}\\
@@ -256,7 +254,7 @@ N/A
 \noindent {status}():
 \begin{itemize}
 
-\item output: Outputs current status of the program ex waiting fr input, rendering etc. 
+\item output: Outputs current status of the program e.g. waiting for input, rendering etc. 
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -298,7 +296,7 @@ Input Module. Deals with User inputs and passes them on to the \ref{Mode Command
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -610,7 +608,7 @@ Command Parser, converts keyboard inputs into commands and passes them onto the 
 
 \subsubsection{Exported Constants}
 
-Command names/ids ex ctrl + s -> <C-s>, d + d -> "dd"
+Command names or ids e.g. ctrl + s -$>$ $<$C-s$>$, d + d -$>$ "dd"
 
 \subsubsection{Exported Access Programs}
 
@@ -619,7 +617,7 @@ Command names/ids ex ctrl + s -> <C-s>, d + d -> "dd"
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{parse\_commands} & keyboard\_inputs, mouse\_inputs & parsed_input & - \\
+{parse\_commands} & keyboard\_inputs, mouse\_inputs & parsed\_input & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -960,7 +958,7 @@ None
 
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
-text : Map\<TextID, TextObject\>
+text : Map$<$TextID, TextObject$>$
 
 \noindent {Where TextObject contains:}
 \begin{itemize}
@@ -1051,11 +1049,11 @@ LineType = {Line, Arrow}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{getShapes} & - & Set\<Shape\> & - \\
+{getShapes} & - & Set$<$Shape$>$ & - \\
 \hline
-{getText} & - & Set\<TextBox\> & - \\
+{getText} & - & Set$<$TextBox$>$ & - \\
 \hline
-{getLines} & - & Set\<Line\> & - \\
+{getLines} & - & Set$<$Line$>$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1064,9 +1062,9 @@ LineType = {Line, Arrow}
 
 \subsubsection{State Variables}
 \begin{itemize}
-\item Shapes : Set\<Shape\>
-\item TextBoxes : Set\<TextBox\>
-\item Lines : Set\<Line\>
+\item Shapes : Set$<$Shape$>$
+\item TextBoxes : Set$<$TextBox$>$
+\item Lines : Set$<$Line$>$
 \end{itemize}
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
@@ -1128,8 +1126,8 @@ GeometryStateMutator (\ref{Geometry State Mutator Module})
 %\wss{Short name for the module}
 
 \subsection{Uses}
-{Undo Redo Module} \ref{Undo Redo Module}
-{Geometry State Module} \ref{Geometry State Module}
+{Undo Redo Module} (\ref{Undo Redo Module}),
+{Geometry State Module} (\ref{Geometry State Module})
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -1236,7 +1234,7 @@ UndoRedoModule (\ref{Undo Redo Module})
 %\wss{Short name for the module}
 
 \subsection{Uses}
-{Geometry State Module} \ref{Geometry State Module}
+{Geometry State Module} (\ref{Geometry State Module})
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -1244,7 +1242,7 @@ None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1261,8 +1259,8 @@ None
 
 \subsubsection{State Variables}
 \begin{itemize}
-\item undoStack : Stack\<Command\>
-\item redoStack : Stack\<Command\>
+\item undoStack : Stack$<$Command$>$
+\item redoStack : Stack$<$Command$>$
 \end{itemize}
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
@@ -1326,7 +1324,7 @@ UserPersistenceModule (\ref{User Persistence Module})
 %\wss{Short name for the module}
 
 \subsection{Uses}
-{User Preference Module} \ref{User Preference Module}
+{User Preference Module} (\ref{User Preference Module})
 
 \subsection{Syntax}
 
