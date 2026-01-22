@@ -1,6 +1,6 @@
 import Flatten from '@flatten-js/core';
 import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
-import { fromFlatten, toFlatten } from '@renderer/core/geometry/shape/FlattenAdapter';
+import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
 type idToShapeMap = Map<ShapeId, { domainShape: Shape; flatShape: Flatten.AnyShape }>;

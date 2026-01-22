@@ -5,7 +5,7 @@ import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModePars
 import { VisualModeParser } from '@renderer/core/commands/parsers/VisualModeParser';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
-import { FlattenSpatialIndex } from '@renderer/core/geometry/shape/FlattenSpatialIndex';
+import { FlattenSpatialIndex } from '@renderer/core/geometry/spatial-index/FlattenSpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
 export class CommandDispatcher {
