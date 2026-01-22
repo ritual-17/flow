@@ -21,7 +21,7 @@ jobs:
       - name: Get changed LaTeX files
         id: latex-files
         run: |
-          CHANGED_FILES=$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} -- docs/**/*.tex | xargs)
+          CHANGED_FILES=$(git diff --name-only origin/main~1...HEAD -- docs/**/*.tex | xargs)
           echo "Changed files: $CHANGED_FILES"
           echo "CHANGED_FILES=$CHANGED_FILES" >> $GITHUB_ENV
           CHANGED_FILENAMES=$(for file in $CHANGED_FILES; do basename "$file"; done | xargs)
@@ -39,7 +39,6 @@ jobs:
           scheme: full
           texlive_version: 2024
           run: |
-            apk add make
             cd docs
             for file in ${{ env.CHANGED_FILES }}; do
               dir=$(dirname "$file" | cut -d'/' -f2-)
@@ -50,5 +49,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: 'Add/Update PDF${{ env.PLURAL_S }} for changed LaTeX file${{ env.PLURAL_S }}: ${{ env.CHANGED_FILENAMES }}'
-          file_pattern: 'docs/*.pdf'
+          file_pattern: 'docs/**/*.pdf'
           branch: main
