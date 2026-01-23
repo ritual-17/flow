@@ -68,6 +68,36 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return hits.map((hit) => this.getDomainShape(hit));
   }
 
+  getNearestShapeId(point: { x: number; y: number }): ShapeId | null {
+    const SEARCH_RADIUS = 20;
+
+    const flatPoint = new Flatten.Point(point.x, point.y);
+    const searchBox = new Flatten.Box(
+      point.x - SEARCH_RADIUS,
+      point.y - SEARCH_RADIUS,
+      point.x + SEARCH_RADIUS,
+      point.y + SEARCH_RADIUS,
+    );
+    const candidates = this.set.search(searchBox);
+
+    let nearest: Flatten.AnyShape | null = null;
+    let minDistance = Infinity;
+    for (const candidate of candidates) {
+      if (candidate instanceof Flatten.Vector || candidate instanceof Flatten.Ray) {
+        continue; // Skip unsupported shapes
+      }
+      const [distance, _] = candidate.distanceTo(flatPoint);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearest = candidate;
+      }
+    }
+
+    if (!nearest) return null;
+
+    return this.getDomainShape(nearest).id;
+  }
+
   private getDomainShape(flat: Flatten.AnyShape): Shape {
     const id = this.shapeToIdMap.get(flat);
     if (!id) throw new Error('Shape not found');

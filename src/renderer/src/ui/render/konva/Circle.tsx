@@ -5,11 +5,11 @@ import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import { HoverEffect } from '@renderer/ui/render/konva/style/HoverEffect';
 import { Circle as KonvaCircle } from 'react-konva';
 
-const Circle: ShapeComponent<DomainCircle> = ({ shape }) => {
+const Circle: ShapeComponent<DomainCircle> = ({ shape, hovered, selected }) => {
   return (
     <>
       <KonvaCircle x={shape.x} y={shape.y} radius={shape.radius} fill='black' />
-      <HoverEffect shape={shape} />
+      {hovered && <HoverEffect shape={shape} />}
     </>
   );
 };

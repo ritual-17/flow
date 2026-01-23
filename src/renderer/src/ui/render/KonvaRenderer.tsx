@@ -1,3 +1,4 @@
+import { useNearestShape } from '@renderer/ui/hooks/NearestShape';
 import Cursor from '@renderer/ui/render/konva/Cursor';
 import getComponent from '@renderer/ui/render/konva/ShapeResolver';
 import { useStore } from '@renderer/ui/Store';
@@ -7,8 +8,9 @@ function KonvaRenderer() {
   const shapes = useStore((state) => state.document.shapes)
     .values()
     .toArray();
+  const selectedShapeIds = new Set(useStore((state) => state.editor.selectedShapeIds));
 
-  // const selectedShapeIds = new Set(useStore((state) => state.editor.selectedShapeIds));
+  const nearestShapeId = useNearestShape();
 
   return (
     <Layer>
@@ -16,7 +18,12 @@ function KonvaRenderer() {
         const Component = getComponent(shape);
         return (
           <Group key={`group-${shape.id}`}>
-            <Component key={shape.id} shape={shape} />
+            <Component
+              key={shape.id}
+              shape={shape}
+              hovered={shape.id === nearestShapeId}
+              selected={selectedShapeIds.has(shape.id)}
+            />
           </Group>
         );
       })}

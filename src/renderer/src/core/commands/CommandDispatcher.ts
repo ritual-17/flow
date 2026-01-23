@@ -9,7 +9,7 @@ import { FlattenSpatialIndex } from '@renderer/core/geometry/spatial-index/Flatt
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
 export class CommandDispatcher {
-  private spatialIndex: SpatialIndex = new FlattenSpatialIndex();
+  public spatialIndex: SpatialIndex = new FlattenSpatialIndex();
   private normalModeParser: CommandParser = new NormalModeParser();
   private insertModeParser: CommandParser = new InsertModeParser();
   private visualModeParser: CommandParser = new VisualModeParser();
