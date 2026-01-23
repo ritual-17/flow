@@ -1,5 +1,6 @@
 import Flatten from '@flatten-js/core';
-import { Circle, Point, Shape, TextBox } from '@renderer/core/geometry/Shape';
+import { Point, Shape, TextBox } from '@renderer/core/geometry/Shape';
+import { Circle } from '@renderer/core/geometry/shapes/Circle';
 
 function toFlatten(shape: Shape): Flatten.AnyShape {
   switch (shape.type) {

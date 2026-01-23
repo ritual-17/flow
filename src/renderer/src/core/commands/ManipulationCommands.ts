@@ -3,7 +3,8 @@
 import { CommandArgs } from '@renderer/core/commands/CommandRegistry';
 import { addShapesToDocument, DocumentModel } from '@renderer/core/document/Document';
 import { Editor } from '@renderer/core/editor/Editor';
-import { Circle, Shape } from '@renderer/core/geometry/Shape';
+import { Shape } from '@renderer/core/geometry/Shape';
+import * as Circle from '@renderer/core/geometry/shapes/Circle';
 
 function addShapeToDocument({
   editor,
@@ -21,18 +22,7 @@ function addShapeToDocument({
 
 function createCircle(args: CommandArgs): [Editor, DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
-  const circle: Circle = {
-    type: 'circle',
-    id: `circle-${Date.now()}`,
-    x: x,
-    y: y,
-    radius: 50,
-    zIndex: 1,
-    stroke: 2,
-    fill: 3,
-    strokeColor: 'black',
-    fillColor: 'red',
-  };
+  const circle = Circle.build({ x, y });
 
   return addShapeToDocument({
     ...args,
