@@ -71,7 +71,6 @@ export class FlattenSpatialIndex implements SpatialIndex {
   getNearestShapeId(point: { x: number; y: number }): ShapeId | null {
     const SEARCH_RADIUS = 20;
 
-    const flatPoint = new Flatten.Point(point.x, point.y);
     const searchBox = new Flatten.Box(
       point.x - SEARCH_RADIUS,
       point.y - SEARCH_RADIUS,
@@ -79,23 +78,19 @@ export class FlattenSpatialIndex implements SpatialIndex {
       point.y + SEARCH_RADIUS,
     );
     const candidates = this.set.search(searchBox);
+    const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
 
-    let nearest: Flatten.AnyShape | null = null;
+    let nearest: ShapeId | null = null;
     let minDistance = Infinity;
-    for (const candidate of candidates) {
-      if (candidate instanceof Flatten.Vector || candidate instanceof Flatten.Ray) {
-        continue; // Skip unsupported shapes
-      }
-      const [distance, _] = candidate.distanceTo(flatPoint);
+    for (const candidate of domainCandidates) {
+      const distance = this.distanceBetweenPoints(point, candidate);
       if (distance < minDistance) {
         minDistance = distance;
-        nearest = candidate;
+        nearest = candidate.id;
       }
     }
 
-    if (!nearest) return null;
-
-    return this.getDomainShape(nearest).id;
+    return nearest;
   }
 
   private getDomainShape(flat: Flatten.AnyShape): Shape {
@@ -128,5 +123,14 @@ export class FlattenSpatialIndex implements SpatialIndex {
     this.set.delete(flat);
     this.idToShapeMap.delete(shape.id);
     this.shapeToIdMap.delete(flat);
+  }
+
+  private distanceBetweenPoints(
+    pointA: { x: number; y: number },
+    pointB: { x: number; y: number },
+  ): number {
+    const dx = pointA.x - pointB.x;
+    const dy = pointA.y - pointB.y;
+    return Math.sqrt(dx * dx + dy * dy);
   }
 }
