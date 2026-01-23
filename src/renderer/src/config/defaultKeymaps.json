@@ -12,7 +12,8 @@
     "p": "pasteAfter",
     "u": "undo",
     "<C-r>": "redo",
-    ".": "repeat"
+    ".": "repeat",
+    "n": "selectNextSearchResult"
   },
   "insert": {
     "j": "up",

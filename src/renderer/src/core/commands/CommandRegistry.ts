@@ -10,6 +10,7 @@ import {
   enterInsertMode,
   enterNormalMode,
   enterVisualMode,
+  selectNextSearchResult,
 } from '@renderer/core/commands/EditorCommands';
 import { addShapeToDocument, createCircle } from '@renderer/core/commands/ManipulationCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
@@ -49,6 +50,8 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorRight;
     case 'createCircle':
       return createCircle;
+    case 'selectNextSearchResult':
+      return selectNextSearchResult;
     default:
       return null;
   }

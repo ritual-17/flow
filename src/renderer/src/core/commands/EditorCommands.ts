@@ -11,7 +11,7 @@ impact the state of the document.
 **/
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
-import { setCursorPosition, setMode } from '@renderer/core/editor/Editor';
+import { setCursorPosition, setMode, setSelectedShapes } from '@renderer/core/editor/Editor';
 
 const CURSOR_MOVE_AMOUNT = 10;
 
@@ -71,6 +71,22 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
   ];
 }
 
+// update this later to use search results and if there is no current search then selected closest shape
+function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  const nearestShapeId = spatialIndex.getNearestShapeId(editor.cursorPosition);
+  let updatedEditor = editor;
+  if (nearestShapeId) {
+    updatedEditor = setSelectedShapes(editor, [nearestShapeId]);
+
+    const nearestShape = document.shapes.get(nearestShapeId);
+    if (!nearestShape) {
+      return [updatedEditor, document];
+    }
+    updatedEditor = setCursorPosition(updatedEditor, { x: nearestShape.x, y: nearestShape.y });
+  }
+  return [updatedEditor, document];
+}
+
 export {
   enterInsertMode,
   enterNormalMode,
@@ -80,4 +96,5 @@ export {
   cursorDown,
   cursorLeft,
   cursorRight,
+  selectNextSearchResult,
 };

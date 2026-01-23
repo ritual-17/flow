@@ -6,9 +6,10 @@ import { HoverEffect } from '@renderer/ui/render/konva/style/HoverEffect';
 import { Circle as KonvaCircle } from 'react-konva';
 
 const Circle: ShapeComponent<DomainCircle> = ({ shape, hovered, selected }) => {
+  const stroke = selected ? 'blue' : 'black';
   return (
     <>
-      <KonvaCircle x={shape.x} y={shape.y} radius={shape.radius} fill='black' />
+      <KonvaCircle x={shape.x} y={shape.y} radius={shape.radius} fill='black' stroke={stroke} />
       {hovered && <HoverEffect shape={shape} />}
     </>
   );
