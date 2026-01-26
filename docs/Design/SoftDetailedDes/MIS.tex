@@ -1408,8 +1408,6 @@ None
 
 \section*{Appendix --- Reflection}
 
-\wss{Not required for CAS 741 projects}
-
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
 
@@ -1417,13 +1415,74 @@ graduate attribute of Problem Analysis and Design.
 
 \begin{enumerate}
   \item What went well while writing this deliverable? 
+  \begin{itemize}
+    \item Chengze -
+    \item Ethan -
+    \item Hussain -
+    \item Jeffrey -
+    \item Kevin -
+  \end{itemize}
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
+    \begin{itemize}
+      \item Chengze -
+      \item Ethan -
+      \item Hussain -
+      \item Jeffrey -
+      \item Kevin -
+    \end{itemize}
   \item Which of your design decisions stemmed from speaking to your client(s)
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
   were not, why, and where did they come from?
+    \begin{itemize}
+      \item Most of our design decisions stemmed from the consulting the primary 
+      stakeholders of the project, namely ourselves as students and end users of the
+      system. Since the software is intended to be used and evaluated by students
+      with similar technical backgrounds and needs, our group discussions acted as
+      a proxy for client consultation. Particularly, decisions regarding the
+      overall modular decomposition were based on stakeholder discussions. As a 
+      group, we agreed to keep the higher-level module structure provided in the
+      template, as it aligned well with the expectations for separation of concerns
+      and maintainability. We then refined this structure by collectively defining
+      the responsibilities and services of each module, which is reflected in the
+      Module Guide. 
+
+      \item Many of these stakeholder-driven decisions were mentioned as part of the 
+      functional and non-functional requirements outlined in the SRS. The design 
+      of individual modules and their interfaces was guided by these requirements, 
+      ensuring clear traceability from stakeholder needs to the system-level design.
+      
+      \item Some design decisions did not stem directly from stakeholder input but instead
+      came from practical constraints and other experiences. For example, user 
+      interface decisions were informed by common design patterns observed in modern 
+      drawing and canvas-based applications, helping minimize the learning curve and
+      aligning with user expectations. Similarly, the project timeline was 
+      determined based on course deadlines and workload considerations, rather than
+      client input, as these constraints were externally imposed by the course 
+      structure.
+    \end{itemize}
   \item While creating the design doc, what parts of your other documents (e.g.
   requirements, hazard analysis, etc), it any, needed to be changed, and why?
+    \begin{itemize}
+      \item While creating the design document, none of the existing documents required 
+      major changes. The SRS served as a foundational input to the design process, and the
+      module decomposition and interfaces were created specifically to satisfy the 
+      functional and non-functional requirements defined. As a result, the design document 
+      did not introduce new requirements or require modifications to the SRS, but instead 
+      validated that the requirements were implementable and well-scoped.
+
+      \item Similarly, the Hazard Analysis did not require updates as no new hazards were
+      identified during the design process. However, the design helped clarify how 
+      previously identified hazards would be addressed through module separation, 
+      controlled state mutation, and undo/redo mechanisms, reinforcing the effectiveness 
+      of existing mitigation strategies.
+
+      \item The design document does, however, influence how the Verification and Validation 
+      (VnV) Plan would be interpreted and later refined. By clearly defining module
+      responsibilities and interfaces, the design gives more precise unit and integration 
+      testing strategies, which would be reflected in future updates to the VnV plan.
+
+    \end{itemize}
   \item What are the limitations of your solution?  Put another way, given
   unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
   \item Give a brief overview of other design solutions you considered.  What
