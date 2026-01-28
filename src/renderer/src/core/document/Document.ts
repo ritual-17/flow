@@ -62,10 +62,26 @@ function updateShapesInDocument(document: DocumentModel, updatedShapes: Shape[])
   });
 }
 
+function hasShape(document: DocumentModel, shapeId: ShapeId): boolean {
+  return document.shapes.has(shapeId);
+}
+
+// Helper function to get a shape by ID that assumes it exists
+function getShapeById(document: DocumentModel, shapeId: ShapeId): Shape {
+  const shape = document.shapes.get(shapeId);
+  if (!shape) {
+    throw new Error(`Shape with ID ${shapeId} not found in document.`);
+  }
+
+  return shape;
+}
+
 export {
   createNewDocument,
   updateDocumentMetadata,
   addShapesToDocument,
   removeShapesFromDocument,
   updateShapesInDocument,
+  hasShape,
+  getShapeById,
 };

@@ -1,7 +1,8 @@
 import Flatten from '@flatten-js/core';
-import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
-import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
+import { Direction, Point, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
+import { getAnchorPoints } from '@renderer/core/geometry/utils/AnchorPoints';
 
 type idToShapeMap = Map<ShapeId, { domainShape: Shape; flatShape: Flatten.AnyShape }>;
 type shapeToIdMap = Map<Flatten.AnyShape, ShapeId>;
@@ -10,6 +11,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
   private set = new Flatten.PlanarSet();
   private idToShapeMap: idToShapeMap = new Map();
   private shapeToIdMap: shapeToIdMap = new Map();
+  private SEARCH_RADIUS = 1000;
 
   addShape(shape: Shape): void {
     const flat = toFlatten(shape);
@@ -68,14 +70,12 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return hits.map((hit) => this.getDomainShape(hit));
   }
 
-  getNearestShapeId(point: { x: number; y: number }): ShapeId | null {
-    const SEARCH_RADIUS = 20;
-
+  getNearestShapeId(point: Point): ShapeId | null {
     const searchBox = new Flatten.Box(
-      point.x - SEARCH_RADIUS,
-      point.y - SEARCH_RADIUS,
-      point.x + SEARCH_RADIUS,
-      point.y + SEARCH_RADIUS,
+      point.x - this.SEARCH_RADIUS,
+      point.y - this.SEARCH_RADIUS,
+      point.x + this.SEARCH_RADIUS,
+      point.y + this.SEARCH_RADIUS,
     );
     const candidates = this.set.search(searchBox);
     const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
@@ -91,6 +91,84 @@ export class FlattenSpatialIndex implements SpatialIndex {
     }
 
     return nearest;
+  }
+
+  getNearestAnchorPoint(point: Point): AnchorPoint | null {
+    const searchBox = new Flatten.Box(
+      point.x - this.SEARCH_RADIUS,
+      point.y - this.SEARCH_RADIUS,
+      point.x + this.SEARCH_RADIUS,
+      point.y + this.SEARCH_RADIUS,
+    );
+    const candidates = this.set.search(searchBox);
+    const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
+
+    let nearestPoint: AnchorPoint | null = null;
+    let minDistance = Infinity;
+    for (const candidate of domainCandidates) {
+      const anchorPoints = getAnchorPoints(candidate);
+      for (const anchorPoint of anchorPoints) {
+        const distance = this.distanceBetweenPoints(point, anchorPoint);
+        if (distance < minDistance) {
+          minDistance = distance;
+          nearestPoint = anchorPoint;
+        }
+      }
+    }
+
+    return nearestPoint;
+  }
+
+  getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint {
+    // can optimize by searching only in the direction
+    const searchBox = new Flatten.Box(
+      currentAnchor.x - this.SEARCH_RADIUS,
+      currentAnchor.y - this.SEARCH_RADIUS,
+      currentAnchor.x + this.SEARCH_RADIUS,
+      currentAnchor.y + this.SEARCH_RADIUS,
+    );
+    const candidates = this.set.search(searchBox);
+    const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
+
+    let nextAnchor: AnchorPoint = currentAnchor;
+    let minDistance = Infinity;
+
+    for (const candidate of domainCandidates) {
+      const anchorPoints = getAnchorPoints(candidate);
+      for (const anchorPoint of anchorPoints) {
+        let isInDirection = false;
+        switch (direction) {
+          case 'up':
+            isInDirection = anchorPoint.y < currentAnchor.y;
+            break;
+          case 'down':
+            isInDirection = anchorPoint.y > currentAnchor.y;
+            break;
+          case 'left':
+            isInDirection = anchorPoint.x < currentAnchor.x;
+            break;
+          case 'right':
+            isInDirection = anchorPoint.x > currentAnchor.x;
+            break;
+        }
+
+        if (isInDirection) {
+          const distance = this.distanceBetweenPoints(currentAnchor, anchorPoint);
+          if (distance < minDistance) {
+            minDistance = distance;
+            nextAnchor = {
+              x: anchorPoint.x,
+              y: anchorPoint.y,
+              ownerId: anchorPoint.ownerId,
+              position: anchorPoint.position,
+              userId: anchorPoint.userId,
+            };
+          }
+        }
+      }
+    }
+
+    return nextAnchor;
   }
 
   private getDomainShape(flat: Flatten.AnyShape): Shape {
@@ -125,10 +203,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     this.shapeToIdMap.delete(flat);
   }
 
-  private distanceBetweenPoints(
-    pointA: { x: number; y: number },
-    pointB: { x: number; y: number },
-  ): number {
+  private distanceBetweenPoints(pointA: Point, pointB: Point): number {
     const dx = pointA.x - pointB.x;
     const dy = pointA.y - pointB.y;
     return Math.sqrt(dx * dx + dy * dy);

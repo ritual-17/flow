@@ -44,5 +44,10 @@
     "q!": "forceQuit"
   },
   "line": {},
-  "anchor-line": {}
+  "anchor-line": {
+    "j": "downAnchor",
+    "k": "upAnchor",
+    "h": "leftAnchor",
+    "l": "rightAnchor"
+  }
 }

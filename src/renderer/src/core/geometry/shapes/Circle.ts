@@ -16,13 +16,14 @@ export function build(attrs: Partial<Circle>): Circle {
   return circle;
 }
 
-export function generateAnchorPoints(circle: Circle): Pick<AnchorPoint, 'x' | 'y'>[] {
+export function generateAnchorPoints(circle: Circle): AnchorPoint[] {
   const { x, y, radius } = circle;
+  const ownerId = circle.id;
 
   return [
-    { x, y: y - radius }, // top
-    { x: x + radius, y }, // right
-    { x, y: y + radius }, // bottom
-    { x: x - radius, y }, // left
+    { position: 0, ownerId, x, y: y - radius }, // top
+    { position: 1, ownerId, x: x + radius, y }, // right
+    { position: 2, ownerId, x, y: y + radius }, // bottom
+    { position: 3, ownerId, x: x - radius, y }, // left
   ];
 }

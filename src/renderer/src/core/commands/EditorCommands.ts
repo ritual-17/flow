@@ -11,13 +11,17 @@ impact the state of the document.
 **/
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
-import { setCursorPosition, setMode, setSelectedShapes } from '@renderer/core/editor/Editor';
+import {
+  setCurrentAnchorPoint,
+  setCursorPosition,
+  setMode,
+  setSelectedShapes,
+} from '@renderer/core/editor/Editor';
 
 const CURSOR_MOVE_AMOUNT = 10;
 
 function enterNormalMode({ editor, document }: CommandArgs): CommandResult {
-  let updatedEditor = editor;
-  updatedEditor = setSelectedShapes(updatedEditor, []);
+  let updatedEditor = setSelectedShapes(editor, []);
   updatedEditor = setMode(updatedEditor, 'normal');
 
   return [updatedEditor, document];
@@ -39,8 +43,17 @@ function enterLineMode({ editor, document }: CommandArgs): CommandResult {
   return [setMode(editor, 'line'), document];
 }
 
-function enterAnchorLineMode({ editor, document }: CommandArgs): CommandResult {
-  return [setMode(editor, 'anchor-line'), document];
+function enterAnchorLineMode({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  const nearestAnchorPoint = spatialIndex.getNearestAnchorPoint(editor.cursorPosition);
+
+  // if there is an anchor point nearby, snap to it, otherwise just enter line mode starting at the cursor
+  if (nearestAnchorPoint) {
+    let updatedEditor = setCursorPosition(editor, nearestAnchorPoint);
+    updatedEditor = setCurrentAnchorPoint(updatedEditor, nearestAnchorPoint);
+    return [setMode(updatedEditor, 'anchor-line'), document];
+  }
+
+  return [setMode(editor, 'line'), document];
 }
 
 function cursorUp({ editor, document }: CommandArgs): CommandResult {

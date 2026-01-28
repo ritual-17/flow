@@ -31,7 +31,7 @@ export type ShapeId = string;
 
 export type AnchorPoint = {
   ownerId: ShapeId; // the shape this anchor point belongs to
-  userId: ShapeId; // the shape that is using this anchor point
+  userId?: ShapeId; // the shape that is using this anchor point
   position: number; // where along the shape's perimeter the anchor point is located
   x: number;
   y: number;

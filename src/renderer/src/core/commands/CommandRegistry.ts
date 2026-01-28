@@ -15,6 +15,12 @@ import {
   selectNextSearchResult,
 } from '@renderer/core/commands/EditorCommands';
 import { addShapeToDocument, createCircle } from '@renderer/core/commands/ManipulationCommands';
+import {
+  jumpToDownAnchorPoint,
+  jumpToLeftAnchorPoint,
+  jumpToRightAnchorPoint,
+  jumpToUpAnchorPoint,
+} from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor } from '@renderer/core/editor/Editor';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
@@ -58,6 +64,14 @@ function commandFromName(command: string): CommandFunction | null {
       return createCircle;
     case 'selectNextSearchResult':
       return selectNextSearchResult;
+    case 'downAnchor':
+      return jumpToDownAnchorPoint;
+    case 'upAnchor':
+      return jumpToUpAnchorPoint;
+    case 'leftAnchor':
+      return jumpToLeftAnchorPoint;
+    case 'rightAnchor':
+      return jumpToRightAnchorPoint;
     default:
       return null;
   }

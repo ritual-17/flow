@@ -13,7 +13,7 @@ const LIGHT_BLUE = '#02fceb';
 export const HoverEffect = ({ shape, selectedPoint }: HoverEffectProps) => {
   const mode = useStore((state) => state.editor.mode);
 
-  if (mode !== 'normal') {
+  if (mode !== 'normal' && mode !== 'anchor-line') {
     return null;
   }
 
