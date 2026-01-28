@@ -94,21 +94,21 @@ found at \url{https://github.com/ritual-17/flow}.
 %multiple assignment statement and conditional rules follow the form $(c_1
 %\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
 %
-%The following table summarizes the primitive data types used by \progname. 
+%The following table summarizes the primitive data types used by \progname.
 %
 %\begin{center}
 %\renewcommand{\arraystretch}{1.2}
-%\noindent 
-%\begin{tabular}{l l p{7.5cm}} 
-%\toprule 
-%\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
+%\noindent
+%\begin{tabular}{l l p{7.5cm}}
+%\toprule
+%\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\
 %\midrule
 %character & char & a single symbol or digit\\
 %integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
 %natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 %real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
 %\bottomrule
-%\end{tabular} 
+%\end{tabular}
 %\end{center}
 
 \noindent
@@ -182,7 +182,7 @@ the relevant module interfaces.
 \newpage
 ~\newpage
 
-\section{MIS of {Display Interface Module}} \label{Display Interface Module} 
+\section{MIS of {Display Interface Module}} \label{Display Interface Module}
 %\wss{Use labels for  cross-referencing}
 
 %\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
@@ -192,10 +192,10 @@ the relevant module interfaces.
 \subsection{Module}
 
 %\wss{Short name for the module}
-Display for the system 
+Display for the system
 
 This is the module that will handle the display for the system.
- This is a module that when called updates the display. 
+ This is a module that when called updates the display.
 \subsection{Uses}
 \ref{Geometry State Module} {Geometry State Module}
 
@@ -242,19 +242,19 @@ N/A
 \noindent {display}(Shapes):
 \begin{itemize}
 
-\item output: Outputs Shapes visually on the screen 
+\item output: Outputs Shapes visually on the screen
 \end{itemize}
 
 \noindent {resize}(length,width):
 \begin{itemize}
 
-\item output: Outputs resized version of the current screen 
+\item output: Outputs resized version of the current screen
 \end{itemize}
 
 \noindent {status}():
 \begin{itemize}
 
-\item output: Outputs current status of the program e.g. waiting for input, rendering etc. 
+\item output: Outputs current status of the program e.g. waiting for input, rendering etc.
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -273,7 +273,7 @@ N/A
 N/A
 
 \newpage
-\section{MIS of {Input Interface Module}} \label{Input Interface Module} 
+\section{MIS of {Input Interface Module}} \label{Input Interface Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -283,10 +283,10 @@ N/A
 
 \subsection{Module}
 
-Input Module. Deals with User inputs and passes them on to the \ref{Mode Commands Module} {Mode Commands Module} 
+Input Module. Deals with User inputs and passes them on to the \ref{Mode Commands Module} {Mode Commands Module}
 
 \subsection{Uses}
-\ref{Mode Commands Module} {Mode Commands Module} 
+\ref{Mode Commands Module} {Mode Commands Module}
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -310,7 +310,7 @@ Input Module. Deals with User inputs and passes them on to the \ref{Mode Command
 \subsection{Semantics}
 
 \subsubsection{State Variables}
- 
+
 \subsubsection{Environment Variables}
 
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
@@ -330,7 +330,7 @@ Input Module. Deals with User inputs and passes them on to the \ref{Mode Command
 
 \noindent {get\_keyboard\_inputs}():
 \begin{itemize}
-\item output: Data containing all current keyboard inputs. All keys will be off if the user is not using a keyboard. 
+\item output: Data containing all current keyboard inputs. All keys will be off if the user is not using a keyboard.
 \end{itemize}
 
 \noindent {get\_mouse\_inputs}():
@@ -353,7 +353,7 @@ Input Module. Deals with User inputs and passes them on to the \ref{Mode Command
 %  have local scope.}
 N/A
 \newpage
-\section{MIS of {File Interface Module}} \label{File Interface Module} 
+\section{MIS of {File Interface Module}} \label{File Interface Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -367,7 +367,7 @@ N/A
 
 \subsection{Uses}
 
-\ref{Mode Commands Module} {Mode Commands Module} 
+\ref{Mode Commands Module} {Mode Commands Module}
 
 \subsection{Syntax}
 
@@ -401,7 +401,7 @@ N/A
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
 \begin{itemize}
-\item File System 
+\item File System
 \end{itemize}
 \subsubsection{Assumptions}
 N/A
@@ -412,7 +412,7 @@ N/A
 
 \noindent {open}(file\_path):
 \begin{itemize}
-\item output: The opened file 
+\item output: The opened file
 \item exception: Invalid File if file is missing or of an incorrect type.
 \end{itemize}
 \noindent {save}(file\_path, opened\_note):
@@ -437,7 +437,7 @@ N/A
 %  have local scope.}
 
 \newpage
-\section{MIS of {Geometry State Parser Module}} \label{Geometry State Parser Module} 
+\section{MIS of {Geometry State Parser Module}} \label{Geometry State Parser Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -451,9 +451,9 @@ File parser takes the file input and parses it into data structure containing al
 %\wss{Short name for the module}
 
 \subsection{Uses}
- 
+
 \ref{Geometry State Module} {Geometry State Module}
-  
+
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -491,7 +491,7 @@ N/A
 
 \noindent {parse}(opened\_file):
 \begin{itemize}
-\item output: Data structure containing all shapes from the given file. 
+\item output: Data structure containing all shapes from the given file.
 \item exception: Invalid File: if the file given is able to be parsed.
 \end{itemize}
 
@@ -510,7 +510,7 @@ N/A
 %  have local scope.}
 
 \newpage
-\section{MIS of {Geometry State Converter Module}} \label{Geometry State Converter Module} 
+\section{MIS of {Geometry State Converter Module}} \label{Geometry State Converter Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -567,7 +567,7 @@ Legal file types
 \subsubsection{Access Routine Semantics}
 
 \noindent {convert}(opened\_note, file\_type):
-\begin{itemize} 
+\begin{itemize}
 \item output: file that is ready to be saved on the computer.
 \item exception: Invalid file\_type if the given file type is not compatable with the ones implemented
 \end{itemize}
@@ -588,7 +588,7 @@ Legal file types
 convert\_*(opened\_note) functions that do the converting once the file type has been determined. (ex convert\_pdf)
 
 \newpage
-\section{MIS of {Commands Parser Module}} \label{Commands Parser Module} 
+\section{MIS of {Commands Parser Module}} \label{Commands Parser Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -599,7 +599,7 @@ convert\_*(opened\_note) functions that do the converting once the file type has
 \subsection{Module}
 
 %\wss{Short name for the module}
-Command Parser, converts keyboard inputs into commands and passes them onto the shape mutator. 
+Command Parser, converts keyboard inputs into commands and passes them onto the shape mutator.
 
 \subsection{Uses}
 \ref{Geometry State Mutator Module} {Geometry State Mutator Module}
@@ -636,7 +636,7 @@ N/A
 %  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
-Inputs have been already cleaned by the other modules. 
+Inputs have been already cleaned by the other modules.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
@@ -663,7 +663,7 @@ Inputs have been already cleaned by the other modules.
 N/A
 
 \newpage
-\section{MIS of {Mode Commands Module}} \label{Mode Commands Module} 
+\section{MIS of {Mode Commands Module}} \label{Mode Commands Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -673,7 +673,7 @@ N/A
 
 \subsection{Module}
 
-Main Module contains the commands usable in the current mode. 
+Main Module contains the commands usable in the current mode.
 
 \subsection{Uses}
 N/A
@@ -725,7 +725,7 @@ Mode given will always be a valid mode.
 
 \noindent {get\_commands}(mode):
 \begin{itemize}
-\item output: commands that can be run in the given mode 
+\item output: commands that can be run in the given mode
 \end{itemize}
 %
 %\wss{A module without environment variables or state variables is unlikely to
@@ -742,7 +742,7 @@ N/A
 %  explicitly.  Even if they are implemented, they are not exported; they only
 %  have local scope.}
 
-\newpage\section{MIS of {Shape Interface Module}} \label{Shape Interface Module} 
+\newpage\section{MIS of {Shape Interface Module}} \label{Shape Interface Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -803,8 +803,8 @@ N/A
 
 \noindent {create\_shape}(shape\_type, points ):
 \begin{itemize}
-\item output: Shape with type shape\_type using points for location and size. 
-\item exception: Invalid points if the points are not possible for the type of shape.  
+\item output: Shape with type shape\_type using points for location and size.
+\item exception: Invalid points if the points are not possible for the type of shape.
 \end{itemize}
 
 \noindent {move\_shape}():
@@ -828,7 +828,7 @@ N/A
 %  have local scope.}
 
 \newpage
-\section{MIS of {User Preference Module}} \label{User Preference Module} 
+\section{MIS of {User Preference Module}} \label{User Preference Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -891,7 +891,7 @@ Theme preferences: user theme prefrences
 
 \noindent {modify}():
 \begin{itemize}
-\item transition: Has the user input their preferences where the moudles saves it to a file. 
+\item transition: Has the user input their preferences where the moudles saves it to a file.
 \end{itemize}
 
 \noindent {get\_theme\_prefrences}():
@@ -914,7 +914,7 @@ Theme preferences: user theme prefrences
 %  have local scope.}
 
 \newpage
-\section{MIS of {Text Buffer Module}} \label{Text Buffer Module} 
+\section{MIS of {Text Buffer Module}} \label{Text Buffer Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -995,7 +995,7 @@ TextIDs are unique and immutable.
 
 \noindent {moveText}(TextID, newLocation):
 \begin{itemize}
-\item transition: text box is moved to location. 
+\item transition: text box is moved to location.
 \item exception: Text Not Found
 \end{itemize}
 \noindent {deleteText}(TextID):
@@ -1020,7 +1020,7 @@ generateTextID() : TextID
 %  have local scope.}
 
 \newpage
-\section{MIS of {Geometry State Module}} \label{Geometry State Module} 
+\section{MIS of {Geometry State Module}} \label{Geometry State Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -1112,7 +1112,7 @@ None
 %  have local scope.}
 
 \newpage
-\section{MIS of {Geometry State Mutator Module}} \label{Geometry State Mutator Module} 
+\section{MIS of {Geometry State Mutator Module}} \label{Geometry State Mutator Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -1174,7 +1174,7 @@ Mutations must be recorded by Undo Redo Module.
 
 \noindent {addShape}(shapeSpec):
 \begin{itemize}
-\item transition: Adds the shape to the canvas 
+\item transition: Adds the shape to the canvas
 \item output: GeometryID of the added shape
 \item exception: Invalid Spec if the shapeSpec is invalid
 \end{itemize}
@@ -1182,13 +1182,13 @@ Mutations must be recorded by Undo Redo Module.
 \noindent {addLine}(lineSpec):
 \begin{itemize}
 \item transition: Adds the line to the canvas
-\item output: GeometryID of the added line  
+\item output: GeometryID of the added line
 \item exception: Invalid Spec if the lineSpec is invalid
 \end{itemize}
 
 \noindent {delete}(GeometryID):
 \begin{itemize}
-\item transition: Deletes the shape/line/textbox with the given GeometryID  
+\item transition: Deletes the shape/line/textbox with the given GeometryID
 \item exception: Not Found if the GeometryID does not exist
 \end{itemize}
 
@@ -1221,7 +1221,7 @@ None
 %  have local scope.}
 
 \newpage
-\section{MIS of {Undo Redo Module}} \label{Undo Redo Module} 
+\section{MIS of {Undo Redo Module}} \label{Undo Redo Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -1310,7 +1310,7 @@ N/A
 %  have local scope.}
 
 \newpage
-\section{MIS of {User Persistence Module}} \label{User Persistence Module} 
+\section{MIS of {User Persistence Module}} \label{User Persistence Module}
 %\wss{Use labels for
 %  cross-referencing}
 
@@ -1414,17 +1414,28 @@ graduate attribute of Problem Analysis and Design.
 \input{../../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable?
   \begin{itemize}
-    \item Chengze -
-    \item Ethan -
-    \item Hussain - In this deliverable, we were able to begin thinking more on 
-    the development of Flow. By discussing and outlining the different modules 
-    and their services, I believe we were able to get a much better 
-    understanding of how we can put together a successful application for this 
-    project. We were assigned this document close to the due date of Rev0 which 
-    is our first real revision of the finished project. This also pushes us to 
-    use the decisions made in this document directly in the development of our 
+    \item Chengze - While we got back on MG and MIS document after some of the implementation,
+    we had a better understanding of the overall design of the project. This allowed us to
+    better fill in the details of each module and their services. In particular, reviewing the
+    specifications helped us identify missing requirements and confirm that our current code
+    matches the intended module responsibilities. Writing this deliverable also made it easier
+    to see how the system should be organized, ensuring that each component has a clear purpose
+    and well-defined interface moving forward.
+    \item Ethan - In this deliverable we got a better idea of how the app would
+      look and work from an architecture standpoint. It let us get a more
+      concrete understanding of how components would be broken down in the code
+      and how they would work together. Additionally, it helped us to write out
+      some scaffold code for our rev 0 and do some work in parallel to better
+      visualize module interactions and dependency.
+    \item Hussain - In this deliverable, we were able to begin thinking more on
+    the development of Flow. By discussing and outlining the different modules
+    and their services, I believe we were able to get a much better
+    understanding of how we can put together a successful application for this
+    project. We were assigned this document close to the due date of Rev0 which
+    is our first real revision of the finished project. This also pushes us to
+    use the decisions made in this document directly in the development of our
     project.
     \item Jeffrey -
     \item Kevin -
@@ -1432,17 +1443,29 @@ graduate attribute of Problem Analysis and Design.
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
     \begin{itemize}
-      \item Chengze -
-      \item Ethan -
-      \item Hussain - A couple pain points I experienced during this 
-      deliverable had to do with the poor delegation of work and slower 
-      restart into working on the design document. Our group had decided to 
-      split the work for the design doc in a same way we did for Rev -1, but 
-      this gave some of us more work than others as this time around, the MIS 
-      required more work than the MG. In addition to this, some of us were a 
-      bit slow (potentially because of the break) in getting back to working 
-      on the project. Thankfully, I was able to resolve this by re-delegating 
-      some of the work and helping set up a meeting with the TA to discuss 
+      \item Chengze - The pain point I experienced during this deliverable
+      was the lack of clarity on some of the module services. Since some of the
+      modules were not fully implemented yet, it was hard to determine what
+      services they should provide. To resolve this, we had to rework on MIS to
+      include more details and make sure the services aligned with the overall
+      design of the project.
+      \item Ethan - Overall I think this was the most challenging deliverable
+        so far. This was where we had to go from ideas to a concrete system
+        design. I have more experience in web development and backend system
+        design, but not as much in designing something like a text editor or
+        geometry manipulation program. It was difficult to think about all of
+        the modules and how they would interact with eachother without writing
+        any code. I helped resolve this by writing out some potentially
+        throw-away code to play with while designing.
+      \item Hussain - A couple pain points I experienced during this
+      deliverable had to do with the poor delegation of work and slower
+      restart into working on the design document. Our group had decided to
+      split the work for the design doc in a same way we did for Rev -1, but
+      this gave some of us more work than others as this time around, the MIS
+      required more work than the MG. In addition to this, some of us were a
+      bit slow (potentially because of the break) in getting back to working
+      on the project. Thankfully, I was able to resolve this by re-delegating
+      some of the work and helping set up a meeting with the TA to discuss
       the items for the deliverable.
       \item Jeffrey -
       \item Kevin -
@@ -1451,51 +1474,51 @@ graduate attribute of Problem Analysis and Design.
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
   were not, why, and where did they come from?
     \begin{itemize}
-      \item Most of our design decisions stemmed from the consulting the primary 
+      \item Most of our design decisions stemmed from the consulting the primary
       stakeholders of the project, namely ourselves as students and end users of the
       system. Since the software is intended to be used and evaluated by students
       with similar technical backgrounds and needs, our group discussions acted as
       a proxy for client consultation. Particularly, decisions regarding the
-      overall modular decomposition were based on stakeholder discussions. As a 
+      overall modular decomposition were based on stakeholder discussions. As a
       group, we agreed to keep the higher-level module structure provided in the
       template, as it aligned well with the expectations for separation of concerns
       and maintainability. We then refined this structure by collectively defining
       the responsibilities and services of each module, which is reflected in the
-      Module Guide. 
+      Module Guide.
 
-      \item Many of these stakeholder-driven decisions were mentioned as part of the 
-      functional and non-functional requirements outlined in the SRS. The design 
-      of individual modules and their interfaces was guided by these requirements, 
+      \item Many of these stakeholder-driven decisions were mentioned as part of the
+      functional and non-functional requirements outlined in the SRS. The design
+      of individual modules and their interfaces was guided by these requirements,
       ensuring clear traceability from stakeholder needs to the system-level design.
-      
+
       \item Some design decisions did not stem directly from stakeholder input but instead
-      came from practical constraints and other experiences. For example, user 
-      interface decisions were informed by common design patterns observed in modern 
+      came from practical constraints and other experiences. For example, user
+      interface decisions were informed by common design patterns observed in modern
       drawing and canvas-based applications, helping minimize the learning curve and
-      aligning with user expectations. Similarly, the project timeline was 
+      aligning with user expectations. Similarly, the project timeline was
       determined based on course deadlines and workload considerations, rather than
-      client input, as these constraints were externally imposed by the course 
+      client input, as these constraints were externally imposed by the course
       structure.
     \end{itemize}
   \item While creating the design doc, what parts of your other documents (e.g.
   requirements, hazard analysis, etc), it any, needed to be changed, and why?
     \begin{itemize}
-      \item While creating the design document, none of the existing documents required 
+      \item While creating the design document, none of the existing documents required
       major changes. The SRS served as a foundational input to the design process, and the
-      module decomposition and interfaces were created specifically to satisfy the 
-      functional and non-functional requirements defined. As a result, the design document 
-      did not introduce new requirements or require modifications to the SRS, but instead 
+      module decomposition and interfaces were created specifically to satisfy the
+      functional and non-functional requirements defined. As a result, the design document
+      did not introduce new requirements or require modifications to the SRS, but instead
       validated that the requirements were implementable and well-scoped.
 
       \item Similarly, the Hazard Analysis did not require updates as no new hazards were
-      identified during the design process. However, the design helped clarify how 
-      previously identified hazards would be addressed through module separation, 
-      controlled state mutation, and undo/redo mechanisms, reinforcing the effectiveness 
+      identified during the design process. However, the design helped clarify how
+      previously identified hazards would be addressed through module separation,
+      controlled state mutation, and undo/redo mechanisms, reinforcing the effectiveness
       of existing mitigation strategies.
 
-      \item The design document does, however, influence how the Verification and Validation 
+      \item The design document does, however, influence how the Verification and Validation
       (VnV) Plan would be interpreted and later refined. By clearly defining module
-      responsibilities and interfaces, the design gives more precise unit and integration 
+      responsibilities and interfaces, the design gives more precise unit and integration
       testing strategies, which would be reflected in future updates to the VnV plan.
 
     \end{itemize}
@@ -1505,6 +1528,33 @@ graduate attribute of Problem Analysis and Design.
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
   (LO\_Explores)
+  \item (After you have implemented another team's module, which means this
+  isn't filled in until after the original deadline). What did you learn by
+  implementing another team's module? Were all the details you needed in the
+  documentation, or did you need to make assumptions, or ask the other team
+  questions?  If your team also had another team implement one of your modules,
+  what was this experience like?  Are there things in your documentation you
+  could have changed to make the process go more smoothly for when an
+  ``outsider'' completes some of the implementation?
+
+  Implementation: \url{https://github.com/SpaceY-Labs/RoCam/pull/262}
+
+
+  The other team's module was well specified and straightforward to implement.
+  We learned how helpful and important clear documentation is for
+  collaboration. We were able to implement the module with little knowledge of
+  the project as a whole and without needing external context for how this
+  module would fit into the larger system. Almost all the details we needed
+  were in the documentation. A couple areas where we made assumptions included
+  the format of the logging files as well as assuming the referenced "OSDData"
+  object structure was JSON. We definitely could have added more detail to our
+  documentation to make it easier for the other team to implement. Writing out
+  steps in plain english made it clear for us what to implement. We also could
+  have specified the exact file path for them to implement. Additionally, the
+  module we were assigned was rather small and easy to understand in isolation.
+  We could have done a better job of breaking up our modules to allow for this
+  type of isolated knowledge requirements during implementation.
+
 \end{enumerate}
 
 
