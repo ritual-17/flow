@@ -16,7 +16,11 @@ import { setCursorPosition, setMode, setSelectedShapes } from '@renderer/core/ed
 const CURSOR_MOVE_AMOUNT = 10;
 
 function enterNormalMode({ editor, document }: CommandArgs): CommandResult {
-  return [setMode(editor, 'normal'), document];
+  let updatedEditor = editor;
+  updatedEditor = setSelectedShapes(updatedEditor, []);
+  updatedEditor = setMode(updatedEditor, 'normal');
+
+  return [updatedEditor, document];
 }
 
 function enterInsertMode({ editor, document }: CommandArgs): CommandResult {
@@ -83,6 +87,7 @@ function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs)
       return [updatedEditor, document];
     }
     updatedEditor = setCursorPosition(updatedEditor, { x: nearestShape.x, y: nearestShape.y });
+    updatedEditor = setMode(updatedEditor, 'visual');
   }
   return [updatedEditor, document];
 }
