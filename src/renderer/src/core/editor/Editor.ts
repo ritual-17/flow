@@ -10,7 +10,7 @@ export interface Editor {
   clipboard: Shape[];
 }
 
-export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text';
+export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
 
 function createEditor(): Editor {
   return {

@@ -6,8 +6,10 @@ import {
   cursorLeft,
   cursorRight,
   cursorUp,
+  enterAnchorLineMode,
   enterCommandMode,
   enterInsertMode,
+  enterLineMode,
   enterNormalMode,
   enterVisualMode,
   selectNextSearchResult,
@@ -40,6 +42,10 @@ function commandFromName(command: string): CommandFunction | null {
       return enterVisualMode;
     case 'enterCommandMode':
       return enterCommandMode;
+    case 'enterLineMode':
+      return enterLineMode;
+    case 'enterAnchorLineMode':
+      return enterAnchorLineMode;
     case 'up':
       return cursorUp;
     case 'down':

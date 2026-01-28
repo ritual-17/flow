@@ -1,4 +1,7 @@
 {
+  "all": {
+    "<Esc>": "enterNormalMode"
+  },
   "normal": {
     "j": "up",
     "k": "down",
@@ -13,14 +16,15 @@
     "u": "undo",
     "<C-r>": "redo",
     ".": "repeat",
-    "n": "selectNextSearchResult"
+    "n": "selectNextSearchResult",
+    "a": "enterLineMode",
+    "A": "enterAnchorLineMode"
   },
   "insert": {
     "j": "up",
     "k": "down",
     "h": "left",
     "l": "right",
-    "<Esc>": "enterNormalMode",
     "cc": "createCircle",
     "<C-s>": "saveFile"
   },
@@ -29,7 +33,6 @@
     "k": "down",
     "h": "left",
     "l": "right",
-    "<Esc>": "enterNormalMode",
     "d": "deleteSelection",
     "y": "yankSelection",
     "p": "pasteOverSelection"
@@ -39,5 +42,7 @@
     "q": "quitEditor",
     "wq": "saveAndQuit",
     "q!": "forceQuit"
-  }
+  },
+  "line": {},
+  "anchor-line": {}
 }

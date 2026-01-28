@@ -35,6 +35,14 @@ function enterCommandMode({ editor, document }: CommandArgs): CommandResult {
   return [setMode(editor, 'command'), document];
 }
 
+function enterLineMode({ editor, document }: CommandArgs): CommandResult {
+  return [setMode(editor, 'line'), document];
+}
+
+function enterAnchorLineMode({ editor, document }: CommandArgs): CommandResult {
+  return [setMode(editor, 'anchor-line'), document];
+}
+
 function cursorUp({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
@@ -97,6 +105,8 @@ export {
   enterNormalMode,
   enterVisualMode,
   enterCommandMode,
+  enterLineMode,
+  enterAnchorLineMode,
   cursorUp,
   cursorDown,
   cursorLeft,
