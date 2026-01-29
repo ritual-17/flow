@@ -13,5 +13,4 @@ export interface SpatialIndex {
   getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint;
 }
 
-export type Point = { x: number; y: number };
 export type Direction = 'up' | 'down' | 'left' | 'right';

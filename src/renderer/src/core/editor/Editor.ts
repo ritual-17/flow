@@ -9,6 +9,7 @@ export interface Editor {
   commandHistory: string[];
   clipboard: Shape[];
   currentAnchorPoint: AnchorPoint | null;
+  currentLineId: ShapeId | null;
 }
 
 export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
@@ -22,6 +23,7 @@ function createEditor(): Editor {
     commandHistory: [],
     clipboard: [],
     currentAnchorPoint: null,
+    currentLineId: null,
   };
 }
 
@@ -67,6 +69,12 @@ function setCurrentAnchorPoint(editor: Editor, anchorPoint: AnchorPoint | null):
   });
 }
 
+function setCurrentLineId(editor: Editor, lineId: ShapeId | null): Editor {
+  return produce(editor, (draft) => {
+    draft.currentLineId = lineId;
+  });
+}
+
 export {
   createEditor,
   setMode,
@@ -76,4 +84,5 @@ export {
   addToCommandHistory,
   setClipboard,
   setCurrentAnchorPoint,
+  setCurrentLineId,
 };

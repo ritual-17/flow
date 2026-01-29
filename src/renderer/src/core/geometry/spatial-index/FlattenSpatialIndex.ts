@@ -1,7 +1,7 @@
 import Flatten from '@flatten-js/core';
-import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { AnchorPoint, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
-import { Direction, Point, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
+import { Direction, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import { getAnchorPoints } from '@renderer/core/geometry/utils/AnchorPoints';
 
 type idToShapeMap = Map<ShapeId, { domainShape: Shape; flatShape: Flatten.AnyShape }>;
@@ -70,7 +70,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return hits.map((hit) => this.getDomainShape(hit));
   }
 
-  getNearestShapeId(point: Point): ShapeId | null {
+  getNearestShapeId(point: Coordinate): ShapeId | null {
     const searchBox = new Flatten.Box(
       point.x - this.SEARCH_RADIUS,
       point.y - this.SEARCH_RADIUS,
@@ -93,7 +93,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return nearest;
   }
 
-  getNearestAnchorPoint(point: Point): AnchorPoint | null {
+  getNearestAnchorPoint(point: Coordinate): AnchorPoint | null {
     const searchBox = new Flatten.Box(
       point.x - this.SEARCH_RADIUS,
       point.y - this.SEARCH_RADIUS,
@@ -203,7 +203,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     this.shapeToIdMap.delete(flat);
   }
 
-  private distanceBetweenPoints(pointA: Point, pointB: Point): number {
+  private distanceBetweenPoints(pointA: Coordinate, pointB: Coordinate): number {
     const dx = pointA.x - pointB.x;
     const dy = pointA.y - pointB.y;
     return Math.sqrt(dx * dx + dy * dy);

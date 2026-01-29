@@ -25,7 +25,7 @@
     "k": "down",
     "h": "left",
     "l": "right",
-    "cc": "createCircle",
+    "c": "createCircle",
     "<C-s>": "saveFile"
   },
   "visual": {
@@ -48,6 +48,7 @@
     "j": "downAnchor",
     "k": "upAnchor",
     "h": "leftAnchor",
-    "l": "rightAnchor"
+    "l": "rightAnchor",
+    "<Space>": "addAnchorPointToLine"
   }
 }

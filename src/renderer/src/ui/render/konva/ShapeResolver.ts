@@ -1,5 +1,6 @@
 import { Shape } from '@renderer/core/geometry/Shape';
 import Circle from '@renderer/ui/render/konva/Circle';
+import Line from '@renderer/ui/render/konva/Line';
 import Point from '@renderer/ui/render/konva/Point';
 import Text from '@renderer/ui/render/konva/Text';
 import { JSX } from 'react';
@@ -19,6 +20,8 @@ function getComponent<T extends Shape>(shape: T): ShapeComponent<T> {
     circle: Circle,
     point: Point,
     textBox: Text,
+    line: Line,
+    'multi-line': Line,
   } as const;
 
   return componentMap[shape.type] as ShapeComponent<T>;

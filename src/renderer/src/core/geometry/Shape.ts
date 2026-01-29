@@ -1,4 +1,6 @@
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
+import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
+import { Point } from '@renderer/core/geometry/shapes/Point';
 import { generateId } from '@renderer/core/utils/id';
 
 export function buildBaseShape(): IShapeBase {
@@ -28,6 +30,7 @@ export interface IShapeBase {
 }
 
 export type ShapeId = string;
+export type Coordinate = { x: number; y: number };
 
 export type AnchorPoint = {
   ownerId: ShapeId; // the shape this anchor point belongs to
@@ -35,10 +38,6 @@ export type AnchorPoint = {
   position: number; // where along the shape's perimeter the anchor point is located
   x: number;
   y: number;
-};
-
-export type Point = IShapeBase & {
-  type: 'point';
 };
 
 export type Line = IShapeBase & {
@@ -62,4 +61,4 @@ export type TextBox = IShapeBase & {
 //   shapes: Shape[];
 // };
 
-export type Shape = Circle | Point | TextBox;
+export type Shape = Circle | Point | TextBox | MultiLine;

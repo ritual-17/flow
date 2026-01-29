@@ -14,7 +14,7 @@ import {
   enterVisualMode,
   selectNextSearchResult,
 } from '@renderer/core/commands/EditorCommands';
-import { addShapeToDocument, createCircle } from '@renderer/core/commands/ManipulationCommands';
+import { addAnchorPointToLine, createCircle } from '@renderer/core/commands/ManipulationCommands';
 import {
   jumpToDownAnchorPoint,
   jumpToLeftAnchorPoint,
@@ -38,8 +38,6 @@ export type CommandFunction = (args: CommandArgs) => CommandResult;
 
 function commandFromName(command: string): CommandFunction | null {
   switch (command) {
-    case 'addShape':
-      return addShapeToDocument;
     case 'enterNormalMode':
       return enterNormalMode;
     case 'enterInsertMode':
@@ -72,6 +70,8 @@ function commandFromName(command: string): CommandFunction | null {
       return jumpToLeftAnchorPoint;
     case 'rightAnchor':
       return jumpToRightAnchorPoint;
+    case 'addAnchorPointToLine':
+      return addAnchorPointToLine;
     default:
       return null;
   }
