@@ -1437,7 +1437,12 @@ graduate attribute of Problem Analysis and Design.
     is our first real revision of the finished project. This also pushes us to
     use the decisions made in this document directly in the development of our
     project.
-    \item Jeffrey -
+    \item Jeffrey - During this deliverable, we began to visualize and
+    actually understand how we wanted our application to work/function.
+    Additionally, as stated in a further section, none of the existing
+    documents required major changes which helped speed the process of
+    this deliverable. Moreover, with a well written MIS, we are now able
+    to proceed with development with a clearer image and better instructions.
     \item Kevin -What went well in this deliverable was using our previous 
      work on the MIS made implementing the skeleton or our project much
       simpler as it was already defined in the design docs. Additionally,
@@ -1470,7 +1475,13 @@ graduate attribute of Problem Analysis and Design.
       on the project. Thankfully, I was able to resolve this by re-delegating
       some of the work and helping set up a meeting with the TA to discuss
       the items for the deliverable.
-      \item Jeffrey -
+
+      \item Jeffrey - The biggest pain point I had during this deliverable was
+      trying to keep up with my peers when conceptualizing ideas for our concrete
+      system. Since I only have a handful of experiences with app development, I
+      was having a hard time helping my teammates come up with modules. Luckily,
+      one of the team members Ethan created throw-away code which helped me
+      visualize the system better.
       \item Kevin - The main pain point while working on this deliverable was
        getting back into the swing of things after the break. This made our 
        team less organized and communication slower than we should have for 
@@ -1533,6 +1544,47 @@ graduate attribute of Problem Analysis and Design.
     \end{itemize}
   \item What are the limitations of your solution?  Put another way, given
   unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
+    \begin{itemize}
+      \item One of the biggest limitations of our solution is that we are
+      priotizing rapid development and usability over mximum performance
+      and architetural flexibility.To clarify, given our time and
+      resource constraints, we chose technologies that
+      allowed us to build and iterate quickly; however, this
+      would obviously introduce trade offs.
+
+      For instance, our application uses Electron, which is relatively resource-heavy
+      when compared to native solution. We chose this as it enables cross-plateform
+      development and faster prototyping. The cross-platform development is very
+      important to use as the team is spread across multiple platforms. While this
+      seems like a great choice, it also has it's cons such as higher memory usage
+      and reduced performance. With unlimited resources, we could reimplement the
+      application using a more performant, lower-level stack to improve effciency,
+      speed, and responsiveness. For example, we could reimplment our application
+      using Rust or C++.
+
+      \item Another limitation is that currently our code is coupled between frontend
+      and backend. If we had unlimitd time we would completely isolate the backend and
+      business logic behind a well-defined API. This would allow alternative frontends,
+      mobile or web, to be developed independently and would allow us to improve the
+      application's scalability and maintainability.
+
+      \item Additionally, if we were truly given unlimited resources, we would
+      contemplate the idea of adding end-to-end encryption for notes.
+      This would also include stronger authentication mechanisms,
+      secure key management, and regular security audits.
+      While this may seem excessive for a note taking application, the idea
+      of large scale companies using our application might require such measures.
+
+      \item Next, our projet relies on third-party libraries which we use for
+      rendering and geometry-related operations. While the libraies we use are robust
+      and trusted, they are general-prupose tools and not optimized for our application
+      specifically. If we were given an unimited resource such as time, we would like
+      to design and implement custom solutions/libraries tailored to our application's
+      specific requirements. By doing this, we believe it would help improve performance,
+      flexibility, and control over rendering behaviour.
+
+
+    \end{itemize}
   \item Give a brief overview of other design solutions you considered.  What
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
