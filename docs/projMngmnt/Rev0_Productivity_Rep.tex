@@ -187,10 +187,6 @@ Name 5 & Num & \% & num & num\\
 
 \section{Issue Tracker}
 
-\wss{For each team member how many issues have they authored (including open and
-closed issues (O+C)) and how many have they been assigned (only counting closed
-issues (C only)) over the time period of interest.}
-
 \begin{table}[H]
 \centering
 \begin{tabular}{lll}
@@ -206,13 +202,15 @@ Chengze & 6  & 7 \\
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
-
 \section{CICD via GitHub Actions}
 
-\wss{Say how CICD technology is used and will be used in your project.}
+CI/CD is being used to compile, lint, format, and run tests on our codebase.
+The pipeline is run on every PR and needs to pass before it can be merged. It
+is also run on every merge to the main branch.
 
-\wss{Provide links to your CICD yaml files}
+LaTex workflow: \url{https://github.com/ritual-17/flow/blob/main/.github/workflows/buildtex.yml}
+Ascii doctor workflow (for SRS): \url{https://github.com/ritual-17/flow/blob/main/.github/workflows/buildadoc.yaml}
+CICD workflow: \url{https://github.com/ritual-17/flow/blob/main/.github/workflows/ci.yaml}
 
 \section{Extras}
 
