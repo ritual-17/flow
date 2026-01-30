@@ -1,12 +1,12 @@
-import { AnchorPoint, buildBaseShape, Coordinate, IShapeBase } from '@renderer/core/geometry/Shape';
+import { AnchorRef, buildBaseShape, Coordinate, IShapeBase } from '@renderer/core/geometry/Shape';
 import { Point } from '@renderer/core/geometry/shapes/Point';
 
 export type MultiLine = IShapeBase & {
   type: 'multi-line';
-  points: (Coordinate | AnchorPoint)[];
+  points: (Coordinate | AnchorRef)[];
 };
 
-type LinePoint = Coordinate | AnchorPoint;
+type LinePoint = Coordinate | AnchorRef;
 
 export function build(attrs: Partial<MultiLine>): MultiLine {
   const multiLine: MultiLine = {
@@ -20,13 +20,17 @@ export function build(attrs: Partial<MultiLine>): MultiLine {
 }
 
 export function fromStartingPoint(start: Point, attrs: Partial<MultiLine> = {}): MultiLine {
-  const lineStart: LinePoint = start.anchor ? start.anchor : { x: start.x, y: start.y };
+  const lineStart: LinePoint = resolveRefOrCoord(start);
   const points = [lineStart];
 
   return build({
     points: points,
     ...attrs,
   });
+}
+
+function resolveRefOrCoord(point: Point): LinePoint {
+  return point.ref ? point.ref : { x: point.x, y: point.y };
 }
 
 export function addPoint(line: MultiLine, point: LinePoint): MultiLine {

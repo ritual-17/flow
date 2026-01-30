@@ -8,10 +8,10 @@ import {
   updateShapesInDocument,
 } from '@renderer/core/document/Document';
 import { Editor, setCurrentLineId } from '@renderer/core/editor/Editor';
-import { Shape } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
-import * as Point from '@renderer/core/geometry/shapes/Point';
+import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
@@ -33,13 +33,15 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
 
   if (!currentAnchorPoint) throw new Error('No current anchor point to add to line');
 
+  const currentAnchorRef: AnchorRef = {
+    shapeId: currentAnchorPoint.ownerId,
+    position: currentAnchorPoint.position,
+  };
+
   if (!currentLineId) {
     // need to add a point rather than a line because we only have one point so far
-    const newLineStartingPoint = Point.build({
-      x: currentAnchorPoint.x,
-      y: currentAnchorPoint.y,
-      anchor: currentAnchorPoint,
-    });
+    const newLineStartingPoint = getAnchorPoint(updatedDocument, currentAnchorRef);
+
     updatedDocument = addShapeToDocument(args, newLineStartingPoint);
     updatedEditor = setCurrentLineId(updatedEditor, newLineStartingPoint.id);
     return [updatedEditor, updatedDocument];
@@ -49,7 +51,7 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
   switch (currentLine.type) {
     case 'point': {
       let newLine = MultiLine.fromStartingPoint(currentLine, { id: currentLine.id });
-      newLine = MultiLine.addPoint(newLine, currentAnchorPoint);
+      newLine = MultiLine.addPoint(newLine, currentAnchorRef);
 
       updatedDocument = updateShapeInDocument(
         { ...args, editor: updatedEditor, document: updatedDocument },
@@ -60,7 +62,7 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
       return [updatedEditor, updatedDocument];
     }
     case 'multi-line': {
-      const updatedLine = MultiLine.addPoint(currentLine, currentAnchorPoint);
+      const updatedLine = MultiLine.addPoint(currentLine, currentAnchorRef);
       updatedDocument = updateShapeInDocument(
         { ...args, editor: updatedEditor, document: updatedDocument },
         updatedLine,

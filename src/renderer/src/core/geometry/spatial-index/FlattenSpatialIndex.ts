@@ -2,7 +2,7 @@ import Flatten from '@flatten-js/core';
 import { AnchorPoint, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
 import { Direction, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
-import { getAnchorPoints } from '@renderer/core/geometry/utils/AnchorPoints';
+import { getAnchorPoints, isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
 
 type idToShapeMap = Map<ShapeId, { domainShape: Shape; flatShape: Flatten.AnyShape }>;
 type shapeToIdMap = Map<Flatten.AnyShape, ShapeId>;
@@ -14,17 +14,19 @@ export class FlattenSpatialIndex implements SpatialIndex {
   private SEARCH_RADIUS = 1000;
 
   addShape(shape: Shape): void {
-    const flat = toFlatten(shape);
+    const resolvedShape = this.resolveShapePoints(shape);
+    const flat = toFlatten(resolvedShape);
 
-    this.addShapeToSets(shape, flat);
+    this.addShapeToSets(resolvedShape, flat);
   }
 
   updateShape(shape: Shape): void {
     const oldFlat = this.getFlattenShapeById(shape.id);
     this.removeShapeFromSets(shape, oldFlat);
 
-    const newFlat = toFlatten(shape);
-    this.addShapeToSets(shape, newFlat);
+    const resolvedShape = this.resolveShapePoints(shape);
+    const newFlat = toFlatten(resolvedShape);
+    this.addShapeToSets(resolvedShape, newFlat);
   }
 
   removeShape(shape: Shape): void {
@@ -189,6 +191,21 @@ export class FlattenSpatialIndex implements SpatialIndex {
     if (!shape) throw new Error('Shape not found');
 
     return shape.domainShape;
+  }
+
+  private resolveShapePoints(shape: Shape): Shape {
+    if (shape.type !== 'multi-line') return shape;
+
+    const resolvedPoints = shape.points.map((pt) => {
+      if (isAnchorRef(pt)) {
+        const refShape = this.getDomainShapeById(pt.shapeId);
+        const anchors = getAnchorPoints(refShape);
+        return { x: anchors[pt.position].x, y: anchors[pt.position].y };
+      }
+      return pt;
+    });
+
+    return { ...shape, points: resolvedPoints };
   }
 
   private addShapeToSets(shape: Shape, flat: Flatten.AnyShape): void {

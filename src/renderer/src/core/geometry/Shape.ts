@@ -32,6 +32,9 @@ export interface IShapeBase {
 export type ShapeId = string;
 export type Coordinate = { x: number; y: number };
 
+export type AnchorRef = { shapeId: ShapeId; position: number };
+export type LinePoint = Coordinate | AnchorRef;
+
 export type AnchorPoint = {
   ownerId: ShapeId; // the shape this anchor point belongs to
   userId?: ShapeId; // the shape that is using this anchor point

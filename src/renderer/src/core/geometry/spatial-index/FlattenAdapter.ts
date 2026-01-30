@@ -1,8 +1,9 @@
 import Flatten from '@flatten-js/core';
-import { Shape, TextBox } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Coordinate, Shape, TextBox } from '@renderer/core/geometry/Shape';
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
+import { isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
 
 function toFlatten(shape: Shape): Flatten.AnyShape {
   switch (shape.type) {
@@ -41,6 +42,10 @@ function toFlattenMultiLine(multiLine: MultiLine): Flatten.Multiline {
   const lines = multiLine.points.reduce<Flatten.Segment[]>((acc, pt, index) => {
     if (index === 0) return acc;
     const prevPt = multiLine.points[index - 1];
+
+    assertLinePointisCoordinate(pt);
+    assertLinePointisCoordinate(prevPt);
+
     const line = new Flatten.Segment(
       new Flatten.Point(prevPt.x, prevPt.y),
       new Flatten.Point(pt.x, pt.y),
@@ -49,6 +54,12 @@ function toFlattenMultiLine(multiLine: MultiLine): Flatten.Multiline {
     return acc;
   }, []);
   return new Flatten.Multiline(lines);
+}
+
+function assertLinePointisCoordinate(point: Coordinate | AnchorRef): asserts point is Coordinate {
+  if (isAnchorRef(point)) {
+    throw new Error('AnchorRef found where Coordinate expected');
+  }
 }
 
 function fromFlatten(flat: Flatten.AnyShape, original: Shape): Shape {
