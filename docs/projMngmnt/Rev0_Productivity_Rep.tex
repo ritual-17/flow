@@ -22,10 +22,18 @@ This document summarizes the contributions of each team member for the Rev 0
 Demo.  The time period of interest is the time between the PoC demo and the Rev
 0 demo; the contributions prior to the PoC are NOT included.
 
+\wss{Please do not delete sections or modify the table formats.  Standardization
+helps the instructors and TAs to review these documents. You may add sections to
+the report.}
+
+\wss{Remove the instructor guidelines/comments in the final version.}
+
+\wss{Fill in the requested information, like project url, TA name, supervisor name, etc.}
+
 \section{Demo Plans}
 
 \wss{What will you be demonstrating}
-
+For our Rev0 Demo we plan to showcase taking a note that involves drawing a state machine, writing some text, and quick navigation around the note.
 \section{Team Meeting Attendance}
 
 \wss{For each team member how many team meetings have they attended over the
@@ -39,17 +47,18 @@ number of team meetings held by the team.}
 \toprule
 \textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 0\\
+Ethan & 0\\
+Hussain & 0\\
+Jeffrey & 0\\
+Kevin & 0\\
+Chengze & 0\\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \wss{If needed, an explanation for the counts can be provided here.}
+Our group did not have any meeting up to the time of this productivity report. Our group used asynchronous communication via discord and github to delegate and complete tasks.
 
 \section{Supervisor/Stakeholder Meeting Attendance}
 
@@ -114,20 +123,20 @@ Chengze & 0\\
 \wss{For each team member how many of the informal document discussion meetings
 with the TA were attended over the time period of interest.}
 
-\noindent \textbf{TA's Name: } [fill in this information]
+\noindent \textbf{TA's Name: } Lucas Dutton
 
 \begin{table}[H]
 \centering
 \begin{tabular}{ll}
 \toprule
-\textbf{Student} & \textbf{Lectures}\\
+\textbf{Student} & \textbf{Meetings}\\
 \midrule
-Total & Num\\
-Name 1 & Num\\
-Name 2 & Num\\
-Name 3 & Num\\
-Name 4 & Num\\
-Name 5 & Num\\
+Total & 2\\
+Ethan & 2\\
+Hussain & 2\\
+Jeffrey & 2\\
+Kevin & 2\\
+Chengze & 2\\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -136,37 +145,31 @@ Name 5 & Num\\
 
 \section{Commits}
 
-\wss{For each team member how many commits to the main branch have been made
-over the time period of interest.  The total is the total number of commits for
-the entire team since the beginning of the term.  The percentage is the
-percentage of the total commits made by each team member.}
+\wss{There are also columns for lines added and lines deleted to give a sense of
+the magnitude of each team member's contributions.  Note that these numbers can
+be somewhat misleading, as a team member who does refactoring may have high
+numbers in both columns, while a team member who implements a large new feature
+may have a high number of lines added, but few lines deleted.  These numbers
+will be interpreted with care.}
 
 \begin{table}[H]
 \centering
-\begin{tabular}{lll}
+\begin{tabular}{lllll}
 \toprule
-\textbf{Student} & \textbf{Commits} & \textbf{Percent}\\
+\textbf{Student} & \textbf{Commits} & \textbf{Percent} & \textbf{Lines Added} &
+\textbf{Lines Deleted}\\
 \midrule
-Total & Num & 100\% \\
-Name 1 & Num & \% \\
-Name 2 & Num & \% \\
-Name 3 & Num & \% \\
-Name 4 & Num & \% \\
-Name 5 & Num & \% \\
+Total & 73 & 100\% & 5149 & 1800\\
+Ethan & 36 & 49.32\% & 4512 & 575\\
+Hussain & 15 & 20.55\% & 288 & 1032\\
+Jeffrey & 9 & 12.33\% & 90 & 49\\
+Kevin & 6 & 8.22\% & 85 & 29\\
+Chengze & 7 & 9.59\% & 174 & 115\\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.  For
-instance, if a team member has more commits to unmerged branches, these numbers
-can be provided here.  If multiple people contribute to a commit, git allows for
-multi-author commits.}
-
 \section{Issue Tracker}
-
-\wss{For each team member how many issues have they authored (including open and
-closed issues (O+C)) and how many have they been assigned (only counting closed
-issues (C only)) over the time period of interest.}
 
 \begin{table}[H]
 \centering
@@ -174,33 +177,47 @@ issues (C only)) over the time period of interest.}
 \toprule
 \textbf{Student} & \textbf{Authored (O+C)} & \textbf{Assigned (C only)}\\
 \midrule
-Name 1 & Num & Num \\
-Name 2 & Num & Num \\
-Name 3 & Num & Num \\
-Name 4 & Num & Num \\
-Name 5 & Num & Num \\
+Ethan & 22  & 4  \\
+Hussain & 11  & 8 \\
+Jeffrey & 11  & 8  \\
+Kevin & 4  & 5  \\
+Chengze & 6  & 7 \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\wss{If needed, an explanation for the counts can be provided here.}
+\section{CICD via GitHub Actions}
 
-\section{CICD}
+CI/CD is being used to compile, lint, format, and run tests on our codebase.
+The pipeline is run on every PR and needs to pass before it can be merged. It
+is also run on every merge to the main branch.
 
-\wss{Say how CICD is used in your project}
+LaTex workflow: \url{https://github.com/ritual-17/flow/blob/main/.github/workflows/buildtex.yml} \\
+
+Ascii doctor workflow (for SRS): \url{https://github.com/ritual-17/flow/blob/main/.github/workflows/buildadoc.yaml} \\
+
+CICD workflow: \url{https://github.com/ritual-17/flow/blob/main/.github/workflows/ci.yaml} \\
+
+\section{Extras}
+
+Our team plans to work on a User Manual and Usability Report as our extras. The
+usability testing will be designed after Rev 0 and testing will be conducted to
+include findings in the Verification and Validation report. The User Manual
+will be created alongside the development process for Rev 1. We still feel
+these extras are appropriate.
 
 \section{Team Charter Trigger Items}
 
 For Revision 0, our team did not use a strict set of quantified trigger items, but
- we followed general expectations such as completing assigned tasks on time, communicating 
- regularly, and staying involved in team progress. No major issues or violations 
- occurred during this revision, as everyone contributed consistently. In future revisions, 
- we plan to define clearer and more measurable triggers to help track productivity and 
+ we followed general expectations such as completing assigned tasks on time, communicating
+ regularly, and staying involved in team progress. No major issues or violations
+ occurred during this revision, as everyone contributed consistently. In future revisions,
+ we plan to define clearer and more measurable triggers to help track productivity and
  address any problems more effectively.
 
 \section{Additional Productivity Metrics}
 
-\wss{If your team has additional metrics of productivity, please feel free to
-add them to this report.}
+Our team does not have any additional metrics of productivity aside from
+the ones listed in this report.
 
 \end{document}
