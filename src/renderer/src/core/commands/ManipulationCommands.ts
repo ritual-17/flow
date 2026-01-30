@@ -11,6 +11,7 @@ import { Editor, setCurrentLineId } from '@renderer/core/editor/Editor';
 import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
+import { translateShape } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
@@ -20,6 +21,37 @@ export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
   const updatedDocument = addShapeToDocument(args, circle);
 
   return [args.editor, updatedDocument];
+}
+
+const TRANSLATE_AMOUNT = 50;
+export function translateSelectionUp(args: CommandArgs): [Editor, DocumentModel] {
+  return translateSelection(args, { deltaX: 0, deltaY: -TRANSLATE_AMOUNT });
+}
+export function translateSelectionDown(args: CommandArgs): [Editor, DocumentModel] {
+  return translateSelection(args, { deltaX: 0, deltaY: TRANSLATE_AMOUNT });
+}
+export function translateSelectionLeft(args: CommandArgs): [Editor, DocumentModel] {
+  return translateSelection(args, { deltaX: -TRANSLATE_AMOUNT, deltaY: 0 });
+}
+export function translateSelectionRight(args: CommandArgs): [Editor, DocumentModel] {
+  return translateSelection(args, { deltaX: TRANSLATE_AMOUNT, deltaY: 0 });
+}
+
+function translateSelection(
+  args: CommandArgs,
+  { deltaX, deltaY }: { deltaX: number; deltaY: number },
+): [Editor, DocumentModel] {
+  const { editor, document } = args;
+  const { selectedShapeIds } = editor;
+
+  const currentShapeId = selectedShapeIds[0];
+  const shape = getShapeById(document, currentShapeId);
+
+  const updatedShape = translateShape(shape, { deltaX: deltaX, deltaY: deltaY });
+
+  const updatedDocument = updateShapeInDocument({ ...args, editor, document }, updatedShape);
+
+  return [editor, updatedDocument];
 }
 
 export function addAnchorPointToLine(args: CommandArgs): CommandResult {

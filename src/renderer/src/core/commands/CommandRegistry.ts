@@ -14,7 +14,14 @@ import {
   enterVisualMode,
   selectNextSearchResult,
 } from '@renderer/core/commands/EditorCommands';
-import { addAnchorPointToLine, createCircle } from '@renderer/core/commands/ManipulationCommands';
+import {
+  addAnchorPointToLine,
+  createCircle,
+  translateSelectionDown,
+  translateSelectionLeft,
+  translateSelectionRight,
+  translateSelectionUp,
+} from '@renderer/core/commands/ManipulationCommands';
 import {
   jumpToDownAnchorPoint,
   jumpToLeftAnchorPoint,
@@ -72,6 +79,14 @@ function commandFromName(command: string): CommandFunction | null {
       return jumpToRightAnchorPoint;
     case 'addAnchorPointToLine':
       return addAnchorPointToLine;
+    case 'translateSelectionUp':
+      return translateSelectionUp;
+    case 'translateSelectionDown':
+      return translateSelectionDown;
+    case 'translateSelectionLeft':
+      return translateSelectionLeft;
+    case 'translateSelectionRight':
+      return translateSelectionRight;
     default:
       return null;
   }

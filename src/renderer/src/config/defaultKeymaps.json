@@ -35,7 +35,11 @@
     "l": "right",
     "d": "deleteSelection",
     "y": "yankSelection",
-    "p": "pasteOverSelection"
+    "p": "pasteOverSelection",
+    "K": "translateSelectionUp",
+    "J": "translateSelectionDown",
+    "L": "translateSelectionRight",
+    "H": "translateSelectionLeft"
   },
   "command": {
     "w": "saveFile",
