@@ -1,6 +1,8 @@
+import { setCursorPosition } from '@renderer/core/editor/Editor';
 import { Canvas } from '@renderer/ui/components/Canvas';
 import { KeyboardHandler } from '@renderer/ui/components/KeyboardHandler';
 import { StatusBar } from '@renderer/ui/components/StatusBar';
+import { useStore } from '@renderer/ui/Store';
 import React from 'react';
 
 const STATUS_BAR_HEIGHT = 24;
@@ -18,6 +20,15 @@ function App(): React.JSX.Element {
         height: window.innerHeight,
       });
     }
+
+    const { editor, updateEditor } = useStore.getState();
+
+    updateEditor(
+      setCursorPosition(editor, {
+        x: window.innerWidth / 2,
+        y: (window.innerHeight - STATUS_BAR_HEIGHT) / 2,
+      }),
+    );
 
     window.addEventListener('resize', handleResize);
     return () => {

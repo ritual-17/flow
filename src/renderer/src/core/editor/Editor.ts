@@ -1,4 +1,4 @@
-import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { produce } from 'immer';
 
 export interface Editor {
@@ -8,9 +8,11 @@ export interface Editor {
   commandBuffer: string;
   commandHistory: string[];
   clipboard: Shape[];
+  currentAnchorPoint: AnchorPoint | null;
+  currentLineId: ShapeId | null;
 }
 
-export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text';
+export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
 
 function createEditor(): Editor {
   return {
@@ -20,6 +22,8 @@ function createEditor(): Editor {
     commandBuffer: '',
     commandHistory: [],
     clipboard: [],
+    currentAnchorPoint: null,
+    currentLineId: null,
   };
 }
 
@@ -59,6 +63,18 @@ function setClipboard(editor: Editor, shapes: Shape[]): Editor {
   });
 }
 
+function setCurrentAnchorPoint(editor: Editor, anchorPoint: AnchorPoint | null): Editor {
+  return produce(editor, (draft) => {
+    draft.currentAnchorPoint = anchorPoint;
+  });
+}
+
+function setCurrentLineId(editor: Editor, lineId: ShapeId | null): Editor {
+  return produce(editor, (draft) => {
+    draft.currentLineId = lineId;
+  });
+}
+
 export {
   createEditor,
   setMode,
@@ -67,4 +83,6 @@ export {
   setCommandBuffer,
   addToCommandHistory,
   setClipboard,
+  setCurrentAnchorPoint,
+  setCurrentLineId,
 };

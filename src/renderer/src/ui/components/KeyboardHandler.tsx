@@ -22,6 +22,12 @@ export function KeyboardHandler() {
         return;
       }
 
+      if (e.key === ' ') {
+        e.preventDefault();
+        appendCommandBuffer('<Space>');
+        return;
+      }
+
       if (e.key.length === 1) {
         // Append character to command buffer
         appendCommandBuffer(e.key);

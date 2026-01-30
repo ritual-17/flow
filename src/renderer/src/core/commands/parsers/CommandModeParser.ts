@@ -5,7 +5,7 @@ import { KeyMap } from '@renderer/core/commands/KeyMaps';
 export class CommandModeParser extends CommandParser {
   constructor() {
     super();
-    const commandModeKeymap = defaultKeymaps['command'] as KeyMap;
-    this.commandKeyMap = { ...commandModeKeymap };
+    const keymap = defaultKeymaps['command'] as KeyMap;
+    Object.assign(this.commandKeyMap, keymap);
   }
 }

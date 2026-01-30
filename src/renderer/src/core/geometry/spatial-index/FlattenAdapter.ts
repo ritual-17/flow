@@ -1,5 +1,9 @@
 import Flatten from '@flatten-js/core';
-import { Circle, Point, Shape, TextBox } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Coordinate, Shape, TextBox } from '@renderer/core/geometry/Shape';
+import { Circle } from '@renderer/core/geometry/shapes/Circle';
+import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
+import { Point } from '@renderer/core/geometry/shapes/Point';
+import { isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
 
 function toFlatten(shape: Shape): Flatten.AnyShape {
   switch (shape.type) {
@@ -9,6 +13,8 @@ function toFlatten(shape: Shape): Flatten.AnyShape {
       return toFlattenPoint(shape);
     case 'textBox':
       return toFlattenTextBox(shape);
+    case 'multi-line':
+      return toFlattenMultiLine(shape);
   }
 }
 
@@ -27,6 +33,33 @@ function toFlattenTextBox(textBox: TextBox): Flatten.Polygon {
   const p4 = new Flatten.Point(textBox.x, textBox.y + textBox.height);
 
   return new Flatten.Polygon([p1, p2, p3, p4]);
+}
+
+function toFlattenMultiLine(multiLine: MultiLine): Flatten.Multiline {
+  if (multiLine.points.length < 2) {
+    throw new Error('MultiLine must have at least 2 points to convert to Flatten.Multiline');
+  }
+  const lines = multiLine.points.reduce<Flatten.Segment[]>((acc, pt, index) => {
+    if (index === 0) return acc;
+    const prevPt = multiLine.points[index - 1];
+
+    assertLinePointisCoordinate(pt);
+    assertLinePointisCoordinate(prevPt);
+
+    const line = new Flatten.Segment(
+      new Flatten.Point(prevPt.x, prevPt.y),
+      new Flatten.Point(pt.x, pt.y),
+    );
+    acc.push(line);
+    return acc;
+  }, []);
+  return new Flatten.Multiline(lines);
+}
+
+function assertLinePointisCoordinate(point: Coordinate | AnchorRef): asserts point is Coordinate {
+  if (isAnchorRef(point)) {
+    throw new Error('AnchorRef found where Coordinate expected');
+  }
 }
 
 function fromFlatten(flat: Flatten.AnyShape, original: Shape): Shape {

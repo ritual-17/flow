@@ -1,4 +1,7 @@
 {
+  "all": {
+    "<Esc>": "enterNormalMode"
+  },
   "normal": {
     "j": "up",
     "k": "down",
@@ -12,15 +15,17 @@
     "p": "pasteAfter",
     "u": "undo",
     "<C-r>": "redo",
-    ".": "repeat"
+    ".": "repeat",
+    "n": "selectNextSearchResult",
+    "a": "enterLineMode",
+    "A": "enterAnchorLineMode"
   },
   "insert": {
     "j": "up",
     "k": "down",
     "h": "left",
     "l": "right",
-    "<Esc>": "enterNormalMode",
-    "cc": "createCircle",
+    "c": "createCircle",
     "<C-s>": "saveFile"
   },
   "visual": {
@@ -28,15 +33,26 @@
     "k": "down",
     "h": "left",
     "l": "right",
-    "<Esc>": "enterNormalMode",
     "d": "deleteSelection",
     "y": "yankSelection",
-    "p": "pasteOverSelection"
+    "p": "pasteOverSelection",
+    "K": "translateSelectionUp",
+    "J": "translateSelectionDown",
+    "L": "translateSelectionRight",
+    "H": "translateSelectionLeft"
   },
   "command": {
     "w": "saveFile",
     "q": "quitEditor",
     "wq": "saveAndQuit",
     "q!": "forceQuit"
+  },
+  "line": {},
+  "anchor-line": {
+    "j": "downAnchor",
+    "k": "upAnchor",
+    "h": "leftAnchor",
+    "l": "rightAnchor",
+    "<Space>": "addAnchorPointToLine"
   }
 }
