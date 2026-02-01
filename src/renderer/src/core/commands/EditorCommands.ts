@@ -11,7 +11,12 @@ impact the state of the document.
 **/
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
-import { setCursorPosition, setMode } from '@renderer/core/editor/Editor';
+import {
+  setCursorPosition,
+  setMode,
+  setSelectedShapes,
+  setVisualAnchor,
+} from '@renderer/core/editor/Editor';
 
 const CURSOR_MOVE_AMOUNT = 10;
 
@@ -24,7 +29,10 @@ function enterInsertMode({ editor, document }: CommandArgs): CommandResult {
 }
 
 function enterVisualMode({ editor, document }: CommandArgs): CommandResult {
-  return [setMode(editor, 'visual'), document];
+  let newEditor = setMode(editor, 'visual');
+  newEditor = setVisualAnchor(newEditor, editor.cursorPosition);
+  newEditor = setSelectedShapes(newEditor, []);
+  return [newEditor, document];
 }
 
 function enterCommandMode({ editor, document }: CommandArgs): CommandResult {

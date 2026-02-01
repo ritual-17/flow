@@ -3,10 +3,16 @@ import * as CommandRegistry from '@renderer/core/commands/CommandRegistry';
 import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
 import { VisualModeParser } from '@renderer/core/commands/parsers/VisualModeParser';
+import { updateVisualSelection } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
 import { FlattenSpatialIndex } from '@renderer/core/geometry/shape/FlattenSpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
+
+// helper for checking if a command is for moving the cursor
+function isCursorMoveCommand(command: string): boolean {
+  return command === 'up' || command === 'down' || command === 'left' || command === 'right';
+}
 
 export class CommandDispatcher {
   private spatialIndex: SpatialIndex = new FlattenSpatialIndex();
@@ -43,8 +49,14 @@ export class CommandDispatcher {
     }
 
     const [updatedEditor, updatedDocument] = commandFunc(this.toCommandArgs(editor, document));
+    let updatedVisualEditor = updatedEditor;
 
-    const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
+    // visual mode: update selection after cursor move commands
+    if (editor.mode === 'visual' && isCursorMoveCommand(command)) {
+      updatedVisualEditor = updateVisualSelection(updatedEditor, this.spatialIndex);
+    }
+
+    const clearedCommandBufferEditor = setCommandBuffer(updatedVisualEditor, '');
 
     return [clearedCommandBufferEditor, updatedDocument];
   }

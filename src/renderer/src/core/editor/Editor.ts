@@ -9,6 +9,7 @@ export interface Editor {
   commandBuffer: string;
   commandHistory: string[];
   clipboard: Shape[]; // stores copies of shapes relative to the center of the selection
+  visualAnchor?: { x: number; y: number };
 }
 
 export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text';
@@ -21,6 +22,7 @@ function createEditor(): Editor {
     commandBuffer: '',
     commandHistory: [],
     clipboard: [],
+    visualAnchor: undefined,
   };
 }
 
@@ -95,6 +97,20 @@ function setClipboard(editor: Editor, shapes: Shape[]): Editor {
   });
 }
 
+// Functions for visual mode operations
+
+function setVisualAnchor(editor: Editor, position: { x: number; y: number }): Editor {
+  return produce(editor, (draft) => {
+    draft.visualAnchor = position;
+  });
+}
+
+function clearVisualAnchor(editor: Editor): Editor {
+  return produce(editor, (draft) => {
+    draft.visualAnchor = undefined;
+  });
+}
+
 export {
   createEditor,
   setMode,
@@ -108,4 +124,6 @@ export {
   setCommandBuffer,
   addToCommandHistory,
   setClipboard,
+  setVisualAnchor,
+  clearVisualAnchor,
 };
