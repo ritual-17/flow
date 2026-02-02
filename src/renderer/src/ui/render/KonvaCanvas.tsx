@@ -1,4 +1,4 @@
-import { Layer, Stage } from 'react-konva';
+import { Stage } from 'react-konva';
 
 type CanvasProps = {
   width: number;
@@ -9,7 +9,7 @@ type CanvasProps = {
 const KonvaCanvas = ({ height, width, children }: CanvasProps) => {
   return (
     <Stage width={width} height={height}>
-      <Layer>{children}</Layer>
+      {children}
     </Stage>
   );
 };

@@ -1,6 +1,6 @@
-// disabled prop-type warning because typescript knows shape is a DomainCircle
+// disabled prop-type warning because typescript knows shape is a DomainPoint
 /* eslint-disable react/prop-types */
-import { Point as DomainPoint } from '@renderer/core/geometry/Shape';
+import { Point as DomainPoint } from '@renderer/core/geometry/shapes/Point';
 import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import { Circle as KonvaPoint } from 'react-konva';
 
