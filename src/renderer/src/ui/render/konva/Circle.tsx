@@ -5,6 +5,7 @@ import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import { HoverEffect } from '@renderer/ui/render/konva/style/HoverEffect';
 import { Circle as KonvaCircle } from 'react-konva';
 
+// TODO: support styling
 const Circle: ShapeComponent<DomainCircle> = ({ shape, hovered, selected }) => {
   const stroke = selected ? 'blue' : 'black';
   return (

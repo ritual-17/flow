@@ -6,6 +6,8 @@ import { Line as KonvaLine } from 'react-konva';
 
 type DomainLine = MultiLine;
 
+// TODO: support styling
+// TODO: support hovered and selected props
 const Line: ShapeComponent<DomainLine> = ({ shape }: { shape: MultiLine }) => {
   const points = useResolvedPoints(shape).flatMap((pt) => [pt.x, pt.y]);
   return <KonvaLine points={points} stroke='red' />;
