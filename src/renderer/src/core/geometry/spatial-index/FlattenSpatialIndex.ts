@@ -2,7 +2,11 @@ import Flatten from '@flatten-js/core';
 import { AnchorPoint, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
 import { Direction, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
-import { getAnchorPoints, isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
+import {
+  getAnchorPoints,
+  isAnchorRef,
+  resolveAnchorPoint,
+} from '@renderer/core/geometry/utils/AnchorPoints';
 
 type idToShapeMap = Map<ShapeId, { domainShape: Shape; flatShape: Flatten.AnyShape }>;
 type shapeToIdMap = Map<Flatten.AnyShape, ShapeId>;
@@ -197,12 +201,11 @@ export class FlattenSpatialIndex implements SpatialIndex {
     if (shape.type !== 'multi-line') return shape;
 
     const resolvedPoints = shape.points.map((pt) => {
-      if (isAnchorRef(pt)) {
-        const refShape = this.getDomainShapeById(pt.shapeId);
-        const anchors = getAnchorPoints(refShape);
-        return { x: anchors[pt.position].x, y: anchors[pt.position].y };
-      }
-      return pt;
+      if (!isAnchorRef(pt)) return pt;
+
+      const refShape = this.getDomainShapeById(pt.shapeId);
+      const anchorPoint = resolveAnchorPoint(refShape, pt.position);
+      return { x: anchorPoint.x, y: anchorPoint.y };
     });
 
     return { ...shape, points: resolvedPoints };

@@ -18,18 +18,22 @@ export const HoverEffect = ({ shape, selectedPoint }: HoverEffectProps) => {
   }
 
   const anchorPoints = getAnchorPoints(shape);
-  return anchorPoints.map((point, index) => {
-    const stroke = index === selectedPoint ? 'blue' : LIGHT_BLUE;
+  return (
+    <>
+      {anchorPoints.map((point, index) => {
+        const stroke = index === selectedPoint ? 'blue' : LIGHT_BLUE;
 
-    return (
-      <KonvaCircle
-        key={`anchor-point-${shape.id}-${index}`}
-        x={point.x}
-        y={point.y}
-        radius={3}
-        stroke={stroke}
-        fill={LIGHT_BLUE}
-      />
-    );
-  });
+        return (
+          <KonvaCircle
+            key={`anchor-point-${shape.id}-${index}`}
+            x={point.x}
+            y={point.y}
+            radius={3}
+            stroke={stroke}
+            fill={LIGHT_BLUE}
+          />
+        );
+      })}
+    </>
+  );
 };

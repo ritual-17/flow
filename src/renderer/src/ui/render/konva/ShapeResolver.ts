@@ -20,7 +20,6 @@ function getComponent<T extends Shape>(shape: T): ShapeComponent<T> {
     circle: Circle,
     point: Point,
     textBox: Text,
-    line: Line,
     'multi-line': Line,
   } as const;
 

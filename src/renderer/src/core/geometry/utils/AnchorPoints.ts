@@ -40,7 +40,7 @@ function getAnchorCoordinate(document: DocumentModel, ref: AnchorRef): Coordinat
   return { x: anchorPoint.x, y: anchorPoint.y };
 }
 
-function resolveAnchorPoint(shape: Shape, position: number): AnchorPoint {
+export function resolveAnchorPoint(shape: Shape, position: number): AnchorPoint {
   const anchorPoints = getAnchorPoints(shape);
   const point = anchorPoints.find((ap) => ap.position === position);
 

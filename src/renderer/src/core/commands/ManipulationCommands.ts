@@ -1,12 +1,7 @@
 // Handles manipulation commands i.e. commands for manipulating shapes and updating the document accordingly
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
-import {
-  addShapesToDocument,
-  DocumentModel,
-  getShapeById,
-  updateShapesInDocument,
-} from '@renderer/core/document/Document';
+import * as Document from '@renderer/core/document/Document';
 import { Editor, setCurrentLineId } from '@renderer/core/editor/Editor';
 import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
@@ -14,7 +9,7 @@ import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import { translateShape } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
-export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
+export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
   const circle = Circle.build({ x, y });
 
@@ -24,32 +19,35 @@ export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
 }
 
 const TRANSLATE_AMOUNT = 50;
-export function translateSelectionUp(args: CommandArgs): [Editor, DocumentModel] {
+export function translateSelectionUp(args: CommandArgs): [Editor, Document.DocumentModel] {
   return translateSelection(args, { deltaX: 0, deltaY: -TRANSLATE_AMOUNT });
 }
-export function translateSelectionDown(args: CommandArgs): [Editor, DocumentModel] {
+export function translateSelectionDown(args: CommandArgs): [Editor, Document.DocumentModel] {
   return translateSelection(args, { deltaX: 0, deltaY: TRANSLATE_AMOUNT });
 }
-export function translateSelectionLeft(args: CommandArgs): [Editor, DocumentModel] {
+export function translateSelectionLeft(args: CommandArgs): [Editor, Document.DocumentModel] {
   return translateSelection(args, { deltaX: -TRANSLATE_AMOUNT, deltaY: 0 });
 }
-export function translateSelectionRight(args: CommandArgs): [Editor, DocumentModel] {
+export function translateSelectionRight(args: CommandArgs): [Editor, Document.DocumentModel] {
   return translateSelection(args, { deltaX: TRANSLATE_AMOUNT, deltaY: 0 });
 }
 
 function translateSelection(
   args: CommandArgs,
   { deltaX, deltaY }: { deltaX: number; deltaY: number },
-): [Editor, DocumentModel] {
+): [Editor, Document.DocumentModel] {
   const { editor, document } = args;
   const { selectedShapeIds } = editor;
 
-  const currentShapeId = selectedShapeIds[0];
-  const shape = getShapeById(document, currentShapeId);
+  if (selectedShapeIds.length === 0) {
+    throw new Error('No shapes selected to translate');
+  }
 
-  const updatedShape = translateShape(shape, { deltaX: deltaX, deltaY: deltaY });
+  const updatedShapes = selectedShapeIds
+    .map((id) => Document.getShapeById(document, id))
+    .map((shape) => translateShape(shape, { deltaX, deltaY }));
 
-  const updatedDocument = updateShapeInDocument({ ...args, editor, document }, updatedShape);
+  const updatedDocument = updateShapesInDocument({ ...args, editor, document }, updatedShapes);
 
   return [editor, updatedDocument];
 }
@@ -79,7 +77,7 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
     return [updatedEditor, updatedDocument];
   }
 
-  const currentLine = getShapeById(updatedDocument, currentLineId);
+  const currentLine = Document.getShapeById(updatedDocument, currentLineId);
   switch (currentLine.type) {
     case 'point': {
       let newLine = MultiLine.fromStartingPoint(currentLine, { id: currentLine.id });
@@ -100,7 +98,6 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
         updatedLine,
       );
 
-      console.log('Added anchor point to line', updatedLine);
       return [updatedEditor, updatedDocument];
     }
     default:
@@ -110,15 +107,21 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
   }
 }
 
-function updateShapeInDocument(args: CommandArgs, shape: Shape): DocumentModel {
+function updateShapeInDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {
+  return updateShapesInDocument(args, [shape]);
+}
+
+function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): Document.DocumentModel {
   const { document, spatialIndex } = args;
-  const newDocument = updateShapesInDocument(document, [shape]);
-  spatialIndex.updateShape(shape);
+  const newDocument = Document.updateShapesInDocument(document, shapes);
+
+  shapes.forEach((shape) => spatialIndex.updateShape(shape));
   return newDocument;
 }
-function addShapeToDocument(args: CommandArgs, shape: Shape): DocumentModel {
+
+function addShapeToDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {
   const { document, spatialIndex } = args;
-  const newDocument = addShapesToDocument(document, [shape]);
+  const newDocument = Document.addShapesToDocument(document, [shape]);
   spatialIndex.addShape(shape);
   return newDocument;
 }
