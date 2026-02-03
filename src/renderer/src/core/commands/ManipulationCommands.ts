@@ -6,6 +6,7 @@ import { Editor, setCurrentLineId } from '@renderer/core/editor/Editor';
 import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { translateShape } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
@@ -14,6 +15,15 @@ export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel
   const circle = Circle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, circle);
+
+  return [args.editor, updatedDocument];
+}
+
+export function createTextBox(args: CommandArgs): [Editor, Document.DocumentModel] {
+  const { x, y } = args.editor.cursorPosition;
+  const textBox = TextBox.build({ x, y });
+
+  const updatedDocument = addShapeToDocument(args, textBox);
 
   return [args.editor, updatedDocument];
 }

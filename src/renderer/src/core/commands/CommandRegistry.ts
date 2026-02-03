@@ -17,6 +17,7 @@ import {
 import {
   addAnchorPointToLine,
   createCircle,
+  createTextBox,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -67,6 +68,8 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorRight;
     case 'createCircle':
       return createCircle;
+    case 'createTextBox':
+      return createTextBox;
     case 'selectNextSearchResult':
       return selectNextSearchResult;
     case 'downAnchor':

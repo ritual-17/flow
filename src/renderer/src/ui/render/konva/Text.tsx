@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { TextBox as DomainText } from '@renderer/core/geometry/Shape';
+import { TextBox as DomainText } from '@renderer/core/geometry/shapes/TextBox';
 import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import { Text as KonvaText } from 'react-konva';
 

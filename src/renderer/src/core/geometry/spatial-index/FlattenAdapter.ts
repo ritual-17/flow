@@ -1,8 +1,9 @@
 import Flatten from '@flatten-js/core';
-import { AnchorRef, Coordinate, Shape, TextBox } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Coordinate, Shape } from '@renderer/core/geometry/Shape';
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
 
 function toFlatten(shape: Shape): Flatten.AnyShape {
