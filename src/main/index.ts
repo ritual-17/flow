@@ -3,6 +3,7 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { join } from 'path';
 
 import icon from '../../resources/icon.png?asset';
+import { compileTypstDocument } from './typst/TextCompiler';
 
 function createWindow(): void {
   // Create the browser window.
@@ -51,7 +52,10 @@ app.whenReady().then(() => {
   });
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'));
+  ipcMain.on('ping', () => console.log(compileTypstDocument()));
+  ipcMain.handle('compile-typst', (_source) => {
+    return compileTypstDocument();
+  });
 
   createWindow();
 

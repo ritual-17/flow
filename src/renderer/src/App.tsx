@@ -37,7 +37,7 @@ function App(): React.JSX.Element {
   }, []);
 
   return (
-    <div className='flex flex-col h-screen w-screen bg-gray-900 text-gray-300 font-mono overflow-hidden'>
+    <div className='flex flex-col h-screen w-screen bg-zinc-800 text-gray-300 font-mono overflow-hidden'>
       <Canvas
         width={windowSize.width - STATUS_BAR_HEIGHT}
         height={windowSize.height - STATUS_BAR_HEIGHT}
