@@ -60,10 +60,17 @@ export type TextBox = IShapeBase & {
   text: string;
 };
 
+export type Rectangle = IShapeBase & {
+  type: 'rectangle';
+  width: number;
+  height: number;
+}
+
+
 // possible future shape for grouping multiple shapes
 // export type Cell = IShapeBase & {
 //   type: 'cell';
 //   shapes: Shape[];
 // };
 
-export type Shape = Circle | Point | TextBox | MultiLine;
+export type Shape = Circle | Point | TextBox | MultiLine | Rectangle;

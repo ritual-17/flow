@@ -26,7 +26,8 @@
     "h": "left",
     "l": "right",
     "c": "createCircle",
-    "<C-s>": "saveFile"
+    "<C-s>": "saveFile",
+    "rr": "createRectangle"
   },
   "visual": {
     "j": "up",
