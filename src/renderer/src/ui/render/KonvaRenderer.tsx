@@ -36,6 +36,7 @@ function KonvaRenderer() {
           </Group>
         );
       })}
+      {/* rendering lines after so they are rendered on top of shapes  */}
       {lines.map((shape) => {
         const Component = getComponent(shape);
         const hovered = shape.id === nearestShapeId || mode === 'anchor-line';

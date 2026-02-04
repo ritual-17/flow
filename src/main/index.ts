@@ -51,7 +51,7 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  // IPC test
+  // HANDLERS
   ipcMain.handle('compile-typst', (_, content) => {
     return compileTypstDocument(content);
   });
