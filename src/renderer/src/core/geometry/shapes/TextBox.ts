@@ -23,8 +23,9 @@ export function build(attrs: Partial<TextBox>): TextBox {
 }
 
 export function generateAnchorPoints(textBox: TextBox): AnchorPoint[] {
-  const { x, y, width, height } = textBox;
-  const ownerId = textBox.id;
+  const { x, y, id: ownerId } = textBox;
+  const width = textBox.compiledImage ? textBox.compiledImage.width : textBox.width;
+  const height = textBox.compiledImage ? textBox.compiledImage.height : textBox.height;
 
   return [
     { ownerId, position: 0, x: x + width / 2, y: y }, // top center
