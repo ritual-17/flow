@@ -46,6 +46,9 @@ export class CommandDispatcher {
       return [updatedEditor, document];
     }
 
+    // to command args takes in editor and document and converts it to a command arg object
+    // which is an object that holds the editor, document, spatial index and any additional
+    // args needed for the command
     const [updatedEditor, updatedDocument] = commandFunc(this.toCommandArgs(editor, document));
 
     const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
@@ -73,6 +76,7 @@ export class CommandDispatcher {
     }
   }
 
+  //
   private toCommandArgs(editor: Editor, document: DocumentModel): CommandRegistry.CommandArgs {
     return {
       editor,
