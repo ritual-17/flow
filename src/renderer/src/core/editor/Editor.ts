@@ -1,5 +1,5 @@
 import { DocumentModel } from '@renderer/core/document/Document';
-import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { produce } from 'immer';
 
 export interface Editor {
@@ -10,9 +10,11 @@ export interface Editor {
   commandHistory: string[];
   clipboard: Shape[]; // stores copies of shapes relative to the center of the selection
   visualAnchor?: { x: number; y: number };
+  currentAnchorPoint: AnchorPoint | null;
+  currentLineId: ShapeId | null;
 }
 
-export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text';
+export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
 
 function createEditor(): Editor {
   return {
@@ -22,6 +24,8 @@ function createEditor(): Editor {
     commandBuffer: '',
     commandHistory: [],
     clipboard: [],
+    currentAnchorPoint: null,
+    currentLineId: null,
     visualAnchor: undefined,
   };
 }
@@ -97,6 +101,18 @@ function setClipboard(editor: Editor, shapes: Shape[]): Editor {
   });
 }
 
+function setCurrentAnchorPoint(editor: Editor, anchorPoint: AnchorPoint | null): Editor {
+  return produce(editor, (draft) => {
+    draft.currentAnchorPoint = anchorPoint;
+  });
+}
+
+function setCurrentLineId(editor: Editor, lineId: ShapeId | null): Editor {
+  return produce(editor, (draft) => {
+    draft.currentLineId = lineId;
+  });
+}
+
 // Functions for visual mode operations
 
 function setVisualAnchor(editor: Editor, position: { x: number; y: number }): Editor {
@@ -124,6 +140,8 @@ export {
   setCommandBuffer,
   addToCommandHistory,
   setClipboard,
+  setCurrentAnchorPoint,
+  setCurrentLineId,
   setVisualAnchor,
   clearVisualAnchor,
 };

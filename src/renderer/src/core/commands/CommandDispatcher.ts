@@ -1,12 +1,14 @@
 import { CommandParser, ParseResult } from '@renderer/core/commands/CommandParser';
 import * as CommandRegistry from '@renderer/core/commands/CommandRegistry';
+import { AnchorLineModeParser } from '@renderer/core/commands/parsers/AnchorLineModeParser';
 import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModeParser';
+import { LineModeParser } from '@renderer/core/commands/parsers/LineModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
 import { VisualModeParser } from '@renderer/core/commands/parsers/VisualModeParser';
 import { updateVisualSelection } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
-import { FlattenSpatialIndex } from '@renderer/core/geometry/shape/FlattenSpatialIndex';
+import { FlattenSpatialIndex } from '@renderer/core/geometry/spatial-index/FlattenSpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
 // helper for checking if a command is for moving the cursor
@@ -15,11 +17,13 @@ function isCursorMoveCommand(command: string): boolean {
 }
 
 export class CommandDispatcher {
-  private spatialIndex: SpatialIndex = new FlattenSpatialIndex();
+  public spatialIndex: SpatialIndex = new FlattenSpatialIndex();
   private normalModeParser: CommandParser = new NormalModeParser();
   private insertModeParser: CommandParser = new InsertModeParser();
   private visualModeParser: CommandParser = new VisualModeParser();
   private commandModeParser: CommandParser = new NormalModeParser();
+  private lineModeParser: CommandParser = new LineModeParser();
+  private anchorLineModeParser: CommandParser = new AnchorLineModeParser();
 
   dispatchCommand(editor: Editor, document: DocumentModel): [Editor, DocumentModel] {
     const parser = this.getCommandParser(editor);
@@ -71,6 +75,10 @@ export class CommandDispatcher {
         return this.visualModeParser;
       case 'command':
         return this.commandModeParser;
+      case 'line':
+        return this.lineModeParser;
+      case 'anchor-line':
+        return this.anchorLineModeParser;
       default:
         // update this
         throw new Error(`Unknown editor mode: ${editor.mode}`);
