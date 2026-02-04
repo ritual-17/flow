@@ -3,7 +3,7 @@ import { TextBox as DomainText } from '@renderer/core/geometry/shapes/TextBox';
 import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import { Image as KonvaImage } from 'react-konva';
 
-const TextBox: ShapeComponent<DomainText> = ({ shape }) => {
+const TextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
   return shape.compiledImage ? (
     <KonvaImage
       image={shape.compiledImage}
@@ -11,7 +11,7 @@ const TextBox: ShapeComponent<DomainText> = ({ shape }) => {
       y={shape.y}
       width={shape.compiledImage.width}
       height={shape.compiledImage.height}
-      stroke={'white'}
+      stroke={stroke}
     />
   ) : (
     <></>

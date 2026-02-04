@@ -60,4 +60,8 @@ export type AnchorPoint = {
 //   shapes: Shape[];
 // };
 
+export function isLine(shape: Shape): shape is MultiLine {
+  return shape.type === 'multi-line';
+}
+
 export type Shape = Circle | Point | TextBox | MultiLine;

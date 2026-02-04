@@ -7,8 +7,7 @@ import { JSX } from 'react';
 
 export interface ShapeComponentProps<T extends Shape = Shape> {
   shape: T;
-  hovered?: boolean;
-  selected?: boolean;
+  stroke?: string;
 }
 
 export type ShapeComponent<T extends Shape = Shape> = (
