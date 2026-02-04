@@ -52,9 +52,8 @@ app.whenReady().then(() => {
   });
 
   // IPC test
-  ipcMain.on('ping', () => console.log(compileTypstDocument()));
-  ipcMain.handle('compile-typst', (_source) => {
-    return compileTypstDocument();
+  ipcMain.handle('compile-typst', (_, content) => {
+    return compileTypstDocument(content);
   });
 
   createWindow();

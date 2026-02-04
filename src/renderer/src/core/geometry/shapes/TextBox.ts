@@ -5,6 +5,7 @@ export type TextBox = IShapeBase & {
   width: number;
   height: number;
   text: string;
+  compiledImage: HTMLImageElement | null;
 };
 
 export function build(attrs: Partial<TextBox>): TextBox {
@@ -13,6 +14,7 @@ export function build(attrs: Partial<TextBox>): TextBox {
     width: 100,
     height: 50,
     text: 'Enter text here',
+    compiledImage: null,
     ...buildBaseShape(),
     ...attrs,
   };

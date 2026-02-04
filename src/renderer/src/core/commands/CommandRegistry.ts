@@ -42,7 +42,7 @@ export type CommandArgs = {
 
 export type CommandResult = [Editor, DocumentModel];
 
-export type CommandFunction = (args: CommandArgs) => CommandResult;
+export type CommandFunction = (args: CommandArgs) => Promise<CommandResult> | CommandResult;
 
 function commandFromName(command: string): CommandFunction | null {
   switch (command) {

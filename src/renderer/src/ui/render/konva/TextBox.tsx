@@ -38,8 +38,8 @@ const TextBox: ShapeComponent<DomainText> = ({ shape }) => {
       image={compiledTextImage}
       x={shape.x}
       y={shape.y}
-      width={compiledTextImage.width}
-      height={compiledTextImage.height}
+      width={shape.width}
+      height={shape.height}
       stroke={'white'}
     />
   );
