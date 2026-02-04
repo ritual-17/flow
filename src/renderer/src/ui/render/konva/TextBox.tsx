@@ -39,19 +39,14 @@ const TextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
       image={image}
       x={shape.x}
       y={shape.y}
-      width={dimensionScaler(shape, image) * image.width}
-      height={dimensionScaler(shape, image) * image.height}
+      width={shape.compiledImageMeta!.width}
+      height={shape.compiledImageMeta!.height}
       stroke={stroke}
+      fill='white'
     />
   ) : (
     <></>
   );
 };
-
-function dimensionScaler(textBox: DomainText, image: HTMLImageElement) {
-  const widthScale = textBox.width / image.width;
-  const heightScale = textBox.height / image.height;
-  return Math.min(widthScale, heightScale);
-}
 
 export default TextBox;

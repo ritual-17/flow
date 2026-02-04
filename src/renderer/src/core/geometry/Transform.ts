@@ -20,11 +20,12 @@ export function translateShape(
 
 export async function updateTextBoxContent(textBox: TextBox, newText: string): Promise<TextBox> {
   const compiledHTMLElement = await TextBoxContentCompiler.compileTextBoxContent(newText);
+  const scaler = dimensionScaler(textBox, compiledHTMLElement);
 
   const compiledImageMeta: TextBox['compiledImageMeta'] = {
     src: compiledHTMLElement.src,
-    width: compiledHTMLElement.width,
-    height: compiledHTMLElement.height,
+    width: compiledHTMLElement.width * scaler,
+    height: compiledHTMLElement.height * scaler,
   };
 
   return {
@@ -53,6 +54,11 @@ export function getSelectionCenter(shapes: Shape[]): { x: number; y: number } {
     x: (Math.min(...xs) + Math.max(...xs)) / 2,
     y: (Math.min(...ys) + Math.max(...ys)) / 2,
   };
+// Calculate the scaling factor to fit the image within the text box dimensions
+function dimensionScaler(textBox: TextBox, image: HTMLImageElement) {
+  const widthScale = textBox.width / image.width;
+  const heightScale = textBox.height / image.height;
+  return Math.min(widthScale, heightScale);
 }
 
 export {};
