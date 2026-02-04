@@ -3,6 +3,7 @@ import Circle from '@renderer/ui/render/konva/Circle';
 import Line from '@renderer/ui/render/konva/Line';
 import Point from '@renderer/ui/render/konva/Point';
 import TextBox from '@renderer/ui/render/konva/TextBox';
+import Rectangle from '@renderer/ui/render/konva/Rectangle';
 import { JSX } from 'react';
 
 export interface ShapeComponentProps<T extends Shape = Shape> {
@@ -20,6 +21,7 @@ function getComponent<T extends Shape>(shape: T): ShapeComponent<T> {
     point: Point,
     textBox: TextBox,
     'multi-line': Line,
+    rectangle: Rectangle,
   } as const;
 
   return componentMap[shape.type] as ShapeComponent<T>;

@@ -27,7 +27,8 @@
     "l": "right",
     "c": "createCircle",
     "t": "createTextBox",
-    "<C-s>": "saveFile"
+    "<C-s>": "saveFile",
+    "rr": "createRectangle"
   },
   "visual": {
     "j": "up",

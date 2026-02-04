@@ -2,7 +2,9 @@ import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
+import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
 import { generateId } from '@renderer/core/utils/id';
+import { Rect } from 'konva/lib/shapes/Rect';
 
 export function buildBaseShape(): IShapeBase {
   return {
@@ -54,6 +56,7 @@ export type AnchorPoint = {
 //   endAnchor?: AnchorPoint;
 // };
 
+
 // possible future shape for grouping multiple shapes
 // export type Cell = IShapeBase & {
 //   type: 'cell';
@@ -64,4 +67,4 @@ export function isLine(shape: Shape): shape is MultiLine {
   return shape.type === 'multi-line';
 }
 
-export type Shape = Circle | Point | TextBox | MultiLine;
+export type Shape = Circle | Point | TextBox | MultiLine | Rectangle;
