@@ -9,7 +9,7 @@ export interface Editor {
   commandBuffer: string;
   commandHistory: string[];
   clipboard: Shape[]; // stores copies of shapes relative to the center of the selection
-  visualAnchor?: { x: number; y: number };
+  boxSelectAnchor?: { x: number; y: number };
   currentAnchorPoint: AnchorPoint | null;
   currentLineId: ShapeId | null;
 }
@@ -26,7 +26,7 @@ function createEditor(): Editor {
     clipboard: [],
     currentAnchorPoint: null,
     currentLineId: null,
-    visualAnchor: undefined,
+    boxSelectAnchor: undefined,
   };
 }
 
@@ -115,15 +115,15 @@ function setCurrentLineId(editor: Editor, lineId: ShapeId | null): Editor {
 
 // Functions for visual mode operations
 
-function setVisualAnchor(editor: Editor, position: { x: number; y: number }): Editor {
+function setBoxSelectAnchor(editor: Editor, position: { x: number; y: number }): Editor {
   return produce(editor, (draft) => {
-    draft.visualAnchor = position;
+    draft.boxSelectAnchor = position;
   });
 }
 
-function clearVisualAnchor(editor: Editor): Editor {
+function clearBoxSelectAnchor(editor: Editor): Editor {
   return produce(editor, (draft) => {
-    draft.visualAnchor = undefined;
+    draft.boxSelectAnchor = undefined;
   });
 }
 
@@ -142,6 +142,6 @@ export {
   setClipboard,
   setCurrentAnchorPoint,
   setCurrentLineId,
-  setVisualAnchor,
-  clearVisualAnchor,
+  setBoxSelectAnchor,
+  clearBoxSelectAnchor,
 };

@@ -103,15 +103,15 @@ export function selectClosestShapeAtPoint(
 }
 
 export function updateVisualSelection(editor: Editor, spatialIndex: SpatialIndex): Editor {
-  if (!editor.visualAnchor) {
+  if (!editor.boxSelectAnchor) {
     return editor; // No visual anchor set, nothing to do
   }
 
   const area = {
-    xMin: Math.min(editor.visualAnchor.x, editor.cursorPosition.x),
-    xMax: Math.max(editor.visualAnchor.x, editor.cursorPosition.x),
-    yMin: Math.min(editor.visualAnchor.y, editor.cursorPosition.y),
-    yMax: Math.max(editor.visualAnchor.y, editor.cursorPosition.y),
+    xMin: Math.min(editor.boxSelectAnchor.x, editor.cursorPosition.x),
+    xMax: Math.max(editor.boxSelectAnchor.x, editor.cursorPosition.x),
+    yMin: Math.min(editor.boxSelectAnchor.y, editor.cursorPosition.y),
+    yMax: Math.max(editor.boxSelectAnchor.y, editor.cursorPosition.y),
   };
 
   console.log('Updating visual selection in area:', area);
