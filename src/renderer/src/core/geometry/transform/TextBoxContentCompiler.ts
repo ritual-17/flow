@@ -23,11 +23,9 @@ async function svgStringToImage(svg: string): Promise<HTMLImageElement> {
 
     const img = new Image();
     img.onload = () => {
-      URL.revokeObjectURL(url);
       resolve(img);
     };
     img.onerror = (e) => {
-      URL.revokeObjectURL(url);
       reject(e);
     };
     img.src = url;

@@ -5,7 +5,13 @@ export type TextBox = IShapeBase & {
   width: number;
   height: number;
   text: string;
-  compiledImage: HTMLImageElement | null;
+  compiledImageMeta: ImageMeta | null;
+};
+
+export type ImageMeta = {
+  src: string;
+  width: number;
+  height: number;
 };
 
 export function build(attrs: Partial<TextBox>): TextBox {
@@ -14,7 +20,7 @@ export function build(attrs: Partial<TextBox>): TextBox {
     width: 100,
     height: 50,
     text: 'Enter text here',
-    compiledImage: null,
+    compiledImageMeta: null,
     ...buildBaseShape(),
     ...attrs,
   };
@@ -24,8 +30,8 @@ export function build(attrs: Partial<TextBox>): TextBox {
 
 export function generateAnchorPoints(textBox: TextBox): AnchorPoint[] {
   const { x, y, id: ownerId } = textBox;
-  const width = textBox.compiledImage ? textBox.compiledImage.width : textBox.width;
-  const height = textBox.compiledImage ? textBox.compiledImage.height : textBox.height;
+  const width = textBox.compiledImageMeta ? textBox.compiledImageMeta.width : textBox.width;
+  const height = textBox.compiledImageMeta ? textBox.compiledImageMeta.height : textBox.height;
 
   return [
     { ownerId, position: 0, x: x + width / 2, y: y }, // top center

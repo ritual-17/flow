@@ -12,6 +12,7 @@ import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import { DocumentStore } from '@renderer/ui/Store';
 
 type CommandDispatcherCallback = (partial: Partial<DocumentStore>) => void;
+
 export class CommandDispatcher {
   private callback: CommandDispatcherCallback;
 

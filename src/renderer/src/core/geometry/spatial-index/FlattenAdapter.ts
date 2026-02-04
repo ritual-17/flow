@@ -28,8 +28,8 @@ function toFlattenPoint(point: Point): Flatten.Point {
 }
 
 function toFlattenTextBox(textBox: TextBox): Flatten.Polygon {
-  const width = textBox.compiledImage ? textBox.compiledImage.width : textBox.width;
-  const height = textBox.compiledImage ? textBox.compiledImage.height : textBox.height;
+  const width = textBox.compiledImageMeta ? textBox.compiledImageMeta.width : textBox.width;
+  const height = textBox.compiledImageMeta ? textBox.compiledImageMeta.height : textBox.height;
 
   const p1 = new Flatten.Point(textBox.x, textBox.y);
   const p2 = new Flatten.Point(textBox.x + width, textBox.y);

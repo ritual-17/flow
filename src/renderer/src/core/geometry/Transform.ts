@@ -17,11 +17,17 @@ export function translateShape(
 }
 
 export async function updateTextBoxContent(textBox: TextBox, newText: string): Promise<TextBox> {
-  const compiledImage = await TextBoxContentCompiler.compileTextBoxContent(newText);
+  const compiledHTMLElement = await TextBoxContentCompiler.compileTextBoxContent(newText);
+
+  const compiledImageMeta: TextBox['compiledImageMeta'] = {
+    src: compiledHTMLElement.src,
+    width: compiledHTMLElement.width,
+    height: compiledHTMLElement.height,
+  };
 
   return {
     ...textBox,
-    compiledImage,
+    compiledImageMeta,
     text: newText,
   };
 }
