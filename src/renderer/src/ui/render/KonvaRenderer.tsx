@@ -1,4 +1,5 @@
 import { useNearestShape } from '@renderer/ui/hooks/NearestShape';
+import BoxSelectOverlay from '@renderer/ui/render/konva/BoxSelectOverlay';
 import Cursor from '@renderer/ui/render/konva/Cursor';
 import getComponent from '@renderer/ui/render/konva/ShapeResolver';
 import { useStore } from '@renderer/ui/Store';
@@ -31,6 +32,7 @@ function KonvaRenderer() {
         );
       })}
       <Cursor />
+      <BoxSelectOverlay />
     </Layer>
   );
 }
