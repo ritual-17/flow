@@ -12,6 +12,8 @@ impact the state of the document.
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import {
+  clearBoxSelectAnchor,
+  clearSelection,
   setBoxSelectAnchor,
   setCurrentAnchorPoint,
   setCursorPosition,
@@ -23,6 +25,7 @@ const CURSOR_MOVE_AMOUNT = 10;
 
 function enterNormalMode({ editor, document }: CommandArgs): CommandResult {
   let updatedEditor = setSelectedShapes(editor, []);
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
   updatedEditor = setMode(updatedEditor, 'normal');
 
   return [updatedEditor, document];
@@ -35,7 +38,7 @@ function enterInsertMode({ editor, document }: CommandArgs): CommandResult {
 function enterVisualMode({ editor, document }: CommandArgs): CommandResult {
   let newEditor = setMode(editor, 'visual');
   newEditor = setBoxSelectAnchor(newEditor, editor.cursorPosition);
-  newEditor = setSelectedShapes(newEditor, []);
+  newEditor = clearSelection(newEditor);
   return [newEditor, document];
 }
 
@@ -113,6 +116,7 @@ function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs)
     }
     updatedEditor = setCursorPosition(updatedEditor, { x: nearestShape.x, y: nearestShape.y });
     updatedEditor = setMode(updatedEditor, 'visual');
+    updatedEditor = setBoxSelectAnchor(updatedEditor, { x: nearestShape.x, y: nearestShape.y });
   }
   return [updatedEditor, document];
 }
