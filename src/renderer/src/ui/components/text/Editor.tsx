@@ -1,9 +1,10 @@
 import { defaultKeymap } from '@codemirror/commands';
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
+import { useStore } from '@renderer/ui/Store';
 import { getCM, Vim, vim } from '@replit/codemirror-vim';
 import { basicSetup } from 'codemirror';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type EditorProps = {
   initialDoc?: string;
@@ -12,23 +13,35 @@ type EditorProps = {
 };
 export const Editor = ({ initialDoc, x, y }: EditorProps) => {
   const editor = useRef<HTMLDivElement>(null);
+  const mode = useStore((state) => state.editor.mode);
+  const [content, setContent] = useState(initialDoc || '');
 
   const handleWrite = EditorView.updateListener.of((update) => {
-    if (update.docChanged) {
-      const doc = update.state.doc.toString();
-      console.log('Document changed:', doc);
-    }
+    const doc = update.state.doc.toString();
+    setContent(doc);
   });
+
   useEffect(() => {
+    const preventDefaults = EditorView.domEventHandlers({
+      keydown: (event, _view) => {
+        // Only intercept when in non-text mode
+        if (mode !== 'text') {
+          event.preventDefault();
+          return true; // true means "I handled this event"
+        }
+        return false; // false means "let CodeMirror handle it"
+      },
+    });
+
     const startState = EditorState.create({
-      doc: initialDoc || 'Hello World',
-      extensions: [vim(), basicSetup, keymap.of(defaultKeymap)],
+      doc: initialDoc || '',
+      extensions: [vim(), basicSetup, keymap.of(defaultKeymap), preventDefaults, handleWrite],
     });
 
     const view = new EditorView({ state: startState, parent: editor.current! });
 
     view.focus();
-    view.contentDOM.blur();
+    // view.contentDOM.blur();
     const cm = getCM(view);
 
     Vim.noremap('yy', '"+yy', 'normal');
@@ -40,7 +53,7 @@ export const Editor = ({ initialDoc, x, y }: EditorProps) => {
     return () => {
       view.destroy();
     };
-  }, [initialDoc]);
+  }, [initialDoc, mode]);
 
   return <div className='absolute w-52 h-44' style={{ top: y, left: x }} ref={editor}></div>;
 };

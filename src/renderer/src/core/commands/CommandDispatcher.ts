@@ -4,6 +4,7 @@ import { AnchorLineModeParser } from '@renderer/core/commands/parsers/AnchorLine
 import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModeParser';
 import { LineModeParser } from '@renderer/core/commands/parsers/LineModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
+import { TextModeParser } from '@renderer/core/commands/parsers/TextModeParser';
 import { VisualModeParser } from '@renderer/core/commands/parsers/VisualModeParser';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
@@ -23,6 +24,7 @@ export class CommandDispatcher {
   private commandModeParser: CommandParser = new NormalModeParser();
   private lineModeParser: CommandParser = new LineModeParser();
   private anchorLineModeParser: CommandParser = new AnchorLineModeParser();
+  private textModeParser: CommandParser = new TextModeParser();
 
   constructor(callback: CommandDispatcherCallback) {
     this.callback = callback;
@@ -114,7 +116,7 @@ export class CommandDispatcher {
       case 'anchor-line':
         return this.anchorLineModeParser;
       case 'text':
-        throw new Error('Text mode should not handle commands');
+        return this.textModeParser;
       default:
         // update this
         throw new Error(`Unknown editor mode: ${editor.mode}`);

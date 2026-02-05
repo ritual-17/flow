@@ -10,10 +10,28 @@ export function KeyboardHandler() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      console.log('Key down:', e.key, 'Mode:', mode);
       if (mode === 'command') return;
-      if (mode === 'text') return;
+      if (mode === 'text') {
+        handleKeyTextMode(e);
+        return;
+      }
 
       handleKeyWithCommandBuffer(e);
+    };
+
+    const handleKeyTextMode = (e: KeyboardEvent) => {
+      if (mode !== 'text') return;
+
+      if (e.key === 'Tab') {
+        e.preventDefault(); // need to prevent default on this to stop focus change
+        return;
+      }
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        updateCommandBuffer('<Esc>');
+      }
     };
 
     const handleKeyWithCommandBuffer = (e: KeyboardEvent) => {
@@ -29,6 +47,19 @@ export function KeyboardHandler() {
         return;
       }
 
+      if (e.key === 'Tab') {
+        e.preventDefault(); // need to prevent default on this to stop focus change
+        appendCommandBuffer('<Tab>');
+        return;
+      }
+
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        appendCommandBuffer('<Enter>');
+        return;
+      }
+
+      // ignore special keys like Shift, Ctrl, etc.
       if (e.key.length === 1) {
         // Append character to command buffer
         appendCommandBuffer(e.key);
