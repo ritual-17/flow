@@ -5,6 +5,7 @@ import { Shape } from '@renderer/core/geometry/Shape';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { TextBoxContentCompiler } from '@renderer/core/geometry/transform/TextBoxContentCompiler';
 
+// this is done this way so the data stays immutable
 export function translateShape(
   shape: Shape,
   { deltaX, deltaY }: { deltaX: number; deltaY: number },

@@ -52,7 +52,6 @@ export class CommandDispatcher {
       this.clearCommandBuffer(editor, document);
       return;
     }
-
     this.dispatch(editor, document, commandFunc);
   }
 
@@ -76,6 +75,9 @@ export class CommandDispatcher {
     document: DocumentModel,
     commandFunc: CommandRegistry.CommandFunction,
   ): void {
+    // to command args takes in editor and document and converts it to a command arg object
+    // which is an object that holds the editor, document, spatial index and any additional
+    // args needed for the command
     const result = commandFunc(this.toCommandArgs(editor, document));
 
     if (!(result instanceof Promise)) {

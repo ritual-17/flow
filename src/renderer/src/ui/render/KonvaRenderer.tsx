@@ -6,6 +6,7 @@ import { HoverEffect } from '@renderer/ui/render/konva/style/HoverEffect';
 import { useStore } from '@renderer/ui/Store';
 import { Group, Layer } from 'react-konva';
 
+// where shapes are rendered using Konva
 function KonvaRenderer() {
   const mode = useStore((state) => state.editor.mode);
   const allShapes = useStore((state) => state.document.shapes)
