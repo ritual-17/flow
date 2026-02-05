@@ -2,13 +2,18 @@
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import * as Document from '@renderer/core/document/Document';
-import { Editor, setCurrentLineId } from '@renderer/core/editor/Editor';
+import {
+  clearBoxSelectAnchor,
+  clearSelection,
+  Editor,
+  setCurrentLineId,
+  setMode,
+} from '@renderer/core/editor/Editor';
 import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import { translateShape } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
-import { produce } from 'immer';
 
 export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
@@ -112,15 +117,18 @@ export function deleteSelection(args: CommandArgs): [Editor, Document.DocumentMo
   const { editor, document } = args;
   const { selectedShapeIds } = editor;
 
+  // not fully needed but avoids unnecessary document updates
   if (selectedShapeIds.length === 0) {
     return [editor, document];
   }
 
+  // update document and editor with following changes
   const updatedDocument = Document.removeShapesFromDocument(document, selectedShapeIds);
 
-  const updatedEditor = produce(editor, (draft) => {
-    draft.selectedShapeIds = [];
-  });
+  let updatedEditor = editor;
+  updatedEditor = clearSelection(updatedEditor);
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+  updatedEditor = setMode(updatedEditor, 'normal');
 
   return [updatedEditor, updatedDocument];
 }
