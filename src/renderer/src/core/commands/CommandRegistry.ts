@@ -17,6 +17,7 @@ import {
 import {
   addAnchorPointToLine,
   createCircle,
+  createTextBox,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -41,7 +42,7 @@ export type CommandArgs = {
 
 export type CommandResult = [Editor, DocumentModel];
 
-export type CommandFunction = (args: CommandArgs) => CommandResult;
+export type CommandFunction = (args: CommandArgs) => Promise<CommandResult> | CommandResult;
 
 function commandFromName(command: string): CommandFunction | null {
   switch (command) {
@@ -67,6 +68,8 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorRight;
     case 'createCircle':
       return createCircle;
+    case 'createTextBox':
+      return createTextBox;
     case 'selectNextSearchResult':
       return selectNextSearchResult;
     case 'downAnchor':

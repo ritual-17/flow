@@ -9,8 +9,13 @@ import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
 import { FlattenSpatialIndex } from '@renderer/core/geometry/spatial-index/FlattenSpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
+import { DocumentStore } from '@renderer/ui/Store';
+
+type CommandDispatcherCallback = (partial: Partial<DocumentStore>) => void;
 
 export class CommandDispatcher {
+  private callback: CommandDispatcherCallback;
+
   public spatialIndex: SpatialIndex = new FlattenSpatialIndex();
   private normalModeParser: CommandParser = new NormalModeParser();
   private insertModeParser: CommandParser = new InsertModeParser();
@@ -19,41 +24,73 @@ export class CommandDispatcher {
   private lineModeParser: CommandParser = new LineModeParser();
   private anchorLineModeParser: CommandParser = new AnchorLineModeParser();
 
-  dispatchCommand(editor: Editor, document: DocumentModel): [Editor, DocumentModel] {
+  constructor(callback: CommandDispatcherCallback) {
+    this.callback = callback;
+  }
+
+  dispatchCommand(editor: Editor, document: DocumentModel): void {
     const parser = this.getCommandParser(editor);
     const inputCommand = editor.commandBuffer;
 
     const command = parser.parse(inputCommand);
 
-    return this.maybeDispatch(editor, document, command);
+    this.maybeDispatch(editor, document, command);
   }
 
-  private maybeDispatch(
-    editor: Editor,
-    document: DocumentModel,
-    parserResult: ParseResult,
-  ): [Editor, DocumentModel] {
+  // checks if the user input command is valid and if a command function exists for it before dispatching
+  private maybeDispatch(editor: Editor, document: DocumentModel, parserResult: ParseResult): void {
     const { command, newCommandBuffer } = parserResult;
 
-    if (command === null) {
-      const updatedEditor = setCommandBuffer(editor, newCommandBuffer);
-      return [updatedEditor, document];
+    if (isInvalidCommand(command)) {
+      this.updateCommandBuffer(editor, document, newCommandBuffer);
+      return;
     }
 
     const commandFunc = CommandRegistry.commandFromName(command);
-    if (commandFunc === null) {
-      const updatedEditor = setCommandBuffer(editor, '');
-      return [updatedEditor, document];
-    }
 
+    if (isInvalidCommandFunction(commandFunc)) {
+      this.clearCommandBuffer(editor, document);
+      return;
+    }
+    this.dispatch(editor, document, commandFunc);
+  }
+
+  private updateCommandBuffer(
+    editor: Editor,
+    document: DocumentModel,
+    newCommandBuffer: string,
+  ): void {
+    const updatedEditor = setCommandBuffer(editor, newCommandBuffer);
+    this.callback({ editor: updatedEditor, document });
+  }
+
+  private clearCommandBuffer(editor: Editor, document: DocumentModel): void {
+    const updatedEditor = setCommandBuffer(editor, '');
+    this.callback({ editor: updatedEditor, document });
+  }
+
+  // this can dispatch both sync and async commands. For reference on an async command, see createTextBox in ManipulationCommands.ts
+  private dispatch(
+    editor: Editor,
+    document: DocumentModel,
+    commandFunc: CommandRegistry.CommandFunction,
+  ): void {
     // to command args takes in editor and document and converts it to a command arg object
     // which is an object that holds the editor, document, spatial index and any additional
     // args needed for the command
-    const [updatedEditor, updatedDocument] = commandFunc(this.toCommandArgs(editor, document));
+    const result = commandFunc(this.toCommandArgs(editor, document));
 
-    const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
+    if (!(result instanceof Promise)) {
+      const [updatedEditor, updatedDocument] = result;
+      const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
+      this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
+      return;
+    }
 
-    return [clearedCommandBufferEditor, updatedDocument];
+    result.then(([updatedEditor, updatedDocument]) => {
+      const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
+      this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
+    });
   }
 
   private getCommandParser(editor: Editor) {
@@ -84,4 +121,14 @@ export class CommandDispatcher {
       args: {},
     };
   }
+}
+
+function isInvalidCommand(command: string | null): command is null {
+  return command === null;
+}
+
+function isInvalidCommandFunction(
+  commandFunc: CommandRegistry.CommandFunction | null,
+): commandFunc is null {
+  return commandFunc === null;
 }
