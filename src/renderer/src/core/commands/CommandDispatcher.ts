@@ -76,7 +76,6 @@ export class CommandDispatcher {
     }
   }
 
-  //
   private toCommandArgs(editor: Editor, document: DocumentModel): CommandRegistry.CommandArgs {
     return {
       editor,
