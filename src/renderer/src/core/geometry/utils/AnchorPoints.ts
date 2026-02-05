@@ -3,6 +3,7 @@ import { AnchorPoint, AnchorRef, Coordinate, Shape } from '@renderer/core/geomet
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import * as Point from '@renderer/core/geometry/shapes/Point';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 
 export function isAnchorRef(point: Coordinate | AnchorRef): point is AnchorRef {
   return 'shapeId' in point;
@@ -13,6 +14,8 @@ export function getAnchorPoints(shape: Shape): AnchorPoint[] {
     case 'circle':
       return Circle.generateAnchorPoints(shape);
     // Add cases for other shape types as needed
+    case 'textBox':
+      return TextBox.generateAnchorPoints(shape);
     default:
       return [];
   }
