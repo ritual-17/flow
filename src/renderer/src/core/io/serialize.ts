@@ -1,7 +1,7 @@
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor } from '@renderer/core/editor/Editor';
 
-import { FlowFileV1 } from './flowfile';
+import { FlowFileV1 } from './FlowFile';
 
 export function serializeToFlowFileV1(document: DocumentModel, editor?: Editor): FlowFileV1 {
   return {
