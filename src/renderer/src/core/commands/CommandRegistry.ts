@@ -11,6 +11,7 @@ import {
   enterInsertMode,
   enterLineMode,
   enterNormalMode,
+  enterTextMode,
   enterVisualMode,
   selectNextSearchResult,
 } from '@renderer/core/commands/EditorCommands';
@@ -66,6 +67,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterLineMode;
     case 'enterAnchorLineMode':
       return enterAnchorLineMode;
+    case 'enterTextMode':
+      return enterTextMode;
     case 'up':
       return cursorUp;
     case 'down':

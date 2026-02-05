@@ -16,6 +16,7 @@ import {
   clearSelection,
   setCurrentAnchorPoint,
   setCursorPosition,
+  setEditingTextBoxId,
   setMode,
   setSelectedShapes,
 } from '@renderer/core/editor/Editor';
@@ -46,6 +47,19 @@ function enterCommandMode({ editor, document }: CommandArgs): CommandResult {
 
 function enterLineMode({ editor, document }: CommandArgs): CommandResult {
   return [setMode(editor, 'line'), document];
+}
+
+function enterTextMode({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  const nearestTextBox = spatialIndex.getNearestTextBox(editor.cursorPosition);
+  if (nearestTextBox) {
+    let updatedEditor = setMode(editor, 'text');
+    updatedEditor = setCursorPosition(updatedEditor, { x: nearestTextBox.x, y: nearestTextBox.y });
+    updatedEditor = setEditingTextBoxId(updatedEditor, nearestTextBox.id);
+    return [updatedEditor, document];
+  }
+
+  // no text box exists so reject the command. should probably add an error message later
+  return [editor, document];
 }
 
 function enterAnchorLineMode({ editor, document, spatialIndex }: CommandArgs): CommandResult {
@@ -125,6 +139,7 @@ export {
   enterCommandMode,
   enterLineMode,
   enterAnchorLineMode,
+  enterTextMode,
   cursorUp,
   cursorDown,
   cursorLeft,

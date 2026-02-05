@@ -10,6 +10,7 @@
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
+    "t": "enterTextMode",
     "dd": "deleteLine",
     "yy": "yankLine",
     "p": "pasteAfter",
@@ -43,6 +44,7 @@
     "H": "translateSelectionLeft",
     "<Space>": "toggleBoxSelect"
   },
+  "text": {},
   "command": {
     "w": "saveFile",
     "q": "quitEditor",

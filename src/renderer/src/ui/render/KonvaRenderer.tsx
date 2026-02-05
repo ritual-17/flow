@@ -54,6 +54,7 @@ function KonvaRenderer() {
           </Group>
         );
       })}
+
       <Cursor />
       <BoxSelectOverlay />
     </Layer>
