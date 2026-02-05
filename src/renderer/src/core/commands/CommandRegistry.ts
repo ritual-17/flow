@@ -22,6 +22,7 @@ import {
   translateSelectionLeft,
   translateSelectionRight,
   translateSelectionUp,
+  yankSelection,
 } from '@renderer/core/commands/ManipulationCommands';
 import {
   jumpToDownAnchorPoint,
@@ -90,6 +91,8 @@ function commandFromName(command: string): CommandFunction | null {
       return translateSelectionRight;
     case 'deleteSelection':
       return deleteSelection;
+    case 'yankSelection':
+      return yankSelection;
     default:
       return null;
   }

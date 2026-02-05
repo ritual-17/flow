@@ -6,6 +6,7 @@ import {
   clearBoxSelectAnchor,
   clearSelection,
   Editor,
+  setClipboard,
   setCurrentLineId,
   setMode,
 } from '@renderer/core/editor/Editor';
@@ -131,6 +132,27 @@ export function deleteSelection(args: CommandArgs): [Editor, Document.DocumentMo
   updatedEditor = setMode(updatedEditor, 'normal');
 
   return [updatedEditor, updatedDocument];
+}
+
+export function yankSelection(args: CommandArgs): [Editor, Document.DocumentModel] {
+  const { editor, document } = args;
+  const { selectedShapeIds } = editor;
+
+  if (selectedShapeIds.length === 0) {
+    return [editor, document];
+  }
+
+  const shapesToYank = selectedShapeIds
+    .map((id) => Document.getShapeById(document, id))
+    .map((shape) => structuredClone(shape)); // deep copy
+
+  let updatedEditor = editor;
+  updatedEditor = setClipboard(updatedEditor, shapesToYank);
+  updatedEditor = clearSelection(updatedEditor);
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+  updatedEditor = setMode(updatedEditor, 'normal');
+
+  return [updatedEditor, document];
 }
 
 function updateShapeInDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {
