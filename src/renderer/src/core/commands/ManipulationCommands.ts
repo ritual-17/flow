@@ -8,6 +8,7 @@ import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import { translateShape } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
+import { produce } from 'immer';
 
 export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
@@ -105,6 +106,23 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
         `Shape with id ${currentLine.id} is not a line or point, cannot add anchor point`,
       );
   }
+}
+
+export function deleteSelection(args: CommandArgs): [Editor, Document.DocumentModel] {
+  const { editor, document } = args;
+  const { selectedShapeIds } = editor;
+
+  if (selectedShapeIds.length === 0) {
+    return [editor, document];
+  }
+
+  const updatedDocument = Document.removeShapesFromDocument(document, selectedShapeIds);
+
+  const updatedEditor = produce(editor, (draft) => {
+    draft.selectedShapeIds = [];
+  });
+
+  return [updatedEditor, updatedDocument];
 }
 
 function updateShapeInDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {

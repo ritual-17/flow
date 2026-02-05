@@ -17,6 +17,7 @@ import {
 import {
   addAnchorPointToLine,
   createCircle,
+  deleteSelection,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -87,6 +88,8 @@ function commandFromName(command: string): CommandFunction | null {
       return translateSelectionLeft;
     case 'translateSelectionRight':
       return translateSelectionRight;
+    case 'deleteSelection':
+      return deleteSelection;
     default:
       return null;
   }
