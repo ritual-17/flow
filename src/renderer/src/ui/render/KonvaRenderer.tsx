@@ -8,6 +8,8 @@ import { useStore } from '@renderer/ui/Store';
 import { Group, Layer } from 'react-konva';
 
 // where shapes are rendered using Konva
+const DEFAULT_STROKE_COLOUR = 'white';
+
 function KonvaRenderer() {
   const mode = useStore((state) => state.editor.mode);
   const allShapes = useStore((state) => state.document.shapes)
@@ -29,7 +31,7 @@ function KonvaRenderer() {
         const hovered = shape.id === nearestShapeId || mode === 'anchor-line';
 
         const selected = selectedShapeIds.has(shape.id);
-        const stroke = selected ? 'blue' : 'white';
+        const stroke = selected ? 'blue' : DEFAULT_STROKE_COLOUR;
 
         return (
           <Group key={`group-${shape.id}`}>
@@ -44,7 +46,7 @@ function KonvaRenderer() {
         const hovered = shape.id === nearestShapeId || mode === 'anchor-line';
 
         const selected = selectedShapeIds.has(shape.id);
-        const stroke = selected ? 'blue' : 'black';
+        const stroke = selected ? 'blue' : DEFAULT_STROKE_COLOUR;
         return (
           <Group key={`group-${shape.id}`}>
             <Component key={shape.id} shape={shape} stroke={stroke} />

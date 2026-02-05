@@ -87,10 +87,16 @@ export class CommandDispatcher {
       return;
     }
 
-    result.then(([updatedEditor, updatedDocument]) => {
-      const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
-      this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
-    });
+    result
+      .then(([updatedEditor, updatedDocument]) => {
+        const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
+        this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
+      })
+      .catch((error) => {
+        // TODO: add some error message to the editor state and show it in the UI
+        console.error('Command execution failed:', error);
+        this.callback({ editor, document });
+      });
   }
 
   private getCommandParser(editor: Editor) {
@@ -107,6 +113,8 @@ export class CommandDispatcher {
         return this.lineModeParser;
       case 'anchor-line':
         return this.anchorLineModeParser;
+      case 'text':
+        throw new Error('Text mode should not handle commands');
       default:
         // update this
         throw new Error(`Unknown editor mode: ${editor.mode}`);
