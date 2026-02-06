@@ -5,16 +5,10 @@ import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModePars
 import { LineModeParser } from '@renderer/core/commands/parsers/LineModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
 import { VisualModeParser } from '@renderer/core/commands/parsers/VisualModeParser';
-import { updateBoxlSelection } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
 import { FlattenSpatialIndex } from '@renderer/core/geometry/spatial-index/FlattenSpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
-
-// helper for checking if a command is for moving the cursor
-function isCursorMoveCommand(command: string): boolean {
-  return command === 'up' || command === 'down' || command === 'left' || command === 'right';
-}
 
 export class CommandDispatcher {
   public spatialIndex: SpatialIndex = new FlattenSpatialIndex();
@@ -53,14 +47,8 @@ export class CommandDispatcher {
     }
 
     const [updatedEditor, updatedDocument] = commandFunc(this.toCommandArgs(editor, document));
-    let updatedVisualEditor = updatedEditor;
 
-    // visual mode: update selection after cursor move commands
-    if (editor.mode === 'visual' && isCursorMoveCommand(command) && editor.boxSelectAnchor) {
-      updatedVisualEditor = updateBoxlSelection(updatedEditor, this.spatialIndex);
-    }
-
-    const clearedCommandBufferEditor = setCommandBuffer(updatedVisualEditor, '');
+    const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
 
     return [clearedCommandBufferEditor, updatedDocument];
   }

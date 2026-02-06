@@ -102,7 +102,7 @@ export function selectClosestShapeAtPoint(
   });
 }
 
-export function updateBoxlSelection(editor: Editor, spatialIndex: SpatialIndex): Editor {
+export function updateBoxSelection(editor: Editor, spatialIndex: SpatialIndex): Editor {
   if (!editor.boxSelectAnchor) {
     return editor; // No visual anchor set, nothing to do
   }
@@ -127,6 +127,7 @@ export function toggleBoxSelect({ editor, document }: CommandArgs): CommandResul
     // box is on, turn it off
     updatedEditor = clearBoxSelectAnchor(updatedEditor);
     // updatedEditor = clearSelection(updatedEditor) should we also clear selection?;
+    console.log('Toggling box select off');
   } else {
     // box is off, start new one at cursor position
     updatedEditor = setBoxSelectAnchor(updatedEditor, editor.cursorPosition);
