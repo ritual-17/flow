@@ -40,7 +40,8 @@
     "J": "translateSelectionDown",
     "L": "translateSelectionRight",
     "H": "translateSelectionLeft",
-    "<Space>": "toggleBoxSelect"
+    "<Space>": "toggleBoxSelect",
+    "p": "pasteOverSelection"
   },
   "command": {
     "w": "saveFile",

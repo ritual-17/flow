@@ -175,25 +175,39 @@ export function yankSelection(args: CommandArgs): [Editor, Document.DocumentMode
 }
 
 export function paste(args: CommandArgs): CommandResult {
-  const { editor, document } = args;
+  const { editor, document, spatialIndex } = args;
   if (editor.clipboard.length === 0) {
     return [editor, document];
   }
+  let updatedDocument = document;
+  let updatedEditor = editor;
 
-  const cursor = editor.cursorPosition;
+  // delete any current selection before pasting
+  if (editor.selectedShapeIds.length > 0) {
+    updatedDocument = Document.removeShapesFromDocument(updatedDocument, editor.selectedShapeIds);
+
+    // keep spatial index in sync
+    for (const id of editor.selectedShapeIds) {
+      const shape = spatialIndex.getShapes().find((s) => s.id === id);
+      if (shape) spatialIndex.removeShape(shape);
+    }
+
+    updatedEditor = clearSelection(updatedEditor); // you said you already have this
+  }
+
+  const cursor = updatedEditor.cursorPosition;
 
   // 1. Clone with new IDs, 2. Position at cursor, 3. Insert each into document (via loop),
-  const cloned = editor.clipboard.map(cloneShape);
+  const cloned = updatedEditor.clipboard.map(cloneShape);
   const position = cloned.map((shape) =>
     translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }),
   );
 
-  let updatedDocument = document;
   for (const shape of position) {
     updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
   }
 
-  return [editor, updatedDocument];
+  return [updatedEditor, updatedDocument];
 }
 
 function updateShapeInDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {

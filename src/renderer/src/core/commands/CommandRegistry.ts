@@ -98,6 +98,7 @@ function commandFromName(command: string): CommandFunction | null {
     case 'toggleBoxSelect':
       return toggleBoxSelect;
     case 'pasteAfter':
+    case 'pasteOverSelection':
       return paste;
     default:
       return null;

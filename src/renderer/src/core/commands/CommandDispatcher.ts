@@ -56,7 +56,7 @@ export class CommandDispatcher {
     let updatedVisualEditor = updatedEditor;
 
     // visual mode: update selection after cursor move commands
-    if (editor.mode === 'visual' && isCursorMoveCommand(command)) {
+    if (editor.mode === 'visual' && isCursorMoveCommand(command) && editor.boxSelectAnchor) {
       updatedVisualEditor = updateBoxlSelection(updatedEditor, this.spatialIndex);
     }
 
