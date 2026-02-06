@@ -125,14 +125,15 @@ export function updateBoxlSelection(editor: Editor, spatialIndex: SpatialIndex):
   return selectShapesInArea(editor, spatialIndex, area);
 }
 
+// turns box select on or off
 export function toggleBoxSelect({ editor, document }: CommandArgs): CommandResult {
   let updatedEditor = editor;
   if (editor.boxSelectAnchor) {
-    // Box is ON → turn OFF
+    // box is on, turn it off
     updatedEditor = clearBoxSelectAnchor(updatedEditor);
     updatedEditor = clearSelection(updatedEditor);
   } else {
-    // Box is OFF → start new box at cursor
+    // box is off, start new one at cursor position
     updatedEditor = setBoxSelectAnchor(updatedEditor, editor.cursorPosition);
   }
   return [updatedEditor, document];
