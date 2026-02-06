@@ -50,13 +50,19 @@ function translateSelection(
     throw new Error('No shapes selected to translate');
   }
 
+  let updatedEditor = editor;
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+
   const updatedShapes = selectedShapeIds
     .map((id) => Document.getShapeById(document, id))
     .map((shape) => translateShape(shape, { deltaX, deltaY }));
 
-  const updatedDocument = updateShapesInDocument({ ...args, editor, document }, updatedShapes);
+  const updatedDocument = updateShapesInDocument(
+    { ...args, editor: updatedEditor, document },
+    updatedShapes,
+  );
 
-  return [editor, updatedDocument];
+  return [updatedEditor, updatedDocument];
 }
 
 export function addAnchorPointToLine(args: CommandArgs): CommandResult {
