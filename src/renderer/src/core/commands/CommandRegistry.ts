@@ -11,7 +11,22 @@ import {
   enterNormalMode,
   enterVisualMode,
 } from '@renderer/core/commands/EditorCommands';
-import { addShapeToDocument, createCircle } from '@renderer/core/commands/ManipulationCommands';
+import {
+  addAnchorPointToLine,
+  createCircle,
+  createRectangle,
+  createTextBox,
+  translateSelectionDown,
+  translateSelectionLeft,
+  translateSelectionRight,
+  translateSelectionUp,
+} from '@renderer/core/commands/ManipulationCommands';
+import {
+  jumpToDownAnchorPoint,
+  jumpToLeftAnchorPoint,
+  jumpToRightAnchorPoint,
+  jumpToUpAnchorPoint,
+} from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor } from '@renderer/core/editor/Editor';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
@@ -25,7 +40,7 @@ export type CommandArgs = {
 
 export type CommandResult = [Editor, DocumentModel];
 
-export type CommandFunction = (args: CommandArgs) => CommandResult;
+export type CommandFunction = (args: CommandArgs) => Promise<CommandResult> | CommandResult;
 
 function commandFromName(command: string): CommandFunction | null {
   switch (command) {
@@ -49,6 +64,10 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorRight;
     case 'createCircle':
       return createCircle;
+    case 'createTextBox':
+      return createTextBox;
+    case 'createRectangle':
+      return createRectangle;
     default:
       return null;
   }

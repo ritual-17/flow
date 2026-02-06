@@ -1,10 +1,16 @@
 // Parses Commands from keys.
 // For example in vim, takes in keys "ciw" and parses this as a complete command.
 
+import defaultKeymaps from '@renderer/config/defaultKeymaps.json';
 import { KeyMap } from '@renderer/core/commands/KeyMaps';
 
 export abstract class CommandParser implements CommandParser {
   protected commandKeyMap: KeyMap = {};
+
+  constructor() {
+    const allKeymaps = defaultKeymaps['all'] as KeyMap;
+    this.commandKeyMap = { ...allKeymaps };
+  }
 
   parse(input: string): ParseResult {
     const exactCommand = this.exactMatch(input);
