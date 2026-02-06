@@ -17,17 +17,18 @@ import {
   clearSelection,
   setCurrentAnchorPoint,
   setCursorPosition,
-  setEditingTextBoxId,
+  setEditingTextBox,
   setMode,
   setSelectedShapes,
 } from '@renderer/core/editor/Editor';
 
 const CURSOR_MOVE_AMOUNT = 10;
 
-function enterNormalMode(args: CommandArgs): CommandResult {
+async function enterNormalMode(args: CommandArgs): Promise<CommandResult> {
   // disabling because it is complaining updatedDocument is not reassigned
   // eslint-disable-next-line prefer-const
-  let [updatedEditor, updatedDocument] = previousModeExitCleanup(args);
+  let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
+
   updatedEditor = setSelectedShapes(updatedEditor, []);
   updatedEditor = clearBoxSelectAnchor(updatedEditor);
   updatedEditor = setMode(updatedEditor, 'normal');
@@ -35,41 +36,44 @@ function enterNormalMode(args: CommandArgs): CommandResult {
   return [updatedEditor, updatedDocument];
 }
 
-function enterInsertMode(args: CommandArgs): CommandResult {
-  const [updatedEditor, updatedDocument] = previousModeExitCleanup(args);
+async function enterInsertMode(args: CommandArgs): Promise<CommandResult> {
+  const [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
   return [setMode(updatedEditor, 'insert'), updatedDocument];
 }
 
-function enterVisualMode(args: CommandArgs): CommandResult {
+async function enterVisualMode(args: CommandArgs): Promise<CommandResult> {
   // disabling because it is complaining updatedDocument is not reassigned
   // eslint-disable-next-line prefer-const
-  let [updatedEditor, updatedDocument] = previousModeExitCleanup(args);
+  let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
   updatedEditor = setMode(updatedEditor, 'visual');
   updatedEditor = clearSelection(updatedEditor);
   return [updatedEditor, updatedDocument];
 }
 
-function enterCommandMode(args: CommandArgs): CommandResult {
-  const [updatedEditor, updatedDocument] = previousModeExitCleanup(args);
+async function enterCommandMode(args: CommandArgs): Promise<CommandResult> {
+  const [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
   return [setMode(updatedEditor, 'command'), updatedDocument];
 }
 
-function enterLineMode(args: CommandArgs): CommandResult {
-  const [updatedEditor, updatedDocument] = previousModeExitCleanup(args);
+async function enterLineMode(args: CommandArgs): Promise<CommandResult> {
+  const [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
   return [setMode(updatedEditor, 'line'), updatedDocument];
 }
 
-function enterTextMode(args: CommandArgs): CommandResult {
+async function enterTextMode(args: CommandArgs): Promise<CommandResult> {
   const { spatialIndex } = args;
   // disabling because it is complaining updatedDocument is not reassigned
   // eslint-disable-next-line prefer-const
-  let [updatedEditor, updatedDocument] = previousModeExitCleanup(args);
+  let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
 
   const nearestTextBox = spatialIndex.getNearestTextBox(updatedEditor.cursorPosition);
   if (nearestTextBox) {
     updatedEditor = setMode(updatedEditor, 'text');
     updatedEditor = setCursorPosition(updatedEditor, { x: nearestTextBox.x, y: nearestTextBox.y });
-    updatedEditor = setEditingTextBoxId(updatedEditor, nearestTextBox.id);
+    updatedEditor = setEditingTextBox(updatedEditor, {
+      id: nearestTextBox.id,
+      content: nearestTextBox.text,
+    });
     return [updatedEditor, updatedDocument];
   }
 
@@ -77,11 +81,11 @@ function enterTextMode(args: CommandArgs): CommandResult {
   return [updatedEditor, updatedDocument];
 }
 
-function enterAnchorLineMode(args: CommandArgs): CommandResult {
+async function enterAnchorLineMode(args: CommandArgs): Promise<CommandResult> {
   const { spatialIndex } = args;
   // disabling because it is complaining updatedDocument is not reassigned
   // eslint-disable-next-line prefer-const
-  let [updatedEditor, updatedDocument] = previousModeExitCleanup(args);
+  let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
   const nearestAnchorPoint = spatialIndex.getNearestAnchorPoint(updatedEditor.cursorPosition);
 
   // if there is an anchor point nearby, snap to it, otherwise just enter line mode starting at the cursor

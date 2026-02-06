@@ -1,7 +1,7 @@
 // Handles manipulation commands i.e. commands for manipulating shapes and updating the document accordingly
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
-import * as Document from '@renderer/core/document/Document';
+import { Document, DocumentModel } from '@renderer/core/document/Document';
 import {
   clearBoxSelectAnchor,
   clearSelection,
@@ -25,7 +25,7 @@ import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 import { SpatialIndex } from '../geometry/SpatialIndex';
 
-export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
   const circle = Circle.build({ x, y });
 
@@ -34,7 +34,7 @@ export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel
   return [args.editor, updatedDocument];
 }
 
-export async function createTextBox(args: CommandArgs): Promise<[Editor, Document.DocumentModel]> {
+export async function createTextBox(args: CommandArgs): Promise<[Editor, DocumentModel]> {
   const { x, y } = args.editor.cursorPosition;
   const textBox = TextBox.build({ x, y });
 
@@ -46,23 +46,23 @@ export async function createTextBox(args: CommandArgs): Promise<[Editor, Documen
 }
 
 const TRANSLATE_AMOUNT = 50;
-export function translateSelectionUp(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function translateSelectionUp(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: 0, deltaY: -TRANSLATE_AMOUNT });
 }
-export function translateSelectionDown(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function translateSelectionDown(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: 0, deltaY: TRANSLATE_AMOUNT });
 }
-export function translateSelectionLeft(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function translateSelectionLeft(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: -TRANSLATE_AMOUNT, deltaY: 0 });
 }
-export function translateSelectionRight(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function translateSelectionRight(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: TRANSLATE_AMOUNT, deltaY: 0 });
 }
 
 function translateSelection(
   args: CommandArgs,
   { deltaX, deltaY }: { deltaX: number; deltaY: number },
-): [Editor, Document.DocumentModel] {
+): [Editor, DocumentModel] {
   const { editor, document } = args;
   const { selectedShapeIds } = editor;
 
@@ -234,11 +234,11 @@ function helperRemoveShapes(
   return [updatedDocument, updatedEditor];
 }
 
-function updateShapeInDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {
+export function updateShapeInDocument(args: CommandArgs, shape: Shape): DocumentModel {
   return updateShapesInDocument(args, [shape]);
 }
 
-function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): Document.DocumentModel {
+function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): DocumentModel {
   const { document, spatialIndex } = args;
   const newDocument = Document.updateShapesInDocument(document, shapes);
 
@@ -246,7 +246,7 @@ function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): Document.Do
   return newDocument;
 }
 
-function addShapeToDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {
+function addShapeToDocument(args: CommandArgs, shape: Shape): DocumentModel {
   const { document, spatialIndex } = args;
   const newDocument = Document.addShapesToDocument(document, [shape]);
   spatialIndex.addShape(shape);

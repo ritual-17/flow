@@ -64,4 +64,10 @@ export function isLine(shape: Shape): shape is MultiLine {
   return shape.type === 'multi-line';
 }
 
+export function assertIsTextBox(shape: Shape): asserts shape is TextBox {
+  if (shape.type !== 'textBox') {
+    throw new Error(`Shape with id ${shape.id} is not a TextBox`);
+  }
+}
+
 export type Shape = Circle | Point | TextBox | MultiLine;

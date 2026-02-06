@@ -12,8 +12,13 @@ export interface Editor {
   boxSelectAnchor?: { x: number; y: number };
   currentAnchorPoint: AnchorPoint | null;
   currentLineId: ShapeId | null;
-  editingTextBoxId: ShapeId | null;
   statusMessage: string;
+  currentTextBox: TextBoxEditingState | null;
+}
+
+export interface TextBoxEditingState {
+  id: ShapeId;
+  content: string;
 }
 
 export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
@@ -30,9 +35,9 @@ function createEditor(): Editor {
     clipboard: [],
     currentAnchorPoint: null,
     currentLineId: null,
-    editingTextBoxId: null,
     boxSelectAnchor: undefined,
     statusMessage: '',
+    currentTextBox: null,
   };
 }
 
@@ -117,9 +122,9 @@ function setCurrentLineId(editor: Editor, lineId: ShapeId | null): Editor {
   });
 }
 
-function setEditingTextBoxId(editor: Editor, textBoxId: ShapeId | null): Editor {
+function setEditingTextBox(editor: Editor, textBoxState: TextBoxEditingState | null): Editor {
   return produce(editor, (draft) => {
-    draft.editingTextBoxId = textBoxId;
+    draft.currentTextBox = textBoxState;
   });
 }
 
@@ -158,8 +163,8 @@ export {
   setClipboard,
   setCurrentAnchorPoint,
   setCurrentLineId,
-  setEditingTextBoxId,
   setBoxSelectAnchor,
   clearBoxSelectAnchor,
   setStatus,
+  setEditingTextBox,
 };

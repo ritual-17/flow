@@ -2,24 +2,19 @@ import { defaultKeymap } from '@codemirror/commands';
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { useStore } from '@renderer/ui/Store';
-import { getCM, Vim, vim } from '@replit/codemirror-vim';
+import { Vim, vim } from '@replit/codemirror-vim';
 import { basicSetup } from 'codemirror';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
 type EditorProps = {
   initialDoc?: string;
+  setContent: (n: string) => void;
   x: number;
   y: number;
 };
-export const Editor = ({ initialDoc, x, y }: EditorProps) => {
+export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
   const editor = useRef<HTMLDivElement>(null);
   const mode = useStore((state) => state.editor.mode);
-  const [content, setContent] = useState(initialDoc || '');
-
-  const handleWrite = EditorView.updateListener.of((update) => {
-    const doc = update.state.doc.toString();
-    setContent(doc);
-  });
 
   useEffect(() => {
     const preventDefaults = EditorView.domEventHandlers({
@@ -33,6 +28,11 @@ export const Editor = ({ initialDoc, x, y }: EditorProps) => {
       },
     });
 
+    const handleWrite = EditorView.updateListener.of((update) => {
+      const doc = update.state.doc.toString();
+      setContent(doc);
+    });
+
     const startState = EditorState.create({
       doc: initialDoc || '',
       extensions: [vim(), basicSetup, keymap.of(defaultKeymap), preventDefaults, handleWrite],
@@ -41,8 +41,6 @@ export const Editor = ({ initialDoc, x, y }: EditorProps) => {
     const view = new EditorView({ state: startState, parent: editor.current! });
 
     view.focus();
-    // view.contentDOM.blur();
-    const cm = getCM(view);
 
     Vim.noremap('yy', '"+yy', 'normal');
     Vim.noremap('dd', '"+d', 'normal');

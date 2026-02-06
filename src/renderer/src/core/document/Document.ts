@@ -79,7 +79,7 @@ function getShapeById(document: DocumentModel, shapeId: ShapeId): Shape {
   return shape;
 }
 
-export {
+export const Document = {
   createNewDocument,
   updateDocumentMetadata,
   addShapesToDocument,
