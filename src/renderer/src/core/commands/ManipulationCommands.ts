@@ -5,6 +5,7 @@ import * as Document from '@renderer/core/document/Document';
 import { Editor, setCurrentLineId } from '@renderer/core/editor/Editor';
 import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
+import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { translateShape, updateTextBoxContent } from '@renderer/core/geometry/Transform';
@@ -15,6 +16,15 @@ export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel
   const circle = Circle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, circle);
+
+  return [args.editor, updatedDocument];
+}
+
+export function createRectangle(args: CommandArgs): [Editor, Document.DocumentModel] {
+  const { x, y } = args.editor.cursorPosition;
+  const rectangle = Rectangle.build({ x, y });
+
+  const updatedDocument = addShapeToDocument(args, rectangle);
 
   return [args.editor, updatedDocument];
 }

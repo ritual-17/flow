@@ -6,17 +6,15 @@ import {
   cursorLeft,
   cursorRight,
   cursorUp,
-  enterAnchorLineMode,
   enterCommandMode,
   enterInsertMode,
-  enterLineMode,
   enterNormalMode,
   enterVisualMode,
-  selectNextSearchResult,
 } from '@renderer/core/commands/EditorCommands';
 import {
   addAnchorPointToLine,
   createCircle,
+  createRectangle,
   createTextBox,
   translateSelectionDown,
   translateSelectionLeft,
@@ -46,6 +44,8 @@ export type CommandFunction = (args: CommandArgs) => Promise<CommandResult> | Co
 
 function commandFromName(command: string): CommandFunction | null {
   switch (command) {
+    case 'addShape':
+      return addShapeToDocument;
     case 'enterNormalMode':
       return enterNormalMode;
     case 'enterInsertMode':
@@ -54,10 +54,6 @@ function commandFromName(command: string): CommandFunction | null {
       return enterVisualMode;
     case 'enterCommandMode':
       return enterCommandMode;
-    case 'enterLineMode':
-      return enterLineMode;
-    case 'enterAnchorLineMode':
-      return enterAnchorLineMode;
     case 'up':
       return cursorUp;
     case 'down':
@@ -70,26 +66,8 @@ function commandFromName(command: string): CommandFunction | null {
       return createCircle;
     case 'createTextBox':
       return createTextBox;
-    case 'selectNextSearchResult':
-      return selectNextSearchResult;
-    case 'downAnchor':
-      return jumpToDownAnchorPoint;
-    case 'upAnchor':
-      return jumpToUpAnchorPoint;
-    case 'leftAnchor':
-      return jumpToLeftAnchorPoint;
-    case 'rightAnchor':
-      return jumpToRightAnchorPoint;
-    case 'addAnchorPointToLine':
-      return addAnchorPointToLine;
-    case 'translateSelectionUp':
-      return translateSelectionUp;
-    case 'translateSelectionDown':
-      return translateSelectionDown;
-    case 'translateSelectionLeft':
-      return translateSelectionLeft;
-    case 'translateSelectionRight':
-      return translateSelectionRight;
+    case 'createRectangle':
+      return createRectangle;
     default:
       return null;
   }

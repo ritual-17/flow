@@ -1,11 +1,21 @@
 // disabled prop-type warning because typescript knows shape is a DomainCircle
 /* eslint-disable react/prop-types */
-import { Rectangle as DomainCircle } from '@renderer/core/geometry/Shape';
+import { Rectangle as DomainRectangle } from '@renderer/core/geometry/shapes/Rectangle';
 import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
-import { Rectangle as KonvaCircle } from 'react-konva';
+import { Rect as KonvaRectangle } from 'react-konva';
 
-const Rectangle: ShapeComponent<DomainCircle> = ({ shape }) => {
-  return <KonvaCircle x={shape.x} y={shape.y} width={shape.width} height={shape.height} fill='black' />;
+// TODO: support styling
+const Rectangle: ShapeComponent<DomainRectangle> = ({ shape, stroke }) => {
+  return (
+    <KonvaRectangle
+      x={shape.x}
+      y={shape.y}
+      width={shape.width}
+      height={shape.height}
+      fill='black'
+      stroke={stroke}
+    />
+  );
 };
 
 export default Rectangle;
