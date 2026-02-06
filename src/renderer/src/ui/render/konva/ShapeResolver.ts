@@ -2,8 +2,8 @@ import { Shape } from '@renderer/core/geometry/Shape';
 import Circle from '@renderer/ui/render/konva/Circle';
 import Line from '@renderer/ui/render/konva/Line';
 import Point from '@renderer/ui/render/konva/Point';
-import TextBox from '@renderer/ui/render/konva/TextBox';
 import Rectangle from '@renderer/ui/render/konva/Rectangle';
+import TextBox from '@renderer/ui/render/konva/TextBox';
 import { JSX } from 'react';
 
 export interface ShapeComponentProps<T extends Shape = Shape> {
