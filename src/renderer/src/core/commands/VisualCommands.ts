@@ -7,12 +7,7 @@
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { DocumentModel } from '@renderer/core/document/Document';
-import {
-  clearBoxSelectAnchor,
-  clearSelection,
-  Editor,
-  setBoxSelectAnchor,
-} from '@renderer/core/editor/Editor';
+import { clearBoxSelectAnchor, Editor, setBoxSelectAnchor } from '@renderer/core/editor/Editor';
 import { Direction } from '@renderer/core/geometry/SpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import { produce } from 'immer';
@@ -131,7 +126,7 @@ export function toggleBoxSelect({ editor, document }: CommandArgs): CommandResul
   if (editor.boxSelectAnchor) {
     // box is on, turn it off
     updatedEditor = clearBoxSelectAnchor(updatedEditor);
-    updatedEditor = clearSelection(updatedEditor);
+    // updatedEditor = clearSelection(updatedEditor) should we also clear selection?;
   } else {
     // box is off, start new one at cursor position
     updatedEditor = setBoxSelectAnchor(updatedEditor, editor.cursorPosition);
