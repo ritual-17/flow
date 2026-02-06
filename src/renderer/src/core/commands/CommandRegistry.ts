@@ -29,6 +29,7 @@ import {
   jumpToLeftAnchorPoint,
   jumpToRightAnchorPoint,
   jumpToUpAnchorPoint,
+  toggleBoxSelect,
 } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor } from '@renderer/core/editor/Editor';
@@ -93,6 +94,8 @@ function commandFromName(command: string): CommandFunction | null {
       return deleteSelection;
     case 'yankSelection':
       return yankSelection;
+    case 'toggleBoxSelect':
+      return toggleBoxSelect;
     default:
       return null;
   }

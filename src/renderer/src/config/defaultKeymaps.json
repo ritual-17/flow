@@ -39,7 +39,8 @@
     "K": "translateSelectionUp",
     "J": "translateSelectionDown",
     "L": "translateSelectionRight",
-    "H": "translateSelectionLeft"
+    "H": "translateSelectionLeft",
+    "<Space>": "toggleBoxSelect"
   },
   "command": {
     "w": "saveFile",

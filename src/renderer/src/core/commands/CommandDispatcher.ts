@@ -5,7 +5,7 @@ import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModePars
 import { LineModeParser } from '@renderer/core/commands/parsers/LineModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
 import { VisualModeParser } from '@renderer/core/commands/parsers/VisualModeParser';
-import { updateVisualSelection } from '@renderer/core/commands/VisualCommands';
+import { updateBoxlSelection } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
 import { FlattenSpatialIndex } from '@renderer/core/geometry/spatial-index/FlattenSpatialIndex';
@@ -57,7 +57,7 @@ export class CommandDispatcher {
 
     // visual mode: update selection after cursor move commands
     if (editor.mode === 'visual' && isCursorMoveCommand(command)) {
-      updatedVisualEditor = updateVisualSelection(updatedEditor, this.spatialIndex);
+      updatedVisualEditor = updateBoxlSelection(updatedEditor, this.spatialIndex);
     }
 
     const clearedCommandBufferEditor = setCommandBuffer(updatedVisualEditor, '');

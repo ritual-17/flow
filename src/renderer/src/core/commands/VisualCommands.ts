@@ -7,7 +7,12 @@
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { DocumentModel } from '@renderer/core/document/Document';
-import { Editor } from '@renderer/core/editor/Editor';
+import {
+  clearBoxSelectAnchor,
+  clearSelection,
+  Editor,
+  setBoxSelectAnchor,
+} from '@renderer/core/editor/Editor';
 import { Direction } from '@renderer/core/geometry/SpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import { produce } from 'immer';
@@ -102,7 +107,7 @@ export function selectClosestShapeAtPoint(
   });
 }
 
-export function updateVisualSelection(editor: Editor, spatialIndex: SpatialIndex): Editor {
+export function updateBoxlSelection(editor: Editor, spatialIndex: SpatialIndex): Editor {
   if (!editor.boxSelectAnchor) {
     return editor; // No visual anchor set, nothing to do
   }
@@ -118,4 +123,17 @@ export function updateVisualSelection(editor: Editor, spatialIndex: SpatialIndex
   console.log('Selected IDs:', editor.selectedShapeIds);
 
   return selectShapesInArea(editor, spatialIndex, area);
+}
+
+export function toggleBoxSelect({ editor, document }: CommandArgs): CommandResult {
+  let updatedEditor = editor;
+  if (editor.boxSelectAnchor) {
+    // Box is ON → turn OFF
+    updatedEditor = clearBoxSelectAnchor(updatedEditor);
+    updatedEditor = clearSelection(updatedEditor);
+  } else {
+    // Box is OFF → start new box at cursor
+    updatedEditor = setBoxSelectAnchor(updatedEditor, editor.cursorPosition);
+  }
+  return [updatedEditor, document];
 }
