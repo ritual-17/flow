@@ -12,6 +12,7 @@ export interface Editor {
   boxSelectAnchor?: { x: number; y: number };
   currentAnchorPoint: AnchorPoint | null;
   currentLineId: ShapeId | null;
+  statusMessage?: string;
 }
 
 export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
@@ -27,6 +28,7 @@ function createEditor(): Editor {
     currentAnchorPoint: null,
     currentLineId: null,
     boxSelectAnchor: undefined,
+    statusMessage: '',
   };
 }
 
@@ -127,6 +129,12 @@ function clearBoxSelectAnchor(editor: Editor): Editor {
   });
 }
 
+function setStatus(editor: Editor, message: string): Editor {
+  return produce(editor, (draft) => {
+    draft.statusMessage = message;
+  });
+}
+
 export {
   createEditor,
   setMode,
@@ -144,4 +152,5 @@ export {
   setCurrentLineId,
   setBoxSelectAnchor,
   clearBoxSelectAnchor,
+  setStatus,
 };

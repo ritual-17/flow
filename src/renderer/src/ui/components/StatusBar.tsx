@@ -8,6 +8,7 @@ export function StatusBar() {
   const isSaved = useStore((state) => state.document.metadata.isSaved);
   const documentName = useStore((state) => state.document.metadata.name);
   const commandBuffer = useStore((state) => state.editor.commandBuffer);
+  const statusMessage = useStore((state) => state.editor.statusMessage);
 
   const getModeDisplay = () => {
     switch (mode) {
@@ -64,6 +65,10 @@ export function StatusBar() {
 
       <div className='flex items-center gap-2'>
         <span className='opacity-80 font-mono'>{commandBuffer}</span>
+      </div>
+
+      <div className='flex items-center gap-2'>
+        <span className='opacity-80 font-mono'>{statusMessage ?? ''}</span>
       </div>
     </div>
   );

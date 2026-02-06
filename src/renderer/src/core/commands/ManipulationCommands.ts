@@ -9,6 +9,7 @@ import {
   setClipboard,
   setCurrentLineId,
   setMode,
+  setStatus,
 } from '@renderer/core/editor/Editor';
 import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
@@ -152,8 +153,12 @@ export function yankSelection(args: CommandArgs): [Editor, Document.DocumentMode
     .map((id) => Document.getShapeById(document, id))
     .map((shape) => structuredClone(shape)); // deep copy
 
+  const count = shapesToYank.length;
+  const word = count === 1 ? 'object' : 'objects';
+
   let updatedEditor = editor;
   updatedEditor = setClipboard(updatedEditor, shapesToYank);
+  updatedEditor = setStatus(updatedEditor, `${count} ${word} yanked`);
   updatedEditor = clearSelection(updatedEditor);
   updatedEditor = clearBoxSelectAnchor(updatedEditor);
   updatedEditor = setMode(updatedEditor, 'normal');
