@@ -6,21 +6,10 @@
 // VisualCommands should operate on editor state, related to selection and visual modes
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
-import { DocumentModel } from '@renderer/core/document/Document';
 import { clearBoxSelectAnchor, Editor, setBoxSelectAnchor } from '@renderer/core/editor/Editor';
 import { Direction } from '@renderer/core/geometry/SpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import { produce } from 'immer';
-
-export function yankSelectedShapes(editor: Editor, document: DocumentModel): Editor {
-  const selectedShapes = editor.selectedShapeIds
-    .map((id) => document.shapes.get(id))
-    .filter((shape) => shape !== undefined);
-
-  return produce(editor, (draft) => {
-    draft.clipboard = selectedShapes;
-  });
-}
 
 export function jumpToUpAnchorPoint(args: CommandArgs): CommandResult {
   return jumpToAnchorPoint(args, 'up');
@@ -114,9 +103,6 @@ export function updateBoxSelection(editor: Editor, spatialIndex: SpatialIndex): 
     yMax: Math.max(editor.boxSelectAnchor.y, editor.cursorPosition.y),
   };
 
-  console.log('Updating visual selection in area:', area);
-  console.log('Selected IDs:', editor.selectedShapeIds);
-
   return selectShapesInArea(editor, spatialIndex, area);
 }
 
@@ -127,7 +113,6 @@ export function toggleBoxSelect({ editor, document }: CommandArgs): CommandResul
     // box is on, turn it off
     updatedEditor = clearBoxSelectAnchor(updatedEditor);
     // updatedEditor = clearSelection(updatedEditor) should we also clear selection?;
-    console.log('Toggling box select off');
   } else {
     // box is off, start new one at cursor position
     updatedEditor = setBoxSelectAnchor(updatedEditor, editor.cursorPosition);
