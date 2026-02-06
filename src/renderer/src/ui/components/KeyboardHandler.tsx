@@ -2,6 +2,7 @@
 import { useStore } from '@renderer/ui/Store';
 import { useEffect } from 'react';
 
+// takes in keyboard input and updates command buffer (seen at bottom left of the screen)
 export function KeyboardHandler() {
   const mode = useStore((state) => state.editor.mode);
   const updateCommandBuffer = useStore((state) => state.updateCommandBuffer);

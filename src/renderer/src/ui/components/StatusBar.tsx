@@ -1,6 +1,7 @@
 // components/StatusBar.tsx
 import { useStore } from '@renderer/ui/Store';
 
+// just visual for showing current mode, cursor position, shape count, etc.
 export function StatusBar() {
   const mode = useStore((state) => state.editor.mode);
   const cursor = useStore((state) => state.editor.cursorPosition);

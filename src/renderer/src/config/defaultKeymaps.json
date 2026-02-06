@@ -26,6 +26,7 @@
     "h": "left",
     "l": "right",
     "c": "createCircle",
+    "t": "createTextBox",
     "<C-s>": "saveFile"
   },
   "visual": {

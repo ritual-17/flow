@@ -1,6 +1,7 @@
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { generateId } from '@renderer/core/utils/id';
 
 export function buildBaseShape(): IShapeBase {
@@ -53,17 +54,14 @@ export type AnchorPoint = {
 //   endAnchor?: AnchorPoint;
 // };
 
-export type TextBox = IShapeBase & {
-  type: 'textBox';
-  width: number;
-  height: number;
-  text: string;
-};
-
 // possible future shape for grouping multiple shapes
 // export type Cell = IShapeBase & {
 //   type: 'cell';
 //   shapes: Shape[];
 // };
+
+export function isLine(shape: Shape): shape is MultiLine {
+  return shape.type === 'multi-line';
+}
 
 export type Shape = Circle | Point | TextBox | MultiLine;

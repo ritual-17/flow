@@ -14,7 +14,13 @@ import {
 import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
-import { cloneShape, getSelectionCenter, translateShape } from '@renderer/core/geometry/Transform';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
+import {
+  cloneShape,
+  getSelectionCenter,
+  translateShape,
+  updateTextBoxContent,
+} from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel] {
@@ -22,6 +28,17 @@ export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel
   const circle = Circle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, circle);
+
+  return [args.editor, updatedDocument];
+}
+
+export async function createTextBox(args: CommandArgs): Promise<[Editor, Document.DocumentModel]> {
+  const { x, y } = args.editor.cursorPosition;
+  const textBox = TextBox.build({ x, y });
+
+  const compiledTextBox = await updateTextBoxContent(textBox, textBox.text);
+
+  const updatedDocument = addShapeToDocument(args, compiledTextBox);
 
   return [args.editor, updatedDocument];
 }

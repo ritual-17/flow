@@ -17,7 +17,7 @@ export interface DocumentStore {
 export const useStore = create<DocumentStore>((set) => ({
   editor: createEditor(),
   document: createNewDocument('Untitled'),
-  commandDispatcher: new CommandDispatcher(),
+  commandDispatcher: new CommandDispatcher(set),
   update: (newEditor, newDocument) => set({ editor: newEditor, document: newDocument }),
   updateEditor: (newEditor) => set({ editor: newEditor }),
   updateDocument: (newDocument) => set({ document: newDocument }),
@@ -28,8 +28,7 @@ export const useStore = create<DocumentStore>((set) => ({
     const document = useStore.getState().document;
     const dispatcher = useStore.getState().commandDispatcher;
 
-    const [newEditor, newDocument] = dispatcher.dispatchCommand(commandEditor, document);
-    set({ editor: newEditor, document: newDocument });
+    dispatcher.dispatchCommand(commandEditor, document);
   },
   appendCommandBuffer: (char: string) => {
     const editor = useStore.getState().editor;
@@ -38,7 +37,6 @@ export const useStore = create<DocumentStore>((set) => ({
     const document = useStore.getState().document;
     const dispatcher = useStore.getState().commandDispatcher;
 
-    const [newEditor, newDocument] = dispatcher.dispatchCommand(commandEditor, document);
-    set({ editor: newEditor, document: newDocument });
+    dispatcher.dispatchCommand(commandEditor, document);
   },
 }));

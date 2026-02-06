@@ -12,11 +12,14 @@ export interface Editor {
   boxSelectAnchor?: { x: number; y: number };
   currentAnchorPoint: AnchorPoint | null;
   currentLineId: ShapeId | null;
+  editingTextBoxId: ShapeId | null;
   statusMessage?: string;
 }
 
 export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
 
+// any modification to the editor state should go through these functions
+// below are just some helper functions to create and update the editor state
 function createEditor(): Editor {
   return {
     mode: 'normal',
@@ -27,6 +30,7 @@ function createEditor(): Editor {
     clipboard: [],
     currentAnchorPoint: null,
     currentLineId: null,
+    editingTextBoxId: null,
     boxSelectAnchor: undefined,
     statusMessage: '',
   };
@@ -115,6 +119,12 @@ function setCurrentLineId(editor: Editor, lineId: ShapeId | null): Editor {
   });
 }
 
+function setEditingTextBoxId(editor: Editor, textBoxId: ShapeId | null): Editor {
+  return produce(editor, (draft) => {
+    draft.editingTextBoxId = textBoxId;
+  });
+}
+
 // Functions for visual mode operations
 
 function setBoxSelectAnchor(editor: Editor, position: { x: number; y: number }): Editor {
@@ -150,6 +160,7 @@ export {
   setClipboard,
   setCurrentAnchorPoint,
   setCurrentLineId,
+  setEditingTextBoxId,
   setBoxSelectAnchor,
   clearBoxSelectAnchor,
   setStatus,
