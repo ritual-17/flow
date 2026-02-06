@@ -14,7 +14,7 @@ import {
 import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
-import { translateShape } from '@renderer/core/geometry/Transform';
+import { cloneShape, getSelectionCenter, translateShape } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel] {
@@ -149,9 +149,17 @@ export function yankSelection(args: CommandArgs): [Editor, Document.DocumentMode
     return [editor, document];
   }
 
-  const shapesToYank = selectedShapeIds
-    .map((id) => Document.getShapeById(document, id))
-    .map((shape) => structuredClone(shape)); // deep copy
+  const selectedShapes = editor.selectedShapeIds.map((id) => Document.getShapeById(document, id));
+
+  const center = getSelectionCenter(selectedShapes);
+
+  // copy and translate to origin
+  const shapesToYank = selectedShapes.map((shape) =>
+    translateShape(structuredClone(shape), {
+      deltaX: -center.x,
+      deltaY: -center.y,
+    }),
+  ); // deep copy
 
   const count = shapesToYank.length;
   const word = count === 1 ? 'object' : 'objects';
@@ -164,6 +172,28 @@ export function yankSelection(args: CommandArgs): [Editor, Document.DocumentMode
   updatedEditor = setMode(updatedEditor, 'normal');
 
   return [updatedEditor, document];
+}
+
+export function paste(args: CommandArgs): CommandResult {
+  const { editor, document } = args;
+  if (editor.clipboard.length === 0) {
+    return [editor, document];
+  }
+
+  const cursor = editor.cursorPosition;
+
+  // 1. Clone with new IDs, 2. Position at cursor, 3. Insert each into document (via loop),
+  const cloned = editor.clipboard.map(cloneShape);
+  const position = cloned.map((shape) =>
+    translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }),
+  );
+
+  let updatedDocument = document;
+  for (const shape of position) {
+    updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
+  }
+
+  return [editor, updatedDocument];
 }
 
 function updateShapeInDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {

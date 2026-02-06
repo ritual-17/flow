@@ -18,6 +18,7 @@ import {
   addAnchorPointToLine,
   createCircle,
   deleteSelection,
+  paste,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -96,6 +97,8 @@ function commandFromName(command: string): CommandFunction | null {
       return yankSelection;
     case 'toggleBoxSelect':
       return toggleBoxSelect;
+    case 'pasteAfter':
+      return paste;
     default:
       return null;
   }
