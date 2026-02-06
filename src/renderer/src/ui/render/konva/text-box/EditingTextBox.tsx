@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { TextBox as DomainText } from '@renderer/core/geometry/shapes/TextBox';
+import { compileTextBoxContent } from '@renderer/core/geometry/transform/TextBoxContentCompiler';
 import { Editor } from '@renderer/ui/components/text/Editor';
 import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import { useStore } from '@renderer/ui/Store';
@@ -15,27 +16,15 @@ const EditingTextBox: ShapeComponent<DomainText> = ({ shape }) => {
 
   console.log('EditingTextBox render, content:', content);
   useEffect(() => {
-    let cancelled = false;
-
-    const compile = async () => {
-      try {
-        const svg = await window.api.compileTypst(content);
-        if (cancelled) return;
-
-        const img = await svgStringToImage(svg);
-        if (!cancelled) {
-          setCompiledTextImage(img);
-        }
-      } catch (err) {
-        console.error('Typst compile failed:', err);
-      }
-    };
-
-    compile();
-
-    return () => {
-      cancelled = true;
-    };
+    compileTextBoxContent(content)
+      .then((img) => {
+        URL.revokeObjectURL(img.src);
+        setCompiledTextImage(img);
+      })
+      .catch((error) => {
+        console.error('Failed to compile text box content:', error);
+      });
+    return () => {};
   }, [content]);
 
   if (!compiledTextImage) return <></>;
@@ -49,6 +38,7 @@ const EditingTextBox: ShapeComponent<DomainText> = ({ shape }) => {
         width={compiledTextImage.width}
         height={compiledTextImage.height}
         stroke={'white'}
+        fill='white'
       />
       <Html>
         <Editor
