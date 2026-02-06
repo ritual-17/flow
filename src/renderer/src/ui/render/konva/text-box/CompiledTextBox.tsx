@@ -40,8 +40,8 @@ const CompiledTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
         image={image}
         x={shape.x}
         y={shape.y}
-        width={shape.compiledImageMeta!.width}
-        height={shape.compiledImageMeta!.height}
+        width={image.width}
+        height={image.height}
         stroke={stroke}
         fill='white'
       />

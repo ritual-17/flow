@@ -1,4 +1,4 @@
-import { defaultKeymap } from '@codemirror/commands';
+import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { useStore } from '@renderer/ui/Store';
@@ -35,7 +35,13 @@ export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
 
     const startState = EditorState.create({
       doc: initialDoc || '',
-      extensions: [vim(), basicSetup, keymap.of(defaultKeymap), preventDefaults, handleWrite],
+      extensions: [
+        vim(),
+        basicSetup,
+        keymap.of([...defaultKeymap, indentWithTab]),
+        preventDefaults,
+        handleWrite,
+      ],
     });
 
     const view = new EditorView({ state: startState, parent: editor.current! });

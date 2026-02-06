@@ -10,7 +10,6 @@ export function KeyboardHandler() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log('Key down:', e.key, 'Mode:', mode);
       if (mode === 'command') return;
       if (mode === 'text') {
         handleKeyTextMode(e);

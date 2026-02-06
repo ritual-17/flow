@@ -55,9 +55,13 @@ export function getSelectionCenter(shapes: Shape[]): { x: number; y: number } {
     y: (Math.min(...ys) + Math.max(...ys)) / 2,
   };
 // Calculate the scaling factor to fit the image within the text box dimensions
-function dimensionScaler(textBox: TextBox, image: HTMLImageElement) {
-  const widthScale = textBox.width / image.width;
-  const heightScale = textBox.height / image.height;
+function dimensionScaler(_textBox: TextBox, _image: HTMLImageElement) {
+  // potentially scale the image down to fit within the text box dimensions, while maintaining aspect ratio
+  // const widthScale = textBox.width / image.width;
+  // const heightScale = textBox.height / image.height;
+  // for now just use image height
+  const heightScale = 1;
+  const widthScale = 1;
   return Math.min(widthScale, heightScale);
 }
 
