@@ -140,7 +140,7 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
   }
 }
 
-export function deleteSelection(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function deleteSelection(args: CommandArgs): [Editor, DocumentModel] {
   const { editor, document, spatialIndex } = args;
   const { selectedShapeIds } = editor;
 
@@ -158,7 +158,7 @@ export function deleteSelection(args: CommandArgs): [Editor, Document.DocumentMo
   return [updatedEditor, updatedDocument];
 }
 
-export function yankSelection(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
   const { editor, document } = args;
   const { selectedShapeIds } = editor;
 
@@ -222,11 +222,11 @@ export function paste(args: CommandArgs): CommandResult {
 }
 
 function helperRemoveShapes(
-  document: Document.DocumentModel,
+  document: DocumentModel,
   editor: Editor,
   spatialIndex: SpatialIndex,
   shapeIds: ShapeId[],
-): [Document.DocumentModel, Editor] {
+): [DocumentModel, Editor] {
   const updatedDocument = Document.removeShapesFromDocument(document, shapeIds);
   spatialIndex.removeShapesByIds(shapeIds);
   let updatedEditor = clearSelection(editor);

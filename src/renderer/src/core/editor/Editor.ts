@@ -1,4 +1,4 @@
-import { DocumentModel, getShapeById } from '@renderer/core/document/Document';
+import { Document, DocumentModel } from '@renderer/core/document/Document';
 import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { produce } from 'immer';
 
@@ -56,7 +56,7 @@ function setSelectedShapes(editor: Editor, shapeIds: ShapeId[]): Editor {
 }
 
 function getSelectedShapes(editor: Editor, document: DocumentModel): Shape[] {
-  return editor.selectedShapeIds.map((id) => getShapeById(document, id));
+  return editor.selectedShapeIds.map((id) => Document.getShapeById(document, id));
 }
 
 function clearSelection(editor: Editor): Editor {
