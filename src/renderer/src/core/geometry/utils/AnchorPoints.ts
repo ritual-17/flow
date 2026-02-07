@@ -1,4 +1,4 @@
-import { DocumentModel, getShapeById } from '@renderer/core/document/Document';
+import { DocumentModel, getShapeById, hasShape } from '@renderer/core/document/Document';
 import { AnchorPoint, AnchorRef, Coordinate, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
@@ -33,10 +33,15 @@ export function getAnchorPoint(document: DocumentModel, ref: AnchorRef): Point.P
 }
 
 export function resolveLinePoints(document: DocumentModel, line: MultiLine): Coordinate[] {
-  return line.points.map((p) => (isAnchorRef(p) ? getAnchorCoordinate(document, p) : p));
+  return line.points
+    .map((p) => (isAnchorRef(p) ? getAnchorCoordinate(document, p) : p))
+    .filter((pt): pt is Coordinate => pt !== null);
 }
 
-function getAnchorCoordinate(document: DocumentModel, ref: AnchorRef): Coordinate {
+function getAnchorCoordinate(document: DocumentModel, ref: AnchorRef): Coordinate | null {
+  if (!hasShape(document, ref.shapeId)) {
+    return null;
+  }
   const shape = getShapeById(document, ref.shapeId);
   const anchorPoint = resolveAnchorPoint(shape, ref.position);
 
