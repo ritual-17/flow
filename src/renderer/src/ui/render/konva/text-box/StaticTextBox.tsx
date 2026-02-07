@@ -4,7 +4,8 @@ import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import { useEffect, useState } from 'react';
 import { Image as KonvaImage } from 'react-konva';
 
-const CompiledTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
+// This renders a text box that is not currently being edited
+const StaticTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
   const [image, setImage] = useState<HTMLImageElement | null>(null);
 
   // need to load the image from the src url in compiledImageMeta
@@ -40,8 +41,8 @@ const CompiledTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
         image={image}
         x={shape.x}
         y={shape.y}
-        width={image.width}
-        height={image.height}
+        width={shape.compiledImageMeta?.width ?? image.width}
+        height={shape.compiledImageMeta?.height ?? image.height}
         stroke={stroke}
         fill='white'
       />
@@ -51,4 +52,4 @@ const CompiledTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
   );
 };
 
-export default CompiledTextBox;
+export default StaticTextBox;

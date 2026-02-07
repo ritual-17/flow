@@ -196,7 +196,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     const candidates = this.set.search(searchBox);
     const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
 
-    let nearestTextBoxId: TextBox | null = null;
+    let nearestTextBox: TextBox | null = null;
     let minDistance = Infinity;
     for (const candidate of domainCandidates) {
       if (candidate.type !== 'textBox') continue;
@@ -204,11 +204,11 @@ export class FlattenSpatialIndex implements SpatialIndex {
       const distance = this.distanceBetweenPoints(point, candidate);
       if (distance < minDistance) {
         minDistance = distance;
-        nearestTextBoxId = candidate;
+        nearestTextBox = candidate;
       }
     }
 
-    return nearestTextBoxId;
+    return nearestTextBox;
   }
 
   private getDomainShape(flat: Flatten.AnyShape): Shape {

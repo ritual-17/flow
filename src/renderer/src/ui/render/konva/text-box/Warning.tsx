@@ -1,7 +1,6 @@
 import { Circle } from 'react-konva';
 
-// Exclamation mark icon to indicate a warning
-
+// A small red circle that appears next to a text box when there is an error compiling the text box content
 interface WarningProps {
   x: number;
   y: number;

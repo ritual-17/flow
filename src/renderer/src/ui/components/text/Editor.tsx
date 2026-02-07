@@ -12,12 +12,21 @@ type EditorProps = {
   x: number;
   y: number;
 };
+//
+// remapping some functions to use system clipboard
+Vim.noremap('yy', '"+yy', 'normal');
+Vim.noremap('dd', '"+dd', 'normal');
+Vim.noremap('p', '"+p', 'normal');
+Vim.noremap('P', '"+P', 'normal');
+
 export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
   const editor = useRef<HTMLDivElement>(null);
   const mode = useStore((state) => state.editor.mode);
 
   useEffect(() => {
     const handleWrite = EditorView.updateListener.of((update) => {
+      if (!update.docChanged) return; // ignores updates that don't change the document e.g. cursor movements
+
       const doc = update.state.doc.toString();
       setContent(doc);
     });
@@ -30,12 +39,6 @@ export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
     const view = new EditorView({ state: startState, parent: editor.current! });
 
     view.focus();
-
-    // remapping some functions to use system clipboard
-    Vim.noremap('yy', '"+yy', 'normal');
-    Vim.noremap('dd', '"+dd', 'normal');
-    Vim.noremap('p', '"+p', 'normal');
-    Vim.noremap('P', '"+P', 'normal');
 
     // clean up function
     return () => {
