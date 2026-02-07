@@ -4,8 +4,7 @@
 import { Shape } from '@renderer/core/geometry/Shape';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { TextBoxContentCompiler } from '@renderer/core/geometry/transform/TextBoxContentCompiler';
-
-import { generateId } from '../utils/id';
+import { generateId } from '@renderer/core/utils/id';
 
 // this is done this way so the data stays immutable
 export function translateShape(

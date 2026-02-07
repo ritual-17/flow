@@ -11,6 +11,7 @@ export interface SpatialIndex {
   getNearestShapeId(point: { x: number; y: number }): ShapeId | null;
   getNearestAnchorPoint(point: { x: number; y: number }): AnchorPoint | null;
   getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint;
+  removeShapesByIds(shapeIds: ShapeId[]): void;
 }
 
 export type Direction = 'up' | 'down' | 'left' | 'right';

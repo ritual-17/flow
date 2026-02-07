@@ -65,38 +65,39 @@ function selectShapesInArea(
   });
 }
 
-// helper function to select the closest shape to a point within a tolerance
-export function selectClosestShapeAtPoint(
-  editor: Editor,
-  spatialIndex: SpatialIndex,
-  point: { x: number; y: number },
-  tolerance: number = 5,
-): Editor {
-  // search for shapes within the tolerance box
-  const candidateShapes = spatialIndex.searchInArea({
-    xMin: point.x - tolerance,
-    xMax: point.x + tolerance,
-    yMin: point.y - tolerance,
-    yMax: point.y + tolerance,
-  });
+// comment out as currently unused, but may be useful in the future
+// // helper function to select the closest shape to a point within a tolerance
+// export function selectClosestShapeAtPoint(
+//   editor: Editor,
+//   spatialIndex: SpatialIndex,
+//   point: { x: number; y: number },
+//   tolerance: number = 5,
+// ): Editor {
+//   // search for shapes within the tolerance box
+//   const candidateShapes = spatialIndex.searchInArea({
+//     xMin: point.x - tolerance,
+//     xMax: point.x + tolerance,
+//     yMin: point.y - tolerance,
+//     yMax: point.y + tolerance,
+//   });
 
-  if (candidateShapes.length === 0) {
-    return editor; // No shapes found within tolerance
-  }
+//   if (candidateShapes.length === 0) {
+//     return editor; // No shapes found within tolerance
+//   }
 
-  // find the closest shape among the candidates
-  const closestShape = candidateShapes.reduce((best, curr) => {
-    if (!best) return curr;
-    const bestDistance = spatialIndex.distanceBetweenShapes(best, curr);
-    if (bestDistance <= 0)
-      return best; // same shape
-    else return curr;
-  });
+//   // find the closest shape among the candidates
+//   const closestShape = candidateShapes.reduce((best, curr) => {
+//     if (!best) return curr;
+//     const bestDistance = spatialIndex.distanceBetweenShapes(best, curr);
+//     if (bestDistance <= 0)
+//       return best; // same shape
+//     else return curr;
+//   });
 
-  return produce(editor, (draft) => {
-    draft.selectedShapeIds = [closestShape.id];
-  });
-}
+//   return produce(editor, (draft) => {
+//     draft.selectedShapeIds = [closestShape.id];
+//   });
+// }
 
 export function updateBoxSelection(editor: Editor, spatialIndex: SpatialIndex): Editor {
   if (!editor.boxSelectAnchor) {

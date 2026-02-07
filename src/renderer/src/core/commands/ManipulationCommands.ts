@@ -11,7 +11,7 @@ import {
   setMode,
   setStatus,
 } from '@renderer/core/editor/Editor';
-import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
@@ -22,6 +22,8 @@ import {
   updateTextBoxContent,
 } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
+
+import { SpatialIndex } from '../geometry/SpatialIndex';
 
 export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
@@ -139,7 +141,7 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
 }
 
 export function deleteSelection(args: CommandArgs): [Editor, Document.DocumentModel] {
-  const { editor, document } = args;
+  const { editor, document, spatialIndex } = args;
   const { selectedShapeIds } = editor;
 
   // not fully needed but avoids unnecessary document updates
@@ -148,11 +150,9 @@ export function deleteSelection(args: CommandArgs): [Editor, Document.DocumentMo
   }
 
   // update document and editor with following changes
-  const updatedDocument = Document.removeShapesFromDocument(document, selectedShapeIds);
-
-  let updatedEditor = editor;
-  updatedEditor = clearSelection(updatedEditor);
-  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+  const result = helperRemoveShapes(document, editor, spatialIndex, selectedShapeIds);
+  const updatedDocument = result[0];
+  let updatedEditor = result[1];
   updatedEditor = setMode(updatedEditor, 'normal');
 
   return [updatedEditor, updatedDocument];
@@ -201,15 +201,9 @@ export function paste(args: CommandArgs): CommandResult {
 
   // delete any current selection before pasting
   if (editor.selectedShapeIds.length > 0) {
-    updatedDocument = Document.removeShapesFromDocument(updatedDocument, editor.selectedShapeIds);
-
-    // keep spatial index in sync
-    for (const id of editor.selectedShapeIds) {
-      const shape = spatialIndex.getShapes().find((s) => s.id === id);
-      if (shape) spatialIndex.removeShape(shape);
-    }
-
-    updatedEditor = clearSelection(updatedEditor); // you said you already have this
+    const result = helperRemoveShapes(document, editor, spatialIndex, editor.selectedShapeIds);
+    updatedDocument = result[0];
+    updatedEditor = result[1];
   }
 
   const cursor = updatedEditor.cursorPosition;
@@ -225,6 +219,19 @@ export function paste(args: CommandArgs): CommandResult {
   }
 
   return [updatedEditor, updatedDocument];
+}
+
+function helperRemoveShapes(
+  document: Document.DocumentModel,
+  editor: Editor,
+  spatialIndex: SpatialIndex,
+  shapeIds: ShapeId[],
+): [Document.DocumentModel, Editor] {
+  const updatedDocument = Document.removeShapesFromDocument(document, shapeIds);
+  spatialIndex.removeShapesByIds(shapeIds);
+  let updatedEditor = clearSelection(editor);
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+  return [updatedDocument, updatedEditor];
 }
 
 function updateShapeInDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {
