@@ -15,6 +15,7 @@ export function buildBaseShape(): IShapeBase {
     fill: 1,
     strokeColor: 'black',
     fillColor: 'white',
+    label: '',
   };
 }
 
@@ -28,6 +29,7 @@ export interface IShapeBase {
   fill: number;
   strokeColor: string;
   fillColor: string;
+  label: string;
 }
 
 export type ShapeId = string;
