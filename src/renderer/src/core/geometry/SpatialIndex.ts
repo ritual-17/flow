@@ -1,4 +1,5 @@
 import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 
 export interface SpatialIndex {
   addShape(shape: Shape): void;
@@ -12,6 +13,7 @@ export interface SpatialIndex {
   getNearestAnchorPoint(point: { x: number; y: number }): AnchorPoint | null;
   getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint;
   removeShapesByIds(shapeIds: ShapeId[]): void;
+  getNearestTextBox(point: { x: number; y: number }): TextBox | null;
 }
 
 export type Direction = 'up' | 'down' | 'left' | 'right';

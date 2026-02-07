@@ -1,3 +1,5 @@
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
+
 export const TextBoxContentCompiler = {
   compileTextBoxContent,
 };
@@ -12,6 +14,24 @@ export async function compileTextBoxContent(content: string): Promise<HTMLImageE
     console.error('Typst compile failed:', err);
     throw err;
   }
+}
+
+// Calculate the scaling factor to fit the image within the text box dimensions
+export function dimensionScaler(
+  _textBox: TextBox,
+  image: HTMLImageElement,
+): { width: number; height: number } {
+  // potentially scale the image down to fit within the text box dimensions, while maintaining aspect ratio
+  // const widthScale = textBox.width / image.width;
+  // const heightScale = textBox.height / image.height;
+  // for now just use image height
+  const heightScale = 1;
+  const widthScale = 1;
+  const scaler = Math.min(widthScale, heightScale);
+  return {
+    width: image.width * scaler,
+    height: image.height * scaler,
+  };
 }
 
 async function svgStringToImage(svg: string): Promise<HTMLImageElement> {

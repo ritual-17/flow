@@ -1,5 +1,6 @@
 import Flatten from '@flatten-js/core';
 import { AnchorPoint, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
 import { Direction, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import {
@@ -182,6 +183,32 @@ export class FlattenSpatialIndex implements SpatialIndex {
       const shape = this.getDomainShapeById(id);
       this.removeShape(shape);
     });
+  }
+
+  // could use a refactor to generalize nearest shape search with filter
+  getNearestTextBox(point: Coordinate): TextBox | null {
+    const searchBox = new Flatten.Box(
+      point.x - this.SEARCH_RADIUS,
+      point.y - this.SEARCH_RADIUS,
+      point.x + this.SEARCH_RADIUS,
+      point.y + this.SEARCH_RADIUS,
+    );
+    const candidates = this.set.search(searchBox);
+    const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
+
+    let nearestTextBox: TextBox | null = null;
+    let minDistance = Infinity;
+    for (const candidate of domainCandidates) {
+      if (candidate.type !== 'textBox') continue;
+
+      const distance = this.distanceBetweenPoints(point, candidate);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestTextBox = candidate;
+      }
+    }
+
+    return nearestTextBox;
   }
 
   private getDomainShape(flat: Flatten.AnyShape): Shape {
