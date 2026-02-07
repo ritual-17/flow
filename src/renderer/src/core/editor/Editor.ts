@@ -1,4 +1,4 @@
-import { DocumentModel } from '@renderer/core/document/Document';
+import { DocumentModel, getShapeById } from '@renderer/core/document/Document';
 import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { produce } from 'immer';
 
@@ -13,7 +13,7 @@ export interface Editor {
   currentAnchorPoint: AnchorPoint | null;
   currentLineId: ShapeId | null;
   editingTextBoxId: ShapeId | null;
-  statusMessage?: string;
+  statusMessage: string;
 }
 
 export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
@@ -51,9 +51,7 @@ function setSelectedShapes(editor: Editor, shapeIds: ShapeId[]): Editor {
 }
 
 function getSelectedShapes(editor: Editor, document: DocumentModel): Shape[] {
-  return editor.selectedShapeIds
-    .map((id) => document.shapes.get(id))
-    .filter((shape): shape is Shape => shape !== undefined);
+  return editor.selectedShapeIds.map((id) => getShapeById(document, id));
 }
 
 function clearSelection(editor: Editor): Editor {
