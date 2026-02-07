@@ -18,16 +18,24 @@ import {
   addAnchorPointToLine,
   createCircle,
   createTextBox,
+  deleteSelection,
+  paste,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
   translateSelectionUp,
+  yankSelection,
 } from '@renderer/core/commands/ManipulationCommands';
 import {
   jumpToDownAnchorPoint,
   jumpToLeftAnchorPoint,
   jumpToRightAnchorPoint,
   jumpToUpAnchorPoint,
+  toggleBoxSelect,
+  visualDown,
+  visualLeft,
+  visualRight,
+  visualUp,
 } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor } from '@renderer/core/editor/Editor';
@@ -90,6 +98,23 @@ function commandFromName(command: string): CommandFunction | null {
       return translateSelectionLeft;
     case 'translateSelectionRight':
       return translateSelectionRight;
+    case 'deleteSelection':
+      return deleteSelection;
+    case 'yankSelection':
+      return yankSelection;
+    case 'toggleBoxSelect':
+      return toggleBoxSelect;
+    case 'pasteAfter':
+    case 'pasteOverSelection':
+      return paste;
+    case 'visualUp':
+      return visualUp;
+    case 'visualDown':
+      return visualDown;
+    case 'visualLeft':
+      return visualLeft;
+    case 'visualRight':
+      return visualRight;
     default:
       return null;
   }

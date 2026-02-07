@@ -2,13 +2,28 @@
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import * as Document from '@renderer/core/document/Document';
-import { Editor, setCurrentLineId } from '@renderer/core/editor/Editor';
-import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
+import {
+  clearBoxSelectAnchor,
+  clearSelection,
+  Editor,
+  setClipboard,
+  setCurrentLineId,
+  setMode,
+  setStatus,
+} from '@renderer/core/editor/Editor';
+import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
-import { translateShape, updateTextBoxContent } from '@renderer/core/geometry/Transform';
+import {
+  cloneShape,
+  getSelectionCenter,
+  translateShape,
+  updateTextBoxContent,
+} from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
+
+import { SpatialIndex } from '../geometry/SpatialIndex';
 
 export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
@@ -55,13 +70,19 @@ function translateSelection(
     throw new Error('No shapes selected to translate');
   }
 
+  let updatedEditor = editor;
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+
   const updatedShapes = selectedShapeIds
     .map((id) => Document.getShapeById(document, id))
     .map((shape) => translateShape(shape, { deltaX, deltaY }));
 
-  const updatedDocument = updateShapesInDocument({ ...args, editor, document }, updatedShapes);
+  const updatedDocument = updateShapesInDocument(
+    { ...args, editor: updatedEditor, document },
+    updatedShapes,
+  );
 
-  return [editor, updatedDocument];
+  return [updatedEditor, updatedDocument];
 }
 
 export function addAnchorPointToLine(args: CommandArgs): CommandResult {
@@ -117,6 +138,100 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
         `Shape with id ${currentLine.id} is not a line or point, cannot add anchor point`,
       );
   }
+}
+
+export function deleteSelection(args: CommandArgs): [Editor, Document.DocumentModel] {
+  const { editor, document, spatialIndex } = args;
+  const { selectedShapeIds } = editor;
+
+  // not fully needed but avoids unnecessary document updates
+  if (selectedShapeIds.length === 0) {
+    return [editor, document];
+  }
+
+  // update document and editor with following changes
+  const result = helperRemoveShapes(document, editor, spatialIndex, selectedShapeIds);
+  const updatedDocument = result[0];
+  let updatedEditor = result[1];
+  updatedEditor = setMode(updatedEditor, 'normal');
+
+  return [updatedEditor, updatedDocument];
+}
+
+export function yankSelection(args: CommandArgs): [Editor, Document.DocumentModel] {
+  const { editor, document } = args;
+  const { selectedShapeIds } = editor;
+
+  if (selectedShapeIds.length === 0) {
+    return [editor, document];
+  }
+
+  const selectedShapes = editor.selectedShapeIds.map((id) => Document.getShapeById(document, id));
+
+  const center = getSelectionCenter(selectedShapes);
+
+  // copy and translate to origin
+  const shapesToYank = selectedShapes.map((shape) =>
+    translateShape(structuredClone(shape), {
+      deltaX: -center.x,
+      deltaY: -center.y,
+    }),
+  ); // deep copy
+
+  const count = shapesToYank.length;
+  const word = count === 1 ? 'object' : 'objects';
+
+  let updatedEditor = editor;
+  updatedEditor = setClipboard(updatedEditor, shapesToYank);
+  updatedEditor = setStatus(updatedEditor, `${count} ${word} yanked`);
+  updatedEditor = clearSelection(updatedEditor);
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+  updatedEditor = setMode(updatedEditor, 'normal');
+
+  return [updatedEditor, document];
+}
+
+export function paste(args: CommandArgs): CommandResult {
+  const { editor, document, spatialIndex } = args;
+  if (editor.clipboard.length === 0) {
+    return [editor, document];
+  }
+  let updatedDocument = document;
+  let updatedEditor = editor;
+
+  // delete any current selection before pasting
+  if (editor.selectedShapeIds.length > 0) {
+    const result = helperRemoveShapes(document, editor, spatialIndex, editor.selectedShapeIds);
+    updatedDocument = result[0];
+    updatedEditor = result[1];
+  }
+
+  const cursor = updatedEditor.cursorPosition;
+
+  // 1. Clone with new IDs, 2. Position at cursor, 3. Insert each into document (via loop),
+  const cloned = updatedEditor.clipboard.map(cloneShape);
+  const position = cloned.map((shape) =>
+    translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }),
+  );
+
+  for (const shape of position) {
+    updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
+  }
+
+  return [updatedEditor, updatedDocument];
+}
+
+function helperRemoveShapes(
+  document: Document.DocumentModel,
+  editor: Editor,
+  spatialIndex: SpatialIndex,
+  shapeIds: ShapeId[],
+): [Document.DocumentModel, Editor] {
+  const updatedDocument = Document.removeShapesFromDocument(document, shapeIds);
+  spatialIndex.removeShapesByIds(shapeIds);
+  let updatedEditor = clearSelection(editor);
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+  return [updatedDocument, updatedEditor];
 }
 
 function updateShapeInDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {

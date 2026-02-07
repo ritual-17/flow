@@ -4,6 +4,7 @@
 import { Shape } from '@renderer/core/geometry/Shape';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { TextBoxContentCompiler } from '@renderer/core/geometry/transform/TextBoxContentCompiler';
+import { generateId } from '@renderer/core/utils/id';
 
 // this is done this way so the data stays immutable
 export function translateShape(
@@ -30,6 +31,27 @@ export async function updateTextBoxContent(textBox: TextBox, newText: string): P
     ...textBox,
     compiledImageMeta,
     text: newText,
+  };
+}
+
+export function cloneShape(shape: Shape): Shape {
+  return {
+    ...shape,
+    id: generateId(),
+    anchorPoints: shape.anchorPoints.map((a) => ({
+      ...a,
+      ownerId: shape.id,
+    })),
+  };
+}
+
+export function getSelectionCenter(shapes: Shape[]): { x: number; y: number } {
+  const xs = shapes.map((s) => s.x);
+  const ys = shapes.map((s) => s.y);
+
+  return {
+    x: (Math.min(...xs) + Math.max(...xs)) / 2,
+    y: (Math.min(...ys) + Math.max(...ys)) / 2,
   };
 }
 

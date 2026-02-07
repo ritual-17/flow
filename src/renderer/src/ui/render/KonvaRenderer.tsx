@@ -1,5 +1,6 @@
 import { isLine } from '@renderer/core/geometry/Shape';
 import { useNearestShape } from '@renderer/ui/hooks/NearestShape';
+import BoxSelectOverlay from '@renderer/ui/render/konva/BoxSelectOverlay';
 import Cursor from '@renderer/ui/render/konva/Cursor';
 import getComponent from '@renderer/ui/render/konva/ShapeResolver';
 import { HoverEffect } from '@renderer/ui/render/konva/style/HoverEffect';
@@ -52,6 +53,7 @@ function KonvaRenderer() {
         );
       })}
       <Cursor />
+      <BoxSelectOverlay />
     </Layer>
   );
 }

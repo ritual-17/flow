@@ -30,17 +30,18 @@
     "<C-s>": "saveFile"
   },
   "visual": {
-    "j": "up",
-    "k": "down",
-    "h": "left",
-    "l": "right",
+    "j": "visualUp",
+    "k": "visualDown",
+    "h": "visualLeft",
+    "l": "visualRight",
     "d": "deleteSelection",
     "y": "yankSelection",
     "p": "pasteOverSelection",
     "K": "translateSelectionUp",
     "J": "translateSelectionDown",
     "L": "translateSelectionRight",
-    "H": "translateSelectionLeft"
+    "H": "translateSelectionLeft",
+    "<Space>": "toggleBoxSelect"
   },
   "command": {
     "w": "saveFile",

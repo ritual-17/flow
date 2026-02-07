@@ -177,6 +177,13 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return nextAnchor;
   }
 
+  removeShapesByIds(shapeIds: ShapeId[]): void {
+    shapeIds.forEach((id) => {
+      const shape = this.getDomainShapeById(id);
+      this.removeShape(shape);
+    });
+  }
+
   private getDomainShape(flat: Flatten.AnyShape): Shape {
     const id = this.shapeToIdMap.get(flat);
     if (!id) throw new Error('Shape not found');
