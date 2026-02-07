@@ -6,10 +6,17 @@
 // VisualCommands should operate on editor state, related to selection and visual modes
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
-import { clearBoxSelectAnchor, Editor, setBoxSelectAnchor } from '@renderer/core/editor/Editor';
+import {
+  clearBoxSelectAnchor,
+  Editor,
+  setBoxSelectAnchor,
+  setCursorPosition,
+} from '@renderer/core/editor/Editor';
 import { Direction } from '@renderer/core/geometry/SpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import { produce } from 'immer';
+
+const CURSOR_MOVE_AMOUNT = 10;
 
 export function jumpToUpAnchorPoint(args: CommandArgs): CommandResult {
   return jumpToAnchorPoint(args, 'up');
@@ -116,6 +123,54 @@ export function toggleBoxSelect({ editor, document }: CommandArgs): CommandResul
   } else {
     // box is off, start new one at cursor position
     updatedEditor = setBoxSelectAnchor(updatedEditor, editor.cursorPosition);
+  }
+  return [updatedEditor, document];
+}
+
+export function visualUp({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  const newPosition = {
+    x: editor.cursorPosition.x,
+    y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
+  };
+  let updatedEditor = setCursorPosition(editor, newPosition);
+  if (editor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+  return [updatedEditor, document];
+}
+
+export function visualDown({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  const newPosition = {
+    x: editor.cursorPosition.x,
+    y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
+  };
+  let updatedEditor = setCursorPosition(editor, newPosition);
+  if (editor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+  return [updatedEditor, document];
+}
+
+export function visualLeft({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  const newPosition = {
+    x: editor.cursorPosition.x - CURSOR_MOVE_AMOUNT,
+    y: editor.cursorPosition.y,
+  };
+  let updatedEditor = setCursorPosition(editor, newPosition);
+  if (editor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+  return [updatedEditor, document];
+}
+
+export function visualRight({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  const newPosition = {
+    x: editor.cursorPosition.x + CURSOR_MOVE_AMOUNT,
+    y: editor.cursorPosition.y,
+  };
+  let updatedEditor = setCursorPosition(editor, newPosition);
+  if (editor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
   return [updatedEditor, document];
 }

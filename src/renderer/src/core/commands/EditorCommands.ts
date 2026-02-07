@@ -20,8 +20,6 @@ import {
   setSelectedShapes,
 } from '@renderer/core/editor/Editor';
 
-import { updateBoxSelection } from './VisualCommands';
-
 const CURSOR_MOVE_AMOUNT = 10;
 
 function enterNormalMode({ editor, document }: CommandArgs): CommandResult {
@@ -63,52 +61,44 @@ function enterAnchorLineMode({ editor, document, spatialIndex }: CommandArgs): C
   return [setMode(editor, 'line'), document];
 }
 
-function cursorUp({ editor, document, spatialIndex }: CommandArgs): CommandResult {
-  const newPosition = {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
-  };
-  let updatedEditor = setCursorPosition(editor, newPosition);
-  if (editor.boxSelectAnchor) {
-    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
-  }
-  return [updatedEditor, document];
+function cursorUp({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: editor.cursorPosition.x,
+      y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
+    }),
+    document,
+  ];
 }
 
-function cursorDown({ editor, document, spatialIndex }: CommandArgs): CommandResult {
-  const newPosition = {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
-  };
-  let updatedEditor = setCursorPosition(editor, newPosition);
-  if (editor.boxSelectAnchor) {
-    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
-  }
-  return [updatedEditor, document];
+function cursorDown({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: editor.cursorPosition.x,
+      y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
+    }),
+    document,
+  ];
 }
 
-function cursorLeft({ editor, document, spatialIndex }: CommandArgs): CommandResult {
-  const newPosition = {
-    x: editor.cursorPosition.x - CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
-  };
-  let updatedEditor = setCursorPosition(editor, newPosition);
-  if (editor.boxSelectAnchor) {
-    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
-  }
-  return [updatedEditor, document];
+function cursorLeft({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: editor.cursorPosition.x - CURSOR_MOVE_AMOUNT,
+      y: editor.cursorPosition.y,
+    }),
+    document,
+  ];
 }
 
-function cursorRight({ editor, document, spatialIndex }: CommandArgs): CommandResult {
-  const newPosition = {
-    x: editor.cursorPosition.x + CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
-  };
-  let updatedEditor = setCursorPosition(editor, newPosition);
-  if (editor.boxSelectAnchor) {
-    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
-  }
-  return [updatedEditor, document];
+function cursorRight({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: editor.cursorPosition.x + CURSOR_MOVE_AMOUNT,
+      y: editor.cursorPosition.y,
+    }),
+    document,
+  ];
 }
 
 // update this later to use search results and if there is no current search then selected closest shape
