@@ -1,7 +1,7 @@
 // Transformation utilities for shapes, e.g. rotate, scale, translate
 
 import { Shape } from '@renderer/core/geometry/Shape';
-import { ImageCompiler } from '@renderer/core/geometry/transform/TextBoxContentCompiler';
+import { ImageCompiler } from '@renderer/core/geometry/text/ImageCompiler';
 import { generateId } from '@renderer/core/utils/id';
 
 // this is done this way so the data stays immutable

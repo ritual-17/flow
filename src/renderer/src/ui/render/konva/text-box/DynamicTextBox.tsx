@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Shape } from '@renderer/core/geometry/Shape';
-import { ImageCompiler } from '@renderer/core/geometry/transform/TextBoxContentCompiler';
+import { ImageCompiler } from '@renderer/core/geometry/text/ImageCompiler';
 import { Editor } from '@renderer/ui/components/text/Editor';
 import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import Warning from '@renderer/ui/render/konva/text-box/Warning';
