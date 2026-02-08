@@ -7,6 +7,7 @@
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
+    "c": "enterCommandMode",
     "dd": "deleteLine",
     "yy": "yankLine",
     "p": "pasteAfter",
