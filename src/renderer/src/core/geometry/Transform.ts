@@ -22,7 +22,7 @@ the user from exiting text editing mode while the content is in a bad
 state.
 **/
 export async function compileShapeTextContent(shape: Shape, newText?: string): Promise<Shape> {
-  const text = newText || shape.label.text;
+  const text = newText !== undefined ? newText : shape.label.text;
   const compiledHTMLElement = await ImageCompiler.compileFromText(text);
   const { width: scaledWidth, height: scaledHeight } = ImageCompiler.getScaledDimensions(
     shape,
