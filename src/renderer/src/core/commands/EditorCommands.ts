@@ -155,6 +155,22 @@ function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs)
   return [updatedEditor, document];
 }
 
+// functions to handle undo and redo commands. these will be passed as callbacks to the
+// CommandRegistry for the undo and redo commands respectively
+// export function undo(editor: Editor, document: DocumentModel): void {
+//   if (!this.history.canUndo()) return;
+
+//   const prevDocument = this.history.undo(document);
+//   this.callback({ editor, document: prevDocument });
+// }
+
+// export function public redo(editor: Editor, document: DocumentModel): void {
+//   if (!this.history.canRedo()) return;
+
+//   const nextDocument = this.history.redo(document);
+//   this.callback({ editor, document: nextDocument });
+// }
+
 export {
   enterInsertMode,
   enterNormalMode,
