@@ -1,10 +1,7 @@
 // Transformation utilities for shapes, e.g. rotate, scale, translate
 
 import { Shape } from '@renderer/core/geometry/Shape';
-import {
-  dimensionScaler,
-  TextBoxContentCompiler,
-} from '@renderer/core/geometry/transform/TextBoxContentCompiler';
+import { ImageCompiler } from '@renderer/core/geometry/transform/TextBoxContentCompiler';
 import { generateId } from '@renderer/core/utils/id';
 
 // this is done this way so the data stays immutable
@@ -19,41 +16,18 @@ export function translateShape(
   };
 }
 
-export async function compileShape(shape: Shape): Promise<Shape> {
-  try {
-    if (shape.type === 'textBox') {
-      return await updateTextBoxContent(shape, shape.label.text);
-    }
-    const compiledHTML = await TextBoxContentCompiler.compileTextBoxContent(shape.label.text);
-
-    const { width: scaledWidth, height: scaledHeight } = dimensionScaler(shape, compiledHTML);
-
-    const compiledImageMeta: Shape['label']['compiledImageMeta'] = {
-      src: compiledHTML.src,
-      width: scaledWidth,
-      height: scaledHeight,
-    };
-
-    return {
-      ...shape,
-      label: {
-        ...shape.label,
-        compiledImageMeta,
-      },
-    };
-  } catch {
-    return shape;
-  }
-}
-
 /**
 throws error if compilation fails. this is important because it prevents
 the user from exiting text editing mode while the content is in a bad
 state.
 **/
-export async function updateTextBoxContent(shape: Shape, newText: string): Promise<Shape> {
-  const compiledHTMLElement = await TextBoxContentCompiler.compileTextBoxContent(newText);
-  const { width: scaledWidth, height: scaledHeight } = dimensionScaler(shape, compiledHTMLElement);
+export async function compileShapeTextContent(shape: Shape, newText?: string): Promise<Shape> {
+  const text = newText || shape.label.text;
+  const compiledHTMLElement = await ImageCompiler.compileFromText(text);
+  const { width: scaledWidth, height: scaledHeight } = ImageCompiler.getScaledDimensions(
+    shape,
+    compiledHTMLElement,
+  );
 
   const compiledImageMeta: Shape['label']['compiledImageMeta'] = {
     src: compiledHTMLElement.src,
@@ -64,7 +38,7 @@ export async function updateTextBoxContent(shape: Shape, newText: string): Promi
   return {
     ...shape,
     label: {
-      text: newText,
+      text,
       compiledImageMeta,
     },
   };
@@ -93,8 +67,7 @@ export function getSelectionCenter(shapes: Shape[]): { x: number; y: number } {
 
 export const Transform = {
   translateShape,
-  compileShape,
-  updateTextBoxContent,
+  compileShapeTextContent,
   cloneShape,
   getSelectionCenter,
 };

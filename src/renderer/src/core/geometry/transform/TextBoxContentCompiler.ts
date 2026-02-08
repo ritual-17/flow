@@ -1,10 +1,11 @@
 import { Shape } from '@renderer/core/geometry/Shape';
 
-export const TextBoxContentCompiler = {
-  compileTextBoxContent,
+export const ImageCompiler = {
+  compileFromText,
+  getScaledDimensions,
 };
 
-export async function compileTextBoxContent(content: string): Promise<HTMLImageElement> {
+export async function compileFromText(content: string): Promise<HTMLImageElement> {
   try {
     const svg = await window.api.compileTypst(content);
 
@@ -17,7 +18,7 @@ export async function compileTextBoxContent(content: string): Promise<HTMLImageE
 }
 
 // Calculate the scaling factor to fit the image within the text box dimensions
-export function dimensionScaler(
+export function getScaledDimensions(
   _shape: Shape,
   image: HTMLImageElement,
 ): { width: number; height: number } {

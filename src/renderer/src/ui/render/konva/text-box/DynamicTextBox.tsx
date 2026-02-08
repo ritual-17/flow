@@ -1,9 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Shape } from '@renderer/core/geometry/Shape';
-import {
-  compileTextBoxContent,
-  dimensionScaler,
-} from '@renderer/core/geometry/transform/TextBoxContentCompiler';
+import { ImageCompiler } from '@renderer/core/geometry/transform/TextBoxContentCompiler';
 import { Editor } from '@renderer/ui/components/text/Editor';
 import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import Warning from '@renderer/ui/render/konva/text-box/Warning';
@@ -27,7 +24,7 @@ const DynamicTextBox: ShapeComponent<Shape> = ({ shape }) => {
   useEffect(() => {
     const currentRequestId = ++requestIdRef.current;
 
-    compileTextBoxContent(content)
+    ImageCompiler.compileFromText(content)
       .then((img) => {
         // check if this response is still relevant (i.e. the content hasn't changed since this request was made)
         if (currentRequestId !== requestIdRef.current) {
@@ -65,7 +62,10 @@ const DynamicTextBox: ShapeComponent<Shape> = ({ shape }) => {
 
   if (!compiledTextImage) return <></>;
 
-  const { width: scaledWidth, height: scaledHeight } = dimensionScaler(shape, compiledTextImage);
+  const { width: scaledWidth, height: scaledHeight } = ImageCompiler.getScaledDimensions(
+    shape,
+    compiledTextImage,
+  );
   return (
     <>
       <KonvaImage

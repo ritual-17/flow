@@ -20,7 +20,6 @@ import {
   getSelectionCenter,
   Transform,
   translateShape,
-  updateTextBoxContent,
 } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
@@ -28,20 +27,18 @@ import { SpatialIndex } from '../geometry/SpatialIndex';
 
 export async function createCircle(args: CommandArgs): Promise<CommandResult> {
   const { x, y } = args.editor.cursorPosition;
-  const circle = await Transform.compileShape(Circle.build({ x, y }));
+  const circle = await Transform.compileShapeTextContent(Circle.build({ x, y }));
 
   const updatedDocument = addShapeToDocument(args, circle);
 
   return [args.editor, updatedDocument];
 }
 
-export async function createTextBox(args: CommandArgs): Promise<[Editor, DocumentModel]> {
+export async function createTextBox(args: CommandArgs): Promise<CommandResult> {
   const { x, y } = args.editor.cursorPosition;
-  const textBox = TextBox.build({ x, y });
+  const textBox = await Transform.compileShapeTextContent(TextBox.build({ x, y }));
 
-  const compiledTextBox = await updateTextBoxContent(textBox, textBox.label.text);
-
-  const updatedDocument = addShapeToDocument(args, compiledTextBox);
+  const updatedDocument = addShapeToDocument(args, textBox);
 
   return [args.editor, updatedDocument];
 }
