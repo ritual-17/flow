@@ -16,8 +16,8 @@ import {
   clearBoxSelectAnchor,
   clearSelection,
   setCurrentAnchorPoint,
+  setCurrentTextBox,
   setCursorPosition,
-  setEditingTextBox,
   setMode,
   setSelectedShapes,
 } from '@renderer/core/editor/Editor';
@@ -72,7 +72,7 @@ async function enterTextMode(args: CommandArgs): Promise<CommandResult> {
 
   updatedEditor = setMode(updatedEditor, 'text');
   updatedEditor = setCursorPosition(updatedEditor, { x: nearestShape.x, y: nearestShape.y });
-  updatedEditor = setEditingTextBox(updatedEditor, {
+  updatedEditor = setCurrentTextBox(updatedEditor, {
     id: nearestShape.id,
     content: nearestShape.label.text,
   });
@@ -107,7 +107,7 @@ async function enterTextModeForNearestTextBox(args: CommandArgs): Promise<Comman
   if (nearestTextBox) {
     updatedEditor = setMode(updatedEditor, 'text');
     updatedEditor = setCursorPosition(updatedEditor, { x: nearestTextBox.x, y: nearestTextBox.y });
-    updatedEditor = setEditingTextBox(updatedEditor, {
+    updatedEditor = setCurrentTextBox(updatedEditor, {
       id: nearestTextBox.id,
       content: nearestTextBox.label.text,
     });

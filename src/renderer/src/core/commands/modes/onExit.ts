@@ -3,7 +3,7 @@
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { updateShapeInDocument } from '@renderer/core/commands/ManipulationCommands';
 import { Document } from '@renderer/core/document/Document';
-import { setEditingTextBox } from '@renderer/core/editor/Editor';
+import { setCurrentTextBox } from '@renderer/core/editor/Editor';
 import { compileShapeTextContent } from '@renderer/core/geometry/Transform';
 
 type OnExitCommandFunction = (args: CommandArgs) => Promise<CommandResult>;
@@ -33,6 +33,6 @@ async function onExitTextMode(args: CommandArgs): Promise<CommandResult> {
 
   const updatedDocument = updateShapeInDocument(args, updatedTextBox);
   // clear the current text box being edited
-  const updatedEditor = setEditingTextBox(editor, null);
+  const updatedEditor = setCurrentTextBox(editor, null);
   return [updatedEditor, updatedDocument];
 }
