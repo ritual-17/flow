@@ -1,8 +1,17 @@
 import { electronAPI } from '@electron-toolkit/preload';
-import { contextBridge } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
+
+type SaveArgs = { contents: string; filePath?: string | null };
+type SaveResult = { filePath: string | null };
+type OpenResult = { filePath: string; contents: string } | null;
 
 // Custom APIs for renderer
-const api = {};
+const api = {
+  flowFS: {
+    open: (): Promise<OpenResult> => ipcRenderer.invoke('flow:open'),
+    save: (args: SaveArgs): Promise<SaveResult> => ipcRenderer.invoke('flow:save', args),
+  },
+};
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
