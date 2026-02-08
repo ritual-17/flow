@@ -6,6 +6,8 @@ import {
   setCommandBuffer,
   setEditingTextBox,
 } from '@renderer/core/editor/Editor';
+import { deserializeFromJSONString } from '@renderer/core/io/Deserialize';
+import { serializeToJSONString } from '@renderer/core/io/Serialize';
 import { create } from 'zustand';
 
 export interface DocumentStore {
@@ -18,6 +20,8 @@ export interface DocumentStore {
   updateCommandBuffer: (command: string) => void;
   appendCommandBuffer: (char: string) => void;
   updateEditingTextBoxContent: (content: string) => void;
+  saveFile: () => Promise<void>;
+  openFile: () => Promise<void>;
 }
 
 export const useStore = create<DocumentStore>((set) => ({
@@ -56,5 +60,41 @@ export const useStore = create<DocumentStore>((set) => ({
       content,
     });
     set({ editor: updatedEditor });
+  },
+
+  saveFile: async () => {
+    const { document, editor } = useStore.getState();
+
+    const contents = serializeToJSONString(document, editor);
+
+    const result = await window.api.flowFS.save({
+      contents,
+      filePath: document.metadata.path,
+    });
+
+    if (!result.filePath) return; // user cancelled
+
+    const updated = Document.updateDocumentMetadata(document, {
+      path: result.filePath,
+      isSaved: true,
+      lastEdited: new Date(),
+    });
+
+    set({ document: updated });
+  },
+
+  openFile: async () => {
+    const result = await window.api.flowFS.open();
+    if (!result) return; // user cancelled
+
+    const { document, editor } = deserializeFromJSONString(result.contents);
+
+    const docWithPath = Document.updateDocumentMetadata(document, {
+      path: result.filePath,
+      isSaved: true,
+      lastEdited: new Date(),
+    });
+
+    set({ document: docWithPath, editor });
   },
 }));
