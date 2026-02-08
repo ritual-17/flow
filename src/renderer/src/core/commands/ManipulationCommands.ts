@@ -189,7 +189,7 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
   return [updatedEditor, document];
 }
 
-export function paste(args: CommandArgs): CommandResult {
+export async function paste(args: CommandArgs): Promise<CommandResult> {
   const { editor, document, spatialIndex } = args;
   if (editor.clipboard.length === 0) {
     return [editor, document];
@@ -206,13 +206,15 @@ export function paste(args: CommandArgs): CommandResult {
 
   const cursor = updatedEditor.cursorPosition;
 
-  // 1. Clone with new IDs, 2. Position at cursor, 3. Insert each into document (via loop),
-  const cloned = updatedEditor.clipboard.map(cloneShape);
-  const position = cloned.map((shape) =>
-    translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }),
+  // 1. Clone with new IDs, 2. Position at cursor, 3. compile, 4. Insert each into document (via loop),
+  const clonedShapes = await Promise.all(
+    updatedEditor.clipboard
+      .map(cloneShape)
+      .map((shape) => translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }))
+      .map((shape) => Transform.compileShapeTextContent(shape)),
   );
 
-  for (const shape of position) {
+  for (const shape of clonedShapes) {
     updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
   }
 
