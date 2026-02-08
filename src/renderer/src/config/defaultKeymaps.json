@@ -39,6 +39,7 @@
     "e": "openFile",
     "q": "quitEditor",
     "wq": "saveAndQuit",
-    "q!": "forceQuit"
+    "q!": "forceQuit",
+    "<Esc>": "enterNormalMode"
   }
 }
