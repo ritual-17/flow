@@ -3,13 +3,14 @@ import { Shape } from '@renderer/core/geometry/Shape';
 import { ImageCompiler } from '@renderer/core/geometry/text/ImageCompiler';
 import { Editor } from '@renderer/ui/components/text/Editor';
 import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
+import { LocationResolver } from '@renderer/ui/render/konva/text-box/LocationResolver';
 import Warning from '@renderer/ui/render/konva/text-box/Warning';
 import { useStore } from '@renderer/ui/Store';
 import { useEffect, useRef, useState } from 'react';
 import { Image as KonvaImage } from 'react-konva';
 import { Html } from 'react-konva-utils';
 
-// This renders a text box that is currently being edited and has changing content
+// This renders a text box or label that is currently being edited and has changing content
 const DynamicTextBox: ShapeComponent<Shape> = ({ shape }) => {
   const [compiledTextImage, setCompiledTextImage] = useState<HTMLImageElement | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -66,12 +67,18 @@ const DynamicTextBox: ShapeComponent<Shape> = ({ shape }) => {
     shape,
     compiledTextImage,
   );
+
+  const { x, y } = LocationResolver.resolveImagePosition(shape, {
+    width: scaledWidth,
+    height: scaledHeight,
+  });
+
   return (
     <>
       <KonvaImage
         image={compiledTextImage}
-        x={shape.x}
-        y={shape.y}
+        x={x}
+        y={y}
         width={scaledWidth}
         height={scaledHeight}
         stroke={'white'}

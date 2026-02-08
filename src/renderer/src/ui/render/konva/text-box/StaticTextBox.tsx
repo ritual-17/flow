@@ -4,6 +4,7 @@ import { ShapeComponentProps } from '@renderer/ui/render/konva/ShapeResolver';
 import { JSX, useEffect, useState } from 'react';
 import { Image as KonvaImage } from 'react-konva';
 
+// optional x and y props for specifying label position
 interface StaticTextBoxProps<T extends Shape = Shape> extends ShapeComponentProps<T> {
   x?: number;
   y?: number;
