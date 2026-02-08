@@ -62,13 +62,18 @@ export const useStore = create<DocumentStore>((set) => ({
 
     if (!result.filePath) return; // user cancelled
 
-    const updated = updateDocumentMetadata(document, {
+    const updatedDocument = updateDocumentMetadata(document, {
       path: result.filePath,
       isSaved: true,
       lastEdited: new Date(),
     });
 
-    set({ document: updated });
+    const clearedEditor = setCommandBuffer(editor, '');
+
+    set({
+      document: updatedDocument,
+      editor: clearedEditor,
+    });
   },
 
   openFile: async () => {
@@ -77,12 +82,17 @@ export const useStore = create<DocumentStore>((set) => ({
 
     const { document, editor } = deserializeFromJSONString(result.contents);
 
-    const docWithPath = updateDocumentMetadata(document, {
+    const updatedDocument = updateDocumentMetadata(document, {
       path: result.filePath,
       isSaved: true,
       lastEdited: new Date(),
     });
 
-    set({ document: docWithPath, editor });
+    const clearedEditor = setCommandBuffer(editor, '');
+
+    set({
+      document: updatedDocument,
+      editor: clearedEditor,
+    });
   },
 }));
