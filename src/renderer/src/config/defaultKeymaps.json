@@ -47,6 +47,7 @@
   "text": {},
   "command": {
     "w": "saveFile",
+    "e": "openFile",
     "q": "quitEditor",
     "wq": "saveAndQuit",
     "q!": "forceQuit"
