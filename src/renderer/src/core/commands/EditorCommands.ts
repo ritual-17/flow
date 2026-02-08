@@ -72,7 +72,7 @@ async function enterTextMode(args: CommandArgs): Promise<CommandResult> {
     updatedEditor = setCursorPosition(updatedEditor, { x: nearestTextBox.x, y: nearestTextBox.y });
     updatedEditor = setEditingTextBox(updatedEditor, {
       id: nearestTextBox.id,
-      content: nearestTextBox.text,
+      content: nearestTextBox.label.text,
     });
     return [updatedEditor, updatedDocument];
   }

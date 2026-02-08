@@ -39,7 +39,7 @@ export async function createTextBox(args: CommandArgs): Promise<[Editor, Documen
   const { x, y } = args.editor.cursorPosition;
   const textBox = TextBox.build({ x, y });
 
-  const compiledTextBox = await updateTextBoxContent(textBox, textBox.text);
+  const compiledTextBox = await updateTextBoxContent(textBox, textBox.label.text);
 
   const updatedDocument = addShapeToDocument(args, compiledTextBox);
 

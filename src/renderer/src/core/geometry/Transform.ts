@@ -23,7 +23,7 @@ export function translateShape(
 export async function compileShape(shape: Shape): Promise<Shape> {
   try {
     if (shape.type === 'textBox') {
-      return await updateTextBoxContent(shape, shape.text);
+      return await updateTextBoxContent(shape, shape.label.text);
     }
     const compiledHTML = await TextBoxContentCompiler.compileTextBoxContent(shape.label.text);
 
@@ -55,7 +55,7 @@ export async function updateTextBoxContent(textBox: TextBox, newText: string): P
       compiledHTMLElement,
     );
 
-    const compiledImageMeta: TextBox['compiledImageMeta'] = {
+    const compiledImageMeta: TextBox['label']['compiledImageMeta'] = {
       src: compiledHTMLElement.src,
       width: scaledWidth,
       height: scaledHeight,
@@ -63,8 +63,10 @@ export async function updateTextBoxContent(textBox: TextBox, newText: string): P
 
     return {
       ...textBox,
-      compiledImageMeta,
-      text: newText,
+      label: {
+        text: newText,
+        compiledImageMeta,
+      },
     };
   } catch {
     return textBox;

@@ -10,7 +10,7 @@ const StaticTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
 
   // need to load the image from the src url in compiledImageMeta
   useEffect(() => {
-    if (!shape.compiledImageMeta) {
+    if (!shape.label.compiledImageMeta) {
       setImage(null);
       return;
     }
@@ -27,13 +27,13 @@ const StaticTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
       setImage(null);
     };
 
-    img.src = shape.compiledImageMeta.src;
+    img.src = shape.label.compiledImageMeta.src;
 
     // Cleanup function
     return () => {
       URL.revokeObjectURL(img.src);
     };
-  }, [shape.compiledImageMeta]);
+  }, [shape.label.compiledImageMeta]);
 
   return image ? (
     <>
@@ -41,8 +41,8 @@ const StaticTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
         image={image}
         x={shape.x}
         y={shape.y}
-        width={shape.compiledImageMeta?.width ?? image.width}
-        height={shape.compiledImageMeta?.height ?? image.height}
+        width={shape.label.compiledImageMeta?.width ?? image.width}
+        height={shape.label.compiledImageMeta?.height ?? image.height}
         stroke={stroke}
         fill='white'
       />

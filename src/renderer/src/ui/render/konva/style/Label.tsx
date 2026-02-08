@@ -35,6 +35,7 @@ function Label({ shape }: LabelProps) {
     };
   }, [shape.label.compiledImageMeta]);
 
+  if (shape.type === 'textBox') return null;
   if (!shape.label.compiledImageMeta) return null;
 
   const { width, height } = resolveLabelDimensions(shape);

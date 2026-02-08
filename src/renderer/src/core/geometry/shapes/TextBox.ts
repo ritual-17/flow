@@ -1,11 +1,9 @@
-import { AnchorPoint, buildBaseShape, ImageMeta, IShapeBase } from '@renderer/core/geometry/Shape';
+import { AnchorPoint, buildBaseShape, IShapeBase } from '@renderer/core/geometry/Shape';
 
 export type TextBox = IShapeBase & {
   type: 'textBox';
   width: number;
   height: number;
-  text: string;
-  compiledImageMeta: ImageMeta | null;
 };
 
 export function build(attrs: Partial<TextBox>): TextBox {
@@ -13,9 +11,11 @@ export function build(attrs: Partial<TextBox>): TextBox {
     type: 'textBox',
     width: 100,
     height: 50,
-    text: 'Enter text here',
-    compiledImageMeta: null,
     ...buildBaseShape(),
+    label: {
+      text: 'Enter text here',
+      compiledImageMeta: null,
+    },
     ...attrs,
   };
 
@@ -24,8 +24,12 @@ export function build(attrs: Partial<TextBox>): TextBox {
 
 export function generateAnchorPoints(textBox: TextBox): AnchorPoint[] {
   const { x, y, id: ownerId } = textBox;
-  const width = textBox.compiledImageMeta ? textBox.compiledImageMeta.width : textBox.width;
-  const height = textBox.compiledImageMeta ? textBox.compiledImageMeta.height : textBox.height;
+  const width = textBox.label.compiledImageMeta
+    ? textBox.label.compiledImageMeta.width
+    : textBox.width;
+  const height = textBox.label.compiledImageMeta
+    ? textBox.label.compiledImageMeta.height
+    : textBox.height;
 
   return [
     { ownerId, position: 0, x: x + width / 2, y: y }, // top center

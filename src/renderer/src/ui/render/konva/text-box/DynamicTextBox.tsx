@@ -83,7 +83,7 @@ const DynamicTextBox: ShapeComponent<DomainText> = ({ shape }) => {
           setContent={updateEditingTextBoxContent}
           x={shape.x}
           y={shape.y + scaledHeight + 5}
-          initialDoc={shape.text}
+          initialDoc={shape.label.text}
         />
       </Html>
     </>
