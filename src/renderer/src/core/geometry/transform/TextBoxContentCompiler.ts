@@ -1,4 +1,4 @@
-import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
+import { Shape } from '@renderer/core/geometry/Shape';
 
 export const TextBoxContentCompiler = {
   compileTextBoxContent,
@@ -18,7 +18,7 @@ export async function compileTextBoxContent(content: string): Promise<HTMLImageE
 
 // Calculate the scaling factor to fit the image within the text box dimensions
 export function dimensionScaler(
-  _textBox: TextBox,
+  _shape: Shape,
   image: HTMLImageElement,
 ): { width: number; height: number } {
   // potentially scale the image down to fit within the text box dimensions, while maintaining aspect ratio

@@ -20,6 +20,28 @@ export function translateShape(
   };
 }
 
+export async function compileShape(shape: Shape): Promise<Shape> {
+  if (shape.type === 'textBox') {
+    return await updateTextBoxContent(shape, shape.text);
+  }
+  const compiledHTML = await TextBoxContentCompiler.compileTextBoxContent(shape.label.text);
+  const { width: scaledWidth, height: scaledHeight } = dimensionScaler(shape, compiledHTML);
+
+  const compiledImageMeta: Shape['label']['compiledImageMeta'] = {
+    src: compiledHTML.src,
+    width: scaledWidth,
+    height: scaledHeight,
+  };
+
+  return {
+    ...shape,
+    label: {
+      ...shape.label,
+      compiledImageMeta,
+    },
+  };
+}
+
 export async function updateTextBoxContent(textBox: TextBox, newText: string): Promise<TextBox> {
   const compiledHTMLElement = await TextBoxContentCompiler.compileTextBoxContent(newText);
   const { width: scaledWidth, height: scaledHeight } = dimensionScaler(
@@ -61,4 +83,10 @@ export function getSelectionCenter(shapes: Shape[]): { x: number; y: number } {
   };
 }
 
-export {};
+export const Transform = {
+  translateShape,
+  compileShape,
+  updateTextBoxContent,
+  cloneShape,
+  getSelectionCenter,
+};

@@ -18,6 +18,7 @@ import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
   cloneShape,
   getSelectionCenter,
+  Transform,
   translateShape,
   updateTextBoxContent,
 } from '@renderer/core/geometry/Transform';
@@ -25,9 +26,9 @@ import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 import { SpatialIndex } from '../geometry/SpatialIndex';
 
-export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
+export async function createCircle(args: CommandArgs): Promise<CommandResult> {
   const { x, y } = args.editor.cursorPosition;
-  const circle = Circle.build({ x, y });
+  const circle = await Transform.compileShape(Circle.build({ x, y }));
 
   const updatedDocument = addShapeToDocument(args, circle);
 

@@ -1,4 +1,4 @@
-import { AnchorPoint, buildBaseShape, IShapeBase } from '@renderer/core/geometry/Shape';
+import { AnchorPoint, buildBaseShape, ImageMeta, IShapeBase } from '@renderer/core/geometry/Shape';
 
 export type TextBox = IShapeBase & {
   type: 'textBox';
@@ -6,12 +6,6 @@ export type TextBox = IShapeBase & {
   height: number;
   text: string;
   compiledImageMeta: ImageMeta | null;
-};
-
-export type ImageMeta = {
-  src: string;
-  width: number;
-  height: number;
 };
 
 export function build(attrs: Partial<TextBox>): TextBox {
