@@ -1,7 +1,6 @@
 // Transformation utilities for shapes, e.g. rotate, scale, translate
 
 import { Shape } from '@renderer/core/geometry/Shape';
-import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
   dimensionScaler,
   TextBoxContentCompiler,
@@ -47,30 +46,28 @@ export async function compileShape(shape: Shape): Promise<Shape> {
   }
 }
 
-export async function updateTextBoxContent(textBox: TextBox, newText: string): Promise<TextBox> {
-  try {
-    const compiledHTMLElement = await TextBoxContentCompiler.compileTextBoxContent(newText);
-    const { width: scaledWidth, height: scaledHeight } = dimensionScaler(
-      textBox,
-      compiledHTMLElement,
-    );
+/**
+throws error if compilation fails. this is important because it prevents
+the user from exiting text editing mode while the content is in a bad
+state.
+**/
+export async function updateTextBoxContent(shape: Shape, newText: string): Promise<Shape> {
+  const compiledHTMLElement = await TextBoxContentCompiler.compileTextBoxContent(newText);
+  const { width: scaledWidth, height: scaledHeight } = dimensionScaler(shape, compiledHTMLElement);
 
-    const compiledImageMeta: TextBox['label']['compiledImageMeta'] = {
-      src: compiledHTMLElement.src,
-      width: scaledWidth,
-      height: scaledHeight,
-    };
+  const compiledImageMeta: Shape['label']['compiledImageMeta'] = {
+    src: compiledHTMLElement.src,
+    width: scaledWidth,
+    height: scaledHeight,
+  };
 
-    return {
-      ...textBox,
-      label: {
-        text: newText,
-        compiledImageMeta,
-      },
-    };
-  } catch {
-    return textBox;
-  }
+  return {
+    ...shape,
+    label: {
+      text: newText,
+      compiledImageMeta,
+    },
+  };
 }
 
 export function cloneShape(shape: Shape): Shape {

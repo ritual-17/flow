@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { TextBox as DomainText } from '@renderer/core/geometry/shapes/TextBox';
+import { Shape } from '@renderer/core/geometry/Shape';
 import {
   compileTextBoxContent,
   dimensionScaler,
@@ -13,7 +13,7 @@ import { Image as KonvaImage } from 'react-konva';
 import { Html } from 'react-konva-utils';
 
 // This renders a text box that is currently being edited and has changing content
-const DynamicTextBox: ShapeComponent<DomainText> = ({ shape }) => {
+const DynamicTextBox: ShapeComponent<Shape> = ({ shape }) => {
   const [compiledTextImage, setCompiledTextImage] = useState<HTMLImageElement | null>(null);
   const [error, setError] = useState<string | null>(null);
 

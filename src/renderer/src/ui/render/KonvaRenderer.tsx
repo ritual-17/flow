@@ -23,7 +23,7 @@ function KonvaRenderer() {
 
   const selectedShapeIds = new Set(useStore((state) => state.editor.selectedShapeIds));
 
-  const nearestShapeId = useNearestShape();
+  const nearestShapeId = useNearestShape()?.id;
 
   return (
     <Layer>
