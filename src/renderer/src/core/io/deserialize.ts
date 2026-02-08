@@ -1,9 +1,4 @@
-import {
-  addShapesToDocument,
-  createNewDocument,
-  DocumentModel,
-  updateDocumentMetadata,
-} from '@renderer/core/document/Document';
+import { Document, DocumentModel } from '@renderer/core/document/Document';
 import { createEditor, Editor, setCursorPosition } from '@renderer/core/editor/Editor';
 import { Shape } from '@renderer/core/geometry/Shape';
 
@@ -40,15 +35,15 @@ export function deserializeFromJSONString(json: string): {
   assertFlowFile(parsed);
 
   // Rebuild document
-  let document = createNewDocument(parsed.metadata.name);
+  let document = Document.createNewDocument(parsed.metadata.name);
 
-  document = updateDocumentMetadata(document, {
+  document = Document.updateDocumentMetadata(document, {
     path: parsed.metadata.path ?? null,
     isSaved: true,
     lastEdited: new Date(parsed.metadata.lastEditedISO),
   });
 
-  document = addShapesToDocument(document, parsed.shapes as Shape[]);
+  document = Document.addShapesToDocument(document, parsed.shapes as Shape[]);
 
   // Rebuild editor
   let editor = createEditor();
