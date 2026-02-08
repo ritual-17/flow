@@ -3,6 +3,7 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { join } from 'path';
 
 import icon from '../../resources/icon.png?asset';
+import { openFlowFile, saveFlowFile } from './FileSystem';
 import { compileTypstDocument } from './typst/TextCompiler';
 
 function createWindow(): void {
@@ -76,3 +77,14 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+ipcMain.handle('flow:open', async () => {
+  return await openFlowFile();
+});
+
+ipcMain.handle(
+  'flow:save',
+  async (_event, args: { contents: string; filePath?: string | null }) => {
+    return await saveFlowFile(args);
+  },
+);
