@@ -4,6 +4,7 @@ import BoxSelectOverlay from '@renderer/ui/render/konva/BoxSelectOverlay';
 import Cursor from '@renderer/ui/render/konva/Cursor';
 import getComponent from '@renderer/ui/render/konva/ShapeResolver';
 import { HoverEffect } from '@renderer/ui/render/konva/style/HoverEffect';
+import Label from '@renderer/ui/render/konva/style/Label';
 import { useStore } from '@renderer/ui/Store';
 import { Group, Layer } from 'react-konva';
 
@@ -37,6 +38,7 @@ function KonvaRenderer() {
           <Group key={`group-${shape.id}`}>
             <Component key={shape.id} shape={shape} stroke={stroke} />
             {hovered && <HoverEffect shape={shape} />}
+            <Label shape={shape} />
           </Group>
         );
       })}

@@ -16,7 +16,7 @@ export function buildBaseShape(): IShapeBase {
     strokeColor: 'black',
     fillColor: 'white',
     label: {
-      text: 'this is a test',
+      text: '$pi_0 + integral_0^infinity + min(0, 8)$',
       compiledImageMeta: null,
     },
   };

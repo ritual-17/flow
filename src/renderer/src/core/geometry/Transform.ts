@@ -21,45 +21,54 @@ export function translateShape(
 }
 
 export async function compileShape(shape: Shape): Promise<Shape> {
-  if (shape.type === 'textBox') {
-    return await updateTextBoxContent(shape, shape.text);
+  try {
+    if (shape.type === 'textBox') {
+      return await updateTextBoxContent(shape, shape.text);
+    }
+    const compiledHTML = await TextBoxContentCompiler.compileTextBoxContent(shape.label.text);
+
+    const { width: scaledWidth, height: scaledHeight } = dimensionScaler(shape, compiledHTML);
+
+    const compiledImageMeta: Shape['label']['compiledImageMeta'] = {
+      src: compiledHTML.src,
+      width: scaledWidth,
+      height: scaledHeight,
+    };
+
+    return {
+      ...shape,
+      label: {
+        ...shape.label,
+        compiledImageMeta,
+      },
+    };
+  } catch {
+    return shape;
   }
-  const compiledHTML = await TextBoxContentCompiler.compileTextBoxContent(shape.label.text);
-  const { width: scaledWidth, height: scaledHeight } = dimensionScaler(shape, compiledHTML);
-
-  const compiledImageMeta: Shape['label']['compiledImageMeta'] = {
-    src: compiledHTML.src,
-    width: scaledWidth,
-    height: scaledHeight,
-  };
-
-  return {
-    ...shape,
-    label: {
-      ...shape.label,
-      compiledImageMeta,
-    },
-  };
 }
 
 export async function updateTextBoxContent(textBox: TextBox, newText: string): Promise<TextBox> {
-  const compiledHTMLElement = await TextBoxContentCompiler.compileTextBoxContent(newText);
-  const { width: scaledWidth, height: scaledHeight } = dimensionScaler(
-    textBox,
-    compiledHTMLElement,
-  );
+  try {
+    const compiledHTMLElement = await TextBoxContentCompiler.compileTextBoxContent(newText);
+    const { width: scaledWidth, height: scaledHeight } = dimensionScaler(
+      textBox,
+      compiledHTMLElement,
+    );
 
-  const compiledImageMeta: TextBox['compiledImageMeta'] = {
-    src: compiledHTMLElement.src,
-    width: scaledWidth,
-    height: scaledHeight,
-  };
+    const compiledImageMeta: TextBox['compiledImageMeta'] = {
+      src: compiledHTMLElement.src,
+      width: scaledWidth,
+      height: scaledHeight,
+    };
 
-  return {
-    ...textBox,
-    compiledImageMeta,
-    text: newText,
-  };
+    return {
+      ...textBox,
+      compiledImageMeta,
+      text: newText,
+    };
+  } catch {
+    return textBox;
+  }
 }
 
 export function cloneShape(shape: Shape): Shape {
