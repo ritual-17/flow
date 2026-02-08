@@ -1,4 +1,5 @@
 import { Shape } from '@renderer/core/geometry/Shape';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 
 export const ImageCompiler = {
   compileFromText,
@@ -19,9 +20,17 @@ export async function compileFromText(content: string): Promise<HTMLImageElement
 
 // Calculate the scaling factor to fit the image within the text box dimensions
 export function getScaledDimensions(
-  _shape: Shape,
+  shape: Shape,
   image: HTMLImageElement,
 ): { width: number; height: number } {
+  if (shape.type === 'textBox') {
+    return resolveTextBoxDimensions(shape, image);
+  } else {
+    return resolveLabelDimensions(shape, image);
+  }
+}
+
+function resolveTextBoxDimensions(_textBox: TextBox, image: HTMLImageElement) {
   // potentially scale the image down to fit within the text box dimensions, while maintaining aspect ratio
   // const widthScale = textBox.width / image.width;
   // const heightScale = textBox.height / image.height;
@@ -33,6 +42,31 @@ export function getScaledDimensions(
     width: image.width * scaler,
     height: image.height * scaler,
   };
+}
+
+function resolveLabelDimensions(shape: Exclude<Shape, TextBox>, image: HTMLImageElement) {
+  const { width: labelWidth, height: labelHeight } = image;
+  const { width: shapeWidth, height: shapeHeight } = getShapeDimensions(shape);
+
+  // if the label is larger than the shape, we need to scale it down to fit within the shape
+  const widthScale = shapeWidth > 0 ? Math.min(1, shapeWidth / labelWidth) : 1;
+  const heightScale = shapeHeight > 0 ? Math.min(1, shapeHeight / labelHeight) : 1;
+  const scale = Math.min(widthScale, heightScale);
+
+  return {
+    width: labelWidth * scale,
+    height: labelHeight * scale,
+  };
+}
+
+// this could be moved to a util file for better reusability and visibility, but for now it's only used here
+function getShapeDimensions(shape: Shape) {
+  switch (shape.type) {
+    case 'circle':
+      return { width: shape.radius * 2, height: shape.radius * 2 };
+    default:
+      return { width: 0, height: 0 };
+  }
 }
 
 async function svgStringToImage(svg: string): Promise<HTMLImageElement> {
