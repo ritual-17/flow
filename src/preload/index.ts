@@ -1,9 +1,17 @@
 import { electronAPI } from '@electron-toolkit/preload';
 import { contextBridge, ipcRenderer } from 'electron';
 
+type SaveArgs = { contents: string; filePath?: string | null };
+type SaveResult = { filePath: string | null };
+type OpenResult = { filePath: string; contents: string } | null;
+
 // Custom APIs for renderer
 const api = {
   compileTypst: (source: string) => ipcRenderer.invoke('compile-typst', source),
+  flowFS: {
+    open: (): Promise<OpenResult> => ipcRenderer.invoke('flow:open'),
+    save: (args: SaveArgs): Promise<SaveResult> => ipcRenderer.invoke('flow:save', args),
+  },
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to
