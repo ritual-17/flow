@@ -11,7 +11,7 @@
     "i": "enterInsertMode",
     "v": "enterVisualMode",
     "t": "enterTextMode",
-    "T": "enterTextModeForLabel",
+    "T": "enterTextModeForNearestTextBox",
     "dd": "deleteLine",
     "yy": "yankLine",
     "p": "pasteAfter",

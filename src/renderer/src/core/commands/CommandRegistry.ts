@@ -70,7 +70,7 @@ function commandFromName(command: string): CommandFunction | null {
       return enterAnchorLineMode;
     case 'enterTextMode':
       return enterTextMode;
-    case 'enterTextModeForLabel':
+    case 'enterTextModeForNearestTextBox':
       return enterTextModeForNearestTextBox;
     case 'up':
       return cursorUp;
