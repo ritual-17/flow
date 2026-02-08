@@ -51,6 +51,7 @@ const StaticTextBox: ShapeComponent<Shape> = ({ shape, stroke }) => {
       )
     );
   }
+  if (!shape.label.text) return null;
 
   const { width, height } = resolveLabelDimensions(shape);
   const { x, y } = resolveLabelPosition(shape, { width, height });
