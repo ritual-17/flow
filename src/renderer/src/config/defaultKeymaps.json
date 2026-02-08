@@ -10,6 +10,7 @@
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
+    "c": "enterCommandMode",
     "t": "enterTextMode",
     "dd": "deleteLine",
     "yy": "yankLine",
