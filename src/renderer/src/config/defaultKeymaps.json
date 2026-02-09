@@ -51,7 +51,21 @@
     "wq": "saveAndQuit",
     "q!": "forceQuit"
   },
-  "line": {},
+  "line": {
+    "j": "up",
+    "k": "down",
+    "h": "left",
+    "l": "right",
+
+    "n": "newLine",
+    "<Space>": "linePoint",
+    ",": "endLine",
+
+    "s": "squareLine",
+    "c": "curvedLine",
+
+    "A": "enterAnchorLineMode"
+  },
   "anchor-line": {
     "j": "downAnchor",
     "k": "upAnchor",
