@@ -31,6 +31,8 @@ export class CommandDispatcher {
 
   private history = new History<DocumentModel>();
 
+  private isApplyingHistory = false;
+
   constructor(callback: CommandDispatcherCallback) {
     this.callback = callback;
   }
@@ -84,6 +86,10 @@ export class CommandDispatcher {
   ): void {
     const beforeDocument = document; // for recording in history
 
+    // check if command is a history command
+    const isHistoryCommand =
+      commandFunc === CommandRegistry.undo || commandFunc === CommandRegistry.redo;
+
     // to command args takes in editor and document and converts it to a command arg object
     // which is an object that holds the editor, document, spatial index and any additional
     // args needed for the command
@@ -92,16 +98,7 @@ export class CommandDispatcher {
     if (!(result instanceof Promise)) {
       const [updatedEditor, updatedDocument] = result;
 
-      // record the command in history before updating the state
-      if (updatedDocument !== beforeDocument) {
-        const [_, patches, inversePatches] = produceWithPatches(beforeDocument, (draft) =>
-          Object.assign(draft, updatedDocument),
-        ); // get patches to update the document and inverse patches to undo the update
-
-        if (patches.length > 0) {
-          this.history.record({ patches, backwardPatches: inversePatches });
-        }
-      }
+      this.recordHistory(beforeDocument, updatedDocument, isHistoryCommand);
 
       const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
       this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
@@ -110,6 +107,7 @@ export class CommandDispatcher {
 
     result
       .then(([updatedEditor, updatedDocument]) => {
+        this.recordHistory(beforeDocument, updatedDocument, isHistoryCommand);
         const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
         this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
       })
@@ -118,6 +116,34 @@ export class CommandDispatcher {
         console.error('Command execution failed:', error);
         this.callback({ editor, document });
       });
+  }
+
+  private recordHistory(
+    beforeDocument: DocumentModel,
+    afterDocument: DocumentModel,
+    isHistoryCommand: boolean,
+  ): void {
+    // rebuild spatial index with updated document
+    this.spatialIndex = new FlattenSpatialIndex();
+    afterDocument.shapes.forEach((shape) => this.spatialIndex.addShape(shape));
+
+    if (isHistoryCommand) {
+      this.isApplyingHistory = true;
+    }
+
+    // record the command in history before updating the state
+    if (afterDocument !== beforeDocument && !this.isApplyingHistory) {
+      const [_, patches, inversePatches] = produceWithPatches(beforeDocument, (draft) =>
+        Object.assign(draft, afterDocument),
+      ); // get patches to update the document and inverse patches to undo the update
+      if (patches.length > 0) {
+        this.history.record({ patches, backwardPatches: inversePatches });
+      }
+    }
+
+    if (isHistoryCommand) {
+      this.isApplyingHistory = false;
+    }
   }
 
   private getCommandParser(editor: Editor) {

@@ -130,4 +130,4 @@ function commandFromName(command: string): CommandFunction | null {
       return null;
   }
 }
-export { commandFromName };
+export { commandFromName, undo, redo };
