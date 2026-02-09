@@ -147,6 +147,7 @@ export class CommandDispatcher {
       editor,
       document,
       spatialIndex: this.spatialIndex,
+      history: this.history,
       args: {},
     };
   }

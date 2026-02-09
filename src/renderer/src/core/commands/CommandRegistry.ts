@@ -39,6 +39,7 @@ import {
   visualUp,
 } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
+import { History } from '@renderer/core/document/History';
 import { Editor } from '@renderer/core/editor/Editor';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
@@ -46,6 +47,7 @@ export type CommandArgs = {
   editor: Editor;
   document: DocumentModel;
   spatialIndex: SpatialIndex;
+  history: History<DocumentModel>;
   args: Record<string, unknown>;
 };
 

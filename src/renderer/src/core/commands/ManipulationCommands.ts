@@ -221,6 +221,23 @@ export function paste(args: CommandArgs): CommandResult {
   return [updatedEditor, updatedDocument];
 }
 
+// functions to handle undo and redo commands
+export function undo(args: CommandArgs): CommandResult {
+  const { editor, document, history } = args;
+  if (!history.canUndo()) return [editor, document];
+
+  const prevDocument = history.undo(document);
+  return [editor, prevDocument];
+}
+
+export function redo(args: CommandArgs): CommandResult {
+  const { editor, document, history } = args;
+  if (!history.canRedo()) return [editor, document];
+
+  const nextDocument = history.redo(document);
+  return [editor, nextDocument];
+}
+
 function helperRemoveShapes(
   document: DocumentModel,
   editor: Editor,
