@@ -7,6 +7,3 @@ export type KeyMaps = {
 export interface KeyMap {
   [keys: string]: string;
 }
-
-
-
