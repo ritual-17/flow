@@ -170,20 +170,17 @@ export function addPointToLine(args: CommandArgs): CommandResult {
 
   let updatedEditor = editor;
   let updatedDocument = document;
-
   const currentLineId = editor.currentLineId;
+  if (!currentLineId) {
+    // need to add a point rather than a line because we only have one point so far
+    return startNewLine(args);
+  }
+
   const { x, y } = args.editor.cursorPosition;
   const currentPoint = Point.build({
     x: x,
     y: y,
   });
-  if (!currentLineId) {
-    // need to add a point rather than a line because we only have one point so far
-    updatedEditor = setCurrentLineId(updatedEditor, currentPoint.id);
-    updatedDocument = addShapeToDocument(args, currentPoint);
-    return [updatedEditor, updatedDocument];
-  }
-
   const currentLine = Document.getShapeById(updatedDocument, currentLineId);
   switch (currentLine.type) {
     case 'point': {
