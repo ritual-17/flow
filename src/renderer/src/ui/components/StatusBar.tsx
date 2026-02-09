@@ -1,6 +1,7 @@
 // components/StatusBar.tsx
 import { useStore } from '@renderer/ui/Store';
 
+// just visual for showing current mode, cursor position, shape count, etc.
 export function StatusBar() {
   const mode = useStore((state) => state.editor.mode);
   const cursor = useStore((state) => state.editor.cursorPosition);
@@ -8,6 +9,7 @@ export function StatusBar() {
   const isSaved = useStore((state) => state.document.metadata.isSaved);
   const documentName = useStore((state) => state.document.metadata.name);
   const commandBuffer = useStore((state) => state.editor.commandBuffer);
+  const statusMessage = useStore((state) => state.editor.statusMessage);
 
   const getModeDisplay = () => {
     switch (mode) {
@@ -64,6 +66,10 @@ export function StatusBar() {
 
       <div className='flex items-center gap-2'>
         <span className='opacity-80 font-mono'>{commandBuffer}</span>
+      </div>
+
+      <div className='flex items-center gap-2'>
+        <span className='opacity-80 font-mono'>{statusMessage ?? ''}</span>
       </div>
     </div>
   );

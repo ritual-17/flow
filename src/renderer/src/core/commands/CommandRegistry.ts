@@ -9,6 +9,7 @@ import {
   enterCommandMode,
   enterInsertMode,
   enterNormalMode,
+  enterTextMode,
   enterVisualMode,
 } from '@renderer/core/commands/EditorCommands';
 import {
@@ -16,16 +17,24 @@ import {
   createCircle,
   createRectangle,
   createTextBox,
+  deleteSelection,
+  paste,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
   translateSelectionUp,
+  yankSelection,
 } from '@renderer/core/commands/ManipulationCommands';
 import {
   jumpToDownAnchorPoint,
   jumpToLeftAnchorPoint,
   jumpToRightAnchorPoint,
   jumpToUpAnchorPoint,
+  toggleBoxSelect,
+  visualDown,
+  visualLeft,
+  visualRight,
+  visualUp,
 } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor } from '@renderer/core/editor/Editor';
@@ -54,6 +63,12 @@ function commandFromName(command: string): CommandFunction | null {
       return enterVisualMode;
     case 'enterCommandMode':
       return enterCommandMode;
+    case 'enterLineMode':
+      return enterLineMode;
+    case 'enterAnchorLineMode':
+      return enterAnchorLineMode;
+    case 'enterTextMode':
+      return enterTextMode;
     case 'up':
       return cursorUp;
     case 'down':
@@ -68,6 +83,23 @@ function commandFromName(command: string): CommandFunction | null {
       return createTextBox;
     case 'createRectangle':
       return createRectangle;
+    case 'deleteSelection':
+      return deleteSelection;
+    case 'yankSelection':
+      return yankSelection;
+    case 'toggleBoxSelect':
+      return toggleBoxSelect;
+    case 'pasteAfter':
+    case 'pasteOverSelection':
+      return paste;
+    case 'visualUp':
+      return visualUp;
+    case 'visualDown':
+      return visualDown;
+    case 'visualLeft':
+      return visualLeft;
+    case 'visualRight':
+      return visualRight;
     default:
       return null;
   }

@@ -15,6 +15,7 @@ export type ShapeComponent<T extends Shape = Shape> = (
   props: ShapeComponentProps<T>,
 ) => JSX.Element;
 
+// mapping from shape type to corresponding Konva component
 function getComponent<T extends Shape>(shape: T): ShapeComponent<T> {
   const componentMap = {
     circle: Circle,

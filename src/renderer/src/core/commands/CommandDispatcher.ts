@@ -4,6 +4,7 @@ import { AnchorLineModeParser } from '@renderer/core/commands/parsers/AnchorLine
 import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModeParser';
 import { LineModeParser } from '@renderer/core/commands/parsers/LineModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
+import { TextModeParser } from '@renderer/core/commands/parsers/TextModeParser';
 import { VisualModeParser } from '@renderer/core/commands/parsers/VisualModeParser';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
@@ -23,6 +24,7 @@ export class CommandDispatcher {
   private commandModeParser: CommandParser = new NormalModeParser();
   private lineModeParser: CommandParser = new LineModeParser();
   private anchorLineModeParser: CommandParser = new AnchorLineModeParser();
+  private textModeParser: CommandParser = new TextModeParser();
 
   constructor(callback: CommandDispatcherCallback) {
     this.callback = callback;
@@ -52,7 +54,6 @@ export class CommandDispatcher {
       this.clearCommandBuffer(editor, document);
       return;
     }
-
     this.dispatch(editor, document, commandFunc);
   }
 
@@ -76,6 +77,9 @@ export class CommandDispatcher {
     document: DocumentModel,
     commandFunc: CommandRegistry.CommandFunction,
   ): void {
+    // to command args takes in editor and document and converts it to a command arg object
+    // which is an object that holds the editor, document, spatial index and any additional
+    // args needed for the command
     const result = commandFunc(this.toCommandArgs(editor, document));
 
     if (!(result instanceof Promise)) {
@@ -85,10 +89,16 @@ export class CommandDispatcher {
       return;
     }
 
-    result.then(([updatedEditor, updatedDocument]) => {
-      const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
-      this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
-    });
+    result
+      .then(([updatedEditor, updatedDocument]) => {
+        const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
+        this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
+      })
+      .catch((error) => {
+        // TODO: add some error message to the editor state and show it in the UI
+        console.error('Command execution failed:', error);
+        this.callback({ editor, document });
+      });
   }
 
   private getCommandParser(editor: Editor) {
@@ -105,6 +115,8 @@ export class CommandDispatcher {
         return this.lineModeParser;
       case 'anchor-line':
         return this.anchorLineModeParser;
+      case 'text':
+        return this.textModeParser;
       default:
         // update this
         throw new Error(`Unknown editor mode: ${editor.mode}`);

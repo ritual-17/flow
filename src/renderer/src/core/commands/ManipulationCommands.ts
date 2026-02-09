@@ -1,17 +1,32 @@
 // Handles manipulation commands i.e. commands for manipulating shapes and updating the document accordingly
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
-import * as Document from '@renderer/core/document/Document';
-import { Editor, setCurrentLineId } from '@renderer/core/editor/Editor';
-import { AnchorRef, Shape } from '@renderer/core/geometry/Shape';
+import { Document, DocumentModel } from '@renderer/core/document/Document';
+import {
+  clearBoxSelectAnchor,
+  clearSelection,
+  Editor,
+  setClipboard,
+  setCurrentLineId,
+  setMode,
+  setStatus,
+} from '@renderer/core/editor/Editor';
+import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
-import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
+import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
-import { translateShape, updateTextBoxContent } from '@renderer/core/geometry/Transform';
+import {
+  cloneShape,
+  getSelectionCenter,
+  translateShape,
+  updateTextBoxContent,
+} from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
-export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel] {
+import { SpatialIndex } from '../geometry/SpatialIndex';
+
+export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
   const circle = Circle.build({ x, y });
 
@@ -20,7 +35,7 @@ export function createCircle(args: CommandArgs): [Editor, Document.DocumentModel
   return [args.editor, updatedDocument];
 }
 
-export function createRectangle(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
   const { x, y } = args.editor.cursorPosition;
   const rectangle = Rectangle.build({ x, y });
 
@@ -29,7 +44,7 @@ export function createRectangle(args: CommandArgs): [Editor, Document.DocumentMo
   return [args.editor, updatedDocument];
 }
 
-export async function createTextBox(args: CommandArgs): Promise<[Editor, Document.DocumentModel]> {
+export async function createTextBox(args: CommandArgs): Promise<[Editor, DocumentModel]> {
   const { x, y } = args.editor.cursorPosition;
   const textBox = TextBox.build({ x, y });
 
@@ -41,23 +56,23 @@ export async function createTextBox(args: CommandArgs): Promise<[Editor, Documen
 }
 
 const TRANSLATE_AMOUNT = 50;
-export function translateSelectionUp(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function translateSelectionUp(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: 0, deltaY: -TRANSLATE_AMOUNT });
 }
-export function translateSelectionDown(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function translateSelectionDown(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: 0, deltaY: TRANSLATE_AMOUNT });
 }
-export function translateSelectionLeft(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function translateSelectionLeft(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: -TRANSLATE_AMOUNT, deltaY: 0 });
 }
-export function translateSelectionRight(args: CommandArgs): [Editor, Document.DocumentModel] {
+export function translateSelectionRight(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: TRANSLATE_AMOUNT, deltaY: 0 });
 }
 
 function translateSelection(
   args: CommandArgs,
   { deltaX, deltaY }: { deltaX: number; deltaY: number },
-): [Editor, Document.DocumentModel] {
+): [Editor, DocumentModel] {
   const { editor, document } = args;
   const { selectedShapeIds } = editor;
 
@@ -65,13 +80,19 @@ function translateSelection(
     throw new Error('No shapes selected to translate');
   }
 
+  let updatedEditor = editor;
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+
   const updatedShapes = selectedShapeIds
     .map((id) => Document.getShapeById(document, id))
     .map((shape) => translateShape(shape, { deltaX, deltaY }));
 
-  const updatedDocument = updateShapesInDocument({ ...args, editor, document }, updatedShapes);
+  const updatedDocument = updateShapesInDocument(
+    { ...args, editor: updatedEditor, document },
+    updatedShapes,
+  );
 
-  return [editor, updatedDocument];
+  return [updatedEditor, updatedDocument];
 }
 
 export function addAnchorPointToLine(args: CommandArgs): CommandResult {
@@ -129,11 +150,105 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
   }
 }
 
-function updateShapeInDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {
+export function deleteSelection(args: CommandArgs): [Editor, DocumentModel] {
+  const { editor, document, spatialIndex } = args;
+  const { selectedShapeIds } = editor;
+
+  // not fully needed but avoids unnecessary document updates
+  if (selectedShapeIds.length === 0) {
+    return [editor, document];
+  }
+
+  // update document and editor with following changes
+  const result = helperRemoveShapes(document, editor, spatialIndex, selectedShapeIds);
+  const updatedDocument = result[0];
+  let updatedEditor = result[1];
+  updatedEditor = setMode(updatedEditor, 'normal');
+
+  return [updatedEditor, updatedDocument];
+}
+
+export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
+  const { editor, document } = args;
+  const { selectedShapeIds } = editor;
+
+  if (selectedShapeIds.length === 0) {
+    return [editor, document];
+  }
+
+  const selectedShapes = editor.selectedShapeIds.map((id) => Document.getShapeById(document, id));
+
+  const center = getSelectionCenter(selectedShapes);
+
+  // copy and translate to origin
+  const shapesToYank = selectedShapes.map((shape) =>
+    translateShape(structuredClone(shape), {
+      deltaX: -center.x,
+      deltaY: -center.y,
+    }),
+  ); // deep copy
+
+  const count = shapesToYank.length;
+  const word = count === 1 ? 'object' : 'objects';
+
+  let updatedEditor = editor;
+  updatedEditor = setClipboard(updatedEditor, shapesToYank);
+  updatedEditor = setStatus(updatedEditor, `${count} ${word} yanked`);
+  updatedEditor = clearSelection(updatedEditor);
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+  updatedEditor = setMode(updatedEditor, 'normal');
+
+  return [updatedEditor, document];
+}
+
+export function paste(args: CommandArgs): CommandResult {
+  const { editor, document, spatialIndex } = args;
+  if (editor.clipboard.length === 0) {
+    return [editor, document];
+  }
+  let updatedDocument = document;
+  let updatedEditor = editor;
+
+  // delete any current selection before pasting
+  if (editor.selectedShapeIds.length > 0) {
+    const result = helperRemoveShapes(document, editor, spatialIndex, editor.selectedShapeIds);
+    updatedDocument = result[0];
+    updatedEditor = result[1];
+  }
+
+  const cursor = updatedEditor.cursorPosition;
+
+  // 1. Clone with new IDs, 2. Position at cursor, 3. Insert each into document (via loop),
+  const cloned = updatedEditor.clipboard.map(cloneShape);
+  const position = cloned.map((shape) =>
+    translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }),
+  );
+
+  for (const shape of position) {
+    updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
+  }
+
+  return [updatedEditor, updatedDocument];
+}
+
+function helperRemoveShapes(
+  document: DocumentModel,
+  editor: Editor,
+  spatialIndex: SpatialIndex,
+  shapeIds: ShapeId[],
+): [DocumentModel, Editor] {
+  const updatedDocument = Document.removeShapesFromDocument(document, shapeIds);
+  spatialIndex.removeShapesByIds(shapeIds);
+  let updatedEditor = clearSelection(editor);
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+  return [updatedDocument, updatedEditor];
+}
+
+export function updateShapeInDocument(args: CommandArgs, shape: Shape): DocumentModel {
   return updateShapesInDocument(args, [shape]);
 }
 
-function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): Document.DocumentModel {
+function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): DocumentModel {
   const { document, spatialIndex } = args;
   const newDocument = Document.updateShapesInDocument(document, shapes);
 
@@ -141,7 +256,7 @@ function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): Document.Do
   return newDocument;
 }
 
-function addShapeToDocument(args: CommandArgs, shape: Shape): Document.DocumentModel {
+function addShapeToDocument(args: CommandArgs, shape: Shape): DocumentModel {
   const { document, spatialIndex } = args;
   const newDocument = Document.addShapesToDocument(document, [shape]);
   spatialIndex.addShape(shape);

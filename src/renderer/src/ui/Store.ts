@@ -1,6 +1,11 @@
 import { CommandDispatcher } from '@renderer/core/commands/CommandDispatcher';
-import { createNewDocument, DocumentModel } from '@renderer/core/document/Document';
-import { createEditor, Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
+import { Document, DocumentModel } from '@renderer/core/document/Document';
+import {
+  createEditor,
+  Editor,
+  setCommandBuffer,
+  setEditingTextBox,
+} from '@renderer/core/editor/Editor';
 import { create } from 'zustand';
 
 export interface DocumentStore {
@@ -12,11 +17,12 @@ export interface DocumentStore {
   updateDocument: (newDocument: DocumentModel) => void;
   updateCommandBuffer: (command: string) => void;
   appendCommandBuffer: (char: string) => void;
+  updateEditingTextBoxContent: (content: string) => void;
 }
 
 export const useStore = create<DocumentStore>((set) => ({
   editor: createEditor(),
-  document: createNewDocument('Untitled'),
+  document: Document.createNewDocument('Untitled'),
   commandDispatcher: new CommandDispatcher(set),
   update: (newEditor, newDocument) => set({ editor: newEditor, document: newDocument }),
   updateEditor: (newEditor) => set({ editor: newEditor }),
@@ -38,5 +44,17 @@ export const useStore = create<DocumentStore>((set) => ({
     const dispatcher = useStore.getState().commandDispatcher;
 
     dispatcher.dispatchCommand(commandEditor, document);
+  },
+  updateEditingTextBoxContent: (content: string) => {
+    const editor = useStore.getState().editor;
+    const currentTextBox = editor.currentTextBox;
+    if (!currentTextBox) {
+      return;
+    }
+    const updatedEditor = setEditingTextBox(editor, {
+      id: currentTextBox.id,
+      content,
+    });
+    set({ editor: updatedEditor });
   },
 }));

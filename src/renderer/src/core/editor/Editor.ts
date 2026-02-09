@@ -1,3 +1,4 @@
+import { Document, DocumentModel } from '@renderer/core/document/Document';
 import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { produce } from 'immer';
 
@@ -7,14 +8,23 @@ export interface Editor {
   cursorPosition: { x: number; y: number };
   commandBuffer: string;
   commandHistory: string[];
-  clipboard: Shape[];
+  clipboard: Shape[]; // stores copies of shapes relative to the center of the selection
+  boxSelectAnchor?: { x: number; y: number };
   currentAnchorPoint: AnchorPoint | null;
   currentLineId: ShapeId | null;
-  editingTextBoxId: ShapeId | null;
+  statusMessage: string;
+  currentTextBox: TextBoxEditingState | null;
+}
+
+export interface TextBoxEditingState {
+  id: ShapeId;
+  content: string;
 }
 
 export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
 
+// any modification to the editor state should go through these functions
+// below are just some helper functions to create and update the editor state
 function createEditor(): Editor {
   return {
     mode: 'normal',
@@ -25,7 +35,9 @@ function createEditor(): Editor {
     clipboard: [],
     currentAnchorPoint: null,
     currentLineId: null,
-    editingTextBoxId: null,
+    boxSelectAnchor: undefined,
+    statusMessage: '',
+    currentTextBox: null,
   };
 }
 
@@ -35,10 +47,43 @@ function setMode(editor: Editor, mode: Mode): Editor {
   });
 }
 
+// Editor state shape manipulation functions to be used by visual commands
+
 function setSelectedShapes(editor: Editor, shapeIds: ShapeId[]): Editor {
   return produce(editor, (draft) => {
     draft.selectedShapeIds = shapeIds;
   });
+}
+
+function getSelectedShapes(editor: Editor, document: DocumentModel): Shape[] {
+  return editor.selectedShapeIds.map((id) => Document.getShapeById(document, id));
+}
+
+function clearSelection(editor: Editor): Editor {
+  return produce(editor, (draft) => {
+    draft.selectedShapeIds = [];
+  });
+}
+
+function addToSelection(editor: Editor, shapeId: ShapeId): Editor {
+  return produce(editor, (draft) => {
+    if (!draft.selectedShapeIds.includes(shapeId)) {
+      draft.selectedShapeIds.push(shapeId);
+    }
+  });
+}
+
+function removeFromSelection(editor: Editor, shapeId: ShapeId): Editor {
+  return produce(editor, (draft) => {
+    draft.selectedShapeIds = draft.selectedShapeIds.filter((id) => id !== shapeId);
+  });
+}
+
+function toggleSelection(editor: Editor, shapeId: ShapeId): Editor {
+  if (editor.selectedShapeIds.includes(shapeId)) {
+    return removeFromSelection(editor, shapeId);
+  }
+  return addToSelection(editor, shapeId);
 }
 
 function setCursorPosition(editor: Editor, position: { x: number; y: number }): Editor {
@@ -77,9 +122,29 @@ function setCurrentLineId(editor: Editor, lineId: ShapeId | null): Editor {
   });
 }
 
-function setEditingTextBoxId(editor: Editor, textBoxId: ShapeId | null): Editor {
+function setEditingTextBox(editor: Editor, textBoxState: TextBoxEditingState | null): Editor {
   return produce(editor, (draft) => {
-    draft.editingTextBoxId = textBoxId;
+    draft.currentTextBox = textBoxState;
+  });
+}
+
+// Functions for visual mode operations
+
+function setBoxSelectAnchor(editor: Editor, position: { x: number; y: number }): Editor {
+  return produce(editor, (draft) => {
+    draft.boxSelectAnchor = position;
+  });
+}
+
+function clearBoxSelectAnchor(editor: Editor): Editor {
+  return produce(editor, (draft) => {
+    draft.boxSelectAnchor = undefined;
+  });
+}
+
+function setStatus(editor: Editor, message: string): Editor {
+  return produce(editor, (draft) => {
+    draft.statusMessage = message;
   });
 }
 
@@ -87,11 +152,19 @@ export {
   createEditor,
   setMode,
   setSelectedShapes,
+  getSelectedShapes,
+  clearSelection,
+  addToSelection,
+  removeFromSelection,
+  toggleSelection,
   setCursorPosition,
   setCommandBuffer,
   addToCommandHistory,
   setClipboard,
   setCurrentAnchorPoint,
   setCurrentLineId,
-  setEditingTextBoxId,
+  setBoxSelectAnchor,
+  clearBoxSelectAnchor,
+  setStatus,
+  setEditingTextBox,
 };

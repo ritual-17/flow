@@ -10,6 +10,7 @@
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
+    "t": "enterTextMode",
     "dd": "deleteLine",
     "yy": "yankLine",
     "p": "pasteAfter",
@@ -31,18 +32,20 @@
     "r": "createRectangle"
   },
   "visual": {
-    "j": "up",
-    "k": "down",
-    "h": "left",
-    "l": "right",
+    "j": "visualUp",
+    "k": "visualDown",
+    "h": "visualLeft",
+    "l": "visualRight",
     "d": "deleteSelection",
     "y": "yankSelection",
     "p": "pasteOverSelection",
     "K": "translateSelectionUp",
     "J": "translateSelectionDown",
     "L": "translateSelectionRight",
-    "H": "translateSelectionLeft"
+    "H": "translateSelectionLeft",
+    "<Space>": "toggleBoxSelect"
   },
+  "text": {},
   "command": {
     "w": "saveFile",
     "q": "quitEditor",
