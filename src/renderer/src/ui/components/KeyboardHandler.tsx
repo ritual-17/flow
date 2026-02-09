@@ -58,6 +58,31 @@ export function KeyboardHandler() {
         return;
       }
 
+      // Handle arrow keys
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        appendCommandBuffer('ArrowUp');
+        return;
+      }
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        appendCommandBuffer('ArrowDown');
+        return;
+      }
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        appendCommandBuffer('ArrowLeft');
+        return;
+      }
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        appendCommandBuffer('ArrowRight');
+        return;
+      }
+
       // ignore special keys like Shift, Ctrl, etc.
       if (e.key.length === 1) {
         // Append character to command buffer
