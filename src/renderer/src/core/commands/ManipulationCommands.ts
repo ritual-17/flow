@@ -19,14 +19,14 @@ import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
   cloneShape,
   getSelectionCenter,
+  Transform,
   translateShape,
-  updateTextBoxContent,
 } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 import { SpatialIndex } from '../geometry/SpatialIndex';
 
-export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
+export function createCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
   const circle = Circle.build({ x, y });
 
@@ -35,13 +35,11 @@ export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
   return [args.editor, updatedDocument];
 }
 
-export async function createTextBox(args: CommandArgs): Promise<[Editor, DocumentModel]> {
+export async function createTextBox(args: CommandArgs): Promise<CommandResult> {
   const { x, y } = args.editor.cursorPosition;
-  const textBox = TextBox.build({ x, y });
+  const textBox = await Transform.compileShapeTextContent(TextBox.build({ x, y }));
 
-  const compiledTextBox = await updateTextBoxContent(textBox, textBox.text);
-
-  const updatedDocument = addShapeToDocument(args, compiledTextBox);
+  const updatedDocument = addShapeToDocument(args, textBox);
 
   return [args.editor, updatedDocument];
 }
@@ -262,7 +260,7 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
   return [updatedEditor, document];
 }
 
-export function paste(args: CommandArgs): CommandResult {
+export async function paste(args: CommandArgs): Promise<CommandResult> {
   const { editor, document, spatialIndex } = args;
   if (editor.clipboard.length === 0) {
     return [editor, document];
@@ -279,13 +277,15 @@ export function paste(args: CommandArgs): CommandResult {
 
   const cursor = updatedEditor.cursorPosition;
 
-  // 1. Clone with new IDs, 2. Position at cursor, 3. Insert each into document (via loop),
-  const cloned = updatedEditor.clipboard.map(cloneShape);
-  const position = cloned.map((shape) =>
-    translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }),
+  // 1. Clone with new IDs, 2. Position at cursor, 3. compile, 4. Insert each into document (via loop),
+  const clonedShapes = await Promise.all(
+    updatedEditor.clipboard
+      .map(cloneShape)
+      .map((shape) => translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }))
+      .map((shape) => Transform.compileShapeTextContent(shape)),
   );
 
-  for (const shape of position) {
+  for (const shape of clonedShapes) {
     updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
   }
 

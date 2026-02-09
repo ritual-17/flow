@@ -12,6 +12,7 @@ import {
   enterLineMode,
   enterNormalMode,
   enterTextMode,
+  enterTextModeForNearestTextBox,
   enterVisualMode,
   selectNextSearchResult,
 } from '@renderer/core/commands/EditorCommands';
@@ -77,6 +78,8 @@ function commandFromName(command: string): CommandFunction | null {
       return startNewLine;
     case 'enterTextMode':
       return enterTextMode;
+    case 'enterTextModeForNearestTextBox':
+      return enterTextModeForNearestTextBox;
     case 'up':
       return cursorUp;
     case 'down':

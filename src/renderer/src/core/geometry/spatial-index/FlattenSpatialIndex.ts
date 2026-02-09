@@ -77,7 +77,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return hits.map((hit) => this.getDomainShape(hit));
   }
 
-  getNearestShapeId(point: Coordinate): ShapeId | null {
+  getNearestShape(point: Coordinate): Shape | null {
     const searchBox = new Flatten.Box(
       point.x - this.SEARCH_RADIUS,
       point.y - this.SEARCH_RADIUS,
@@ -87,13 +87,13 @@ export class FlattenSpatialIndex implements SpatialIndex {
     const candidates = this.set.search(searchBox);
     const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
 
-    let nearest: ShapeId | null = null;
+    let nearest: Shape | null = null;
     let minDistance = Infinity;
     for (const candidate of domainCandidates) {
       const distance = this.distanceBetweenPoints(point, candidate);
       if (distance < minDistance) {
         minDistance = distance;
-        nearest = candidate.id;
+        nearest = candidate;
       }
     }
 
