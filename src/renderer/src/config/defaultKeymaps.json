@@ -15,7 +15,7 @@
     "yy": "yankLine",
     "p": "pasteAfter",
     "u": "undo",
-    "<C-r>": "redo",
+    "r": "redo",
     ".": "repeat",
     "n": "selectNextSearchResult",
     "a": "enterLineMode",
