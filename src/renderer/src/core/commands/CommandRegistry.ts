@@ -6,11 +6,14 @@ import {
   cursorLeft,
   cursorRight,
   cursorUp,
+  enterAnchorLineMode,
   enterCommandMode,
   enterInsertMode,
+  enterLineMode,
   enterNormalMode,
   enterTextMode,
   enterVisualMode,
+  selectNextSearchResult,
 } from '@renderer/core/commands/EditorCommands';
 import {
   addAnchorPointToLine,
@@ -53,8 +56,6 @@ export type CommandFunction = (args: CommandArgs) => Promise<CommandResult> | Co
 
 function commandFromName(command: string): CommandFunction | null {
   switch (command) {
-    case 'addShape':
-      return addShapeToDocument;
     case 'enterNormalMode':
       return enterNormalMode;
     case 'enterInsertMode':
@@ -79,10 +80,30 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorRight;
     case 'createCircle':
       return createCircle;
-    case 'createTextBox':
-      return createTextBox;
     case 'createRectangle':
       return createRectangle;
+    case 'createTextBox':
+      return createTextBox;
+    case 'selectNextSearchResult':
+      return selectNextSearchResult;
+    case 'downAnchor':
+      return jumpToDownAnchorPoint;
+    case 'upAnchor':
+      return jumpToUpAnchorPoint;
+    case 'leftAnchor':
+      return jumpToLeftAnchorPoint;
+    case 'rightAnchor':
+      return jumpToRightAnchorPoint;
+    case 'addAnchorPointToLine':
+      return addAnchorPointToLine;
+    case 'translateSelectionUp':
+      return translateSelectionUp;
+    case 'translateSelectionDown':
+      return translateSelectionDown;
+    case 'translateSelectionLeft':
+      return translateSelectionLeft;
+    case 'translateSelectionRight':
+      return translateSelectionRight;
     case 'deleteSelection':
       return deleteSelection;
     case 'yankSelection':
