@@ -14,6 +14,7 @@ import {
 import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
+import * as Point from '@renderer/core/geometry/shapes/Point';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
   cloneShape,
@@ -136,6 +137,56 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
     default:
       throw new Error(
         `Shape with id ${currentLine.id} is not a line or point, cannot add anchor point`,
+      );
+  }
+}
+
+export function addPointToLine(args: CommandArgs): CommandResult {
+  const { editor, document } = args;
+
+  let updatedEditor = editor;
+  let updatedDocument = document;
+
+  const currentLineId = editor.currentLineId;
+  const { x, y } = args.editor.cursorPosition;
+  const currentPoint = Point.build({
+    x: x,
+    y: y,
+  });
+
+  if (!currentLineId) {
+    // need to add a point rather than a line because we only have one point so far
+
+    updatedDocument = addShapeToDocument(args, currentPoint);
+    updatedEditor = setCurrentLineId(updatedEditor, currentPoint.id);
+    return [updatedEditor, updatedDocument];
+  }
+  const currentLine = Document.getShapeById(updatedDocument, currentLineId);
+  switch (currentLine.type) {
+    case 'point': {
+      let newLine = MultiLine.fromStartingPoint(currentLine, { id: currentLine.id });
+      newLine = MultiLine.addPoint(newLine, currentPoint);
+
+      updatedDocument = updateShapeInDocument(
+        { ...args, editor: updatedEditor, document: updatedDocument },
+        newLine,
+      );
+
+      updatedEditor = setCurrentLineId(updatedEditor, newLine.id);
+      return [updatedEditor, updatedDocument];
+    }
+    case 'multi-line': {
+      const updatedLine = MultiLine.addPoint(currentLine, currentPoint);
+      updatedDocument = updateShapeInDocument(
+        { ...args, editor: updatedEditor, document: updatedDocument },
+        updatedLine,
+      );
+
+      return [updatedEditor, updatedDocument];
+    }
+    default:
+      throw new Error(
+        `Shape with id ${currentLine.id} is not a line or point, cannot add another point`,
       );
   }
 }

@@ -57,9 +57,7 @@
     "h": "left",
     "l": "right",
 
-    "n": "newLine",
     "<Space>": "linePoint",
-    ",": "endLine",
 
     "s": "squareLine",
     "c": "curvedLine",
