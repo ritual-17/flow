@@ -17,10 +17,12 @@ import {
 } from '@renderer/core/commands/EditorCommands';
 import {
   addAnchorPointToLine,
+  addPointToLine,
   createCircle,
   createTextBox,
   deleteSelection,
   paste,
+  startNewLine,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -67,6 +69,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterLineMode;
     case 'enterAnchorLineMode':
       return enterAnchorLineMode;
+    case 'newLine':
+      return startNewLine;
     case 'enterTextMode':
       return enterTextMode;
     case 'up':
@@ -93,6 +97,8 @@ function commandFromName(command: string): CommandFunction | null {
       return jumpToRightAnchorPoint;
     case 'addAnchorPointToLine':
       return addAnchorPointToLine;
+    case 'linePoint':
+      return addPointToLine;
     case 'translateSelectionUp':
       return translateSelectionUp;
     case 'translateSelectionDown':

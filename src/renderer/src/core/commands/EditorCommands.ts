@@ -16,6 +16,7 @@ import {
   clearBoxSelectAnchor,
   clearSelection,
   setCurrentAnchorPoint,
+  setCurrentLineId,
   setCursorPosition,
   setEditingTextBox,
   setMode,
@@ -32,6 +33,7 @@ async function enterNormalMode(args: CommandArgs): Promise<CommandResult> {
   updatedEditor = setSelectedShapes(updatedEditor, []);
   updatedEditor = clearBoxSelectAnchor(updatedEditor);
   updatedEditor = setMode(updatedEditor, 'normal');
+  updatedEditor = setCurrentLineId(updatedEditor, null);
 
   return [updatedEditor, updatedDocument];
 }
