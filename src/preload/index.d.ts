@@ -5,10 +5,10 @@ declare global {
     electron: ElectronAPI;
     api: {
       compileTypst: (source: string) => Promise<string>;
-    };
 
-    pdf: {
-      pick: () => Promise<{ filePath: string; name: string } | null>;
+      pdf: {
+        pick: () => Promise<{ filePath: string; name: string } | null>;
+      };
     };
   }
 }
