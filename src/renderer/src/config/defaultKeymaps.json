@@ -54,6 +54,10 @@
     "J": "translateSelectionDown",
     "L": "translateSelectionRight",
     "H": "translateSelectionLeft",
+    "<Shift-ArrowUp>": "translateSelectionUp",
+    "<Shift-ArrowDown>": "translateSelectionDown",
+    "<Shift-ArrowRight>": "translateSelectionRight",
+    "<Shift-ArrowLeft>": "translateSelectionLeft",
     "<Space>": "toggleBoxSelect"
   },
   "text": {},
