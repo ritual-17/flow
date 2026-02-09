@@ -15,6 +15,7 @@ import {
   enterTextModeForNearestTextBox,
   enterVisualMode,
   selectNextSearchResult,
+  selectPreviousSearchResult,
 } from '@renderer/core/commands/EditorCommands';
 import {
   addAnchorPointToLine,
@@ -96,6 +97,8 @@ function commandFromName(command: string): CommandFunction | null {
       return createTextBox;
     case 'selectNextSearchResult':
       return selectNextSearchResult;
+    case 'selectPreviousSearchResult':
+      return selectPreviousSearchResult;
     case 'downAnchor':
       return jumpToDownAnchorPoint;
     case 'upAnchor':

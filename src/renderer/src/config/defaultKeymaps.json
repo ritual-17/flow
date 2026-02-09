@@ -23,6 +23,7 @@
     "<C-r>": "redo",
     ".": "repeat",
     "n": "selectNextSearchResult",
+    "N": "selectPreviousSearchResult",
     "a": "enterLineMode",
     "A": "enterAnchorLineMode"
   },

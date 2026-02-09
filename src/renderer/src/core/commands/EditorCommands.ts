@@ -162,17 +162,28 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
 
 // update this later to use search results and if there is no current search then selected closest shape
 function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs): CommandResult {
-  const nearestShapeId = spatialIndex.getNearestShape(editor.cursorPosition)?.id;
+  const nextShape = spatialIndex.getNextShape(editor.cursorPosition);
   let updatedEditor = editor;
-  if (nearestShapeId) {
-    updatedEditor = setSelectedShapes(editor, [nearestShapeId]);
+  if (nextShape) {
+    // updatedEditor = setSelectedShapes(editor, [nextShape.id]);
+    updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
+    // updatedEditor = setMode(updatedEditor, 'visual');
+  }
+  return [updatedEditor, document];
+}
 
-    const nearestShape = document.shapes.get(nearestShapeId);
-    if (!nearestShape) {
-      return [updatedEditor, document];
-    }
-    updatedEditor = setCursorPosition(updatedEditor, { x: nearestShape.x, y: nearestShape.y });
-    updatedEditor = setMode(updatedEditor, 'visual');
+// update this later to use search results and if there is no current search then selected closest shape
+function selectPreviousSearchResult({
+  editor,
+  document,
+  spatialIndex,
+}: CommandArgs): CommandResult {
+  const nextShape = spatialIndex.getNextShape(editor.cursorPosition, true);
+  let updatedEditor = editor;
+  if (nextShape) {
+    // updatedEditor = setSelectedShapes(editor, [nextShape.id]);
+    updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
+    // updatedEditor = setMode(updatedEditor, 'visual');
   }
   return [updatedEditor, document];
 }
@@ -191,4 +202,5 @@ export {
   cursorLeft,
   cursorRight,
   selectNextSearchResult,
+  selectPreviousSearchResult,
 };

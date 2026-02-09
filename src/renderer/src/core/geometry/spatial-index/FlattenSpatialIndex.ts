@@ -1,5 +1,12 @@
 import Flatten from '@flatten-js/core';
-import { AnchorPoint, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import {
+  AnchorPoint,
+  Coordinate,
+  isLine,
+  isPoint,
+  Shape,
+  ShapeId,
+} from '@renderer/core/geometry/Shape';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
 import { Direction, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
@@ -8,6 +15,11 @@ import {
   isAnchorRef,
   resolveAnchorPoint,
 } from '@renderer/core/geometry/utils/AnchorPoints';
+import BTree from 'sorted-btree';
+
+type OrderKey = [number, number, ShapeId];
+
+type OrderedShapesCache = BTree<OrderKey, ShapeId>;
 
 type idToShapeMap = Map<ShapeId, { domainShape: Shape; flatShape: Flatten.AnyShape }>;
 type shapeToIdMap = Map<Flatten.AnyShape, ShapeId>;
@@ -17,6 +29,15 @@ export class FlattenSpatialIndex implements SpatialIndex {
   private idToShapeMap: idToShapeMap = new Map();
   private shapeToIdMap: shapeToIdMap = new Map();
   private SEARCH_RADIUS = 1000;
+
+  // BTree to maintain shapes in a consistent order for next/previous shape retrieval. Ordered by y, then x, then id.
+  private orderedShapesCache: OrderedShapesCache = new BTree(
+    undefined,
+    (a, b) =>
+      a[0] - b[0] || // y
+      a[1] - b[1] || // x
+      a[2].localeCompare(b[2]), // id
+  );
 
   addShape(shape: Shape): void {
     const resolvedShape = this.resolveShapePoints(shape);
@@ -50,6 +71,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     this.set.clear();
     this.idToShapeMap.clear();
     this.shapeToIdMap.clear();
+    this.orderedShapesCache.clear();
   }
 
   distanceBetweenShapes(shapeA: Shape, shapeB: Shape): number {
@@ -85,7 +107,12 @@ export class FlattenSpatialIndex implements SpatialIndex {
       point.y + this.SEARCH_RADIUS,
     );
     const candidates = this.set.search(searchBox);
-    const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
+    const domainCandidates = candidates
+      .map((candidate) => this.getDomainShape(candidate))
+      .filter((shape) => {
+        // Exclude lines and points
+        return shape.type !== 'multi-line' && shape.type !== 'point';
+      });
 
     let nearest: Shape | null = null;
     let minDistance = Infinity;
@@ -178,6 +205,24 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return nextAnchor;
   }
 
+  getNextShape(point: Coordinate, backward = false): Shape | null {
+    const nearestShape = this.getNearestShape(point);
+    if (!nearestShape) return null;
+
+    if (nearestShape.x !== point.x || nearestShape.y !== point.y) return nearestShape;
+
+    const key = this.getOrderKey(nearestShape);
+
+    const next = backward
+      ? this.orderedShapesCache.nextLowerKey(key)
+      : this.orderedShapesCache.nextHigherKey(key);
+
+    if (!next) return nearestShape;
+
+    const [_y, _x, nextId] = next;
+    return this.getDomainShapeById(nextId);
+  }
+
   removeShapesByIds(shapeIds: ShapeId[]): void {
     shapeIds.forEach((id) => {
       const shape = this.getDomainShapeById(id);
@@ -249,9 +294,16 @@ export class FlattenSpatialIndex implements SpatialIndex {
     this.set.add(flat);
     this.idToShapeMap.set(shape.id, { domainShape: shape, flatShape: flat });
     this.shapeToIdMap.set(flat, shape.id);
+
+    // Lines and points are not included in the ordered cache since they are not selectable by next/previous shape command
+    if (isLine(shape) || isPoint(shape)) return;
+
+    this.orderedShapesCache.set(this.getOrderKey(shape), shape.id);
   }
 
   private removeShapeFromSets(shape: Shape, flat: Flatten.AnyShape): void {
+    const oldShape = this.getDomainShapeById(shape.id);
+    this.orderedShapesCache.delete(this.getOrderKey(oldShape));
     this.set.delete(flat);
     this.idToShapeMap.delete(shape.id);
     this.shapeToIdMap.delete(flat);
@@ -261,5 +313,10 @@ export class FlattenSpatialIndex implements SpatialIndex {
     const dx = pointA.x - pointB.x;
     const dy = pointA.y - pointB.y;
     return Math.sqrt(dx * dx + dy * dy);
+  }
+  private getOrderKey(shape: Shape): OrderKey {
+    // You can customize this per shape type if needed
+    const { x, y } = shape;
+    return [y, x, shape.id];
   }
 }
