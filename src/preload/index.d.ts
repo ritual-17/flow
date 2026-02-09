@@ -6,5 +6,9 @@ declare global {
     api: {
       compileTypst: (source: string) => Promise<string>;
     };
+
+    pdf: {
+      pick: () => Promise<{ filePath: string; name: string } | null>;
+    };
   }
 }
