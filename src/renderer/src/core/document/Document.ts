@@ -4,6 +4,7 @@
 // - metadata: document name, last edited, path
 // - shapes: shape info
 //
+import { PdfId, PdfSlide, PdfSlideId, PdfSource } from '@renderer/core/document/Pdf';
 import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { produce } from 'immer';
 
@@ -17,6 +18,8 @@ export interface DocumentMetadata {
 export interface DocumentModel {
   metadata: DocumentMetadata;
   shapes: Map<ShapeId, Shape>;
+  pdfSources: Map<PdfId, PdfSource>;
+  pdfSlides: Map<PdfSlideId, PdfSlide>;
 }
 
 function createNewDocument(name: string): DocumentModel {
@@ -28,6 +31,8 @@ function createNewDocument(name: string): DocumentModel {
       path: null,
     },
     shapes: new Map<ShapeId, Shape>(),
+    pdfSources: new Map<PdfId, PdfSource>(),
+    pdfSlides: new Map<PdfSlideId, PdfSlide>(),
   };
 }
 
@@ -79,6 +84,33 @@ function getShapeById(document: DocumentModel, shapeId: ShapeId): Shape {
   return shape;
 }
 
+// PDF helper functions
+function addPdfSource(document: DocumentModel, source: PdfSource): DocumentModel {
+  return produce(document, (draft) => {
+    draft.pdfSources.set(source.id, source);
+  });
+}
+
+function addPdfSlides(document: DocumentModel, slides: PdfSlide[]): DocumentModel {
+  return produce(document, (draft) => {
+    slides.forEach((s) => draft.pdfSlides.set(s.id, s));
+  });
+}
+
+function updatePdfSlide(document: DocumentModel, slide: PdfSlide): DocumentModel {
+  return produce(document, (draft) => {
+    if (draft.pdfSlides.has(slide.id)) {
+      draft.pdfSlides.set(slide.id, slide);
+    }
+  });
+}
+
+function removePdfSlides(document: DocumentModel, slideIds: PdfSlideId[]): DocumentModel {
+  return produce(document, (draft) => {
+    slideIds.forEach((id) => draft.pdfSlides.delete(id));
+  });
+}
+
 export const Document = {
   createNewDocument,
   updateDocumentMetadata,
@@ -87,4 +119,8 @@ export const Document = {
   updateShapesInDocument,
   hasShape,
   getShapeById,
+  addPdfSource,
+  addPdfSlides,
+  updatePdfSlide,
+  removePdfSlides,
 };
