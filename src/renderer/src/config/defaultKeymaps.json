@@ -20,7 +20,7 @@
     "n": "selectNextSearchResult",
     "a": "enterLineMode",
     "A": "enterAnchorLineMode",
-    "pdf": "importPdf"
+    "f": "importPdf"
   },
   "insert": {
     "j": "up",
