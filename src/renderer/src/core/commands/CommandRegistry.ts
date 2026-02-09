@@ -21,10 +21,12 @@ import {
   createTextBox,
   deleteSelection,
   paste,
+  redo,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
   translateSelectionUp,
+  undo,
   yankSelection,
 } from '@renderer/core/commands/ManipulationCommands';
 import {
@@ -120,6 +122,10 @@ function commandFromName(command: string): CommandFunction | null {
       return visualLeft;
     case 'visualRight':
       return visualRight;
+    case 'undo':
+      return undo;
+    case 'redo':
+      return redo;
     default:
       return null;
   }
