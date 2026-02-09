@@ -3,8 +3,8 @@
     "<Esc>": "enterNormalMode"
   },
   "normal": {
-    "j": "up",
-    "k": "down",
+    "j": "down",
+    "k": "up",
     "h": "left",
     "l": "right",
     "ArrowUp": "up",
@@ -26,8 +26,8 @@
     "A": "enterAnchorLineMode"
   },
   "insert": {
-    "j": "up",
-    "k": "down",
+    "j": "down",
+    "k": "up",
     "h": "left",
     "l": "right",
     "ArrowUp": "up",
@@ -39,8 +39,8 @@
     "<C-s>": "saveFile"
   },
   "visual": {
-    "j": "visualUp",
-    "k": "visualDown",
+    "j": "visualDown",
+    "k": "visualUp",
     "h": "visualLeft",
     "l": "visualRight",
     "ArrowUp": "visualUp",
@@ -64,8 +64,8 @@
     "q!": "forceQuit"
   },
   "line": {
-    "j": "up",
-    "k": "down",
+    "j": "down",
+    "k": "up",
     "h": "left",
     "l": "right",
     "ArrowUp": "up",
