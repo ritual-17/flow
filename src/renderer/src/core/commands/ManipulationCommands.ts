@@ -141,6 +141,30 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
   }
 }
 
+/*
+ * Functon that creates a new point usabel for lines.
+ * Also sets the currentLineId to the new point
+ */
+export function startNewLine(args: CommandArgs): CommandResult {
+  const { editor, document } = args;
+
+  let updatedEditor = editor;
+  let updatedDocument = document;
+
+  const { x, y } = args.editor.cursorPosition;
+  const currentPoint = Point.build({
+    x: x,
+    y: y,
+  });
+  updatedEditor = setCurrentLineId(updatedEditor, currentPoint.id);
+  updatedDocument = addShapeToDocument(args, currentPoint);
+  return [updatedEditor, updatedDocument];
+}
+
+/*
+ * Function that attempts to add a point to the currently selected line.
+ * If no line is selected then it will create a point for a line to base off of
+ */
 export function addPointToLine(args: CommandArgs): CommandResult {
   const { editor, document } = args;
 
@@ -153,14 +177,13 @@ export function addPointToLine(args: CommandArgs): CommandResult {
     x: x,
     y: y,
   });
-
   if (!currentLineId) {
     // need to add a point rather than a line because we only have one point so far
-
-    updatedDocument = addShapeToDocument(args, currentPoint);
     updatedEditor = setCurrentLineId(updatedEditor, currentPoint.id);
+    updatedDocument = addShapeToDocument(args, currentPoint);
     return [updatedEditor, updatedDocument];
   }
+
   const currentLine = Document.getShapeById(updatedDocument, currentLineId);
   switch (currentLine.type) {
     case 'point': {

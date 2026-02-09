@@ -22,6 +22,7 @@ import {
   createTextBox,
   deleteSelection,
   paste,
+  startNewLine,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -68,6 +69,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterLineMode;
     case 'enterAnchorLineMode':
       return enterAnchorLineMode;
+    case 'newLine':
+      return startNewLine;
     case 'enterTextMode':
       return enterTextMode;
     case 'up':

@@ -56,12 +56,10 @@
     "k": "down",
     "h": "left",
     "l": "right",
-
     "<Space>": "linePoint",
-
     "s": "squareLine",
     "c": "curvedLine",
-
+    "n": "newLine",
     "A": "enterAnchorLineMode"
   },
   "anchor-line": {
@@ -69,7 +67,9 @@
     "k": "upAnchor",
     "h": "leftAnchor",
     "l": "rightAnchor",
+    "n": "newLine",
     "<Space>": "addAnchorPointToLine",
+
     "a": "enterLineMode"
   }
 }
