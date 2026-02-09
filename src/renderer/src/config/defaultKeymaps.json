@@ -19,7 +19,8 @@
     ".": "repeat",
     "n": "selectNextSearchResult",
     "a": "enterLineMode",
-    "A": "enterAnchorLineMode"
+    "A": "enterAnchorLineMode",
+    "pdf": "importPdf"
   },
   "insert": {
     "j": "up",
