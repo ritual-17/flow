@@ -19,7 +19,10 @@ const StaticTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
 
     img.onload = () => {
       setImage(img);
-      URL.revokeObjectURL(img.src);
+      // TODO: commenting this out for now because it revokes the image URL, meaning if the textbox is deleted and then re-added via un
+      // do/redo, the image wont load. we can revisit this later to find a better way to manage memory without breaking undo/redo by ei
+      // either figuring out a smart way to do revokation, or by recompiling images on undo/redo.
+      // URL.revokeObjectURL(img.src);
     };
 
     img.onerror = (error) => {
@@ -31,7 +34,8 @@ const StaticTextBox: ShapeComponent<DomainText> = ({ shape, stroke }) => {
 
     // Cleanup function
     return () => {
-      URL.revokeObjectURL(img.src);
+      // TODO: see above comment on URL revokation
+      // URL.revokeObjectURL(img.src);
     };
   }, [shape.compiledImageMeta]);
 
