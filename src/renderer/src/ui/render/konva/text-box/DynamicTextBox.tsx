@@ -36,7 +36,7 @@ const DynamicTextBox: ShapeComponent<Shape> = ({ shape }) => {
         stroke={'white'}
         fill='white'
       />
-      {error && <Warning x={shape.x + scaledWidth} y={shape.y + scaledHeight} />}
+      {error && <Warning x={x + scaledWidth} y={y + scaledHeight} />}
       <Html>
         <Editor
           setContent={updateCurrentTextBoxContent}

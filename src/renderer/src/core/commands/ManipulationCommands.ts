@@ -25,9 +25,9 @@ import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 import { SpatialIndex } from '../geometry/SpatialIndex';
 
-export async function createCircle(args: CommandArgs): Promise<CommandResult> {
+export function createCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
-  const circle = await Transform.compileShapeTextContent(Circle.build({ x, y }));
+  const circle = Circle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, circle);
 

@@ -26,8 +26,8 @@ const StaticTextBox: StaticTextBoxComponent = ({ shape, stroke, x, y }) => {
     image && (
       <KonvaImage
         image={image}
-        x={x ? x : shape.x}
-        y={y ? y : shape.y}
+        x={x ?? shape.x}
+        y={y ?? shape.y}
         width={shape.label.compiledImageMeta.width}
         height={shape.label.compiledImageMeta.height}
         stroke={stroke}

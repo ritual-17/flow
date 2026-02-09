@@ -8,16 +8,17 @@ export function resolveImagePosition(
   shape: Shape,
   imageDimensions?: { width: number; height: number },
 ) {
-  if (!shape.label.compiledImageMeta) {
-    throw new Error('Cannot resolve image position without compiledImageMeta');
-  }
-
   if (shape.type === 'textBox') {
     return { x: shape.x, y: shape.y };
   }
 
-  const { width: labelWidth, height: labelHeight } =
-    imageDimensions || shape.label.compiledImageMeta;
+  const dimensions = imageDimensions ?? shape.label.compiledImageMeta;
+
+  if (!dimensions) {
+    throw new Error('Cannot resolve image position without image dimensions');
+  }
+
+  const { width: labelWidth, height: labelHeight } = dimensions;
   const shapeCenter = getCenterCoordinate(shape);
   return {
     x: shapeCenter.x - labelWidth / 2,

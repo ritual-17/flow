@@ -12,15 +12,14 @@ function Label(args: LabelProps) {
   const { shape } = args;
   const isCurrentlyEditing = useStore((state) => state.editor.currentTextBox?.id) === shape.id;
   if (shape.type === 'textBox') return null;
-  if (!shape.label.compiledImageMeta) return null;
 
-  const { x, y } = LocationResolver.resolveImagePosition(shape);
-
-  return isCurrentlyEditing ? (
-    <DynamicTextBox {...args} />
-  ) : (
-    <StaticTextBox x={x} y={y} {...args} />
-  );
+  if (isCurrentlyEditing) {
+    return <DynamicTextBox {...args} />;
+  } else if (shape.label.compiledImageMeta) {
+    const { x, y } = LocationResolver.resolveImagePosition(shape);
+    return <StaticTextBox x={x} y={y} {...args} />;
+  }
+  return null;
 }
 
 export default Label;
