@@ -185,6 +185,16 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
   ];
 }
 
+function moveCursorToMiddle({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    }),
+    document,
+  ];
+}
+
 function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const nextShape = spatialIndex.getNextShape(editor.cursorPosition);
   let updatedEditor = editor;
@@ -225,6 +235,7 @@ export {
   cursorDown,
   cursorLeft,
   cursorRight,
+  moveCursorToMiddle,
   selectNextSearchResult,
   selectPreviousSearchResult,
 };

@@ -15,6 +15,7 @@ import {
   enterTextModeForNearestTextBox,
   enterVisualBlockMode,
   enterVisualMode,
+  moveCursorToMiddle,
   selectNextSearchResult,
   selectPreviousSearchResult,
 } from '@renderer/core/commands/EditorCommands';
@@ -91,6 +92,8 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorLeft;
     case 'right':
       return cursorRight;
+    case 'moveCursorToMiddle':
+      return moveCursorToMiddle;
     case 'createCircle':
       return createCircle;
     case 'createRectangle':

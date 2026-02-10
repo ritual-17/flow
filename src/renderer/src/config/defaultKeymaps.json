@@ -11,6 +11,7 @@
     "ArrowDown": "down",
     "ArrowLeft": "left",
     "ArrowRight": "right",
+    "M": "moveCursorToMiddle",
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
@@ -66,7 +67,8 @@
     "n": "selectNextSearchResult",
     "N": "selectPreviousSearchResult",
     "<Space>": "toggleSelectShapeAtCursor",
-    "V": "enterVisualBlockMode"
+    "V": "enterVisualBlockMode",
+    "M": "moveCursorToMiddle"
   },
   "visual-block": {
     "v": "enterVisualMode",
