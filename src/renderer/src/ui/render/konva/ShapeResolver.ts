@@ -13,7 +13,7 @@ export interface ShapeComponentProps<T extends Shape = Shape> {
 
 export type ShapeComponent<T extends Shape = Shape> = (
   props: ShapeComponentProps<T>,
-) => JSX.Element;
+) => JSX.Element | null;
 
 // mapping from shape type to corresponding Konva component
 function getComponent<T extends Shape>(shape: T): ShapeComponent<T> {

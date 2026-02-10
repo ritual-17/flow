@@ -16,6 +16,10 @@ export function buildBaseShape(): IShapeBase {
     fill: 1,
     strokeColor: 'black',
     fillColor: 'white',
+    label: {
+      text: '',
+      compiledImageMeta: null,
+    },
   };
 }
 
@@ -29,7 +33,19 @@ export interface IShapeBase {
   fill: number;
   strokeColor: string;
   fillColor: string;
+  label: Label;
 }
+
+export type Label = {
+  text: string;
+  compiledImageMeta: ImageMeta | null;
+};
+
+export type ImageMeta = {
+  src: string;
+  width: number;
+  height: number;
+};
 
 export type ShapeId = string;
 export type Coordinate = { x: number; y: number };

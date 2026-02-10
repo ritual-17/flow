@@ -3,9 +3,8 @@
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { updateShapeInDocument } from '@renderer/core/commands/ManipulationCommands';
 import { Document } from '@renderer/core/document/Document';
-import { setEditingTextBox } from '@renderer/core/editor/Editor';
-import { assertIsTextBox } from '@renderer/core/geometry/Shape';
-import { updateTextBoxContent } from '@renderer/core/geometry/Transform';
+import { setCurrentTextBox } from '@renderer/core/editor/Editor';
+import { compileShapeTextContent } from '@renderer/core/geometry/Transform';
 
 type OnExitCommandFunction = (args: CommandArgs) => Promise<CommandResult>;
 const onExitCommands: { [mode: string]: OnExitCommandFunction } = {
@@ -30,11 +29,10 @@ async function onExitTextMode(args: CommandArgs): Promise<CommandResult> {
   }
   const { id: textBoxId, content: updatedContent } = editor.currentTextBox;
   const textBox = Document.getShapeById(document, textBoxId);
-  assertIsTextBox(textBox);
-  const updatedTextBox = await updateTextBoxContent(textBox, updatedContent);
+  const updatedTextBox = await compileShapeTextContent(textBox, updatedContent);
 
   const updatedDocument = updateShapeInDocument(args, updatedTextBox);
   // clear the current text box being edited
-  const updatedEditor = setEditingTextBox(editor, null);
+  const updatedEditor = setCurrentTextBox(editor, null);
   return [updatedEditor, updatedDocument];
 }

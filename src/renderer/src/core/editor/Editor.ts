@@ -122,7 +122,7 @@ function setCurrentLineId(editor: Editor, lineId: ShapeId | null): Editor {
   });
 }
 
-function setEditingTextBox(editor: Editor, textBoxState: TextBoxEditingState | null): Editor {
+function setCurrentTextBox(editor: Editor, textBoxState: TextBoxEditingState | null): Editor {
   return produce(editor, (draft) => {
     draft.currentTextBox = textBoxState;
   });
@@ -166,5 +166,5 @@ export {
   setBoxSelectAnchor,
   clearBoxSelectAnchor,
   setStatus,
-  setEditingTextBox,
+  setCurrentTextBox,
 };

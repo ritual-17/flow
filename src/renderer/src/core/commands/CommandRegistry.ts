@@ -12,16 +12,19 @@ import {
   enterLineMode,
   enterNormalMode,
   enterTextMode,
+  enterTextModeForNearestTextBox,
   enterVisualMode,
   selectNextSearchResult,
 } from '@renderer/core/commands/EditorCommands';
 import {
   addAnchorPointToLine,
+  addPointToLine,
   createCircle,
   createRectangle,
   createTextBox,
   deleteSelection,
   paste,
+  startNewLine,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -68,8 +71,12 @@ function commandFromName(command: string): CommandFunction | null {
       return enterLineMode;
     case 'enterAnchorLineMode':
       return enterAnchorLineMode;
+    case 'newLine':
+      return startNewLine;
     case 'enterTextMode':
       return enterTextMode;
+    case 'enterTextModeForNearestTextBox':
+      return enterTextModeForNearestTextBox;
     case 'up':
       return cursorUp;
     case 'down':
@@ -96,6 +103,8 @@ function commandFromName(command: string): CommandFunction | null {
       return jumpToRightAnchorPoint;
     case 'addAnchorPointToLine':
       return addAnchorPointToLine;
+    case 'linePoint':
+      return addPointToLine;
     case 'translateSelectionUp':
       return translateSelectionUp;
     case 'translateSelectionDown':
