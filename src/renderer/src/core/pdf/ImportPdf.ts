@@ -1,4 +1,4 @@
-import { PdfId, PdfSlide, PdfSource } from '@renderer/core/document/Pdf';
+import { PDF, PdfId, PdfSlide, PdfSource } from '@renderer/core/document/Pdf';
 import * as pdfjsLib from 'pdfjs-dist';
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min?url';
 
@@ -56,16 +56,16 @@ export async function importPdfFromPicker(): Promise<{
 
     const imageDataUrl = canvas.toDataURL('image/png');
 
-    slides.push({
-      id: newId(),
-      pdfId,
-      pageNumber,
-      x: startX,
-      y: currentY,
-      width: canvas.width,
-      height: canvas.height,
-      imageDataUrl,
-    });
+    slides.push(
+      PDF.build({
+        id: newId(),
+        x: startX,
+        y: currentY,
+        width: canvas.width,
+        height: canvas.height,
+        imageDataUrl,
+      }),
+    );
 
     currentY += canvas.height + 20; // spacing
   }
