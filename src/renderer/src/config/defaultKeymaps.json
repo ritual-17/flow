@@ -72,8 +72,8 @@
   },
   "visual-block": {
     "v": "enterVisualMode",
-    "j": "visualUp",
-    "k": "visualDown",
+    "j": "visualDown",
+    "k": "visualUp",
     "h": "visualLeft",
     "l": "visualRight",
     "ArrowUp": "visualUp",
