@@ -2,6 +2,7 @@ import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
 import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
+import { Square } from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { generateId } from '@renderer/core/utils/id';
 
@@ -86,4 +87,4 @@ export function assertIsTextBox(shape: Shape): asserts shape is TextBox {
   }
 }
 
-export type Shape = Circle | Point | TextBox | MultiLine | Rectangle;
+export type Shape = Circle | Point | TextBox | MultiLine | Rectangle | Square;

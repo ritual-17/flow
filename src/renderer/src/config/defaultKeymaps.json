@@ -38,7 +38,8 @@
     "c": "createCircle",
     "t": "createTextBox",
     "<C-s>": "saveFile",
-    "r": "createRectangle"
+    "r": "createRectangle",
+    "s": "createSquare"
   },
   "visual": {
     "j": "visualDown",
