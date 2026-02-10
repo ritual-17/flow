@@ -17,6 +17,8 @@ export class FlattenSpatialIndex implements SpatialIndex {
   private idToShapeMap: idToShapeMap = new Map();
   private shapeToIdMap: shapeToIdMap = new Map();
   private SEARCH_RADIUS = 1000;
+  // mapping from a shape id to the multi-line shapes that reference it
+  private shapeLineRefs = new Map<ShapeId, Set<ShapeId>>();
 
   addShape(shape: Shape): void {
     const resolvedShape = this.resolveShapePoints(shape);
@@ -50,6 +52,20 @@ export class FlattenSpatialIndex implements SpatialIndex {
     this.set.clear();
     this.idToShapeMap.clear();
     this.shapeToIdMap.clear();
+  }
+
+  // get all ids for shapes that reference any of the given shape ids
+  getReferencingShapeIds(shapeIds: ShapeId[]): ShapeId[] {
+    const referencingShapeIds = new Set<ShapeId>();
+
+    shapeIds.forEach((id) => {
+      const refs = this.shapeLineRefs.get(id);
+      if (refs) {
+        refs.forEach((refId) => referencingShapeIds.add(refId));
+      }
+    });
+
+    return Array.from(referencingShapeIds);
   }
 
   distanceBetweenShapes(shapeA: Shape, shapeB: Shape): number {
@@ -239,6 +255,13 @@ export class FlattenSpatialIndex implements SpatialIndex {
 
       const refShape = this.getDomainShapeById(pt.shapeId);
       const anchorPoint = resolveAnchorPoint(refShape, pt.position);
+
+      // track line references for future updates
+      if (!this.shapeLineRefs.has(refShape.id)) {
+        this.shapeLineRefs.set(refShape.id, new Set<ShapeId>());
+      }
+      this.shapeLineRefs.get(refShape.id)!.add(shape.id);
+
       return { x: anchorPoint.x, y: anchorPoint.y };
     });
 
@@ -255,6 +278,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     this.set.delete(flat);
     this.idToShapeMap.delete(shape.id);
     this.shapeToIdMap.delete(flat);
+    this.shapeLineRefs.delete(shape.id);
   }
 
   private distanceBetweenPoints(pointA: Coordinate, pointB: Coordinate): number {

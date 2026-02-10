@@ -7,6 +7,7 @@ export interface SpatialIndex {
   removeShape(shape: Shape): void;
   getShapes(): Shape[];
   clearShapes(): void;
+  getReferencingShapeIds(shapeIds: ShapeId[]): ShapeId[];
   distanceBetweenShapes(shapeA: Shape, shapeB: Shape): number;
   searchInArea(area: { xMin: number; xMax: number; yMin: number; yMax: number }): Shape[];
   getNearestShape(point: { x: number; y: number }): Shape | null;
