@@ -31,8 +31,6 @@ export class CommandDispatcher {
 
   private history = new History<DocumentModel>();
 
-  private isApplyingHistory = false;
-
   constructor(callback: CommandDispatcherCallback) {
     this.callback = callback;
   }
@@ -127,22 +125,14 @@ export class CommandDispatcher {
     this.spatialIndex = new FlattenSpatialIndex();
     afterDocument.shapes.forEach((shape) => this.spatialIndex.addShape(shape));
 
-    if (isHistoryCommand) {
-      this.isApplyingHistory = true;
-    }
-
     // record the command in history before updating the state
-    if (afterDocument !== beforeDocument && !this.isApplyingHistory) {
+    if (afterDocument !== beforeDocument && !isHistoryCommand) {
       const [_, patches, inversePatches] = produceWithPatches(beforeDocument, (draft) =>
         Object.assign(draft, afterDocument),
       ); // get patches to update the document and inverse patches to undo the update
       if (patches.length > 0) {
         this.history.record({ patches, backwardPatches: inversePatches });
       }
-    }
-
-    if (isHistoryCommand) {
-      this.isApplyingHistory = false;
     }
   }
 
