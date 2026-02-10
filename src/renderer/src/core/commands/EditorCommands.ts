@@ -54,6 +54,7 @@ async function enterVisualMode(args: CommandArgs): Promise<CommandResult> {
     editor: updatedEditor,
     document: updatedDocument,
     spatialIndex: args.spatialIndex,
+    history: args.history,
     args: {},
   });
   return [updatedEditor, updatedDocument];
@@ -68,6 +69,7 @@ async function enterVisualBlockMode(args: CommandArgs): Promise<CommandResult> {
     editor: updatedEditor,
     document: updatedDocument,
     spatialIndex: args.spatialIndex,
+    history: args.history,
     args: {},
   });
   return [updatedEditor, updatedDocument];
