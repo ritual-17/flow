@@ -2,6 +2,7 @@ import { Document, DocumentModel } from '@renderer/core/document/Document';
 import { AnchorPoint, AnchorRef, Coordinate, Shape } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
+import * as PdfSlide from '@renderer/core/geometry/shapes/PdfSlide';
 import * as Point from '@renderer/core/geometry/shapes/Point';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 
@@ -16,6 +17,8 @@ export function getAnchorPoints(shape: Shape): AnchorPoint[] {
     // Add cases for other shape types as needed
     case 'textBox':
       return TextBox.generateAnchorPoints(shape);
+    case 'pdf':
+      return PdfSlide.generateAnchorPoints(shape);
     default:
       return [];
   }

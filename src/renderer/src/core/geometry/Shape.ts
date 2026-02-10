@@ -4,6 +4,8 @@ import { Point } from '@renderer/core/geometry/shapes/Point';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { generateId } from '@renderer/core/utils/id';
 
+import { PdfSlide } from './shapes/PdfSlide';
+
 export function buildBaseShape(): IShapeBase {
   return {
     id: generateId(),
@@ -70,4 +72,4 @@ export function assertIsTextBox(shape: Shape): asserts shape is TextBox {
   }
 }
 
-export type Shape = Circle | Point | TextBox | MultiLine;
+export type Shape = Circle | Point | TextBox | MultiLine | PdfSlide;
