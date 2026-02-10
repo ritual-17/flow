@@ -62,6 +62,30 @@
     "<Shift-ArrowDown>": "translateSelectionDown",
     "<Shift-ArrowRight>": "translateSelectionRight",
     "<Shift-ArrowLeft>": "translateSelectionLeft",
+    "n": "selectNextSearchResult",
+    "N": "selectPreviousSearchResult",
+    "<Space>": "toggleSelectShapeAtCursor"
+  },
+  "visual-block": {
+    "j": "visualUp",
+    "k": "visualDown",
+    "h": "visualLeft",
+    "l": "visualRight",
+    "ArrowUp": "visualUp",
+    "ArrowDown": "visualDown",
+    "ArrowLeft": "visualLeft",
+    "ArrowRight": "visualRight",
+    "d": "deleteSelection",
+    "y": "yankSelection",
+    "p": "pasteOverSelection",
+    "K": "translateSelectionUp",
+    "J": "translateSelectionDown",
+    "L": "translateSelectionRight",
+    "H": "translateSelectionLeft",
+    "<Shift-ArrowUp>": "translateSelectionUp",
+    "<Shift-ArrowDown>": "translateSelectionDown",
+    "<Shift-ArrowRight>": "translateSelectionRight",
+    "<Shift-ArrowLeft>": "translateSelectionLeft",
     "<Space>": "toggleBoxSelect"
   },
   "text": {},
@@ -97,7 +121,6 @@
     "ArrowRight": "rightAnchor",
     "n": "newLine",
     "<Space>": "addAnchorPointToLine",
-
     "a": "enterLineMode"
   }
 }

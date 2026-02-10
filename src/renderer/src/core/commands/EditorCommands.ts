@@ -12,6 +12,7 @@ impact the state of the document.
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { previousModeExitCleanup } from '@renderer/core/commands/modes/onExit';
+import { toggleSelectShapeAtPoint } from '@renderer/core/commands/VisualCommands';
 import {
   clearBoxSelectAnchor,
   clearSelection,
@@ -45,10 +46,18 @@ async function enterInsertMode(args: CommandArgs): Promise<CommandResult> {
 
 async function enterVisualMode(args: CommandArgs): Promise<CommandResult> {
   // disabling because it is complaining updatedDocument is not reassigned
-  // eslint-disable-next-line prefer-const
+
   let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
   updatedEditor = setMode(updatedEditor, 'visual');
   updatedEditor = clearSelection(updatedEditor);
+
+  // toggle selection of shape at cursor position if it exists, otherwise just enter visual mode with no selection
+  [updatedEditor, updatedDocument] = toggleSelectShapeAtPoint({
+    editor: updatedEditor,
+    document: updatedDocument,
+    spatialIndex: args.spatialIndex,
+    args: {},
+  });
   return [updatedEditor, updatedDocument];
 }
 

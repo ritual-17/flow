@@ -39,6 +39,7 @@ import {
   jumpToRightAnchorPoint,
   jumpToUpAnchorPoint,
   toggleBoxSelect,
+  toggleSelectShapeAtPoint,
   visualDown,
   visualLeft,
   visualRight,
@@ -123,6 +124,8 @@ function commandFromName(command: string): CommandFunction | null {
       return deleteSelection;
     case 'yankSelection':
       return yankSelection;
+    case 'toggleSelectShapeAtCursor':
+      return toggleSelectShapeAtPoint;
     case 'toggleBoxSelect':
       return toggleBoxSelect;
     case 'pasteAfter':

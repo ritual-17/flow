@@ -55,6 +55,12 @@ function setSelectedShapes(editor: Editor, shapeIds: ShapeId[]): Editor {
   });
 }
 
+function pushSelectedShapes(editor: Editor, shapeIds: ShapeId[]): Editor {
+  return produce(editor, (draft) => {
+    draft.selectedShapeIds.push(...shapeIds);
+  });
+}
+
 function getSelectedShapes(editor: Editor, document: DocumentModel): Shape[] {
   return editor.selectedShapeIds.map((id) => Document.getShapeById(document, id));
 }
@@ -152,6 +158,7 @@ export {
   createEditor,
   setMode,
   setSelectedShapes,
+  pushSelectedShapes,
   getSelectedShapes,
   clearSelection,
   addToSelection,

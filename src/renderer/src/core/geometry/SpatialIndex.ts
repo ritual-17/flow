@@ -9,6 +9,7 @@ export interface SpatialIndex {
   clearShapes(): void;
   distanceBetweenShapes(shapeA: Shape, shapeB: Shape): number;
   searchInArea(area: { xMin: number; xMax: number; yMin: number; yMax: number }): Shape[];
+  searchAtPoint(point: Coordinate): Shape[];
   getNearestShape(point: Coordinate): Shape | null;
   getNearestAnchorPoint(point: Coordinate): AnchorPoint | null;
   getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint;

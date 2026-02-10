@@ -99,6 +99,11 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return hits.map((hit) => this.getDomainShape(hit));
   }
 
+  searchAtPoint(point: Coordinate): Shape[] {
+    const hits = this.set.hit(new Flatten.Point(point.x, point.y));
+    return hits.map((hit) => this.getDomainShape(hit));
+  }
+
   getNearestShape(point: Coordinate): Shape | null {
     const searchBox = new Flatten.Box(
       point.x - this.SEARCH_RADIUS,
