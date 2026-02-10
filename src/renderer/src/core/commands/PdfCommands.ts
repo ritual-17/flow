@@ -9,7 +9,6 @@ export async function importPdf(args: CommandArgs): Promise<CommandResult> {
   const pdfSlides = await generatePdfSlides();
   if (!pdfSlides) return [editor, document];
 
-  // TODO: add pdf results to shapes instead of pdf fields
   const updatedDocument = addShapesToDocument(args, pdfSlides);
 
   return [editor, updatedDocument];
