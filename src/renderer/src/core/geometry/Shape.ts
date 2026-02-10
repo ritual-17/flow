@@ -81,6 +81,10 @@ export function isLine(shape: Shape): shape is MultiLine {
   return shape.type === 'multi-line';
 }
 
+export function isPoint(shape: Shape): shape is Point {
+  return shape.type === 'point';
+}
+
 export function assertIsTextBox(shape: Shape): asserts shape is TextBox {
   if (shape.type !== 'textBox') {
     throw new Error(`Shape with id ${shape.id} is not a TextBox`);

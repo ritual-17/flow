@@ -5,6 +5,7 @@ import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModePars
 import { LineModeParser } from '@renderer/core/commands/parsers/LineModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
 import { TextModeParser } from '@renderer/core/commands/parsers/TextModeParser';
+import { VisualBlockModeParser } from '@renderer/core/commands/parsers/VisualBlockModeParser';
 import { VisualModeParser } from '@renderer/core/commands/parsers/VisualModeParser';
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
@@ -21,6 +22,7 @@ export class CommandDispatcher {
   private normalModeParser: CommandParser = new NormalModeParser();
   private insertModeParser: CommandParser = new InsertModeParser();
   private visualModeParser: CommandParser = new VisualModeParser();
+  private visualBlockModeParser: CommandParser = new VisualBlockModeParser();
   private commandModeParser: CommandParser = new NormalModeParser();
   private lineModeParser: CommandParser = new LineModeParser();
   private anchorLineModeParser: CommandParser = new AnchorLineModeParser();
@@ -109,6 +111,8 @@ export class CommandDispatcher {
         return this.insertModeParser;
       case 'visual':
         return this.visualModeParser;
+      case 'visual-block':
+        return this.visualBlockModeParser;
       case 'command':
         return this.commandModeParser;
       case 'line':
