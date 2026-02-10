@@ -51,7 +51,7 @@ export async function importPdfFromPicker(): Promise<{
   const startX = 50;
   let currentY = 50;
 
-  // Adjust scale to taste; 1.5 is usually readable
+  // Adjust scale here
   const scale = 1.5;
 
   for (let pageNumber = 1; pageNumber <= pageCount; pageNumber++) {
