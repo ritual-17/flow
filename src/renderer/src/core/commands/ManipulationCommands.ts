@@ -14,8 +14,8 @@ import {
 import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
-import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
 import * as Point from '@renderer/core/geometry/shapes/Point';
+import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
   cloneShape,
