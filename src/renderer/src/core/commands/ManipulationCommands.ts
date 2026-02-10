@@ -11,7 +11,7 @@ import {
   setMode,
   setStatus,
 } from '@renderer/core/editor/Editor';
-import { AnchorRef, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import * as Point from '@renderer/core/geometry/shapes/Point';
@@ -22,11 +22,8 @@ import {
   Transform,
   translateShape,
 } from '@renderer/core/geometry/Transform';
-import {
-  getAnchorPoint,
-  isAnchorRef,
-  resolveAnchorPoint,
-} from '@renderer/core/geometry/utils/AnchorPoints';
+import { AnchorPointDereferencer } from '@renderer/core/geometry/utils/AnchorPointDereferencer';
+import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function createCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
@@ -315,7 +312,10 @@ function helperRemoveShapes(args: CommandArgs, shapeIds: ShapeId[]): [DocumentMo
   const { document, spatialIndex, editor } = args;
   const referencingLines = spatialIndex.getReferencingShapeIds(shapeIds);
 
-  const updatedLines = populateLinePointsFromReferences(document, referencingLines, shapeIds);
+  const lines = referencingLines.map((id) => Document.getShapeById(document, id));
+  const refs = shapeIds.map((id) => Document.getShapeById(document, id));
+
+  const updatedLines = new AnchorPointDereferencer(lines, refs).populateLinePointsFromReferences();
   updatedLines.forEach((line) => spatialIndex.updateShape(line));
 
   let updatedDocument = updateShapesInDocument(args, updatedLines);
@@ -324,39 +324,6 @@ function helperRemoveShapes(args: CommandArgs, shapeIds: ShapeId[]): [DocumentMo
   let updatedEditor = clearSelection(editor);
   updatedEditor = clearBoxSelectAnchor(updatedEditor);
   return [updatedDocument, updatedEditor];
-}
-
-function populateLinePointsFromReferences(
-  document: DocumentModel,
-  lineIds: ShapeId[],
-  refIds: ShapeId[],
-): Shape[] {
-  const lines = lineIds.map((id) => Document.getShapeById(document, id));
-  const refs = refIds.map((id) => Document.getShapeById(document, id));
-
-  const updatedLines = lines.map((line) => {
-    if (line.type === 'multi-line') {
-      const updatedPoints: MultiLine.MultiLine['points'] = [];
-      line.points.forEach((point) => {
-        if (isAnchorRef(point)) {
-          const ref = refs.find((r) => r.id === point.shapeId);
-          if (ref) {
-            const resolvedPoint = resolveAnchorPoint(ref, point.position);
-            const coordinate: Coordinate = { x: resolvedPoint.x, y: resolvedPoint.y };
-            updatedPoints.push(coordinate);
-          } else {
-            updatedPoints.push(point);
-          }
-        } else {
-          updatedPoints.push(point);
-        }
-      });
-      return { ...line, points: updatedPoints };
-    }
-    return line;
-  });
-
-  return updatedLines;
 }
 
 export function updateShapeInDocument(args: CommandArgs, shape: Shape): DocumentModel {
