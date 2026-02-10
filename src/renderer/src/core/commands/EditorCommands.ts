@@ -16,8 +16,9 @@ import {
   clearBoxSelectAnchor,
   clearSelection,
   setCurrentAnchorPoint,
+  setCurrentLineId,
+  setCurrentTextBox,
   setCursorPosition,
-  setEditingTextBox,
   setMode,
   setSelectedShapes,
 } from '@renderer/core/editor/Editor';
@@ -32,6 +33,7 @@ async function enterNormalMode(args: CommandArgs): Promise<CommandResult> {
   updatedEditor = setSelectedShapes(updatedEditor, []);
   updatedEditor = clearBoxSelectAnchor(updatedEditor);
   updatedEditor = setMode(updatedEditor, 'normal');
+  updatedEditor = setCurrentLineId(updatedEditor, null);
 
   return [updatedEditor, updatedDocument];
 }
@@ -60,24 +62,22 @@ async function enterLineMode(args: CommandArgs): Promise<CommandResult> {
   return [setMode(updatedEditor, 'line'), updatedDocument];
 }
 
+// enters text mode on the nearest shape (i.e. either a text box or label of a shape)
 async function enterTextMode(args: CommandArgs): Promise<CommandResult> {
   const { spatialIndex } = args;
   // disabling because it is complaining updatedDocument is not reassigned
   // eslint-disable-next-line prefer-const
   let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
 
-  const nearestTextBox = spatialIndex.getNearestTextBox(updatedEditor.cursorPosition);
-  if (nearestTextBox) {
-    updatedEditor = setMode(updatedEditor, 'text');
-    updatedEditor = setCursorPosition(updatedEditor, { x: nearestTextBox.x, y: nearestTextBox.y });
-    updatedEditor = setEditingTextBox(updatedEditor, {
-      id: nearestTextBox.id,
-      content: nearestTextBox.text,
-    });
-    return [updatedEditor, updatedDocument];
-  }
+  const nearestShape = spatialIndex.getNearestShape(updatedEditor.cursorPosition);
+  if (!nearestShape) return [updatedEditor, updatedDocument];
 
-  // no text box exists so reject the command. should probably add an error message later
+  updatedEditor = setMode(updatedEditor, 'text');
+  updatedEditor = setCursorPosition(updatedEditor, { x: nearestShape.x, y: nearestShape.y });
+  updatedEditor = setCurrentTextBox(updatedEditor, {
+    id: nearestShape.id,
+    content: nearestShape.label.text,
+  });
   return [updatedEditor, updatedDocument];
 }
 
@@ -96,6 +96,28 @@ async function enterAnchorLineMode(args: CommandArgs): Promise<CommandResult> {
   }
 
   return [setMode(updatedEditor, 'line'), updatedDocument];
+}
+
+// enters text mode for the nearest text box (not label)
+async function enterTextModeForNearestTextBox(args: CommandArgs): Promise<CommandResult> {
+  const { spatialIndex } = args;
+  // disabling because it is complaining updatedDocument is not reassigned
+  // eslint-disable-next-line prefer-const
+  let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
+
+  const nearestTextBox = spatialIndex.getNearestTextBox(updatedEditor.cursorPosition);
+  if (nearestTextBox) {
+    updatedEditor = setMode(updatedEditor, 'text');
+    updatedEditor = setCursorPosition(updatedEditor, { x: nearestTextBox.x, y: nearestTextBox.y });
+    updatedEditor = setCurrentTextBox(updatedEditor, {
+      id: nearestTextBox.id,
+      content: nearestTextBox.label.text,
+    });
+    return [updatedEditor, updatedDocument];
+  }
+
+  // no text box exists so reject the command. should probably add an error message later
+  return [updatedEditor, updatedDocument];
 }
 
 function cursorUp({ editor, document }: CommandArgs): CommandResult {
@@ -140,7 +162,7 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
 
 // update this later to use search results and if there is no current search then selected closest shape
 function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs): CommandResult {
-  const nearestShapeId = spatialIndex.getNearestShapeId(editor.cursorPosition);
+  const nearestShapeId = spatialIndex.getNearestShape(editor.cursorPosition)?.id;
   let updatedEditor = editor;
   if (nearestShapeId) {
     updatedEditor = setSelectedShapes(editor, [nearestShapeId]);
@@ -163,6 +185,7 @@ export {
   enterLineMode,
   enterAnchorLineMode,
   enterTextMode,
+  enterTextModeForNearestTextBox,
   cursorUp,
   cursorDown,
   cursorLeft,

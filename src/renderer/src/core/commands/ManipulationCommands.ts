@@ -15,18 +15,19 @@ import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
+import * as Point from '@renderer/core/geometry/shapes/Point';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
   cloneShape,
   getSelectionCenter,
+  Transform,
   translateShape,
-  updateTextBoxContent,
 } from '@renderer/core/geometry/Transform';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 import { SpatialIndex } from '../geometry/SpatialIndex';
 
-export function createCircle(args: CommandArgs): [Editor, DocumentModel] {
+export function createCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
   const circle = Circle.build({ x, y });
 
@@ -44,13 +45,11 @@ export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
   return [args.editor, updatedDocument];
 }
 
-export async function createTextBox(args: CommandArgs): Promise<[Editor, DocumentModel]> {
+export async function createTextBox(args: CommandArgs): Promise<CommandResult> {
   const { x, y } = args.editor.cursorPosition;
-  const textBox = TextBox.build({ x, y });
+  const textBox = await Transform.compileShapeTextContent(TextBox.build({ x, y }));
 
-  const compiledTextBox = await updateTextBoxContent(textBox, textBox.text);
-
-  const updatedDocument = addShapeToDocument(args, compiledTextBox);
+  const updatedDocument = addShapeToDocument(args, textBox);
 
   return [args.editor, updatedDocument];
 }
@@ -150,6 +149,76 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
   }
 }
 
+/*
+ * Functon that creates a new point usabel for lines.
+ * Also sets the currentLineId to the new point
+ */
+export function startNewLine(args: CommandArgs): CommandResult {
+  const { editor, document } = args;
+
+  let updatedEditor = editor;
+  let updatedDocument = document;
+
+  const { x, y } = args.editor.cursorPosition;
+  const currentPoint = Point.build({
+    x: x,
+    y: y,
+  });
+  updatedEditor = setCurrentLineId(updatedEditor, currentPoint.id);
+  updatedDocument = addShapeToDocument(args, currentPoint);
+  return [updatedEditor, updatedDocument];
+}
+
+/*
+ * Function that attempts to add a point to the currently selected line.
+ * If no line is selected then it will create a point for a line to base off of
+ */
+export function addPointToLine(args: CommandArgs): CommandResult {
+  const { editor, document } = args;
+
+  let updatedEditor = editor;
+  let updatedDocument = document;
+  const currentLineId = editor.currentLineId;
+  if (!currentLineId) {
+    // need to add a point rather than a line because we only have one point so far
+    return startNewLine(args);
+  }
+
+  const { x, y } = args.editor.cursorPosition;
+  const currentPoint = Point.build({
+    x: x,
+    y: y,
+  });
+  const currentLine = Document.getShapeById(updatedDocument, currentLineId);
+  switch (currentLine.type) {
+    case 'point': {
+      let newLine = MultiLine.fromStartingPoint(currentLine, { id: currentLine.id });
+      newLine = MultiLine.addPoint(newLine, currentPoint);
+
+      updatedDocument = updateShapeInDocument(
+        { ...args, editor: updatedEditor, document: updatedDocument },
+        newLine,
+      );
+
+      updatedEditor = setCurrentLineId(updatedEditor, newLine.id);
+      return [updatedEditor, updatedDocument];
+    }
+    case 'multi-line': {
+      const updatedLine = MultiLine.addPoint(currentLine, currentPoint);
+      updatedDocument = updateShapeInDocument(
+        { ...args, editor: updatedEditor, document: updatedDocument },
+        updatedLine,
+      );
+
+      return [updatedEditor, updatedDocument];
+    }
+    default:
+      throw new Error(
+        `Shape with id ${currentLine.id} is not a line or point, cannot add another point`,
+      );
+  }
+}
+
 export function deleteSelection(args: CommandArgs): [Editor, DocumentModel] {
   const { editor, document, spatialIndex } = args;
   const { selectedShapeIds } = editor;
@@ -201,7 +270,7 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
   return [updatedEditor, document];
 }
 
-export function paste(args: CommandArgs): CommandResult {
+export async function paste(args: CommandArgs): Promise<CommandResult> {
   const { editor, document, spatialIndex } = args;
   if (editor.clipboard.length === 0) {
     return [editor, document];
@@ -218,13 +287,15 @@ export function paste(args: CommandArgs): CommandResult {
 
   const cursor = updatedEditor.cursorPosition;
 
-  // 1. Clone with new IDs, 2. Position at cursor, 3. Insert each into document (via loop),
-  const cloned = updatedEditor.clipboard.map(cloneShape);
-  const position = cloned.map((shape) =>
-    translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }),
+  // 1. Clone with new IDs, 2. Position at cursor, 3. compile, 4. Insert each into document (via loop),
+  const clonedShapes = await Promise.all(
+    updatedEditor.clipboard
+      .map(cloneShape)
+      .map((shape) => translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }))
+      .map((shape) => Transform.compileShapeTextContent(shape)),
   );
 
-  for (const shape of position) {
+  for (const shape of clonedShapes) {
     updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
   }
 
