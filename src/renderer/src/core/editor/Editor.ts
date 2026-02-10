@@ -21,7 +21,15 @@ export interface TextBoxEditingState {
   content: string;
 }
 
-export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
+export type Mode =
+  | 'insert'
+  | 'normal'
+  | 'visual'
+  | 'visual-block'
+  | 'command'
+  | 'text'
+  | 'line'
+  | 'anchor-line';
 
 // any modification to the editor state should go through these functions
 // below are just some helper functions to create and update the editor state
@@ -52,6 +60,12 @@ function setMode(editor: Editor, mode: Mode): Editor {
 function setSelectedShapes(editor: Editor, shapeIds: ShapeId[]): Editor {
   return produce(editor, (draft) => {
     draft.selectedShapeIds = shapeIds;
+  });
+}
+
+function pushSelectedShapes(editor: Editor, shapeIds: ShapeId[]): Editor {
+  return produce(editor, (draft) => {
+    draft.selectedShapeIds.push(...shapeIds);
   });
 }
 
@@ -152,6 +166,7 @@ export {
   createEditor,
   setMode,
   setSelectedShapes,
+  pushSelectedShapes,
   getSelectedShapes,
   clearSelection,
   addToSelection,

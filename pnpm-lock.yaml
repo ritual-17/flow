@@ -53,6 +53,9 @@ importers:
       react-konva-utils:
         specifier: ^2.0.0
         version: 2.0.0(konva@10.1.0)(react-dom@19.2.0(react@19.2.0))(react-konva@19.2.1(@types/react@19.2.2)(konva@10.1.0)(react-dom@19.2.0(react@19.2.0))(react@19.2.0))(react@19.2.0)
+      sorted-btree:
+        specifier: ^2.1.0
+        version: 2.1.0
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.15.11)(@swc/wasm@1.15.11)(@types/node@22.18.10)(typescript@5.9.3)
@@ -3927,6 +3930,9 @@ packages:
   socks@2.8.7:
     resolution: {integrity: sha512-HLpt+uLy/pxB+bum/9DzAgiKS8CX1EvbWxI4zlmgGCExImLdiad2iCwXT5Z4c9c3Eq8rP2318mPW2c+QbtjK8A==}
     engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
+
+  sorted-btree@2.1.0:
+    resolution: {integrity: sha512-AtYXy3lL+5jrATpbymC2bM8anN/3maLkmVCd94MzypnKjokfCid/zeS3rvXedv7W6ffSfqKIGdz3UaJPWRBZ0g==}
 
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
@@ -8864,6 +8870,8 @@ snapshots:
     dependencies:
       ip-address: 10.0.1
       smart-buffer: 4.2.0
+
+  sorted-btree@2.1.0: {}
 
   source-map-js@1.2.1: {}
 

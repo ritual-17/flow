@@ -13,13 +13,18 @@ import {
   enterNormalMode,
   enterTextMode,
   enterTextModeForNearestTextBox,
+  enterVisualBlockMode,
   enterVisualMode,
+  moveCursorToMiddle,
   selectNextSearchResult,
+  selectPreviousSearchResult,
 } from '@renderer/core/commands/EditorCommands';
 import {
   addAnchorPointToLine,
   addPointToLine,
   createCircle,
+  createRectangle,
+  createSquare,
   createTextBox,
   deleteSelection,
   paste,
@@ -38,6 +43,7 @@ import {
   jumpToRightAnchorPoint,
   jumpToUpAnchorPoint,
   toggleBoxSelect,
+  toggleSelectShapeAtPoint,
   visualDown,
   visualLeft,
   visualRight,
@@ -68,6 +74,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterInsertMode;
     case 'enterVisualMode':
       return enterVisualMode;
+    case 'enterVisualBlockMode':
+      return enterVisualBlockMode;
     case 'enterCommandMode':
       return enterCommandMode;
     case 'enterLineMode':
@@ -88,12 +96,20 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorLeft;
     case 'right':
       return cursorRight;
+    case 'moveCursorToMiddle':
+      return moveCursorToMiddle;
     case 'createCircle':
       return createCircle;
+    case 'createRectangle':
+      return createRectangle;
+    case 'createSquare':
+      return createSquare;
     case 'createTextBox':
       return createTextBox;
     case 'selectNextSearchResult':
       return selectNextSearchResult;
+    case 'selectPreviousSearchResult':
+      return selectPreviousSearchResult;
     case 'downAnchor':
       return jumpToDownAnchorPoint;
     case 'upAnchor':
@@ -118,6 +134,8 @@ function commandFromName(command: string): CommandFunction | null {
       return deleteSelection;
     case 'yankSelection':
       return yankSelection;
+    case 'toggleSelectShapeAtCursor':
+      return toggleSelectShapeAtPoint;
     case 'toggleBoxSelect':
       return toggleBoxSelect;
     case 'pasteAfter':
