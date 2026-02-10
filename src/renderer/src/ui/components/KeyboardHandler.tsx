@@ -58,6 +58,58 @@ export function KeyboardHandler() {
         return;
       }
 
+      // handle shift+arrow keys
+      if (e.shiftKey) {
+        if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          appendCommandBuffer('<Shift-ArrowUp>');
+          return;
+        }
+
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          appendCommandBuffer('<Shift-ArrowDown>');
+          return;
+        }
+
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          appendCommandBuffer('<Shift-ArrowLeft>');
+          return;
+        }
+
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          appendCommandBuffer('<Shift-ArrowRight>');
+          return;
+        }
+      }
+
+      // handle arrow keys
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        appendCommandBuffer('ArrowUp');
+        return;
+      }
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        appendCommandBuffer('ArrowDown');
+        return;
+      }
+
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        appendCommandBuffer('ArrowLeft');
+        return;
+      }
+
+      if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        appendCommandBuffer('ArrowRight');
+        return;
+      }
+
       // ignore special keys like Shift, Ctrl, etc.
       if (e.key.length === 1) {
         // Append character to command buffer

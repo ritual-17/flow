@@ -131,7 +131,7 @@ export function toggleBoxSelect({ editor, document }: CommandArgs): CommandResul
 export function visualUp({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
     x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
+    y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {
@@ -143,7 +143,7 @@ export function visualUp({ editor, document, spatialIndex }: CommandArgs): Comma
 export function visualDown({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
     x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
+    y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {

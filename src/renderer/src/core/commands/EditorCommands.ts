@@ -124,7 +124,7 @@ function cursorUp({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
       x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
+      y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
     }),
     document,
   ];
@@ -134,7 +134,7 @@ function cursorDown({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
       x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
+      y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
     }),
     document,
   ];
