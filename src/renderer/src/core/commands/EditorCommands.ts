@@ -45,8 +45,6 @@ async function enterInsertMode(args: CommandArgs): Promise<CommandResult> {
 }
 
 async function enterVisualMode(args: CommandArgs): Promise<CommandResult> {
-  // disabling because it is complaining updatedDocument is not reassigned
-
   let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
   updatedEditor = setMode(updatedEditor, 'visual');
   updatedEditor = clearSelection(updatedEditor);
@@ -62,8 +60,6 @@ async function enterVisualMode(args: CommandArgs): Promise<CommandResult> {
 }
 
 async function enterVisualBlockMode(args: CommandArgs): Promise<CommandResult> {
-  // disabling because it is complaining updatedDocument is not reassigned
-
   let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
   updatedEditor = setMode(updatedEditor, 'visual-block');
   updatedEditor = clearSelection(updatedEditor);
@@ -199,9 +195,7 @@ function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs)
   const nextShape = spatialIndex.getNextShape(editor.cursorPosition);
   let updatedEditor = editor;
   if (nextShape) {
-    // updatedEditor = setSelectedShapes(editor, [nextShape.id]);
     updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
-    // updatedEditor = setMode(updatedEditor, 'visual');
   }
   return [updatedEditor, document];
 }
@@ -214,9 +208,7 @@ function selectPreviousSearchResult({
   const nextShape = spatialIndex.getNextShape(editor.cursorPosition, true);
   let updatedEditor = editor;
   if (nextShape) {
-    // updatedEditor = setSelectedShapes(editor, [nextShape.id]);
     updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
-    // updatedEditor = setMode(updatedEditor, 'visual');
   }
   return [updatedEditor, document];
 }
