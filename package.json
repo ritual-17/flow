@@ -41,6 +41,7 @@
     "pdfjs-dist": "^5.4.624",
     "react-konva": "^19.2.1",
     "react-konva-utils": "^2.0.0",
+    "sorted-btree": "^2.1.0",
     "ts-node": "^10.9.2",
     "zustand": "^5.0.9"
   },

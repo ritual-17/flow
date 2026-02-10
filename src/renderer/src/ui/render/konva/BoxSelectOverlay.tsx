@@ -6,7 +6,7 @@ function BoxSelectOverlay() {
   const anchor = useStore((state) => state.editor.boxSelectAnchor);
   const cursor = useStore((state) => state.editor.cursorPosition);
 
-  if (mode !== 'visual' || !anchor) return null;
+  if (mode !== 'visual-block' || !anchor) return null;
 
   const x = Math.min(anchor.x, cursor.x);
   const y = Math.min(anchor.y, cursor.y);

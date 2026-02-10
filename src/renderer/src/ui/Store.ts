@@ -4,7 +4,7 @@ import {
   createEditor,
   Editor,
   setCommandBuffer,
-  setEditingTextBox,
+  setCurrentTextBox,
 } from '@renderer/core/editor/Editor';
 import { create } from 'zustand';
 
@@ -17,7 +17,7 @@ export interface DocumentStore {
   updateDocument: (newDocument: DocumentModel) => void;
   updateCommandBuffer: (command: string) => void;
   appendCommandBuffer: (char: string) => void;
-  updateEditingTextBoxContent: (content: string) => void;
+  updateCurrentTextBoxContent: (content: string) => void;
 }
 
 export const useStore = create<DocumentStore>((set) => ({
@@ -45,13 +45,13 @@ export const useStore = create<DocumentStore>((set) => ({
 
     dispatcher.dispatchCommand(commandEditor, document);
   },
-  updateEditingTextBoxContent: (content: string) => {
+  updateCurrentTextBoxContent: (content: string) => {
     const editor = useStore.getState().editor;
     const currentTextBox = editor.currentTextBox;
     if (!currentTextBox) {
       return;
     }
-    const updatedEditor = setEditingTextBox(editor, {
+    const updatedEditor = setCurrentTextBox(editor, {
       id: currentTextBox.id,
       content,
     });

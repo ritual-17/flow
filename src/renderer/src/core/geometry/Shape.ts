@@ -1,6 +1,8 @@
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
+import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
+import { Square } from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { generateId } from '@renderer/core/utils/id';
 
@@ -17,6 +19,10 @@ export function buildBaseShape(): IShapeBase {
     fill: 1,
     strokeColor: 'black',
     fillColor: 'white',
+    label: {
+      text: '',
+      compiledImageMeta: null,
+    },
   };
 }
 
@@ -30,7 +36,19 @@ export interface IShapeBase {
   fill: number;
   strokeColor: string;
   fillColor: string;
+  label: Label;
 }
+
+export type Label = {
+  text: string;
+  compiledImageMeta: ImageMeta | null;
+};
+
+export type ImageMeta = {
+  src: string;
+  width: number;
+  height: number;
+};
 
 export type ShapeId = string;
 export type Coordinate = { x: number; y: number };
@@ -46,7 +64,6 @@ export type AnchorPoint = {
   x: number;
   y: number;
 };
-
 // maybe to be added, or we could possibly stick to multiline only
 // export type Line = IShapeBase & {
 //   type: 'line';
@@ -66,10 +83,14 @@ export function isLine(shape: Shape): shape is MultiLine {
   return shape.type === 'multi-line';
 }
 
+export function isPoint(shape: Shape): shape is Point {
+  return shape.type === 'point';
+}
+
 export function assertIsTextBox(shape: Shape): asserts shape is TextBox {
   if (shape.type !== 'textBox') {
     throw new Error(`Shape with id ${shape.id} is not a TextBox`);
   }
 }
 
-export type Shape = Circle | Point | TextBox | MultiLine | PdfSlide;
+export type Shape = Circle | Point | TextBox | MultiLine | Rectangle | Square | PdfSlide;
