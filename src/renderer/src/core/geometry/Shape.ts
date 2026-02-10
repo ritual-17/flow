@@ -1,10 +1,9 @@
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
-import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { generateId } from '@renderer/core/utils/id';
-import { Rect } from 'konva/lib/shapes/Rect';
 
 export function buildBaseShape(): IShapeBase {
   return {
@@ -55,7 +54,6 @@ export type AnchorPoint = {
 //   startAnchor?: AnchorPoint;
 //   endAnchor?: AnchorPoint;
 // };
-
 
 // possible future shape for grouping multiple shapes
 // export type Cell = IShapeBase & {
