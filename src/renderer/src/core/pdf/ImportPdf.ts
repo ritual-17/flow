@@ -2,19 +2,13 @@ import * as pdfjsLib from 'pdfjs-dist';
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min?url';
 
 import { PDF, PdfSlide } from '../geometry/shapes/PdfSlide';
+import { generateId } from '../utils/id';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
-
-function newId(): string {
-  // crypto.randomUUID is available in modern Electron; fallback included just in case
-  return globalThis.crypto?.randomUUID?.() ?? `id_${Date.now()}_${Math.random()}`;
-}
 
 export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
   const rawPdfData = await window.api.pdf.pick();
   if (!rawPdfData) return null;
-
-  // const url = filePathToFileUrl(picked.filePath);
 
   const loadingTask = pdfjsLib.getDocument({ data: rawPdfData.data });
   const pdf = await loadingTask.promise;
@@ -47,7 +41,7 @@ export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
 
     slides.push(
       PDF.build({
-        id: newId(),
+        id: generateId(),
         x: startX,
         y: currentY,
         width: canvas.width,
