@@ -5,15 +5,16 @@ import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import { Rect as KonvaRectangle } from 'react-konva';
 
 // TODO: support styling
-const Rectangle: ShapeComponent<DomainRectangle> = ({ shape, stroke }) => {
+const Rectangle: ShapeComponent<DomainRectangle> = ({ shape }) => {
   return (
     <KonvaRectangle
       x={shape.x}
       y={shape.y}
       width={shape.width}
       height={shape.height}
-      fill='black'
-      stroke={stroke}
+      fill={shape.fillColor}
+      stroke={shape.strokeColor}
+      strokeWidth={shape.strokeWidth}
     />
   );
 };
