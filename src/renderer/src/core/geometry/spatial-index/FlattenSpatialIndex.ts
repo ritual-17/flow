@@ -209,7 +209,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     const nearestShape = this.getNearestShape(point);
     if (!nearestShape) return null;
 
-    if (nearestShape.x !== point.x || nearestShape.y !== point.y) return nearestShape;
+    if (!this.hasCursorCenteredOnShape(point, nearestShape)) return nearestShape;
 
     const key = this.getOrderKey(nearestShape);
 
@@ -217,7 +217,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
       ? this.orderedShapesCache.nextLowerKey(key)
       : this.orderedShapesCache.nextHigherKey(key);
 
-    if (!next) return nearestShape;
+    if (!next) return this.wrapAroundShapeList(key) || nearestShape;
 
     const [_y, _x, nextId] = next;
     return this.getDomainShapeById(nextId);
@@ -314,6 +314,29 @@ export class FlattenSpatialIndex implements SpatialIndex {
     const dy = pointA.y - pointB.y;
     return Math.sqrt(dx * dx + dy * dy);
   }
+
+  private wrapAroundShapeList(key: OrderKey): Shape | null {
+    if (this.orderedShapesCache.isEmpty) return null;
+
+    const minKey = this.orderedShapesCache.minKey()!;
+    const maxKey = this.orderedShapesCache.maxKey()!;
+
+    if (key[0] === maxKey[0] && key[1] === maxKey[1] && key[2] === maxKey[2]) {
+      // If we're at the end, wrap to the beginning
+      const nextId = this.orderedShapesCache.get(minKey)!;
+      return this.getDomainShapeById(nextId);
+    } else if (key[0] === minKey[0] && key[1] === minKey[1] && key[2] === minKey[2]) {
+      // If we're at the beginning, wrap to the end
+      const nextId = this.orderedShapesCache.get(maxKey)!;
+      return this.getDomainShapeById(nextId);
+    }
+
+    return null;
+  }
+  private hasCursorCenteredOnShape(cursor: Coordinate, shape: Shape): boolean {
+    return cursor.x === shape.x && cursor.y === shape.y;
+  }
+
   private getOrderKey(shape: Shape): OrderKey {
     // You can customize this per shape type if needed
     const { x, y } = shape;

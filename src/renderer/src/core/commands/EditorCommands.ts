@@ -160,7 +160,6 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
   ];
 }
 
-// update this later to use search results and if there is no current search then selected closest shape
 function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const nextShape = spatialIndex.getNextShape(editor.cursorPosition);
   let updatedEditor = editor;
@@ -172,7 +171,6 @@ function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs)
   return [updatedEditor, document];
 }
 
-// update this later to use search results and if there is no current search then selected closest shape
 function selectPreviousSearchResult({
   editor,
   document,
