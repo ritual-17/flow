@@ -1,4 +1,4 @@
-import type { PdfSlide } from '@renderer/core/document/Pdf';
+import { PdfSlide } from '@renderer/core/document/Pdf';
 import { isLine } from '@renderer/core/geometry/Shape';
 import { useNearestShape } from '@renderer/ui/hooks/NearestShape';
 import BoxSelectOverlay from '@renderer/ui/render/konva/BoxSelectOverlay';
@@ -7,8 +7,7 @@ import getComponent from '@renderer/ui/render/konva/ShapeResolver';
 import { HoverEffect } from '@renderer/ui/render/konva/style/HoverEffect';
 import { useStore } from '@renderer/ui/Store';
 import React from 'react';
-import { Group, Layer } from 'react-konva';
-import { Image as KonvaImage } from 'react-konva';
+import { Group, Image as KonvaImage, Layer } from 'react-konva';
 
 // where shapes are rendered using Konva
 const DEFAULT_STROKE_COLOUR = 'white';
@@ -30,7 +29,9 @@ function PdfSlideNode({ slide }: { slide: PdfSlide }) {
 }
 
 function KonvaRenderer() {
-  const pdfSlides = useStore((state) => Array.from(state.document.pdfSlides?.values?.() ?? []));
+  const pdfSlides = useStore((state) => state.document.pdfSlides)
+    .values()
+    .toArray();
   const mode = useStore((state) => state.editor.mode);
   const allShapes = useStore((state) => state.document.shapes)
     .values()

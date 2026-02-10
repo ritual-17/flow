@@ -9,38 +9,25 @@ function newId(): string {
   return globalThis.crypto?.randomUUID?.() ?? `id_${Date.now()}_${Math.random()}`;
 }
 
-function filePathToFileUrl(filePath: string): string {
-  // Normalize Windows backslashes, then build a file URL.
-  // Example Windows path: C:\Users\me\file.pdf  -> file:///C:/Users/me/file.pdf
-  const normalized = filePath.replace(/\\/g, '/');
-
-  // If it already looks like a file URL, return as-is
-  if (normalized.startsWith('file://')) return normalized;
-
-  // Windows drive letter case
-  const isWindowsDrivePath = /^[A-Za-z]:\//.test(normalized);
-  return isWindowsDrivePath ? `file:///${normalized}` : `file://${normalized}`;
-}
-
 export async function importPdfFromPicker(): Promise<{
   source: PdfSource;
   slides: PdfSlide[];
 } | null> {
-  const picked = await window.api.pdf.pick();
-  if (!picked) return null;
+  const rawPdfData = await window.api.pdf.pick();
+  if (!rawPdfData) return null;
 
   const pdfId: PdfId = newId();
-  const url = filePathToFileUrl(picked.filePath);
+  // const url = filePathToFileUrl(picked.filePath);
 
-  const loadingTask = pdfjsLib.getDocument(url);
+  const loadingTask = pdfjsLib.getDocument({ data: rawPdfData.data });
   const pdf = await loadingTask.promise;
 
   const pageCount = pdf.numPages;
 
   const source: PdfSource = {
     id: pdfId,
-    name: picked.name,
-    filePath: picked.filePath,
+    name: rawPdfData.name,
+    filePath: rawPdfData.filePath,
     pageCount,
     importedAt: new Date(),
   };

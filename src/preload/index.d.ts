@@ -1,5 +1,7 @@
 import { ElectronAPI } from '@electron-toolkit/preload';
 
+import { LoadedPdfFile } from './pdfSystem';
+
 declare global {
   interface Window {
     electron: ElectronAPI;
@@ -7,7 +9,7 @@ declare global {
       compileTypst: (source: string) => Promise<string>;
 
       pdf: {
-        pick: () => Promise<{ filePath: string; name: string } | null>;
+        pick: () => Promise<LoadedPdfFile | null>;
       };
     };
   }

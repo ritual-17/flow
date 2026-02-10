@@ -3,7 +3,7 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { join } from 'path';
 
 import icon from '../../resources/icon.png?asset';
-import { pickPdfFile } from './pdfSystem';
+import { LoadedPdfFile, pickPdfFile } from './pdfSystem';
 import { compileTypstDocument } from './typst/TextCompiler';
 
 function createWindow(): void {
@@ -57,7 +57,7 @@ app.whenReady().then(() => {
     return compileTypstDocument(content);
   });
 
-  ipcMain.handle('flow:pdf:pick', async () => {
+  ipcMain.handle('flow:pdf:pick', async (): Promise<LoadedPdfFile | null> => {
     return await pickPdfFile();
   });
 

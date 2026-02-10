@@ -1,8 +1,15 @@
 // This module opens the OS file picker dialog to select a PDF file and returns { filepath, name }
 
 import { dialog } from 'electron';
+import fs from 'fs';
 
-export async function pickPdfFile(): Promise<{ filePath: string; name: string } | null> {
+export type LoadedPdfFile = {
+  filePath: string;
+  name: string;
+  data: Buffer;
+};
+
+export async function pickPdfFile(): Promise<LoadedPdfFile | null> {
   const result = await dialog.showOpenDialog({
     title: 'Import PDF',
     properties: ['openFile'],
@@ -13,5 +20,7 @@ export async function pickPdfFile(): Promise<{ filePath: string; name: string } 
 
   const filePath = result.filePaths[0];
   const name = filePath.split(/[\\/]/).pop() ?? 'document.pdf';
-  return { filePath, name };
+  const data = fs.readFileSync(filePath);
+
+  return { filePath, name, data };
 }
