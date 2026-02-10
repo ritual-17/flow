@@ -1,5 +1,5 @@
-import { PdfSlide } from '@renderer/core/document/Pdf';
 import { isLine } from '@renderer/core/geometry/Shape';
+import { PdfSlide } from '@renderer/core/geometry/shapes/PdfSlide';
 import { useNearestShape } from '@renderer/ui/hooks/NearestShape';
 import BoxSelectOverlay from '@renderer/ui/render/konva/BoxSelectOverlay';
 import Cursor from '@renderer/ui/render/konva/Cursor';

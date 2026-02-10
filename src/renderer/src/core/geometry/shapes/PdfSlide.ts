@@ -1,5 +1,10 @@
 import { AnchorPoint, buildBaseShape, IShapeBase, ShapeId } from '@renderer/core/geometry/Shape';
 
+export const PDF = {
+  build,
+  generateAnchorPoints,
+};
+
 export type PdfSlide = IShapeBase & {
   type: 'pdf';
   id: ShapeId;

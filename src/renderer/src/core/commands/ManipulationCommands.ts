@@ -238,7 +238,7 @@ export function updateShapeInDocument(args: CommandArgs, shape: Shape): Document
   return updateShapesInDocument(args, [shape]);
 }
 
-function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): DocumentModel {
+export function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): DocumentModel {
   const { document, spatialIndex } = args;
   const newDocument = Document.updateShapesInDocument(document, shapes);
 
@@ -246,9 +246,13 @@ function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): DocumentMod
   return newDocument;
 }
 
-function addShapeToDocument(args: CommandArgs, shape: Shape): DocumentModel {
+export function addShapeToDocument(args: CommandArgs, shape: Shape): DocumentModel {
+  return addShapesToDocument(args, [shape]);
+}
+
+export function addShapesToDocument(args: CommandArgs, shapes: Shape[]): DocumentModel {
   const { document, spatialIndex } = args;
-  const newDocument = Document.addShapesToDocument(document, [shape]);
-  spatialIndex.addShape(shape);
+  const newDocument = Document.addShapesToDocument(document, shapes);
+  shapes.forEach((shape) => spatialIndex.addShape(shape));
   return newDocument;
 }

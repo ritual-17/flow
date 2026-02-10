@@ -1,6 +1,7 @@
-import { PDF, PdfId, PdfSlide, PdfSource } from '@renderer/core/document/Pdf';
 import * as pdfjsLib from 'pdfjs-dist';
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min?url';
+
+import { PDF, PdfSlide } from '../geometry/shapes/PdfSlide';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = workerSrc;
 
@@ -9,28 +10,16 @@ function newId(): string {
   return globalThis.crypto?.randomUUID?.() ?? `id_${Date.now()}_${Math.random()}`;
 }
 
-export async function importPdfFromPicker(): Promise<{
-  source: PdfSource;
-  slides: PdfSlide[];
-} | null> {
+export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
   const rawPdfData = await window.api.pdf.pick();
   if (!rawPdfData) return null;
 
-  const pdfId: PdfId = newId();
   // const url = filePathToFileUrl(picked.filePath);
 
   const loadingTask = pdfjsLib.getDocument({ data: rawPdfData.data });
   const pdf = await loadingTask.promise;
 
   const pageCount = pdf.numPages;
-
-  const source: PdfSource = {
-    id: pdfId,
-    name: rawPdfData.name,
-    filePath: rawPdfData.filePath,
-    pageCount,
-    importedAt: new Date(),
-  };
 
   const slides: PdfSlide[] = [];
 
@@ -70,5 +59,5 @@ export async function importPdfFromPicker(): Promise<{
     currentY += canvas.height + 20; // spacing
   }
 
-  return { source, slides };
+  return slides;
 }

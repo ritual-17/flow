@@ -1,16 +1,16 @@
 import type { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
-import { Document } from '@renderer/core/document/Document';
-import { importPdfFromPicker } from '@renderer/core/pdf/ImportPdf';
+import { generatePdfSlides } from '@renderer/core/pdf/ImportPdf';
+
+import { addShapesToDocument } from './ManipulationCommands';
 
 export async function importPdf(args: CommandArgs): Promise<CommandResult> {
   const { editor, document } = args;
 
-  const result = await importPdfFromPicker();
-  if (!result) return [editor, document];
+  const pdfSlides = await generatePdfSlides();
+  if (!pdfSlides) return [editor, document];
 
   // TODO: add pdf results to shapes instead of pdf fields
-  let updatedDocument = Document.addPdfSource(document, result.source);
-  updatedDocument = Document.addPdfSlides(updatedDocument, result.slides);
+  const updatedDocument = addShapesToDocument(args, pdfSlides);
 
   return [editor, updatedDocument];
 }
