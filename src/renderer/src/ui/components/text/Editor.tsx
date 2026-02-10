@@ -32,7 +32,7 @@ export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
     });
 
     const startState = EditorState.create({
-      doc: initialDoc || '',
+      doc: initialDocText(initialDoc),
       extensions: [vim(), basicSetup, keymap.of([...defaultKeymap, indentWithTab]), handleWrite],
     });
 
@@ -48,3 +48,12 @@ export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
 
   return <div className='absolute w-52 h-44' style={{ top: y, left: x }} ref={editor}></div>;
 };
+
+const PLACEHOLDER = 'Enter text here';
+function initialDocText(initialDoc?: string) {
+  // if the initial doc is the placeholder (i.e. 'Enter text here'), start with an empty string
+  if (!initialDoc) return '';
+  if (initialDoc === PLACEHOLDER) return '';
+
+  return initialDoc;
+}
