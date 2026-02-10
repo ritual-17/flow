@@ -29,9 +29,6 @@ function PdfSlideNode({ slide }: { slide: PdfSlide }) {
 }
 
 function KonvaRenderer() {
-  const pdfSlides = useStore((state) => state.document.pdfSlides)
-    .values()
-    .toArray();
   const mode = useStore((state) => state.editor.mode);
   const allShapes = useStore((state) => state.document.shapes)
     .values()
@@ -47,12 +44,6 @@ function KonvaRenderer() {
 
   return (
     <Layer>
-      {pdfSlides.map((slide) => (
-        <Group key={`pdf-${slide.id}`}>
-          <PdfSlideNode slide={slide} />
-        </Group>
-      ))}
-
       {shapes.map((shape) => {
         const Component = getComponent(shape);
         const hovered = shape.id === nearestShapeId || mode === 'anchor-line';
