@@ -14,6 +14,7 @@
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
+    "V": "enterVisualBlockMode",
     "t": "enterTextMode",
     "T": "enterTextModeForNearestTextBox",
     "dd": "deleteLine",
@@ -64,9 +65,11 @@
     "<Shift-ArrowLeft>": "translateSelectionLeft",
     "n": "selectNextSearchResult",
     "N": "selectPreviousSearchResult",
-    "<Space>": "toggleSelectShapeAtCursor"
+    "<Space>": "toggleSelectShapeAtCursor",
+    "V": "enterVisualBlockMode"
   },
   "visual-block": {
+    "v": "enterVisualMode",
     "j": "visualUp",
     "k": "visualDown",
     "h": "visualLeft",

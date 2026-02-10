@@ -21,7 +21,15 @@ export interface TextBoxEditingState {
   content: string;
 }
 
-export type Mode = 'insert' | 'normal' | 'visual' | 'command' | 'text' | 'line' | 'anchor-line';
+export type Mode =
+  | 'insert'
+  | 'normal'
+  | 'visual'
+  | 'visual-block'
+  | 'command'
+  | 'text'
+  | 'line'
+  | 'anchor-line';
 
 // any modification to the editor state should go through these functions
 // below are just some helper functions to create and update the editor state

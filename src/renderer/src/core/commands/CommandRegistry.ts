@@ -13,6 +13,7 @@ import {
   enterNormalMode,
   enterTextMode,
   enterTextModeForNearestTextBox,
+  enterVisualBlockMode,
   enterVisualMode,
   selectNextSearchResult,
   selectPreviousSearchResult,
@@ -68,6 +69,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterInsertMode;
     case 'enterVisualMode':
       return enterVisualMode;
+    case 'enterVisualBlockMode':
+      return enterVisualBlockMode;
     case 'enterCommandMode':
       return enterCommandMode;
     case 'enterLineMode':
