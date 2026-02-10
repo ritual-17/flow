@@ -21,6 +21,7 @@ import {
   addPointToLine,
   createCircle,
   createRectangle,
+  createSquare,
   createTextBox,
   deleteSelection,
   paste,
@@ -89,6 +90,8 @@ function commandFromName(command: string): CommandFunction | null {
       return createCircle;
     case 'createRectangle':
       return createRectangle;
+    case 'createSquare':
+      return createSquare;
     case 'createTextBox':
       return createTextBox;
     case 'selectNextSearchResult':
