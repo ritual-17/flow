@@ -37,7 +37,8 @@
     "ArrowRight": "right",
     "c": "createCircle",
     "t": "createTextBox",
-    "<C-s>": "saveFile"
+    "<C-s>": "saveFile",
+    "r": "createRectangle"
   },
   "visual": {
     "j": "visualDown",

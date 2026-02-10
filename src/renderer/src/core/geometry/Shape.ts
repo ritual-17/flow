@@ -1,6 +1,7 @@
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
+import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { generateId } from '@renderer/core/utils/id';
 
@@ -60,7 +61,6 @@ export type AnchorPoint = {
   x: number;
   y: number;
 };
-
 // maybe to be added, or we could possibly stick to multiline only
 // export type Line = IShapeBase & {
 //   type: 'line';
@@ -86,4 +86,4 @@ export function assertIsTextBox(shape: Shape): asserts shape is TextBox {
   }
 }
 
-export type Shape = Circle | Point | TextBox | MultiLine;
+export type Shape = Circle | Point | TextBox | MultiLine | Rectangle;

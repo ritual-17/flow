@@ -15,6 +15,7 @@ import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import * as Point from '@renderer/core/geometry/shapes/Point';
+import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
   cloneShape,
@@ -31,6 +32,15 @@ export function createCircle(args: CommandArgs): CommandResult {
   const circle = Circle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, circle);
+
+  return [args.editor, updatedDocument];
+}
+
+export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
+  const { x, y } = args.editor.cursorPosition;
+  const rectangle = Rectangle.build({ x, y });
+
+  const updatedDocument = addShapeToDocument(args, rectangle);
 
   return [args.editor, updatedDocument];
 }

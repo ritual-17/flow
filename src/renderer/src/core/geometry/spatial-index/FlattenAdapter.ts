@@ -3,6 +3,7 @@ import { AnchorRef, Coordinate, Shape } from '@renderer/core/geometry/Shape';
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
+import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
 
@@ -10,6 +11,8 @@ function toFlatten(shape: Shape): Flatten.AnyShape {
   switch (shape.type) {
     case 'circle':
       return toFlattenCircle(shape);
+    case 'rectangle':
+      return toFlattenRectangle(shape);
     case 'point':
       return toFlattenPoint(shape);
     case 'textBox':
@@ -21,6 +24,15 @@ function toFlatten(shape: Shape): Flatten.AnyShape {
 
 function toFlattenCircle(circle: Circle): Flatten.Circle {
   return new Flatten.Circle(new Flatten.Point(circle.x, circle.y), circle.radius);
+}
+
+function toFlattenRectangle(rectangle: Rectangle): Flatten.Polygon {
+  const p1 = new Flatten.Point(rectangle.x, rectangle.y);
+  const p2 = new Flatten.Point(rectangle.x + rectangle.width, rectangle.y);
+  const p3 = new Flatten.Point(rectangle.x + rectangle.width, rectangle.y + rectangle.height);
+  const p4 = new Flatten.Point(rectangle.x, rectangle.y + rectangle.height);
+
+  return new Flatten.Polygon([p1, p2, p3, p4]);
 }
 
 function toFlattenPoint(point: Point): Flatten.Point {
