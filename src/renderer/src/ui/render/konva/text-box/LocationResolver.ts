@@ -33,6 +33,10 @@ function getCenterCoordinate(shape: Shape) {
   switch (shape.type) {
     case 'circle':
       return { x: shape.x, y: shape.y };
+    case 'rectangle':
+      return { x: shape.x + shape.width / 2, y: shape.y + shape.height / 2 };
+    case 'square':
+      return { x: shape.x + shape.width / 2, y: shape.y + shape.height / 2 };
     default:
       return { x: shape.x, y: shape.y };
   }
