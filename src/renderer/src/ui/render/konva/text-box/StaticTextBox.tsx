@@ -32,6 +32,7 @@ const StaticTextBox: StaticTextBoxComponent = ({ shape, stroke, x, y }) => {
         height={shape.label.compiledImageMeta.height}
         stroke={stroke}
         fill='white'
+        cornerRadius={10}
       />
     )
   );

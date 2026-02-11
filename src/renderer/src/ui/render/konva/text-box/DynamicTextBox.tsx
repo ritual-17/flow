@@ -35,6 +35,7 @@ const DynamicTextBox: ShapeComponent<Shape> = ({ shape }) => {
         height={scaledHeight}
         stroke={'white'}
         fill='white'
+        cornerRadius={10}
       />
       {error && <Warning x={x + scaledWidth} y={y + scaledHeight} />}
       <Html>
