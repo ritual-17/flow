@@ -8,9 +8,9 @@ type DomainLine = MultiLine;
 
 // TODO: support styling
 // TODO: support hovered and selected props
-const Line: ShapeComponent<DomainLine> = ({ shape }: ShapeComponentProps<DomainLine>) => {
+const Line: ShapeComponent<DomainLine> = ({ shape, stroke }: ShapeComponentProps<DomainLine>) => {
   const points = useResolvedPoints(shape).flatMap((pt) => [pt.x, pt.y]);
-  return <KonvaLine points={points} stroke={shape.strokeColor} strokeWidth={shape.strokeWidth} />;
+  return <KonvaLine points={points} stroke={stroke} strokeWidth={shape.strokeWidth} />;
 };
 
 const useResolvedPoints = (shape: DomainLine) => {

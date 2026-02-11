@@ -5,7 +5,7 @@ import { ShapeComponent } from '@renderer/ui/render/konva/ShapeResolver';
 import { Rect as KonvaSquare } from 'react-konva';
 
 // TODO: support styling
-const Square: ShapeComponent<DomainSquare> = ({ shape }) => {
+const Square: ShapeComponent<DomainSquare> = ({ shape, stroke }) => {
   return (
     <KonvaSquare
       x={shape.x}
@@ -13,7 +13,7 @@ const Square: ShapeComponent<DomainSquare> = ({ shape }) => {
       width={shape.width}
       height={shape.height}
       fill={shape.fillColor}
-      stroke={shape.strokeColor}
+      stroke={stroke}
       strokeWidth={shape.strokeWidth}
     />
   );

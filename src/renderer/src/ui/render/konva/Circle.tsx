@@ -6,14 +6,14 @@ import { memo } from 'react';
 import { Circle as KonvaCircle } from 'react-konva';
 
 // TODO: support styling
-const Circle: ShapeComponent<DomainCircle> = ({ shape }) => {
+const Circle: ShapeComponent<DomainCircle> = ({ shape, stroke }) => {
   return (
     <KonvaCircle
       x={shape.x}
       y={shape.y}
       radius={shape.radius}
       fill={shape.fillColor}
-      stroke={shape.strokeColor}
+      stroke={stroke}
       strokeWidth={shape.strokeWidth}
     />
   );
