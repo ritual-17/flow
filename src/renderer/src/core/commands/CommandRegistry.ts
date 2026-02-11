@@ -26,6 +26,7 @@ import {
   createRectangle,
   createSquare,
   createTextBox,
+  cycleArrowOnSelection,
   deleteSelection,
   paste,
   redo,
@@ -142,6 +143,8 @@ function commandFromName(command: string): CommandFunction | null {
     case 'pasteAfter':
     case 'pasteOverSelection':
       return paste;
+    case 'toggleArrow':
+      return cycleArrowOnSelection;
     case 'visualUp':
       return visualUp;
     case 'visualDown':

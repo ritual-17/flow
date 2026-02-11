@@ -368,3 +368,104 @@ export function addShapesToDocument(args: CommandArgs, shapes: Shape[]): Documen
   shapes.forEach((shape) => spatialIndex.addShape(shape));
   return newDocument;
 }
+
+// Cycle arrow state for selected multi-line shapes.
+// Sequence: none -> end -> both -> start -> none
+export function cycleArrowOnSelection(args: CommandArgs): [Editor, DocumentModel] {
+  const { editor, document } = args;
+  const { selectedShapeIds } = editor;
+
+  let updatedEditor = editor;
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+
+  // If nothing is selected, operate on the nearest shape to the cursor
+  let targetShapeIds = selectedShapeIds;
+
+  // If we're in line-editing modes and have a currentLineId, prefer that (so toggling affects the line being created)
+  if ((editor.mode === 'line' || editor.mode === 'anchor-line') && editor.currentLineId) {
+    targetShapeIds = [editor.currentLineId];
+  }
+
+  // If nothing selected/targeted yet, fall back to nearest shape to cursor
+  if (targetShapeIds.length === 0) {
+    const nearest = args.spatialIndex.getNearestShape(editor.cursorPosition);
+    if (!nearest) return [editor, document];
+    targetShapeIds = [nearest.id];
+  }
+
+  const updatedShapes = targetShapeIds.map((id) => {
+    const shape = Document.getShapeById(document, id);
+
+    // If it's already a multi-line, just toggle its arrow flags
+    if (shape.type === 'multi-line') {
+      const start = !!shape.arrowStart;
+      const end = !!shape.arrowEnd;
+
+      let newStart = start;
+      let newEnd = end;
+
+      if (!start && !end) {
+        newStart = false;
+        newEnd = true;
+      } else if (!start && end) {
+        newStart = true;
+        newEnd = true;
+      } else if (start && end) {
+        newStart = true;
+        newEnd = false;
+      } else if (start && !end) {
+        newStart = false;
+        newEnd = false;
+      }
+
+      return { ...shape, arrowStart: newStart, arrowEnd: newEnd } as Shape;
+    }
+
+    // If it's a single point (line being created in anchor-line/line mode), convert it into a multi-line
+    if (shape.type === 'point') {
+      // create multiline starting at this point and duplicate the point so we have two points
+      let newLine = MultiLine.fromStartingPoint(shape, { id: shape.id });
+
+      const secondPoint = shape.ref ? shape.ref : { x: shape.x, y: shape.y };
+      newLine = MultiLine.addPoint(newLine, secondPoint);
+
+      // starting from no-arrows, compute the new arrow state (none -> end -> both -> start -> none)
+      const start = !!newLine.arrowStart;
+      const end = !!newLine.arrowEnd;
+
+      let newStart = start;
+      let newEnd = end;
+
+      if (!start && !end) {
+        newStart = false;
+        newEnd = true;
+      } else if (!start && end) {
+        newStart = true;
+        newEnd = true;
+      } else if (start && end) {
+        newStart = true;
+        newEnd = false;
+      } else if (start && !end) {
+        newStart = false;
+        newEnd = false;
+      }
+
+      newLine = { ...newLine, arrowStart: newStart, arrowEnd: newEnd };
+
+      // ensure editor tracks the new line id as current
+      updatedEditor = setCurrentLineId(updatedEditor, newLine.id);
+
+      return newLine as Shape;
+    }
+
+    // otherwise leave shape unchanged
+    return shape;
+  });
+
+  const updatedDocument = updateShapesInDocument(
+    { ...args, editor: updatedEditor, document },
+    updatedShapes,
+  );
+
+  return [updatedEditor, updatedDocument];
+}
