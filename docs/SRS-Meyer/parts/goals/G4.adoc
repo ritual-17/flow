@@ -17,8 +17,7 @@ Notes will be viewable as a canvas that the user can pan in all four directions
 user can insert/update/delete text. The text boxes can be moved around the
 canvas.
 
-The user can insert predefined geometry as outlined in <<S.3>>. Geometry can be moved and resized. The basic
-"line" geometry can be used to create a sort of custom geometry in combination with other predefined geometry and lines. A
-combination of geometry can be selected and saved for reuse by the user. Users
-can define custom keyboard shortcuts mapped to custom geometry for quick
-insertion.
+The user can insert predefined geometry as outlined in <<S.3>>. Geometry can be 
+moved and resized and custom geometry can be created. A combination of geometry 
+can be selected and saved for reuse by the user. Users can define custom keyboard
+shortcuts mapped to custom geometry for quick insertion.
