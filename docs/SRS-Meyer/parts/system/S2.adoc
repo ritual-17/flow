@@ -98,8 +98,7 @@ endif::[]
 ===== Functional Requirements
 
 . [[F261]] **Sharing**: The system shall allow users to share notes by exporting and sending files. (F261)
-. [[F262]] **Clipboard operations**: The system shall support standard clipboard functions (copy, cut, paste) for both text and shapes. (F262)
-. [[F263]] **Integration hooks**: The system shall provide a basic API for external extensions (e.g., plugins or synchronization services). (F263)
+. [[F262]] **Clipboard operations**: The system shall support standard vim clipboard functions (copy, paste, pasteOver) for both text and shapes. (F262)
 
 ===== Non-Functional Requirements
 
