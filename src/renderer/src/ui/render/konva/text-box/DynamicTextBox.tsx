@@ -19,6 +19,8 @@ type DynamicTextBoxComponent<T extends Shape = Shape> = (
   props: DynamicTextBoxProps<T>,
 ) => JSX.Element | null;
 
+const SOFT_WHITE = '#f0f0f0';
+
 // This renders a text box or label that is currently being edited and has changing content
 const DynamicTextBox: DynamicTextBoxComponent = ({ shape, center }) => {
   const { compiledImage, error, updateCurrentTextBoxContent } = useDynamicImage();
@@ -46,7 +48,8 @@ const DynamicTextBox: DynamicTextBoxComponent = ({ shape, center }) => {
         width={scaledWidth}
         height={scaledHeight}
         stroke={'white'}
-        fill='white'
+        fill={SOFT_WHITE}
+        cornerRadius={10}
       />
       {error && <Warning x={x + scaledWidth} y={y + scaledHeight} />}
       <Html>

@@ -12,8 +12,9 @@ const Rectangle: ShapeComponent<DomainRectangle> = ({ shape, stroke }) => {
       y={shape.y}
       width={shape.width}
       height={shape.height}
-      fill='black'
+      fill={shape.fillColor}
       stroke={stroke}
+      strokeWidth={shape.strokeWidth}
     />
   );
 };

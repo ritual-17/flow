@@ -7,7 +7,16 @@ import { Circle as KonvaCircle } from 'react-konva';
 
 // TODO: support styling
 const Circle: ShapeComponent<DomainCircle> = ({ shape, stroke }) => {
-  return <KonvaCircle x={shape.x} y={shape.y} radius={shape.radius} fill='black' stroke={stroke} />;
+  return (
+    <KonvaCircle
+      x={shape.x}
+      y={shape.y}
+      radius={shape.radius}
+      fill={shape.fillColor}
+      stroke={stroke}
+      strokeWidth={shape.strokeWidth}
+    />
+  );
 };
 
 // disable re-rendering unless the shape's properties or stroke color change for performance optimization

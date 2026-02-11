@@ -15,10 +15,11 @@ export function buildBaseShape(): IShapeBase {
     y: 0,
     anchorPoints: [],
     zIndex: 1,
-    stroke: 1,
+    strokeWidth: 2,
     fill: 1,
-    strokeColor: 'black',
-    fillColor: 'white',
+    strokeColor: '#ffffff',
+    lineColor: '#aeb8c4',
+    fillColor: '#000000',
     label: {
       text: '',
       compiledImageMeta: null,
@@ -32,9 +33,10 @@ export interface IShapeBase {
   y: number;
   anchorPoints: AnchorPoint[];
   zIndex: number;
-  stroke: number;
+  strokeWidth: number;
   fill: number;
   strokeColor: string;
+  lineColor?: string;
   fillColor: string;
   label: Label;
 }

@@ -42,7 +42,7 @@ export function StatusBar() {
   };
 
   return (
-    <div className='flex gap-4 bg-blue-600 text-white px-3 py-1 text-xs items-center min-h-[24px]'>
+    <div className='flex gap-4 bg-blue-600 text-white px-3 py-0 text-sm leading-none items-center h-[40px]'>
       <div className='flex items-center gap-2'>
         <span className={`font-bold min-w-[60px] ${getModeColor()}`}>{getModeDisplay()}</span>
       </div>
