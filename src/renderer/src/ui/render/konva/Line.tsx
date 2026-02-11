@@ -20,7 +20,12 @@ const Line: ShapeComponent<DomainLine> = ({ shape, stroke }: ShapeComponentProps
     resolved.length >= 2 ? [resolved[1].x, resolved[1].y, resolved[0].x, resolved[0].y] : null;
   const endSegment: number[] | null =
     resolved.length >= 2
-      ? [resolved[resolved.length - 2].x, resolved[resolved.length - 2].y, resolved[resolved.length - 1].x, resolved[resolved.length - 1].y]
+      ? [
+          resolved[resolved.length - 2].x,
+          resolved[resolved.length - 2].y,
+          resolved[resolved.length - 1].x,
+          resolved[resolved.length - 1].y,
+        ]
       : null;
 
   return (
