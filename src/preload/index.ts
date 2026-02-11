@@ -4,6 +4,10 @@ import { contextBridge, ipcRenderer } from 'electron';
 // Custom APIs for renderer
 const api = {
   compileTypst: (source: string) => ipcRenderer.invoke('compile-typst', source),
+
+  pdf: {
+    pick: () => ipcRenderer.invoke('flow:pdf:pick'),
+  },
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to
