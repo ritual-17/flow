@@ -82,7 +82,8 @@
     "s": "squareLine",
     "c": "curvedLine",
     "n": "newLine",
-    "A": "enterAnchorLineMode"
+    "A": "enterAnchorLineMode",
+    "e": "toggleArrow"
   },
   "anchor-line": {
     "j": "downAnchor",
@@ -96,6 +97,7 @@
     "n": "newLine",
     "<Space>": "addAnchorPointToLine",
 
-    "a": "enterLineMode"
+    "a": "enterLineMode",
+    "e": "toggleArrow"
   }
 }
