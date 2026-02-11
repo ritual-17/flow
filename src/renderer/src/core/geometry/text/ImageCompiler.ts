@@ -64,6 +64,10 @@ function getShapeDimensions(shape: Shape) {
   switch (shape.type) {
     case 'circle':
       return { width: shape.radius * 2, height: shape.radius * 2 };
+    case 'rectangle':
+      return { width: shape.width, height: shape.height };
+    case 'square':
+      return { width: shape.width, height: shape.height };
     default:
       return { width: 0, height: 0 };
   }
