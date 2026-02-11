@@ -1,31 +1,79 @@
+import { Circle } from '@renderer/core/geometry/shapes/Circle';
+import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
+import { Point } from '@renderer/core/geometry/shapes/Point';
+import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
+import { Square } from '@renderer/core/geometry/shapes/Square';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
+import { generateId } from '@renderer/core/utils/id';
+
+import { PdfSlide } from './shapes/PdfSlide';
+
+export function buildBaseShape(): IShapeBase {
+  return {
+    id: generateId(),
+    x: 0,
+    y: 0,
+    anchorPoints: [],
+    zIndex: 1,
+    strokeWidth: 2,
+    fill: 1,
+    strokeColor: '#ffffff',
+    lineColor: '#aeb8c4',
+    fillColor: '#000000',
+    label: {
+      text: '',
+      compiledImageMeta: null,
+    },
+  };
+}
+
 export interface IShapeBase {
   id: ShapeId;
   x: number;
   y: number;
+  anchorPoints: AnchorPoint[];
   zIndex: number;
-  stroke: number;
+  strokeWidth: number;
   fill: number;
   strokeColor: string;
+  lineColor?: string;
   fillColor: string;
+  label: Label;
 }
 
-export type ShapeId = string;
-
-export type Circle = IShapeBase & {
-  type: 'circle';
-  radius: number;
+export type Label = {
+  text: string;
+  compiledImageMeta: ImageMeta | null;
 };
 
-export type Point = IShapeBase & {
-  type: 'point';
-};
-
-export type TextBox = IShapeBase & {
-  type: 'textBox';
+export type ImageMeta = {
+  src: string;
   width: number;
   height: number;
-  text: string;
 };
+
+export type ShapeId = string;
+export type Coordinate = { x: number; y: number };
+
+export type AnchorRef = { shapeId: ShapeId; position: number };
+export type LinePoint = Coordinate | AnchorRef;
+
+// TODO: remove AnchorPoint and references to it. Use AnchorRef instead.
+export type AnchorPoint = {
+  ownerId: ShapeId; // the shape this anchor point belongs to
+  userId?: ShapeId; // the shape that is using this anchor point
+  position: number; // where along the shape's perimeter the anchor point is located
+  x: number;
+  y: number;
+};
+// maybe to be added, or we could possibly stick to multiline only
+// export type Line = IShapeBase & {
+//   type: 'line';
+//   x2: number;
+//   y2: number;
+//   startAnchor?: AnchorPoint;
+//   endAnchor?: AnchorPoint;
+// };
 
 // possible future shape for grouping multiple shapes
 // export type Cell = IShapeBase & {
@@ -33,4 +81,18 @@ export type TextBox = IShapeBase & {
 //   shapes: Shape[];
 // };
 
-export type Shape = Circle | Point | TextBox;
+export function isLine(shape: Shape): shape is MultiLine {
+  return shape.type === 'multi-line';
+}
+
+export function isPoint(shape: Shape): shape is Point {
+  return shape.type === 'point';
+}
+
+export function assertIsTextBox(shape: Shape): asserts shape is TextBox {
+  if (shape.type !== 'textBox') {
+    throw new Error(`Shape with id ${shape.id} is not a TextBox`);
+  }
+}
+
+export type Shape = Circle | Point | TextBox | MultiLine | Rectangle | Square | PdfSlide;

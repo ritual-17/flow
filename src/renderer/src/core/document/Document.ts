@@ -52,6 +52,9 @@ function removeShapesFromDocument(document: DocumentModel, shapeIds: ShapeId[]):
   });
 }
 
+// helper function to update multiple shapes in the document to be used in other places
+// this is so everything stays immutable. see translateSelection in ManipulationCommands.ts for
+// example usage.
 function updateShapesInDocument(document: DocumentModel, updatedShapes: Shape[]): DocumentModel {
   return produce(document, (draft) => {
     updatedShapes.forEach((shape) => {
@@ -62,10 +65,26 @@ function updateShapesInDocument(document: DocumentModel, updatedShapes: Shape[])
   });
 }
 
-export {
+function hasShape(document: DocumentModel, shapeId: ShapeId): boolean {
+  return document.shapes.has(shapeId);
+}
+
+// Helper function to get a shape by ID that assumes it exists
+function getShapeById(document: DocumentModel, shapeId: ShapeId): Shape {
+  const shape = document.shapes.get(shapeId);
+  if (!shape) {
+    throw new Error(`Shape with ID ${shapeId} not found in document.`);
+  }
+
+  return shape;
+}
+
+export const Document = {
   createNewDocument,
   updateDocumentMetadata,
   addShapesToDocument,
   removeShapesFromDocument,
   updateShapesInDocument,
+  hasShape,
+  getShapeById,
 };

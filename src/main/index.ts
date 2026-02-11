@@ -3,6 +3,8 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { join } from 'path';
 
 import icon from '../../resources/icon.png?asset';
+import { LoadedPdfFile, pickPdfFile } from './pdfSystem';
+import { compileTypstDocument } from './typst/TextCompiler';
 
 function createWindow(): void {
   // Create the browser window.
@@ -41,7 +43,7 @@ function createWindow(): void {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron');
+  electronApp.setAppUserModelId('com.flow');
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
@@ -50,8 +52,14 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window);
   });
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'));
+  // HANDLERS
+  ipcMain.handle('compile-typst', (_, content) => {
+    return compileTypstDocument(content);
+  });
+
+  ipcMain.handle('flow:pdf:pick', async (): Promise<LoadedPdfFile | null> => {
+    return await pickPdfFile();
+  });
 
   createWindow();
 

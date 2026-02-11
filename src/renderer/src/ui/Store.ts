@@ -1,6 +1,11 @@
 import { CommandDispatcher } from '@renderer/core/commands/CommandDispatcher';
-import { createNewDocument, DocumentModel } from '@renderer/core/document/Document';
-import { createEditor, Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
+import { Document, DocumentModel } from '@renderer/core/document/Document';
+import {
+  createEditor,
+  Editor,
+  setCommandBuffer,
+  setCurrentTextBox,
+} from '@renderer/core/editor/Editor';
 import { create } from 'zustand';
 
 export interface DocumentStore {
@@ -12,12 +17,13 @@ export interface DocumentStore {
   updateDocument: (newDocument: DocumentModel) => void;
   updateCommandBuffer: (command: string) => void;
   appendCommandBuffer: (char: string) => void;
+  updateCurrentTextBoxContent: (content: string) => void;
 }
 
 export const useStore = create<DocumentStore>((set) => ({
   editor: createEditor(),
-  document: createNewDocument('Untitled'),
-  commandDispatcher: new CommandDispatcher(),
+  document: Document.createNewDocument('Untitled'),
+  commandDispatcher: new CommandDispatcher(set),
   update: (newEditor, newDocument) => set({ editor: newEditor, document: newDocument }),
   updateEditor: (newEditor) => set({ editor: newEditor }),
   updateDocument: (newDocument) => set({ document: newDocument }),
@@ -28,8 +34,7 @@ export const useStore = create<DocumentStore>((set) => ({
     const document = useStore.getState().document;
     const dispatcher = useStore.getState().commandDispatcher;
 
-    const [newEditor, newDocument] = dispatcher.dispatchCommand(commandEditor, document);
-    set({ editor: newEditor, document: newDocument });
+    dispatcher.dispatchCommand(commandEditor, document);
   },
   appendCommandBuffer: (char: string) => {
     const editor = useStore.getState().editor;
@@ -38,7 +43,18 @@ export const useStore = create<DocumentStore>((set) => ({
     const document = useStore.getState().document;
     const dispatcher = useStore.getState().commandDispatcher;
 
-    const [newEditor, newDocument] = dispatcher.dispatchCommand(commandEditor, document);
-    set({ editor: newEditor, document: newDocument });
+    dispatcher.dispatchCommand(commandEditor, document);
+  },
+  updateCurrentTextBoxContent: (content: string) => {
+    const editor = useStore.getState().editor;
+    const currentTextBox = editor.currentTextBox;
+    if (!currentTextBox) {
+      return;
+    }
+    const updatedEditor = setCurrentTextBox(editor, {
+      id: currentTextBox.id,
+      content,
+    });
+    set({ editor: updatedEditor });
   },
 }));
