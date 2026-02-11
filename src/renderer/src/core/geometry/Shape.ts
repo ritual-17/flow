@@ -16,6 +16,7 @@ export function buildBaseShape(): IShapeBase {
     strokeWidth: 2,
     fill: 1,
     strokeColor: '#ffffff',
+    lineColor: '#aeb8c4',
     fillColor: '#000000',
     label: {
       text: '',
@@ -33,6 +34,7 @@ export interface IShapeBase {
   strokeWidth: number;
   fill: number;
   strokeColor: string;
+  lineColor?: string;
   fillColor: string;
   label: Label;
 }

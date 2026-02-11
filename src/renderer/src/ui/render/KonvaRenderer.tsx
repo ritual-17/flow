@@ -48,7 +48,7 @@ function KonvaRenderer() {
         const hovered = shape.id === nearestShapeId || mode === 'anchor-line';
 
         const selected = selectedShapeIds.has(shape.id);
-        const stroke = selected ? 'blue' : shape.strokeColor;
+        const stroke = selected ? 'blue' : shape.lineColor;
         return (
           <Group key={`group-${shape.id}`}>
             <Component key={shape.id} shape={shape} stroke={stroke} />
