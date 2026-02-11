@@ -53,7 +53,6 @@ export class FlattenSpatialIndex implements SpatialIndex {
     const oldFlat = this.getFlattenShapeById(shape.id);
     this.removeShapeFromSets(shape, oldFlat);
 
-    this.maybeUpdateLineReferences(shape);
     const resolvedShape = this.resolveShapePoints(shape);
     const newFlat = toFlatten(resolvedShape);
     this.addShapeToSets(resolvedShape, newFlat);
@@ -401,15 +400,6 @@ export class FlattenSpatialIndex implements SpatialIndex {
     if (isLine(shape) || isPoint(shape)) return;
 
     this.orderedShapesCache.set(this.getOrderKey(shape), shape.id);
-  }
-
-  private maybeUpdateLineReferences(shape: Shape): void {
-    const referencingLines = this.shapeLineRefs.get(shape.id);
-    if (!referencingLines) return;
-
-    referencingLines.forEach((lineId) => {
-      const lineShape = this.getFlattenShapeById(lineId);
-    });
   }
 
   private removeShapeFromSets(shape: Shape, flat: Flatten.AnyShape): void {
