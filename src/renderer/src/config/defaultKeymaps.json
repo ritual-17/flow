@@ -22,12 +22,13 @@
     "yy": "yankLine",
     "p": "pasteAfter",
     "u": "undo",
-    "<C-r>": "redo",
+    "r": "redo",
     ".": "repeat",
     "n": "selectNextSearchResult",
     "N": "selectPreviousSearchResult",
     "a": "enterLineMode",
-    "A": "enterAnchorLineMode"
+    "A": "enterAnchorLineMode",
+    "f": "importPdf"
   },
   "insert": {
     "j": "down",
@@ -113,7 +114,9 @@
     "s": "squareLine",
     "c": "curvedLine",
     "n": "newLine",
-    "A": "enterAnchorLineMode"
+    "A": "enterAnchorLineMode",
+    "t": "enterTextModeFromLineMode",
+    "e": "toggleArrow"
   },
   "anchor-line": {
     "j": "downAnchor",
@@ -126,6 +129,8 @@
     "ArrowRight": "rightAnchor",
     "n": "newLine",
     "<Space>": "addAnchorPointToLine",
-    "a": "enterLineMode"
+    "a": "enterLineMode",
+    "t": "enterTextModeFromLineMode",
+    "e": "toggleArrow"
   }
 }

@@ -6,17 +6,18 @@ import { useStore } from '@renderer/ui/Store';
 
 interface LabelProps {
   shape: Shape;
+  center?: { x: number; y: number };
 }
 
 function Label(args: LabelProps) {
-  const { shape } = args;
+  const { shape, center } = args;
   const isCurrentlyEditing = useStore((state) => state.editor.currentTextBox?.id) === shape.id;
   if (shape.type === 'textBox') return null;
 
   if (isCurrentlyEditing) {
     return <DynamicTextBox {...args} />;
   } else if (shape.label.compiledImageMeta) {
-    const { x, y } = LocationResolver.resolveImagePosition(shape);
+    const { x, y } = center || LocationResolver.resolveImagePosition(shape);
     return <StaticTextBox x={x} y={y} {...args} />;
   }
   return null;

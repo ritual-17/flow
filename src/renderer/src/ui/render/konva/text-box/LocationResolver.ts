@@ -1,4 +1,4 @@
-import { Shape } from '@renderer/core/geometry/Shape';
+import { Coordinate, Shape } from '@renderer/core/geometry/Shape';
 
 export const LocationResolver = {
   resolveImagePosition,
@@ -7,6 +7,7 @@ export const LocationResolver = {
 export function resolveImagePosition(
   shape: Shape,
   imageDimensions?: { width: number; height: number },
+  center?: Coordinate,
 ) {
   if (shape.type === 'textBox') {
     return { x: shape.x, y: shape.y };
@@ -19,7 +20,7 @@ export function resolveImagePosition(
   }
 
   const { width: labelWidth, height: labelHeight } = dimensions;
-  const shapeCenter = getCenterCoordinate(shape);
+  const shapeCenter = center || getCenterCoordinate(shape);
   return {
     x: shapeCenter.x - labelWidth / 2,
     y: shapeCenter.y - labelHeight / 2,
@@ -32,6 +33,10 @@ function getCenterCoordinate(shape: Shape) {
   switch (shape.type) {
     case 'circle':
       return { x: shape.x, y: shape.y };
+    case 'rectangle':
+      return { x: shape.x + shape.width / 2, y: shape.y + shape.height / 2 };
+    case 'square':
+      return { x: shape.x + shape.width / 2, y: shape.y + shape.height / 2 };
     default:
       return { x: shape.x, y: shape.y };
   }

@@ -12,6 +12,9 @@ import { Editor, setCommandBuffer } from '@renderer/core/editor/Editor';
 import { FlattenSpatialIndex } from '@renderer/core/geometry/spatial-index/FlattenSpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import { DocumentStore } from '@renderer/ui/Store';
+import { produceWithPatches } from 'immer';
+
+import { History } from '../document/History';
 
 type CommandDispatcherCallback = (partial: Partial<DocumentStore>) => void;
 
@@ -27,6 +30,8 @@ export class CommandDispatcher {
   private lineModeParser: CommandParser = new LineModeParser();
   private anchorLineModeParser: CommandParser = new AnchorLineModeParser();
   private textModeParser: CommandParser = new TextModeParser();
+
+  private history = new History<DocumentModel>();
 
   constructor(callback: CommandDispatcherCallback) {
     this.callback = callback;
@@ -79,6 +84,12 @@ export class CommandDispatcher {
     document: DocumentModel,
     commandFunc: CommandRegistry.CommandFunction,
   ): void {
+    const beforeDocument = document; // for recording in history
+
+    // check if command is a history command
+    const isHistoryCommand =
+      commandFunc === CommandRegistry.undo || commandFunc === CommandRegistry.redo;
+
     // to command args takes in editor and document and converts it to a command arg object
     // which is an object that holds the editor, document, spatial index and any additional
     // args needed for the command
@@ -86,6 +97,9 @@ export class CommandDispatcher {
 
     if (!(result instanceof Promise)) {
       const [updatedEditor, updatedDocument] = result;
+
+      this.recordHistory(beforeDocument, updatedDocument, isHistoryCommand);
+
       const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
       this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
       return;
@@ -93,6 +107,7 @@ export class CommandDispatcher {
 
     result
       .then(([updatedEditor, updatedDocument]) => {
+        this.recordHistory(beforeDocument, updatedDocument, isHistoryCommand);
         const clearedCommandBufferEditor = setCommandBuffer(updatedEditor, '');
         this.callback({ editor: clearedCommandBufferEditor, document: updatedDocument });
       })
@@ -101,6 +116,26 @@ export class CommandDispatcher {
         console.error('Command execution failed:', error);
         this.callback({ editor, document });
       });
+  }
+
+  private recordHistory(
+    beforeDocument: DocumentModel,
+    afterDocument: DocumentModel,
+    isHistoryCommand: boolean,
+  ): void {
+    // rebuild spatial index with updated document
+    this.spatialIndex = new FlattenSpatialIndex();
+    afterDocument.shapes.forEach((shape) => this.spatialIndex.addShape(shape));
+
+    // record the command in history before updating the state
+    if (afterDocument !== beforeDocument && !isHistoryCommand) {
+      const [_, patches, inversePatches] = produceWithPatches(beforeDocument, (draft) =>
+        Object.assign(draft, afterDocument),
+      ); // get patches to update the document and inverse patches to undo the update
+      if (patches.length > 0) {
+        this.history.record({ patches, backwardPatches: inversePatches });
+      }
+    }
   }
 
   private getCommandParser(editor: Editor) {
@@ -132,6 +167,7 @@ export class CommandDispatcher {
       editor,
       document,
       spatialIndex: this.spatialIndex,
+      history: this.history,
       args: {},
     };
   }

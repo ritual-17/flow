@@ -7,6 +7,7 @@ import {
   Shape,
   ShapeId,
 } from '@renderer/core/geometry/Shape';
+import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
 import { Direction, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
@@ -29,6 +30,8 @@ export class FlattenSpatialIndex implements SpatialIndex {
   private idToShapeMap: idToShapeMap = new Map();
   private shapeToIdMap: shapeToIdMap = new Map();
   private SEARCH_RADIUS = 1000;
+  // mapping from a shape id to the multi-line shapes that reference it
+  private shapeLineRefs = new Map<ShapeId, Set<ShapeId>>();
 
   // BTree to maintain shapes in a consistent order for next/previous shape retrieval. Ordered by y, then x, then id.
   private orderedShapesCache: OrderedShapesCache = new BTree(
@@ -72,6 +75,20 @@ export class FlattenSpatialIndex implements SpatialIndex {
     this.idToShapeMap.clear();
     this.shapeToIdMap.clear();
     this.orderedShapesCache.clear();
+  }
+
+  // get all ids for shapes that reference any of the given shape ids
+  getReferencingShapeIds(shapeIds: ShapeId[]): ShapeId[] {
+    const referencingShapeIds = new Set<ShapeId>();
+
+    shapeIds.forEach((id) => {
+      const refs = this.shapeLineRefs.get(id);
+      if (refs) {
+        refs.forEach((refId) => referencingShapeIds.add(refId));
+      }
+    });
+
+    return Array.from(referencingShapeIds);
   }
 
   distanceBetweenShapes(shapeA: Shape, shapeB: Shape): number {
@@ -156,6 +173,78 @@ export class FlattenSpatialIndex implements SpatialIndex {
     }
 
     return nearestPoint;
+  }
+
+  // definitely needs a refactor
+  getNearestLineCenter(point: Coordinate): { line: MultiLine; point: Coordinate } | null {
+    const searchBox = new Flatten.Box(
+      point.x - this.SEARCH_RADIUS,
+      point.y - this.SEARCH_RADIUS,
+      point.x + this.SEARCH_RADIUS,
+      point.y + this.SEARCH_RADIUS,
+    );
+    const candidates = this.set.search(searchBox);
+    const domainCandidates = candidates
+      .map((candidate) => this.getDomainShape(candidate))
+      .filter((shape): shape is MultiLine => shape.type === 'multi-line');
+
+    let nearestLine: MultiLine | null = null;
+    let nearestPoint: Coordinate | null = null;
+    let minDistance = Infinity;
+
+    for (const candidate of domainCandidates) {
+      // Calculate center point of the line
+      const centerIndex = Math.floor(candidate.points.length / 2);
+      const centerPointRaw = candidate.points[centerIndex];
+      let centerPoint: Coordinate;
+      if (candidate.points.length % 2 === 0) {
+        // average the two center points for even-length lines
+        const pointA = candidate.points[centerIndex - 1];
+        const pointB = candidate.points[centerIndex];
+
+        let resolvedA: Coordinate;
+        let resolvedB: Coordinate;
+
+        if (isAnchorRef(pointA)) {
+          const resolvedPointA = resolveAnchorPoint(candidate, pointA.position);
+          resolvedA = { x: resolvedPointA.x, y: resolvedPointA.y };
+        } else {
+          resolvedA = pointA;
+        }
+
+        if (isAnchorRef(pointB)) {
+          const resolvedPointB = resolveAnchorPoint(candidate, pointB.position);
+          resolvedB = { x: resolvedPointB.x, y: resolvedPointB.y };
+        } else {
+          resolvedB = pointB;
+        }
+
+        centerPoint = {
+          x: (resolvedA.x + resolvedB.x) / 2,
+          y: (resolvedA.y + resolvedB.y) / 2,
+        };
+      } else {
+        if (isAnchorRef(centerPointRaw)) {
+          const resolvedPoint = resolveAnchorPoint(candidate, centerPointRaw.position);
+          centerPoint = { x: resolvedPoint.x, y: resolvedPoint.y };
+        } else {
+          centerPoint = centerPointRaw;
+        }
+      }
+
+      const distance = this.distanceBetweenPoints(point, centerPoint);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestLine = candidate;
+        nearestPoint = centerPoint;
+      }
+    }
+
+    if (nearestLine && nearestPoint) {
+      return { line: nearestLine, point: nearestPoint };
+    }
+
+    return null;
   }
 
   getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint {
@@ -289,6 +378,13 @@ export class FlattenSpatialIndex implements SpatialIndex {
 
       const refShape = this.getDomainShapeById(pt.shapeId);
       const anchorPoint = resolveAnchorPoint(refShape, pt.position);
+
+      // track line references for future updates
+      if (!this.shapeLineRefs.has(refShape.id)) {
+        this.shapeLineRefs.set(refShape.id, new Set<ShapeId>());
+      }
+      this.shapeLineRefs.get(refShape.id)!.add(shape.id);
+
       return { x: anchorPoint.x, y: anchorPoint.y };
     });
 
@@ -312,6 +408,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     this.set.delete(flat);
     this.idToShapeMap.delete(shape.id);
     this.shapeToIdMap.delete(flat);
+    this.shapeLineRefs.delete(shape.id);
   }
 
   private distanceBetweenPoints(pointA: Coordinate, pointB: Coordinate): number {

@@ -13,6 +13,7 @@ import {
   enterNormalMode,
   enterTextMode,
   enterTextModeForNearestTextBox,
+  enterTextModeFromLineMode,
   enterVisualBlockMode,
   enterVisualMode,
   moveCursorToMiddle,
@@ -26,15 +27,19 @@ import {
   createRectangle,
   createSquare,
   createTextBox,
+  cycleArrowOnSelection,
   deleteSelection,
   paste,
+  redo,
   startNewLine,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
   translateSelectionUp,
+  undo,
   yankSelection,
 } from '@renderer/core/commands/ManipulationCommands';
+import { importPdf } from '@renderer/core/commands/PdfCommands';
 import {
   jumpToDownAnchorPoint,
   jumpToLeftAnchorPoint,
@@ -48,6 +53,7 @@ import {
   visualUp,
 } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
+import { History } from '@renderer/core/document/History';
 import { Editor } from '@renderer/core/editor/Editor';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
@@ -55,6 +61,7 @@ export type CommandArgs = {
   editor: Editor;
   document: DocumentModel;
   spatialIndex: SpatialIndex;
+  history: History<DocumentModel>;
   args: Record<string, unknown>;
 };
 
@@ -84,6 +91,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterTextMode;
     case 'enterTextModeForNearestTextBox':
       return enterTextModeForNearestTextBox;
+    case 'enterTextModeFromLineMode':
+      return enterTextModeFromLineMode;
     case 'up':
       return cursorUp;
     case 'down':
@@ -137,6 +146,8 @@ function commandFromName(command: string): CommandFunction | null {
     case 'pasteAfter':
     case 'pasteOverSelection':
       return paste;
+    case 'toggleArrow':
+      return cycleArrowOnSelection;
     case 'visualUp':
       return visualUp;
     case 'visualDown':
@@ -145,8 +156,14 @@ function commandFromName(command: string): CommandFunction | null {
       return visualLeft;
     case 'visualRight':
       return visualRight;
+    case 'importPdf':
+      return importPdf;
+    case 'undo':
+      return undo;
+    case 'redo':
+      return redo;
     default:
       return null;
   }
 }
-export { commandFromName };
+export { commandFromName, undo, redo };

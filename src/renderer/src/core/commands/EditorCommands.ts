@@ -54,6 +54,7 @@ async function enterVisualMode(args: CommandArgs): Promise<CommandResult> {
     editor: updatedEditor,
     document: updatedDocument,
     spatialIndex: args.spatialIndex,
+    history: args.history,
     args: {},
   });
   return [updatedEditor, updatedDocument];
@@ -68,6 +69,7 @@ async function enterVisualBlockMode(args: CommandArgs): Promise<CommandResult> {
     editor: updatedEditor,
     document: updatedDocument,
     spatialIndex: args.spatialIndex,
+    history: args.history,
     args: {},
   });
   return [updatedEditor, updatedDocument];
@@ -98,6 +100,26 @@ async function enterTextMode(args: CommandArgs): Promise<CommandResult> {
   updatedEditor = setCurrentTextBox(updatedEditor, {
     id: nearestShape.id,
     content: nearestShape.label.text,
+  });
+  return [updatedEditor, updatedDocument];
+}
+
+async function enterTextModeFromLineMode(args: CommandArgs): Promise<CommandResult> {
+  const { spatialIndex } = args;
+  // disabling because it is complaining updatedDocument is not reassigned
+  // eslint-disable-next-line prefer-const
+  let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
+
+  const line = spatialIndex.getNearestLineCenter(updatedEditor.cursorPosition);
+  if (!line) return [updatedEditor, updatedDocument];
+
+  const { line: nearestLine, point: point } = line;
+
+  updatedEditor = setMode(updatedEditor, 'text');
+  updatedEditor = setCursorPosition(updatedEditor, { x: point.x, y: point.y });
+  updatedEditor = setCurrentTextBox(updatedEditor, {
+    id: nearestLine.id,
+    content: nearestLine.label.text,
   });
   return [updatedEditor, updatedDocument];
 }
@@ -223,6 +245,7 @@ export {
   enterAnchorLineMode,
   enterTextMode,
   enterTextModeForNearestTextBox,
+  enterTextModeFromLineMode,
   cursorUp,
   cursorDown,
   cursorLeft,

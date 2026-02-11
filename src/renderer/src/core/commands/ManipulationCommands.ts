@@ -24,9 +24,8 @@ import {
   Transform,
   translateShape,
 } from '@renderer/core/geometry/Transform';
+import { AnchorPointDereferencer } from '@renderer/core/geometry/utils/AnchorPointDereferencer';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
-
-import { SpatialIndex } from '../geometry/SpatialIndex';
 
 export function createCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
@@ -230,7 +229,7 @@ export function addPointToLine(args: CommandArgs): CommandResult {
 }
 
 export function deleteSelection(args: CommandArgs): [Editor, DocumentModel] {
-  const { editor, document, spatialIndex } = args;
+  const { editor, document } = args;
   const { selectedShapeIds } = editor;
 
   // not fully needed but avoids unnecessary document updates
@@ -239,7 +238,7 @@ export function deleteSelection(args: CommandArgs): [Editor, DocumentModel] {
   }
 
   // update document and editor with following changes
-  const result = helperRemoveShapes(document, editor, spatialIndex, selectedShapeIds);
+  const result = helperRemoveShapes(args, selectedShapeIds);
   const updatedDocument = result[0];
   let updatedEditor = result[1];
   updatedEditor = setMode(updatedEditor, 'normal');
@@ -281,7 +280,7 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
 }
 
 export async function paste(args: CommandArgs): Promise<CommandResult> {
-  const { editor, document, spatialIndex } = args;
+  const { editor, document } = args;
   if (editor.clipboard.length === 0) {
     return [editor, document];
   }
@@ -290,7 +289,7 @@ export async function paste(args: CommandArgs): Promise<CommandResult> {
 
   // delete any current selection before pasting
   if (editor.selectedShapeIds.length > 0) {
-    const result = helperRemoveShapes(document, editor, spatialIndex, editor.selectedShapeIds);
+    const result = helperRemoveShapes(args, editor.selectedShapeIds);
     updatedDocument = result[0];
     updatedEditor = result[1];
   }
@@ -312,13 +311,35 @@ export async function paste(args: CommandArgs): Promise<CommandResult> {
   return [updatedEditor, updatedDocument];
 }
 
-function helperRemoveShapes(
-  document: DocumentModel,
-  editor: Editor,
-  spatialIndex: SpatialIndex,
-  shapeIds: ShapeId[],
-): [DocumentModel, Editor] {
-  const updatedDocument = Document.removeShapesFromDocument(document, shapeIds);
+// functions to handle undo and redo commands
+export function undo(args: CommandArgs): CommandResult {
+  const { editor, document, history } = args;
+  const prevDocument = history.undo(document);
+  return [editor, prevDocument];
+}
+
+export function redo(args: CommandArgs): CommandResult {
+  const { editor, document, history } = args;
+  const nextDocument = history.redo(document);
+  return [editor, nextDocument];
+}
+
+// get the lines that reference the shapes were removing
+// resolve the points in those lines
+// update those lines in the document and spatial index
+// delete the shapes from the spatial index
+function helperRemoveShapes(args: CommandArgs, shapeIds: ShapeId[]): [DocumentModel, Editor] {
+  const { document, spatialIndex, editor } = args;
+  const referencingLines = spatialIndex.getReferencingShapeIds(shapeIds);
+
+  const lines = referencingLines.map((id) => Document.getShapeById(document, id));
+  const refs = shapeIds.map((id) => Document.getShapeById(document, id));
+
+  const updatedLines = new AnchorPointDereferencer(lines, refs).populateLinePointsFromReferences();
+  updatedLines.forEach((line) => spatialIndex.updateShape(line));
+
+  let updatedDocument = updateShapesInDocument(args, updatedLines);
+  updatedDocument = Document.removeShapesFromDocument(updatedDocument, shapeIds);
   spatialIndex.removeShapesByIds(shapeIds);
   let updatedEditor = clearSelection(editor);
   updatedEditor = clearBoxSelectAnchor(updatedEditor);
@@ -329,7 +350,7 @@ export function updateShapeInDocument(args: CommandArgs, shape: Shape): Document
   return updateShapesInDocument(args, [shape]);
 }
 
-function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): DocumentModel {
+export function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): DocumentModel {
   const { document, spatialIndex } = args;
   const newDocument = Document.updateShapesInDocument(document, shapes);
 
@@ -337,9 +358,114 @@ function updateShapesInDocument(args: CommandArgs, shapes: Shape[]): DocumentMod
   return newDocument;
 }
 
-function addShapeToDocument(args: CommandArgs, shape: Shape): DocumentModel {
+export function addShapeToDocument(args: CommandArgs, shape: Shape): DocumentModel {
+  return addShapesToDocument(args, [shape]);
+}
+
+export function addShapesToDocument(args: CommandArgs, shapes: Shape[]): DocumentModel {
   const { document, spatialIndex } = args;
-  const newDocument = Document.addShapesToDocument(document, [shape]);
-  spatialIndex.addShape(shape);
+  const newDocument = Document.addShapesToDocument(document, shapes);
+  shapes.forEach((shape) => spatialIndex.addShape(shape));
   return newDocument;
+}
+
+// Cycle arrow state for selected multi-line shapes.
+// Sequence: none -> end -> both -> start -> none
+export function cycleArrowOnSelection(args: CommandArgs): [Editor, DocumentModel] {
+  const { editor, document } = args;
+  const { selectedShapeIds } = editor;
+
+  let updatedEditor = editor;
+  updatedEditor = clearBoxSelectAnchor(updatedEditor);
+
+  // If nothing is selected, operate on the nearest shape to the cursor
+  let targetShapeIds = selectedShapeIds;
+
+  // If we're in line-editing modes and have a currentLineId, prefer that (so toggling affects the line being created)
+  if ((editor.mode === 'line' || editor.mode === 'anchor-line') && editor.currentLineId) {
+    targetShapeIds = [editor.currentLineId];
+  }
+
+  // If nothing selected/targeted yet, fall back to nearest shape to cursor
+  if (targetShapeIds.length === 0) {
+    const nearest = args.spatialIndex.getNearestShape(editor.cursorPosition);
+    if (!nearest) return [editor, document];
+    targetShapeIds = [nearest.id];
+  }
+
+  const updatedShapes = targetShapeIds.map((id) => {
+    const shape = Document.getShapeById(document, id);
+
+    // If it's already a multi-line, just toggle its arrow flags
+    if (shape.type === 'multi-line') {
+      const start = !!shape.arrowStart;
+      const end = !!shape.arrowEnd;
+
+      let newStart = start;
+      let newEnd = end;
+
+      if (!start && !end) {
+        newStart = false;
+        newEnd = true;
+      } else if (!start && end) {
+        newStart = true;
+        newEnd = true;
+      } else if (start && end) {
+        newStart = true;
+        newEnd = false;
+      } else if (start && !end) {
+        newStart = false;
+        newEnd = false;
+      }
+
+      return { ...shape, arrowStart: newStart, arrowEnd: newEnd } as Shape;
+    }
+
+    // If it's a single point (line being created in anchor-line/line mode), convert it into a multi-line
+    if (shape.type === 'point') {
+      // create multiline starting at this point and duplicate the point so we have two points
+      let newLine = MultiLine.fromStartingPoint(shape, { id: shape.id });
+
+      const secondPoint = shape.ref ? shape.ref : { x: shape.x, y: shape.y };
+      newLine = MultiLine.addPoint(newLine, secondPoint);
+
+      // starting from no-arrows, compute the new arrow state (none -> end -> both -> start -> none)
+      const start = !!newLine.arrowStart;
+      const end = !!newLine.arrowEnd;
+
+      let newStart = start;
+      let newEnd = end;
+
+      if (!start && !end) {
+        newStart = false;
+        newEnd = true;
+      } else if (!start && end) {
+        newStart = true;
+        newEnd = true;
+      } else if (start && end) {
+        newStart = true;
+        newEnd = false;
+      } else if (start && !end) {
+        newStart = false;
+        newEnd = false;
+      }
+
+      newLine = { ...newLine, arrowStart: newStart, arrowEnd: newEnd };
+
+      // ensure editor tracks the new line id as current
+      updatedEditor = setCurrentLineId(updatedEditor, newLine.id);
+
+      return newLine as Shape;
+    }
+
+    // otherwise leave shape unchanged
+    return shape;
+  });
+
+  const updatedDocument = updateShapesInDocument(
+    { ...args, editor: updatedEditor, document },
+    updatedShapes,
+  );
+
+  return [updatedEditor, updatedDocument];
 }
