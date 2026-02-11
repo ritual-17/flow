@@ -64,6 +64,8 @@ function getShapeDimensions(shape: Shape) {
   switch (shape.type) {
     case 'circle':
       return { width: shape.radius * 2, height: shape.radius * 2 };
+    case 'multi-line':
+      return { width: 50, height: 0 };
     default:
       return { width: 0, height: 0 };
   }

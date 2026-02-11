@@ -1,7 +1,8 @@
+import { Coordinate } from '@renderer/core/geometry/Shape';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
-import * as AnchorPoints from '@renderer/core/geometry/utils/AnchorPoints';
+import { useResolvedPoints } from '@renderer/ui/hooks/useResolvedPoints';
 import { ShapeComponent, ShapeComponentProps } from '@renderer/ui/render/konva/ShapeResolver';
-import { useStore } from '@renderer/ui/Store';
+import Label from '@renderer/ui/render/konva/style/Label';
 import { Arrow as KonvaArrow, Line as KonvaLine } from 'react-konva';
 
 type DomainLine = MultiLine;
@@ -14,6 +15,18 @@ const ARROW_POINTER_WIDTH = 10;
 const Line: ShapeComponent<DomainLine> = ({ shape, stroke }: ShapeComponentProps<DomainLine>) => {
   const resolved = useResolvedPoints(shape);
   const points = resolved.flatMap((pt) => [pt.x, pt.y]);
+
+  const centerIndex = Math.floor(resolved.length / 2);
+
+  let center: Coordinate;
+  if (resolved.length % 2 === 0) {
+    // if even number of points, take the average of the two middle points
+    const centerX = (resolved[centerIndex - 1].x + resolved[centerIndex].x) / 2;
+    const centerY = (resolved[centerIndex - 1].y + resolved[centerIndex].y) / 2;
+    center = { x: centerX, y: centerY };
+  } else {
+    center = { x: resolved[centerIndex].x, y: resolved[centerIndex].y };
+  }
 
   // determine arrow segment points (use only first/last segment so arrowheads align with segment direction)
   const startSegment: number[] | null =
@@ -49,14 +62,9 @@ const Line: ShapeComponent<DomainLine> = ({ shape, stroke }: ShapeComponentProps
           pointerWidth={ARROW_POINTER_WIDTH}
         />
       )}
+      <Label shape={shape} center={center} />
     </>
   );
-};
-
-const useResolvedPoints = (shape: DomainLine) => {
-  const document = useStore((state) => state.document);
-
-  return AnchorPoints.resolveLinePoints(document, shape);
 };
 
 export default Line;
