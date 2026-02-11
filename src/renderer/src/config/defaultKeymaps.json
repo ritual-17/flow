@@ -127,6 +127,7 @@
     "ArrowRight": "rightAnchor",
     "n": "newLine",
     "<Space>": "addAnchorPointToLine",
-    "a": "enterLineMode"
+    "a": "enterLineMode",
+    "t": "enterTextModeFromLineMode"
   }
 }
