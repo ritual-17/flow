@@ -13,23 +13,29 @@ import {
   enterNormalMode,
   enterTextMode,
   enterTextModeForNearestTextBox,
+  enterVisualBlockMode,
   enterVisualMode,
+  moveCursorToMiddle,
   selectNextSearchResult,
+  selectPreviousSearchResult,
 } from '@renderer/core/commands/EditorCommands';
 import {
   addAnchorPointToLine,
   addPointToLine,
   createCircle,
   createRectangle,
+  createSquare,
   createTextBox,
   cycleArrowOnSelection,
   deleteSelection,
   paste,
+  redo,
   startNewLine,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
   translateSelectionUp,
+  undo,
   yankSelection,
 } from '@renderer/core/commands/ManipulationCommands';
 import {
@@ -38,12 +44,14 @@ import {
   jumpToRightAnchorPoint,
   jumpToUpAnchorPoint,
   toggleBoxSelect,
+  toggleSelectShapeAtPoint,
   visualDown,
   visualLeft,
   visualRight,
   visualUp,
 } from '@renderer/core/commands/VisualCommands';
 import { DocumentModel } from '@renderer/core/document/Document';
+import { History } from '@renderer/core/document/History';
 import { Editor } from '@renderer/core/editor/Editor';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 
@@ -51,6 +59,7 @@ export type CommandArgs = {
   editor: Editor;
   document: DocumentModel;
   spatialIndex: SpatialIndex;
+  history: History<DocumentModel>;
   args: Record<string, unknown>;
 };
 
@@ -66,6 +75,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterInsertMode;
     case 'enterVisualMode':
       return enterVisualMode;
+    case 'enterVisualBlockMode':
+      return enterVisualBlockMode;
     case 'enterCommandMode':
       return enterCommandMode;
     case 'enterLineMode':
@@ -86,14 +97,20 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorLeft;
     case 'right':
       return cursorRight;
+    case 'moveCursorToMiddle':
+      return moveCursorToMiddle;
     case 'createCircle':
       return createCircle;
     case 'createRectangle':
       return createRectangle;
+    case 'createSquare':
+      return createSquare;
     case 'createTextBox':
       return createTextBox;
     case 'selectNextSearchResult':
       return selectNextSearchResult;
+    case 'selectPreviousSearchResult':
+      return selectPreviousSearchResult;
     case 'downAnchor':
       return jumpToDownAnchorPoint;
     case 'upAnchor':
@@ -118,6 +135,8 @@ function commandFromName(command: string): CommandFunction | null {
       return deleteSelection;
     case 'yankSelection':
       return yankSelection;
+    case 'toggleSelectShapeAtCursor':
+      return toggleSelectShapeAtPoint;
     case 'toggleBoxSelect':
       return toggleBoxSelect;
     case 'pasteAfter':
@@ -133,8 +152,12 @@ function commandFromName(command: string): CommandFunction | null {
       return visualLeft;
     case 'visualRight':
       return visualRight;
+    case 'undo':
+      return undo;
+    case 'redo':
+      return redo;
     default:
       return null;
   }
 }
-export { commandFromName };
+export { commandFromName, undo, redo };

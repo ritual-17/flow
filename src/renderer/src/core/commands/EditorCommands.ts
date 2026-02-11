@@ -12,6 +12,7 @@ impact the state of the document.
 
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { previousModeExitCleanup } from '@renderer/core/commands/modes/onExit';
+import { toggleBoxSelect, toggleSelectShapeAtPoint } from '@renderer/core/commands/VisualCommands';
 import {
   clearBoxSelectAnchor,
   clearSelection,
@@ -44,11 +45,33 @@ async function enterInsertMode(args: CommandArgs): Promise<CommandResult> {
 }
 
 async function enterVisualMode(args: CommandArgs): Promise<CommandResult> {
-  // disabling because it is complaining updatedDocument is not reassigned
-  // eslint-disable-next-line prefer-const
   let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
   updatedEditor = setMode(updatedEditor, 'visual');
   updatedEditor = clearSelection(updatedEditor);
+
+  // toggle selection of shape at cursor position if it exists, otherwise just enter visual mode with no selection
+  [updatedEditor, updatedDocument] = toggleSelectShapeAtPoint({
+    editor: updatedEditor,
+    document: updatedDocument,
+    spatialIndex: args.spatialIndex,
+    history: args.history,
+    args: {},
+  });
+  return [updatedEditor, updatedDocument];
+}
+
+async function enterVisualBlockMode(args: CommandArgs): Promise<CommandResult> {
+  let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
+  updatedEditor = setMode(updatedEditor, 'visual-block');
+  updatedEditor = clearSelection(updatedEditor);
+
+  [updatedEditor, updatedDocument] = toggleBoxSelect({
+    editor: updatedEditor,
+    document: updatedDocument,
+    spatialIndex: args.spatialIndex,
+    history: args.history,
+    args: {},
+  });
   return [updatedEditor, updatedDocument];
 }
 
@@ -160,19 +183,34 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
   ];
 }
 
-// update this later to use search results and if there is no current search then selected closest shape
-function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs): CommandResult {
-  const nearestShapeId = spatialIndex.getNearestShape(editor.cursorPosition)?.id;
-  let updatedEditor = editor;
-  if (nearestShapeId) {
-    updatedEditor = setSelectedShapes(editor, [nearestShapeId]);
+function moveCursorToMiddle({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: window.innerWidth / 2,
+      y: window.innerHeight / 2,
+    }),
+    document,
+  ];
+}
 
-    const nearestShape = document.shapes.get(nearestShapeId);
-    if (!nearestShape) {
-      return [updatedEditor, document];
-    }
-    updatedEditor = setCursorPosition(updatedEditor, { x: nearestShape.x, y: nearestShape.y });
-    updatedEditor = setMode(updatedEditor, 'visual');
+function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  const nextShape = spatialIndex.getNextShape(editor.cursorPosition);
+  let updatedEditor = editor;
+  if (nextShape) {
+    updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
+  }
+  return [updatedEditor, document];
+}
+
+function selectPreviousSearchResult({
+  editor,
+  document,
+  spatialIndex,
+}: CommandArgs): CommandResult {
+  const nextShape = spatialIndex.getNextShape(editor.cursorPosition, true);
+  let updatedEditor = editor;
+  if (nextShape) {
+    updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
   }
   return [updatedEditor, document];
 }
@@ -181,6 +219,7 @@ export {
   enterInsertMode,
   enterNormalMode,
   enterVisualMode,
+  enterVisualBlockMode,
   enterCommandMode,
   enterLineMode,
   enterAnchorLineMode,
@@ -190,5 +229,7 @@ export {
   cursorDown,
   cursorLeft,
   cursorRight,
+  moveCursorToMiddle,
   selectNextSearchResult,
+  selectPreviousSearchResult,
 };

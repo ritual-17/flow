@@ -9,6 +9,7 @@ import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegis
 import {
   clearBoxSelectAnchor,
   Editor,
+  pushSelectedShapes,
   setBoxSelectAnchor,
   setCursorPosition,
 } from '@renderer/core/editor/Editor';
@@ -52,6 +53,31 @@ function jumpToAnchorPoint(
 
   return [updatedEditor, document];
 }
+
+export function toggleSelectShapeAtPoint(args: CommandArgs): CommandResult {
+  const { editor, document, spatialIndex } = args;
+  const shapesAtPoint = spatialIndex.searchAtPoint(editor.cursorPosition);
+
+  // For simplicity, just select the first shape
+  const firstShape = shapesAtPoint[0];
+  if (!firstShape) {
+    return [editor, document]; // No shape at point, do nothing
+  }
+
+  const shapeId = firstShape.id;
+  if (editor.selectedShapeIds.includes(shapeId)) {
+    // Shape is already selected, so deselect it
+    const updatedSelectedShapeIds = editor.selectedShapeIds.filter((id) => id !== shapeId);
+    const updatedEditor = produce(editor, (draft) => {
+      draft.selectedShapeIds = updatedSelectedShapeIds;
+    });
+    return [updatedEditor, document];
+  }
+
+  const updatedEditor = pushSelectedShapes(editor, [shapeId]);
+  return [updatedEditor, document];
+}
+
 function selectShapesInArea(
   editor: Editor,
   spatialIndex: SpatialIndex,

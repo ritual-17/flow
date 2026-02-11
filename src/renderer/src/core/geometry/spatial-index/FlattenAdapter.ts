@@ -4,6 +4,7 @@ import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
 import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
+import { Square } from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
 
@@ -13,6 +14,8 @@ function toFlatten(shape: Shape): Flatten.AnyShape {
       return toFlattenCircle(shape);
     case 'rectangle':
       return toFlattenRectangle(shape);
+    case 'square':
+      return toFlattenSquare(shape); // Square can be treated as a special case of Rectangle
     case 'point':
       return toFlattenPoint(shape);
     case 'textBox':
@@ -31,6 +34,15 @@ function toFlattenRectangle(rectangle: Rectangle): Flatten.Polygon {
   const p2 = new Flatten.Point(rectangle.x + rectangle.width, rectangle.y);
   const p3 = new Flatten.Point(rectangle.x + rectangle.width, rectangle.y + rectangle.height);
   const p4 = new Flatten.Point(rectangle.x, rectangle.y + rectangle.height);
+
+  return new Flatten.Polygon([p1, p2, p3, p4]);
+}
+
+function toFlattenSquare(square: Square): Flatten.Polygon {
+  const p1 = new Flatten.Point(square.x, square.y);
+  const p2 = new Flatten.Point(square.x + square.width, square.y);
+  const p3 = new Flatten.Point(square.x + square.width, square.y + square.height);
+  const p4 = new Flatten.Point(square.x, square.y + square.height);
 
   return new Flatten.Polygon([p1, p2, p3, p4]);
 }
