@@ -138,3 +138,10 @@ These define the essential product behavior and quality bar and are expected to 
 * **Versioning policy & folder sync details:** <<F244>>, <<F245>>  
 * **Security & scalability targets (if sync or large docs expand):** <<NF216>>, <<NF233>>, <<NF218>>, cross-platform polish <<NF213>>  
 These items depend on user feedback, platform constraints, or future scope and may be refined iteratively.
+
+==== Implementation Status – Revision 0
+As of Revision 0, the current prototype demonstrates the core editor capabilities, including shape creation and manipulation, arrow connections, creation and 
+modification of textboxes, Vim-style text navigation, and general vim-style editing commands applicable to the canvas elements. Basic shortcut command functionality
+is partially implemented to support key interactions (copy/paste, undo/redo, shape insertion) as shown in the demo. Features related to document persistence, 
+including creating, opening, saving, and deleting notes, as well as advanced configuration, collaboration, and extended document management, are specified in the 
+SRS but are not implemented in this revision. The current system operates entirely in memory and is intended to showcase core editing and rendering functionality.
