@@ -68,6 +68,8 @@ function getShapeDimensions(shape: Shape) {
       return { width: shape.width, height: shape.height };
     case 'square':
       return { width: shape.width, height: shape.height };
+    case 'multi-line':
+      return { width: 50, height: 0 };
     default:
       return { width: 0, height: 0 };
   }

@@ -7,6 +7,7 @@ import {
   Shape,
   ShapeId,
 } from '@renderer/core/geometry/Shape';
+import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
 import { Direction, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
@@ -172,6 +173,78 @@ export class FlattenSpatialIndex implements SpatialIndex {
     }
 
     return nearestPoint;
+  }
+
+  // definitely needs a refactor
+  getNearestLineCenter(point: Coordinate): { line: MultiLine; point: Coordinate } | null {
+    const searchBox = new Flatten.Box(
+      point.x - this.SEARCH_RADIUS,
+      point.y - this.SEARCH_RADIUS,
+      point.x + this.SEARCH_RADIUS,
+      point.y + this.SEARCH_RADIUS,
+    );
+    const candidates = this.set.search(searchBox);
+    const domainCandidates = candidates
+      .map((candidate) => this.getDomainShape(candidate))
+      .filter((shape): shape is MultiLine => shape.type === 'multi-line');
+
+    let nearestLine: MultiLine | null = null;
+    let nearestPoint: Coordinate | null = null;
+    let minDistance = Infinity;
+
+    for (const candidate of domainCandidates) {
+      // Calculate center point of the line
+      const centerIndex = Math.floor(candidate.points.length / 2);
+      const centerPointRaw = candidate.points[centerIndex];
+      let centerPoint: Coordinate;
+      if (candidate.points.length % 2 === 0) {
+        // average the two center points for even-length lines
+        const pointA = candidate.points[centerIndex - 1];
+        const pointB = candidate.points[centerIndex];
+
+        let resolvedA: Coordinate;
+        let resolvedB: Coordinate;
+
+        if (isAnchorRef(pointA)) {
+          const resolvedPointA = resolveAnchorPoint(candidate, pointA.position);
+          resolvedA = { x: resolvedPointA.x, y: resolvedPointA.y };
+        } else {
+          resolvedA = pointA;
+        }
+
+        if (isAnchorRef(pointB)) {
+          const resolvedPointB = resolveAnchorPoint(candidate, pointB.position);
+          resolvedB = { x: resolvedPointB.x, y: resolvedPointB.y };
+        } else {
+          resolvedB = pointB;
+        }
+
+        centerPoint = {
+          x: (resolvedA.x + resolvedB.x) / 2,
+          y: (resolvedA.y + resolvedB.y) / 2,
+        };
+      } else {
+        if (isAnchorRef(centerPointRaw)) {
+          const resolvedPoint = resolveAnchorPoint(candidate, centerPointRaw.position);
+          centerPoint = { x: resolvedPoint.x, y: resolvedPoint.y };
+        } else {
+          centerPoint = centerPointRaw;
+        }
+      }
+
+      const distance = this.distanceBetweenPoints(point, centerPoint);
+      if (distance < minDistance) {
+        minDistance = distance;
+        nearestLine = candidate;
+        nearestPoint = centerPoint;
+      }
+    }
+
+    if (nearestLine && nearestPoint) {
+      return { line: nearestLine, point: nearestPoint };
+    }
+
+    return null;
   }
 
   getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint {

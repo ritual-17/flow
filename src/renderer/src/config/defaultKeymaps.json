@@ -115,6 +115,7 @@
     "c": "curvedLine",
     "n": "newLine",
     "A": "enterAnchorLineMode",
+    "t": "enterTextModeFromLineMode",
     "e": "toggleArrow"
   },
   "anchor-line": {
@@ -129,6 +130,7 @@
     "n": "newLine",
     "<Space>": "addAnchorPointToLine",
     "a": "enterLineMode",
+    "t": "enterTextModeFromLineMode",
     "e": "toggleArrow"
   }
 }
