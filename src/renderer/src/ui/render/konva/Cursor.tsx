@@ -64,7 +64,7 @@ function getCursorStyle(mode: string) {
     case 'anchor-line':
       return {
         size: 6,
-        fill: '#2dd4bf',
+        fill: '#ffd166',
         stroke: '#000000',
         strokeWidth: 1,
         shadow: 8,
@@ -73,7 +73,7 @@ function getCursorStyle(mode: string) {
     case 'text':
       return {
         size: 6,
-        fill: '#ffd166',
+        fill: '#2dd4bf',
         stroke: '#000000',
         strokeWidth: 1,
         shadow: 8,
