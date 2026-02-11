@@ -134,7 +134,7 @@ These define the essential product behavior and quality bar and are expected to 
 ===== Likely to Change (Evolving / Context-Dependent)
 
 * **Advanced commands & customization:** <<F222>>, <<F223>>, <<F224>>, <<F252>>  
-* **Export surface & integration hooks:** <<F243>>, <<F261>>, <<F263>> (formats/APIs may evolve with feedback)  
+* **Export surface & integration hooks:** <<F243>>, <<F261>> (formats/APIs may evolve with feedback)  
 * **Versioning policy & folder sync details:** <<F244>>, <<F245>>  
 * **Security & scalability targets (if sync or large docs expand):** <<NF216>>, <<NF233>>, <<NF218>>, cross-platform polish <<NF213>>  
 These items depend on user feedback, platform constraints, or future scope and may be refined iteratively.
