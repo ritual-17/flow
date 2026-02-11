@@ -5,6 +5,8 @@ import { useStaticImage } from '@renderer/ui/render/konva/text-box/hooks/useStat
 import { JSX } from 'react';
 import { Image as KonvaImage } from 'react-konva';
 
+const SOFT_WHITE = '#f0f0f0';
+
 // optional x and y props for specifying label position
 interface StaticTextBoxProps<T extends Shape = Shape> extends ShapeComponentProps<T> {
   x?: number;
@@ -31,7 +33,7 @@ const StaticTextBox: StaticTextBoxComponent = ({ shape, stroke, x, y }) => {
         width={shape.label.compiledImageMeta.width}
         height={shape.label.compiledImageMeta.height}
         stroke={stroke}
-        fill='white'
+        fill={SOFT_WHITE}
         cornerRadius={10}
       />
     )
