@@ -2,7 +2,7 @@ import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import * as AnchorPoints from '@renderer/core/geometry/utils/AnchorPoints';
 import { ShapeComponent, ShapeComponentProps } from '@renderer/ui/render/konva/ShapeResolver';
 import { useStore } from '@renderer/ui/Store';
-import { Line as KonvaLine, Arrow as KonvaArrow } from 'react-konva';
+import { Arrow as KonvaArrow, Line as KonvaLine } from 'react-konva';
 
 type DomainLine = MultiLine;
 
