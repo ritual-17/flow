@@ -4,6 +4,7 @@ import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import * as Point from '@renderer/core/geometry/shapes/Point';
 import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
+import * as Square from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 
 export function isAnchorRef(point: Coordinate | AnchorRef): point is AnchorRef {
@@ -19,6 +20,8 @@ export function getAnchorPoints(shape: Shape): AnchorPoint[] {
       return TextBox.generateAnchorPoints(shape);
     case 'rectangle':
       return Rectangle.generateAnchorPoints(shape);
+    case 'square':
+      return Square.generateAnchorPoints(shape);
     default:
       return [];
   }

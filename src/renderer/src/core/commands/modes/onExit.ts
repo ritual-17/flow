@@ -3,12 +3,13 @@
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { updateShapeInDocument } from '@renderer/core/commands/ManipulationCommands';
 import { Document } from '@renderer/core/document/Document';
-import { setCurrentTextBox } from '@renderer/core/editor/Editor';
+import { clearBoxSelectAnchor, setCurrentTextBox } from '@renderer/core/editor/Editor';
 import { compileShapeTextContent } from '@renderer/core/geometry/Transform';
 
 type OnExitCommandFunction = (args: CommandArgs) => Promise<CommandResult>;
 const onExitCommands: { [mode: string]: OnExitCommandFunction } = {
   text: onExitTextMode,
+  'visual-block': onExitVisualBlockMode,
   // add other modes here if they need cleanup on exit
 };
 
@@ -20,6 +21,12 @@ export async function previousModeExitCleanup(args: CommandArgs): Promise<Comman
   }
   // no cleanup needed for this mode
   return [editor, args.document];
+}
+
+async function onExitVisualBlockMode(args: CommandArgs): Promise<CommandResult> {
+  const { editor, document } = args;
+  const updatedEditor = clearBoxSelectAnchor(editor);
+  return [updatedEditor, document];
 }
 
 async function onExitTextMode(args: CommandArgs): Promise<CommandResult> {

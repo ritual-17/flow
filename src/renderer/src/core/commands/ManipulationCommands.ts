@@ -16,6 +16,7 @@ import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import * as Point from '@renderer/core/geometry/shapes/Point';
 import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
+import * as Square from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
   cloneShape,
@@ -23,9 +24,8 @@ import {
   Transform,
   translateShape,
 } from '@renderer/core/geometry/Transform';
+import { AnchorPointDereferencer } from '@renderer/core/geometry/utils/AnchorPointDereferencer';
 import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
-
-import { SpatialIndex } from '../geometry/SpatialIndex';
 
 export function createCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
@@ -41,6 +41,15 @@ export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
   const rectangle = Rectangle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, rectangle);
+
+  return [args.editor, updatedDocument];
+}
+
+export function createSquare(args: CommandArgs): [Editor, DocumentModel] {
+  const { x, y } = args.editor.cursorPosition;
+  const square = Square.build({ x, y });
+
+  const updatedDocument = addShapeToDocument(args, square);
 
   return [args.editor, updatedDocument];
 }
@@ -220,7 +229,7 @@ export function addPointToLine(args: CommandArgs): CommandResult {
 }
 
 export function deleteSelection(args: CommandArgs): [Editor, DocumentModel] {
-  const { editor, document, spatialIndex } = args;
+  const { editor, document } = args;
   const { selectedShapeIds } = editor;
 
   // not fully needed but avoids unnecessary document updates
@@ -229,7 +238,7 @@ export function deleteSelection(args: CommandArgs): [Editor, DocumentModel] {
   }
 
   // update document and editor with following changes
-  const result = helperRemoveShapes(document, editor, spatialIndex, selectedShapeIds);
+  const result = helperRemoveShapes(args, selectedShapeIds);
   const updatedDocument = result[0];
   let updatedEditor = result[1];
   updatedEditor = setMode(updatedEditor, 'normal');
@@ -271,7 +280,7 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
 }
 
 export async function paste(args: CommandArgs): Promise<CommandResult> {
-  const { editor, document, spatialIndex } = args;
+  const { editor, document } = args;
   if (editor.clipboard.length === 0) {
     return [editor, document];
   }
@@ -280,7 +289,7 @@ export async function paste(args: CommandArgs): Promise<CommandResult> {
 
   // delete any current selection before pasting
   if (editor.selectedShapeIds.length > 0) {
-    const result = helperRemoveShapes(document, editor, spatialIndex, editor.selectedShapeIds);
+    const result = helperRemoveShapes(args, editor.selectedShapeIds);
     updatedDocument = result[0];
     updatedEditor = result[1];
   }
@@ -302,13 +311,35 @@ export async function paste(args: CommandArgs): Promise<CommandResult> {
   return [updatedEditor, updatedDocument];
 }
 
-function helperRemoveShapes(
-  document: DocumentModel,
-  editor: Editor,
-  spatialIndex: SpatialIndex,
-  shapeIds: ShapeId[],
-): [DocumentModel, Editor] {
-  const updatedDocument = Document.removeShapesFromDocument(document, shapeIds);
+// functions to handle undo and redo commands
+export function undo(args: CommandArgs): CommandResult {
+  const { editor, document, history } = args;
+  const prevDocument = history.undo(document);
+  return [editor, prevDocument];
+}
+
+export function redo(args: CommandArgs): CommandResult {
+  const { editor, document, history } = args;
+  const nextDocument = history.redo(document);
+  return [editor, nextDocument];
+}
+
+// get the lines that reference the shapes were removing
+// resolve the points in those lines
+// update those lines in the document and spatial index
+// delete the shapes from the spatial index
+function helperRemoveShapes(args: CommandArgs, shapeIds: ShapeId[]): [DocumentModel, Editor] {
+  const { document, spatialIndex, editor } = args;
+  const referencingLines = spatialIndex.getReferencingShapeIds(shapeIds);
+
+  const lines = referencingLines.map((id) => Document.getShapeById(document, id));
+  const refs = shapeIds.map((id) => Document.getShapeById(document, id));
+
+  const updatedLines = new AnchorPointDereferencer(lines, refs).populateLinePointsFromReferences();
+  updatedLines.forEach((line) => spatialIndex.updateShape(line));
+
+  let updatedDocument = updateShapesInDocument(args, updatedLines);
+  updatedDocument = Document.removeShapesFromDocument(updatedDocument, shapeIds);
   spatialIndex.removeShapesByIds(shapeIds);
   let updatedEditor = clearSelection(editor);
   updatedEditor = clearBoxSelectAnchor(updatedEditor);
