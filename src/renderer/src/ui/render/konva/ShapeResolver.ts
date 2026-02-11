@@ -1,6 +1,7 @@
 import { Shape } from '@renderer/core/geometry/Shape';
 import Circle from '@renderer/ui/render/konva/Circle';
 import Line from '@renderer/ui/render/konva/Line';
+import PdfSlideShape from '@renderer/ui/render/konva/PdfSlide';
 import Point from '@renderer/ui/render/konva/Point';
 import Rectangle from '@renderer/ui/render/konva/Rectangle';
 import Square from '@renderer/ui/render/konva/Square';
@@ -23,6 +24,7 @@ function getComponent<T extends Shape>(shape: T): ShapeComponent<T> {
     point: Point,
     textBox: TextBox,
     'multi-line': Line,
+    pdf: PdfSlideShape,
     rectangle: Rectangle,
     square: Square,
   } as const;

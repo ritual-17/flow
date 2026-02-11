@@ -3,6 +3,7 @@ import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { join } from 'path';
 
 import icon from '../../resources/icon.png?asset';
+import { LoadedPdfFile, pickPdfFile } from './pdfSystem';
 import { compileTypstDocument } from './typst/TextCompiler';
 
 function createWindow(): void {
@@ -54,6 +55,10 @@ app.whenReady().then(() => {
   // HANDLERS
   ipcMain.handle('compile-typst', (_, content) => {
     return compileTypstDocument(content);
+  });
+
+  ipcMain.handle('flow:pdf:pick', async (): Promise<LoadedPdfFile | null> => {
+    return await pickPdfFile();
   });
 
   createWindow();
