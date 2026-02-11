@@ -13,6 +13,7 @@ import {
   enterNormalMode,
   enterTextMode,
   enterTextModeForNearestTextBox,
+  enterTextModeFromLineMode,
   enterVisualBlockMode,
   enterVisualMode,
   moveCursorToMiddle,
@@ -88,6 +89,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterTextMode;
     case 'enterTextModeForNearestTextBox':
       return enterTextModeForNearestTextBox;
+    case 'enterTextModeFromLineMode':
+      return enterTextModeFromLineMode;
     case 'up':
       return cursorUp;
     case 'down':

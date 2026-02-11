@@ -113,7 +113,8 @@
     "s": "squareLine",
     "c": "curvedLine",
     "n": "newLine",
-    "A": "enterAnchorLineMode"
+    "A": "enterAnchorLineMode",
+    "t": "enterTextModeFromLineMode"
   },
   "anchor-line": {
     "j": "downAnchor",
