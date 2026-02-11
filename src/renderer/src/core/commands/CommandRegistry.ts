@@ -37,6 +37,7 @@ import {
   undo,
   yankSelection,
 } from '@renderer/core/commands/ManipulationCommands';
+import { importPdf } from '@renderer/core/commands/PdfCommands';
 import {
   jumpToDownAnchorPoint,
   jumpToLeftAnchorPoint,
@@ -149,6 +150,8 @@ function commandFromName(command: string): CommandFunction | null {
       return visualLeft;
     case 'visualRight':
       return visualRight;
+    case 'importPdf':
+      return importPdf;
     case 'undo':
       return undo;
     case 'redo':

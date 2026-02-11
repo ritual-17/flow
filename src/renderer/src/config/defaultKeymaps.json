@@ -27,7 +27,8 @@
     "n": "selectNextSearchResult",
     "N": "selectPreviousSearchResult",
     "a": "enterLineMode",
-    "A": "enterAnchorLineMode"
+    "A": "enterAnchorLineMode",
+    "f": "importPdf"
   },
   "insert": {
     "j": "down",
