@@ -8,6 +8,8 @@ import { Square } from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
 
+import { PdfSlide } from '../shapes/PdfSlide';
+
 function toFlatten(shape: Shape): Flatten.AnyShape {
   switch (shape.type) {
     case 'circle':
@@ -22,6 +24,8 @@ function toFlatten(shape: Shape): Flatten.AnyShape {
       return toFlattenTextBox(shape);
     case 'multi-line':
       return toFlattenMultiLine(shape);
+    case 'pdf':
+      return toFlattenImage(shape);
   }
 }
 
@@ -86,6 +90,14 @@ function toFlattenMultiLine(multiLine: MultiLine): Flatten.Multiline {
     return acc;
   }, []);
   return new Flatten.Multiline(lines);
+}
+
+function toFlattenImage(pdf: PdfSlide): Flatten.Polygon {
+  const p1 = new Flatten.Point(pdf.x, pdf.y);
+  const p2 = new Flatten.Point(pdf.x + pdf.width, pdf.y);
+  const p3 = new Flatten.Point(pdf.x + pdf.width, pdf.y + pdf.height);
+  const p4 = new Flatten.Point(pdf.x, pdf.y + pdf.height);
+  return new Flatten.Polygon([p1, p2, p3, p4]);
 }
 
 function assertLinePointisCoordinate(point: Coordinate | AnchorRef): asserts point is Coordinate {
