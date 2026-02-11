@@ -44,8 +44,8 @@ export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
         id: generateId(),
         x: startX,
         y: currentY,
-        width: canvas.width,
-        height: canvas.height,
+        width: canvas.width * (1 / 2),
+        height: canvas.height * (1 / 2),
         imageDataUrl,
       }),
     );
