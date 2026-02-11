@@ -15,7 +15,7 @@ function Cursor() {
       fill={style.fill}
       stroke={style.stroke}
       strokeWidth={style.strokeWidth}
-      cornerRadius={2}
+      cornerRadius={3}
       shadowBlur={style.shadow}
     />
   );
@@ -26,7 +26,7 @@ function getCursorStyle(mode: string) {
     case 'normal':
       return {
         size: 6,
-        fill: 'transparent',
+        fill: '#000000',
         stroke: '#ffffff',
         strokeWidth: 1.5,
         shadow: 0,
@@ -34,14 +34,15 @@ function getCursorStyle(mode: string) {
 
     case 'insert':
       return {
-        size: 4,
+        size: 6,
         fill: '#ff4d4d',
-        stroke: 'none',
-        strokeWidth: 0,
+        stroke: '#000000',
+        strokeWidth: 1,
         shadow: 8,
       };
 
     case 'visual':
+    case 'visual-block':
       return {
         size: 6,
         fill: '#00d4ff',
@@ -50,10 +51,38 @@ function getCursorStyle(mode: string) {
         shadow: 6,
       };
 
+    case 'command':
+      return {
+        size: 6,
+        fill: '#ff9f1a',
+        stroke: '#000000',
+        strokeWidth: 1,
+        shadow: 8,
+      };
+
+    case 'line':
+    case 'anchor-line':
+      return {
+        size: 6,
+        fill: '#2dd4bf',
+        stroke: '#000000',
+        strokeWidth: 1,
+        shadow: 8,
+      };
+
+    case 'text':
+      return {
+        size: 6,
+        fill: '#ffd166',
+        stroke: '#000000',
+        strokeWidth: 1,
+        shadow: 8,
+      };
+
     default:
       return {
         size: 5,
-        fill: '#ffffff',
+        fill: '#000000',
         stroke: 'none',
         strokeWidth: 0,
         shadow: 0,
