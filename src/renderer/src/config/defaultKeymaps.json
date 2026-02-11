@@ -27,7 +27,8 @@
     "n": "selectNextSearchResult",
     "N": "selectPreviousSearchResult",
     "a": "enterLineMode",
-    "A": "enterAnchorLineMode"
+    "A": "enterAnchorLineMode",
+    "f": "importPdf"
   },
   "insert": {
     "j": "down",
@@ -114,7 +115,8 @@
     "c": "curvedLine",
     "n": "newLine",
     "A": "enterAnchorLineMode",
-    "t": "enterTextModeFromLineMode"
+    "t": "enterTextModeFromLineMode",
+    "e": "toggleArrow"
   },
   "anchor-line": {
     "j": "downAnchor",
@@ -128,6 +130,7 @@
     "n": "newLine",
     "<Space>": "addAnchorPointToLine",
     "a": "enterLineMode",
-    "t": "enterTextModeFromLineMode"
+    "t": "enterTextModeFromLineMode",
+    "e": "toggleArrow"
   }
 }

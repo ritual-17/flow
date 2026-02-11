@@ -4,6 +4,9 @@ import { Point } from '@renderer/core/geometry/shapes/Point';
 export type MultiLine = IShapeBase & {
   type: 'multi-line';
   points: (Coordinate | AnchorRef)[];
+  // arrow flags control whether an arrowhead is drawn at the start/end of the line
+  arrowStart?: boolean;
+  arrowEnd?: boolean;
 };
 
 type LinePoint = Coordinate | AnchorRef;
@@ -12,6 +15,8 @@ export function build(attrs: Partial<MultiLine>): MultiLine {
   const multiLine: MultiLine = {
     type: 'multi-line',
     points: [],
+    arrowStart: false,
+    arrowEnd: false,
     ...buildBaseShape(),
     ...attrs,
   };
