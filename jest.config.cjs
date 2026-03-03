@@ -31,6 +31,7 @@ module.exports = {
       testEnvironment: 'jsdom',
       testMatch: ['**/test/unit/**/*.spec.ts'],
       moduleNameMapper: commonModuleNameMapper,
+      setupFilesAfterEnv: ['<rootDir>/test/jest.setup.ts'],
       transform: transform,
     },
     {
