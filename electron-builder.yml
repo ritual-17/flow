@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: electron-hello-worl
+appId: com.flow.app
+productName: Flow
 directories:
   buildResources: build
 files:
@@ -12,7 +12,7 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: electron-hello-worl
+  executableName: ${productName}
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
@@ -33,7 +33,7 @@ linux:
     - AppImage
     - snap
     - deb
-  maintainer: electronjs.org
+  maintainer: min-cut
   category: Utility
 appImage:
   artifactName: ${name}-${version}.${ext}
