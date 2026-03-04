@@ -6,9 +6,19 @@ const transform = {
   '^.+\\.tsx?$': [
     'ts-jest',
     {
-      tsconfig: './tsconfig.web.json', // Tell jest to use tsconfig.web.json
+      tsconfig: './tsconfig.web.json',
     },
   ],
+};
+
+const commonModuleNameMapper = {
+  ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' }),
+
+  // Maps pdfjs-dist to the mock
+  '^pdfjs-dist$': '<rootDir>/test/mocks/pdfjs-mock.ts',
+
+  // Maps the pdf.worker.min.js to the mock
+  '^pdfjs-dist/build/pdf.worker.min\\?url$': '<rootDir>/test/mocks/file-mock.js',
 };
 
 module.exports = {
@@ -20,7 +30,8 @@ module.exports = {
       preset: 'ts-jest',
       testEnvironment: 'jsdom',
       testMatch: ['**/test/unit/**/*.spec.ts'],
-      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' }),
+      moduleNameMapper: commonModuleNameMapper,
+      setupFilesAfterEnv: ['<rootDir>/test/jest.setup.ts'],
       transform: transform,
     },
     {
@@ -28,7 +39,7 @@ module.exports = {
       preset: 'ts-jest',
       testEnvironment: 'jsdom',
       testMatch: ['**/test/ui/**/*.spec.tsx'],
-      moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>' }),
+      moduleNameMapper: commonModuleNameMapper,
       setupFilesAfterEnv: ['<rootDir>/test/ui/setup.ts'],
       transform: transform,
     },
