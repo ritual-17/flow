@@ -75,31 +75,96 @@ This document ...
 \subsection{etc.}
 	
 \section{Comparison to Existing Implementation}	
-
+\setlength{\parindent}{0pt}
 % This section will not be appropriate for every project.
 
-• Pen and paper
-◦ Not easily editable or shareable
-◦ Handwriting may be slower than typing
-• Tablets with stylus support (e.g. iPad with Apple Pencil)
-◦ Can be expensive
-◦ Handwriting may be slower than typing
-• Traditional text editors (e.g. Microsoft Word, Google Docs)
-◦ Limited support for creating diagrams within the app
-• Mouse-driven editors (e.g. Draw.io, OneNote)
-◦ Can be slow to navigate menus for specific geometry
-◦ Limited keyboard shortcut support for creating and editing geometry
-◦ May  require  exporting  and  importing  images  into  a  separate  text  editor  for  note-taking  (e.g.
-Draw.io)
-• Text-based diagram languages (e.g. Mermaid, PlantUML)
-◦ Separate  definition  from  rendering,  forcing  users  to  manage  an  inefficient  write-compile-insert
-cycle
-◦ Requires integration with another text editor for note-taking text
-• Document markup languages (e.g. LaTeX, Typst)
-◦ Limited  to  a  more  traditional  page  format  rather  than  infinite  workspace  like  OneNote  for
-example
-◦ Editing underlying text rather than geometry itself
-4 SE 4G06
+\subsection{Pen and Paper}
+
+Pen-and-paper note taking allows quick sketches and diagrams, but it lacks digital 
+advantages such as editing, sharing, and organization. Notes cannot easily be 
+rearranged or modified without rewriting large portions.
+
+\vspace{1em}
+
+The Flow prototype improves on this by allowing users to freely edit diagrams and 
+text on a digital canvas. Shapes and text boxes can be moved, resized, and modified 
+without recreating the content. This allows iterative editing that is not possible 
+with traditional handwritten notes.
+
+\subsection{Tablet-Based Note Taking}
+
+Tablet systems such as the iPad with Apple Pencil allow freehand diagramming and 
+handwritten notes. While flexible, these solutions require specialized hardware and 
+often rely on handwriting input, which may be slower than typing for many users.
+
+\vspace{1em}
+
+Flow instead targets keyboard-based workflows and runs on standard desktop computers. 
+The prototype demonstrates keyboard-driven editing and diagram manipulation, allowing 
+users to create structured notes and diagrams without requiring additional hardware.
+
+\subsection{Traditional Text Editors}
+
+Applications such as Microsoft Word or Google Docs support structured text editing 
+but provide limited support for integrated diagram creation. Diagrams often require 
+external tools or inserted images.
+
+\vspace{1em}
+
+The Flow prototype integrates diagram creation directly into the editing workspace. 
+Users can insert geometric shapes and connect them with arrows directly on the canvas 
+while simultaneously editing text content. This removes the need to switch between separate 
+diagramming tools.
+
+\subsection{Mouse-Driven Diagram Editors}
+
+Tools such as Draw.io or OneNote allow diagram creation but rely heavily on mouse-based 
+interaction and menu navigation. Creating shapes or connections often requires multiple UI interactions.
+
+\vspace{1em}
+
+Flow differs by emphasizing keyboard-driven interaction. The current prototype demonstrates 
+Vim-style navigation and keyboard commands that allow users to manipulate shapes, text boxes, 
+and diagram elements without relying on extensive mouse interaction.
+
+\subsection{Text-Based Diagram Languages}
+
+Diagram languages such as Mermaid or PlantUML allow diagrams to be described using text. While 
+powerful, they require a separate compilation or rendering step to visualize the diagram.
+
+\vspace{1em}
+
+Flow eliminates this separation by providing direct manipulation of diagram elements on the 
+canvas. The rendering engine updates the diagram in real time as the user edits elements, avoiding 
+the write–compile–preview workflow required by text-based diagram languages.
+
+\subsection{Document Markup Languages}
+
+Document preparation systems such as \LaTeX{} or Typst support complex document layouts and diagram 
+generation. However, these systems rely on writing structured markup code and are typically designed 
+for page-based documents rather than an interactive canvas.
+
+\vspace{1em}
+
+Flow instead uses a canvas-based editing environment where diagram elements and text boxes can be 
+freely positioned. The prototype supports interactive editing of shapes and text elements, which allows 
+users to experiment with diagram layouts more quickly than code-based document systems.
+
+\subsection{Summary}
+
+The Flow prototype demonstrates that a keyboard-driven, canvas-based note-taking system can combine 
+advantages from multiple existing approaches. Compared to existing tools, the system:
+
+\begin{itemize}
+\item Integrates text editing and diagram creation in a single interface
+\item Supports keyboard-driven workflows inspired by Vim
+\item Allows direct manipulation of diagram elements without compilation or external tools
+\item Provides a flexible canvas for positioning text and diagrams
+\end{itemize}
+
+Although the current implementation does not yet include persistent storage, exporting, or collaboration 
+features, the prototype validates the feasibility of the core interaction model and demonstrates improvements 
+over several existing approaches.
 
 
 \section{Unit Testing}
