@@ -1,10 +1,9 @@
 {
-  "name": "electron-hello-worl",
+  "name": "flow",
   "version": "1.0.0",
-  "description": "An Electron application with React and TypeScript",
+  "description": "A keyboard-driven text editor with a focus on diagram creation capabilities.",
   "main": "./out/main/index.js",
-  "author": "example.com",
-  "homepage": "https://electron-vite.org",
+  "author": "min-cut",
   "scripts": {
     "format": "prettier --write src test",
     "format:check": "prettier --check src test",
