@@ -179,7 +179,86 @@ should be highlighted.}
 \section{Automated Testing}
 		
 \section{Trace to Requirements}
-		
+
+\section{Trace to Requirements}
+
+This section provides traceability between the requirements defined in the
+Software Requirements Specification (SRS) and the verification activities
+performed during testing. Each requirement is linked to one or more test
+cases described in the Verification and Validation Plan. The results of the
+tests demonstrate whether the implementation satisfies the specified
+requirements.
+
+Functional requirements are validated primarily through automated system
+tests that simulate user interactions with the application. These tests
+verify core functionality such as creating notes, manipulating diagram
+elements, and performing file management operations.
+
+Non-functional requirements are evaluated through a combination of manual
+tests, usability evaluation, and performance measurements. These tests assess
+system responsiveness, usability, cross-platform compatibility, and data
+integrity.
+
+Table~\ref{tab:reqTrace} summarizes the mapping between SRS requirements and
+the test cases used to verify them.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{p{2cm} p{7cm} p{3cm} p{2cm}}
+\toprule
+\textbf{Req ID} & \textbf{Requirement Description} & \textbf{Test Case} & \textbf{Result} \\
+\midrule
+
+F211 & The system shall allow users to create and edit notes. 
+& test-F211 & Pass \\
+
+F214 & The system shall allow users to insert and manipulate shapes on the canvas. 
+& test-F214 & Pass \\
+
+F217 & The system shall allow users to save and reopen notes. 
+& test-F217 & Pass \\
+
+F218 & The system shall allow users to export notes as PDF files. 
+& test-F218 & Pass \\
+
+NF211 & The system shall provide low-latency input and rendering during editing operations. 
+& test-NF211 & Pass \\
+
+NF218 & The system shall maintain acceptable performance when handling a large number of shapes or objects. 
+& test-NF218 & Pass \\
+
+NF213 & The system shall support execution on Windows, macOS, and Linux platforms. 
+& test-NF213 & Pass \\
+
+NF214 & The system shall provide accessible keyboard shortcuts for editing operations. 
+& test-NF214 & Pass \\
+
+NF217 & The system shall provide an intuitive and consistent user interface. 
+& test-NF217 & Pass \\
+
+NF212 & The system shall maintain local data persistence and autosave functionality. 
+& test-NF212 & Pass \\
+
+NF215 & The system shall maintain file integrity during save and export operations. 
+& test-NF215 & Pass \\
+
+NF216 & The system shall not perform background network communication. 
+& test-NF216 & Pass \\
+
+\bottomrule
+\end{tabular}
+\caption{Traceability Between Requirements and Test Cases}
+\label{tab:reqTrace}
+\end{table}
+
+The results indicate that all implemented requirements were successfully
+verified through the corresponding tests. No critical failures were observed
+during the verification process, demonstrating that the implemented system
+satisfies the functional and non-functional requirements specified in the
+SRS.
+
+\vspace{15em}
+
 \section{Trace to Modules}		
 
 \section{Code Coverage Metrics}
