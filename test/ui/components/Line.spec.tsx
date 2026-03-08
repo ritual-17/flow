@@ -1,4 +1,4 @@
-import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
+import { build } from '@renderer/core/geometry/shapes/MultiLine';
 import Line from '@renderer/ui/render/konva/Line';
 import { render } from '@testing-library/react';
 
@@ -63,13 +63,10 @@ describe('Line Component', () => {
   });
 
   it('renders a line without arrows', () => {
-    const shape: MultiLine = {
-      type: 'multi-line',
-      points: [],
+    const shape = build({
       arrowStart: false,
       arrowEnd: false,
-      id: 'test-line',
-    };
+    });
 
     const { getByTestId } = render(<Line shape={shape} stroke='black' />);
 
@@ -81,13 +78,10 @@ describe('Line Component', () => {
   });
 
   it('renders an arrow at the end when arrowEnd is true', () => {
-    const shape: MultiLine = {
-      type: 'multi-line',
-      points: [],
+    const shape = build({
       arrowStart: false,
       arrowEnd: true,
-      id: 'test-line',
-    };
+    });
 
     const { getByTestId, getAllByTestId } = render(<Line shape={shape} stroke='black' />);
 
@@ -106,13 +100,10 @@ describe('Line Component', () => {
   });
 
   it('renders an arrow at the start when arrowStart is true', () => {
-    const shape: MultiLine = {
-      type: 'multi-line',
-      points: [],
+    const shape = build({
       arrowStart: true,
       arrowEnd: false,
-      id: 'test-line',
-    };
+    });
 
     const { getByTestId, getAllByTestId } = render(<Line shape={shape} stroke='black' />);
 
@@ -131,13 +122,10 @@ describe('Line Component', () => {
   });
 
   it('renders arrows at both ends when both flags are true', () => {
-    const shape: MultiLine = {
-      type: 'multi-line',
-      points: [],
+    const shape = build({
       arrowStart: true,
       arrowEnd: true,
-      id: 'test-line',
-    };
+    });
 
     const { getByTestId, getAllByTestId } = render(<Line shape={shape} stroke='black' />);
 
@@ -163,13 +151,10 @@ describe('Line Component', () => {
   it('does not render arrows when there are less than 2 points', () => {
     mockUseResolvedPoints.mockReturnValue([{ x: 0, y: 0 }]);
 
-    const shape: MultiLine = {
-      type: 'multi-line',
-      points: [],
+    const shape = build({
       arrowStart: true,
       arrowEnd: true,
-      id: 'test-line',
-    };
+    });
 
     const { getByTestId } = render(<Line shape={shape} stroke='black' />);
 
@@ -183,10 +168,7 @@ describe('Line Component', () => {
   it('calculates center correctly for even number of points', () => {
     // 4 points, even, center average of index 1 and 2
     const { getByTestId } = render(
-      <Line
-        shape={{ type: 'multi-line', points: [], arrowStart: false, arrowEnd: false, id: 'test' }}
-        stroke='black'
-      />,
+      <Line shape={build({ arrowStart: false, arrowEnd: false })} stroke='black' />,
     );
 
     const label = getByTestId('label');
@@ -201,10 +183,7 @@ describe('Line Component', () => {
     ]); // 3 points, odd
 
     const { getByTestId } = render(
-      <Line
-        shape={{ type: 'multi-line', points: [], arrowStart: false, arrowEnd: false, id: 'test' }}
-        stroke='black'
-      />,
+      <Line shape={build({ arrowStart: false, arrowEnd: false })} stroke='black' />,
     );
 
     const label = getByTestId('label');
@@ -218,10 +197,7 @@ describe('Line Component', () => {
     ]); // 2 points, even
 
     const { getByTestId } = render(
-      <Line
-        shape={{ type: 'multi-line', points: [], arrowStart: false, arrowEnd: false, id: 'test' }}
-        stroke='black'
-      />,
+      <Line shape={build({ arrowStart: false, arrowEnd: false })} stroke='black' />,
     );
 
     const label = getByTestId('label');
