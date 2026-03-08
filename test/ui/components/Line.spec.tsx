@@ -1,10 +1,24 @@
-import { build } from '@renderer/core/geometry/shapes/MultiLine';
+import { build, MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import Line from '@renderer/ui/render/konva/Line';
 import { render } from '@testing-library/react';
 
 // Mock react-konva
 jest.mock('react-konva', () => ({
-  Arrow: ({ points, fill, stroke, pointerLength, pointerWidth, ...props }: any) => (
+  Arrow: ({
+    points,
+    fill,
+    stroke,
+    pointerLength,
+    pointerWidth,
+    ...props
+  }: {
+    points: number[];
+    fill: string;
+    stroke: string;
+    pointerLength: number;
+    pointerWidth: number;
+    [key: string]: unknown;
+  }) => (
     <div
       data-testid='konva-arrow'
       data-points={JSON.stringify(points)}
@@ -15,7 +29,15 @@ jest.mock('react-konva', () => ({
       {...props}
     />
   ),
-  Line: ({ points, stroke, ...props }: any) => (
+  Line: ({
+    points,
+    stroke,
+    ...props
+  }: {
+    points: number[];
+    stroke: string;
+    [key: string]: unknown;
+  }) => (
     <div
       data-testid='konva-line'
       data-points={JSON.stringify(points)}
@@ -33,7 +55,7 @@ jest.mock('@renderer/ui/hooks/useResolvedPoints', () => ({
 // Mock Label
 jest.mock('@renderer/ui/render/konva/style/Label', () => ({
   __esModule: true,
-  default: ({ shape, center }: any) => (
+  default: ({ shape, center }: { shape: MultiLine; center: { x: number; y: number } }) => (
     <div
       data-testid='label'
       data-shape={JSON.stringify(shape)}
