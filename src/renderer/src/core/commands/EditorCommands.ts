@@ -163,6 +163,11 @@ async function enterTextModeForNearestTextBox(args: CommandArgs): Promise<Comman
   return [updatedEditor, updatedDocument];
 }
 
+async function enterAutoLinkInsertMode(args: CommandArgs): Promise<CommandResult> {
+  const [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
+  return [setMode(updatedEditor, 'auto-link-insert'), updatedDocument];
+}
+
 function cursorUp({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
@@ -246,6 +251,7 @@ export {
   enterTextMode,
   enterTextModeForNearestTextBox,
   enterTextModeFromLineMode,
+  enterAutoLinkInsertMode,
   cursorUp,
   cursorDown,
   cursorLeft,

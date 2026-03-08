@@ -18,6 +18,7 @@
     "V": "enterVisualBlockMode",
     "t": "enterTextMode",
     "T": "enterTextModeForNearestTextBox",
+    "I": "enterAutoLinkInsertMode",
     "dd": "deleteLine",
     "yy": "yankLine",
     "p": "pasteAfter",
@@ -44,6 +45,16 @@
     "<C-s>": "saveFile",
     "r": "createRectangle",
     "s": "createSquare"
+  },
+  "auto-link-insert": {
+    "j": "down",
+    "k": "up",
+    "h": "left",
+    "l": "right",
+    "ArrowUp": "up",
+    "ArrowDown": "down",
+    "ArrowLeft": "left",
+    "ArrowRight": "right"
   },
   "visual": {
     "j": "visualDown",
