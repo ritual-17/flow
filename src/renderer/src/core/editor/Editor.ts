@@ -29,7 +29,8 @@ export type Mode =
   | 'command'
   | 'text'
   | 'line'
-  | 'anchor-line';
+  | 'anchor-line'
+  | 'auto-link-insert';
 
 // any modification to the editor state should go through these functions
 // below are just some helper functions to create and update the editor state

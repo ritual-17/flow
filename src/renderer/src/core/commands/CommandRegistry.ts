@@ -7,6 +7,7 @@ import {
   cursorRight,
   cursorUp,
   enterAnchorLineMode,
+  enterAutoLinkInsertMode,
   enterCommandMode,
   enterInsertMode,
   enterLineMode,
@@ -93,6 +94,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterTextModeForNearestTextBox;
     case 'enterTextModeFromLineMode':
       return enterTextModeFromLineMode;
+    case 'enterAutoLinkInsertMode':
+      return enterAutoLinkInsertMode;
     case 'up':
       return cursorUp;
     case 'down':
