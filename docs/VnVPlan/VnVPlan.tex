@@ -959,7 +959,7 @@ F242 & The system shall autosave changes at regular intervals (smaller than or e
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Traceability Matrix for Non-Functional Requirements}
 \begin{tabular}{|p{2.5cm}|p{6cm}|p{6cm}|}
@@ -1013,12 +1013,13 @@ The unit tests focuses on modules that implement the core logic of Flow, particu
 responsible for command interpretation, geometry manipulation, and history management. These 
 components were prioritized because they directly affect the application of user operations 
 and the internal state of the system. Unit tests therefore verify functionality within the 
-Geometry State Converter Module (M5), Commands Parser Module (M6), Mode Commands Module (M7), 
-Text Buffer Module (M10), Geometry State Module (M11), Geometry State Mutator Module (M12), 
-and Undo Redo Module (M13). The tests target representative behaviors such as parsing 
-multi-key commands, switching modes, manipulating selected shapes (e.g., translating or 
-deleting objects), creating and positioning diagram elements such as arrows and squares, 
-and performing undo and redo operations.
+File Interface Module (M3), which will handle file operations such as importing pdf files, 
+Commands Parser Module (M6), Mode Commands Module (M7), Text Buffer Module (M10), 
+Geometry State Module (M11), Geometry State Mutator Module (M12), and Undo Redo Module (M13).
+The tests target representative behaviors such as parsing multi-key commands, switching 
+modes, manipulating selected shapes (e.g., translating or deleting objects), creating and 
+positioning diagram elements such as arrows and squares, and performing undo and redo 
+operations.
 
 Some modules are not tested in isolation but are exercised indirectly through these tests. 
 For example, the Shape Interface Module (M8) and Geometry State Parser Module (M4) are 
@@ -1028,10 +1029,11 @@ behavior is verified through tests that manipulate geometry or execute commands 
 through standalone unit tests.
 
 Several modules were excluded from the unit testing scope because their functionality has
-not yet been implemented. These include the File Interface Module (M3), which will 
-eventually handle reading and writing Flow note files, the User Preference Module (M9), 
-which is intended to store configurable user settings, and the User Persistence Module (M14),
-which will manage saving and restoring user state between sessions.
+not yet been implemented. These include the Geometry State Converter Module (M5), which 
+will convert between internal geometry representations and external formats, the User 
+Preference Module (M9), which is intended to store configurable user settings, and the 
+User Persistence Module (M14), which will manage saving and restoring user state 
+between sessions.
 
 Finally, modules primarily responsible for user interaction and rendering, such as the 
 Display Interface Module (M1) and Input Interface Module (M2), were considered lower 
