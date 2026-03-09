@@ -722,14 +722,14 @@ Initial State: Application launched with no open document.
 
 Input: User creates a new note and types text content.
 
-Output: 
+Output:
 % \wss{The expected result for the given inputs.  Output is not how you
 % are going to return the results of the test.  The output is the expected
 % result.}
 A new note file is created and displayed in the editor window. Typed content appears
 immediately in the canvas with no delay.
 
-Test Case Derivation: 
+Test Case Derivation:
 % \wss{Justify the expected value given in the Output field}
 The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.
 The test verifies that note objects are correctly instantiated and rendered without performance issues.
@@ -745,11 +745,11 @@ Initial State: Canvas open with editing mode enabled.
 
 Input: User inserts a shape (rectangle) and moves it across the canvas.
 
-Output: 
+Output:
 % \wss{The expected result for the given inputs}
 The shape appears correctly and follows the user’s movement without lag or distortion.
 
-Test Case Derivation: 
+Test Case Derivation:
 % \wss{Justify the expected value given in the Output field}
 Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.
 The expected value is that the object’s final position and dimensions match those in the test specification.
@@ -829,47 +829,47 @@ How test will be performed: Manual verification by comparing the exported PDF ou
 
 The following section splits the tests into sections based on the Non-Functional requirements.:
 
-1. \textbf{Performance.}  - Covers the performance of the app while making and editing notes. (SRS NF211, NF218)
+1. \textbf{Usability} - Covers the users interactions with the note taking system. (SRS NF214, NF217)
 
-2. \textbf{Usability and Accessibility.} - Covers the users interactions with the note taking system. (SRS NF213-NF214, NF217)
+2. \textbf{Portability}  - Covers the portability of the app to work and behave the same on different operating systems. (NF-213)
 
-3. \textbf{Consistency of Open and Closed Notes.} - Covers data not being lost or corrupted.  (SRS NF212, NF215, NF216)
+3. \textbf{Performance}  - Covers the performance of the app while making and editing notes. (SRS NF211, NF218)
+
+4. \textbf{Consistency of Open and Closed Notes} - Covers data not being lost or corrupted.  (SRS NF212, NF215, NF216)
 
 
 
-\subsubsection{Area of Testing1 - Perfomance of Editing and Canvas Operations}
-
-\paragraph{Latency Test}
+\subsubsection{Area of Testing 1 - Usability}
 
 \begin{enumerate}
 
-\item{test-NF211}
+\item{test-NF214}
 
 Type: Dynamic, Manual.
 
-Initial State: Application launched with an empty open note and a flag to show latency.
+Initial State: Application launched with an open empty note.
 
-Input/Condition: Adding shapes and text 
+Input/Condition: Adding shapes and text via keyboard short cuts
 
-Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms. 
+Output/Result: Shapes or text are shown on screen when short cuts are used.
 
-How test will be performed: The tester will open a note and then attempt to add a shape and a text box, noting the latency for each. 
+How test will be performed: The tester will open a note and then attempt to add a note and a shape and a text box via the corresponding short cut.
 
-\item{test-NF218}
+\item{test-NF217}
 
-Type: Dynamic, Manual.
+Type:  Dynamic, Manual, Usability Survey.
 
-Initial State: Application launched with a flag to show latency and an open note that contains \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes.
+Initial State: Application launched without a note.
 
-Input/Condition: Adding shapes and text to the current note. 
+Input: Have and external user try to create a note without Mouse and survey them.
 
-Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms. 
+Output: Survey results and screen recording that will provide insight to user habits.
 
-How test will be performed: The tester will open a pre-made note with \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes note and then attempt to add another shape, taking note of the latency. 
+How test will be performed: We will have an external user create a note and then try to add multiple shapes, text and formatted text to the note. All of this should be done without the user using the mouse. We will record their actions and ask them some survey questions once they are done.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing2 - Usability and Accessibility}
+\subsubsection{Area of Testing 2 - Portability}
 
 \begin{enumerate}
 
@@ -881,37 +881,46 @@ Initial State: Empty Linux, Windows, Mac computer.
 
 Input/Condition: Creating and opening note, adding shapes and text.
 
-Output/Result: Shapes or text are shown on screen  
+Output/Result: Shapes or text are shown on screen
 
-How test will be performed: The tester will open the program on various different operating systems to test if they function on each platform. 
-
-\item{test-NF214}
-
-Type: Dynamic, Manual.
-
-Initial State: Application launched with an open empty note.
-
-Input/Condition: Adding shapes and text via keyboard short cuts
-
-Output/Result: Shapes or text are shown on screen when short cuts are used. 
-
-How test will be performed: The tester will open a note and then attempt to add a note and a shape and a text box via the corresponding short cut. 
-
-\item{test-NF217}
-
-Type:  Dynamic, Manual, Usability Survey.
-
-Initial State: Application launched without a note.
-
-Input: Have and external user try to create a note without Mouse and survey them.
-
-Output: Survey results and screen recording that will provide insight to user habits. 
-
-How test will be performed: We will have an external user create a note and then try to add multiple shapes, text and formatted text to the note. All of this should be done without the user using the mouse. We will record their actions and ask them some survey questions once they are done. 
+How test will be performed: The tester will open the program on various different operating systems to test if they function on each platform.
 
 \end{enumerate}
 
-\subsubsection{Area of Testing3 - Consistency of Open and Closed Notes.}
+\subsubsection{Area of Testing 3 - Perfomance of Editing and Canvas Operations}
+
+\paragraph{Latency Test}
+
+\begin{enumerate}
+
+\item{test-NF211}
+
+Type: Dynamic, Manual.
+
+Initial State: Application launched with an empty open note and a flag to show latency.
+
+Input/Condition: Adding shapes and text
+
+Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms.
+
+How test will be performed: The tester will open a note and then attempt to add a shape and a text box, noting the latency for each.
+
+\item{test-NF218}
+
+Type: Dynamic, Manual.
+
+Initial State: Application launched with a flag to show latency and an open note that contains \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes.
+
+Input/Condition: Adding shapes and text to the current note.
+
+Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms.
+
+How test will be performed: The tester will open a pre-made note with \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes note and then attempt to add another shape, taking note of the latency.
+
+\end{enumerate}
+
+
+\subsubsection{Area of Testing 4 - Consistency of Open and Closed Notes}
 
 \begin{enumerate}
 
@@ -923,7 +932,7 @@ Initial State: Application launched with an open empty note.
 
 Input/Condition: Adding shapes and text via keyboard short cuts
 
-How test will be performed: See (test-F217, F243). We then compare it after opening to the one that was saved to see if there any differences. Additionally, we will attempt to close a note without saving and check it the autosave catches it 
+How test will be performed: See (test-F217, F243). We then compare it after opening to the one that was saved to see if there any differences. Additionally, we will attempt to close a note without saving and check it the autosave catches it
 
 \item{test-NF216}
 
@@ -1123,11 +1132,11 @@ This is where you can place additional information.
 \subsection{Symbolic Parameters}
 
 \begin{description}
-  \item[DISPLAY\_LATENCY] - 30. Expected Latency in milliseconds. 
+  \item[DISPLAY\_LATENCY] - 30. Expected Latency in milliseconds.
 \end{description}
 
 \begin{description}
-  \item[SHAPE\_LOAD\_TEST\_COUNT] - 500.  Amount of shapes used for stress testing.: 
+  \item[SHAPE\_LOAD\_TEST\_COUNT] - 500.  Amount of shapes used for stress testing.:
 \end{description}
 
 \begin{description}
@@ -1144,9 +1153,9 @@ Their values are defined in this section for easy maintenance.\\
 
 1. How difficult was it to find the short-cuts you needed?
 
-2. What short-cuts felt the least intuitive? 
+2. What short-cuts felt the least intuitive?
 
-3. What short-cuts felt the most intuitive? 
+3. What short-cuts felt the most intuitive?
 
 4. Are their any missing short-cuts that you would want to have?
 
@@ -1169,8 +1178,8 @@ graduate attribute of Lifelong Learning.
 \begin{enumerate}
   \item What went well while writing this deliverable?
   \begin{itemize}
-    \item Chengze - I worked on the system tests section as well as the traceability matrix 
-    that connects the tests to the functional requirements. I think the team collaborated well 
+    \item Chengze - I worked on the system tests section as well as the traceability matrix
+    that connects the tests to the functional requirements. I think the team collaborated well
     to ensure that the tests covered all necessary aspects of the system. Also, I got more familiar
     with the SRS document while writing the tests, which helped me understand the project better. After
     the previous deliverables, me and the team both got more comfortable with the LaTeX format and GitHub workflow,
@@ -1198,18 +1207,18 @@ graduate attribute of Lifelong Learning.
       documents a bit) was very smooth. Since the SRS was well organized and
       most of the members were familiar with it's contents, we were able to
       efficiently reference it and complete the VnV Plan at a good pace.
-    \item Kevin -What went well during this deliverable is our groups ability to communicate and assign 
-    work. We managed to have everyone assigned parts of the VnV document much in advance giving us time 
-    work on it. This also let us look over the VnV, estimating the amount of work expected, and properly 
+    \item Kevin -What went well during this deliverable is our groups ability to communicate and assign
+    work. We managed to have everyone assigned parts of the VnV document much in advance giving us time
+    work on it. This also let us look over the VnV, estimating the amount of work expected, and properly
     plan on time to finish it.
   \end{itemize}
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
   \begin{itemize}
-    \item Chengze - I initially had trouble aligning the LaTeX tables and ensuring proper formatting. I resolved 
-    this by researching the float and tabularx environments and asking for peer feedback. Additionally, I got confused 
+    \item Chengze - I initially had trouble aligning the LaTeX tables and ensuring proper formatting. I resolved
+    this by researching the float and tabularx environments and asking for peer feedback. Additionally, I got confused
     on merge the pull requests when I need to make sure my branch is up to date with the main branch. I resolved this by
-    learning how to rebase my branch onto the main branch before merging. Which is a result of smooth communication with 
+    learning how to rebase my branch onto the main branch before merging. Which is a result of smooth communication with
     team lead Ethan.
     \item Ethan - Honestly, this deliverable went pretty smoothly. There were
       some issues that arose with the GitHub Actions build system that were
@@ -1280,15 +1289,15 @@ graduate attribute of Lifelong Learning.
   mastering the skill?  Of the identified approaches, which will each team
   member pursue, and why did they make this choice?
   \begin{itemize}
-    \item Chengze - As the Quality Assurance Tester, I will focus on improving my 
-    ability to design and execute effective test cases that ensure all features 
-    meet the SRS specifications. First, I plan to strengthen my practical testing 
-    skills by using tools like Jest and Playwright to create and run both manual 
-    and automated tests, which will help me better identify issues and verify functionality. 
-    Second, I aim to refine my understanding of QA methodologies by studying professional 
-    testing resources and documentation practices to improve how I record and communicate 
-    test results. Since my role centers on maintaining the reliability and quality of the 
-    product, these skills will help me ensure that our software performs as intended and 
+    \item Chengze - As the Quality Assurance Tester, I will focus on improving my
+    ability to design and execute effective test cases that ensure all features
+    meet the SRS specifications. First, I plan to strengthen my practical testing
+    skills by using tools like Jest and Playwright to create and run both manual
+    and automated tests, which will help me better identify issues and verify functionality.
+    Second, I aim to refine my understanding of QA methodologies by studying professional
+    testing resources and documentation practices to improve how I record and communicate
+    test results. Since my role centers on maintaining the reliability and quality of the
+    product, these skills will help me ensure that our software performs as intended and
     meets all functional requirements.
     \item Ethan - I will be picking up the code coverage metric integration
       work. For acquiring this skill, two approaches would be reading the
@@ -1334,17 +1343,17 @@ graduate attribute of Lifelong Learning.
     guides or videos, that will assist me in acquiring this skill.
     \item Kevin - I would like to focus on building an automated testing pipeline
      with GitHub actions. As our project already had some issues with GitHub
-      actions. Currently it attempts to compile the latex files. We had issues 
+      actions. Currently it attempts to compile the latex files. We had issues
       where we were doing bad merges and GitHub managed to catch them and display
-       errors. By understanding how this works we can have a more robust system 
-       that can not only just test our documentation, but allow us to make sure 
-       that new features don't cause breaking changes. To acquire this skill, 
+       errors. By understanding how this works we can have a more robust system
+       that can not only just test our documentation, but allow us to make sure
+       that new features don't cause breaking changes. To acquire this skill,
        Place I could find information would be GitHub's official website which
        provides an explanation and documentation on how to implement actions onto
-       our repository. If I have any errors or specific questions I can look on 
-       websites like stackOverflow that are more dedicated to solving errors.  
-       I will most likely use the documentation as my primary method of learning 
-       and implementing GitHub actions as it would contain the most general 
+       our repository. If I have any errors or specific questions I can look on
+       websites like stackOverflow that are more dedicated to solving errors.
+       I will most likely use the documentation as my primary method of learning
+       and implementing GitHub actions as it would contain the most general
        information on how to get started.
   \end{itemize}
 \end{enumerate}
