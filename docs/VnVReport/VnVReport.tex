@@ -65,6 +65,144 @@ Date 2 & 1.1 & Notes\\
 This document ...
 
 \section{Functional Requirements Evaluation}
+\setlength{\parindent}{0pt}
+
+\subsection{Functional User Testing}
+User testing was conducted to evaluate whether the implemented editing and
+canvas manipulation functionality satisfies the functional requirements
+specified in the SRS. Participants were asked to perform a series of diagram
+creation tasks using Flow for the first time. These tasks involved inserting
+shapes, connecting elements with lines, and positioning objects on the
+canvas using the keyboard-driven interaction model.
+
+\vspace{1em}
+
+Two participants completed the testing procedure. Each participant performed
+the same task twice in order to observe how performance changed after gaining
+familiarity with the interface.
+
+\vspace{1em}
+
+The first participant completed the task in approximately 3 minutes and
+7 seconds during the first run and made roughly ten errors. Most of these
+errors occurred because the participant was initially unaware that they could
+switch between line mode and anchor-line mode in order to continue the same
+line between shapes. After becoming familiar with this behavior, the
+participant completed the second run in approximately 1 minute and 49 seconds
+with only one or two minor errors.
+
+\vspace{1em}
+
+The second participant required approximately 8 minutes and 46 seconds to
+complete the first run and approximately 6 minutes and 23 seconds for the
+second run. During these runs, the participant performed several accidental
+operations that required undo actions and occasionally forgot how to execute
+specific commands, such as adding text to a shape or switching interaction
+modes.
+
+\vspace{1em}
+
+Despite these initial usability challenges, both participants were able to
+successfully complete the required diagram creation tasks. The reduction in
+completion time between runs suggests that users become more efficient after
+a short familiarization period with the keyboard-driven workflow.
+
+\vspace{1em}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c c}
+\toprule
+Participant & Run & Completion Time & Errors / Issues \\
+\midrule
+User 1 & Run 1 & 3:07 & $\sim$10 errors \\
+User 1 & Run 2 & 1:49 & 1--2 errors \\
+User 2 & Run 1 & 8:46 & 2 undo, 3 command issues \\
+User 2 & Run 2 & 6:23 & 3 undo, 3 command issues \\
+\bottomrule
+\end{tabular}
+\caption{Summary of Functional User Testing Results}
+\end{table}
+
+
+\vspace{1em}
+
+Overall, the testing results indicate that the implemented editing and canvas
+manipulation functionality operates as intended. Users were able to create
+and manipulate diagram elements and complete the assigned tasks successfully.
+However, the tests also reveal that the keyboard-driven interface introduces
+a learning curve for first-time users, particularly when remembering
+available commands and interaction modes.
+
+
+\subsection{User Feedback}
+
+After completing the testing tasks, participants were asked a series of
+questions about their experience using Flow. The goal of these questions was
+to evaluate how intuitive the system felt to first-time users and to identify
+areas where the interaction design could be improved.
+
+\vspace{1em}
+
+Participants highlighted the line creation mode as one of the most effective
+features of the system. In particular, the automatic snapping behavior and
+the ability to extend connections between shapes without manually selecting
+connection points were viewed as highly convenient when constructing
+diagram structures. Users also noted that positioning elements on the canvas
+felt intuitive compared to text-based diagram tools.
+
+\vspace{1em}
+
+Several usability challenges were also identified during testing. Both users
+reported difficulty remembering all available keyboard shortcuts during
+their initial interaction with the system. One participant suggested that a
+reference sheet or command palette could help users discover available
+commands more easily.
+
+\vspace{1em}
+
+Participants also suggested several potential feature improvements,
+including support for inserting custom icons, automatic linking of shapes
+during diagram creation, and the ability to select all elements on the
+canvas. These suggestions indicate potential directions for future
+development that could further improve the usability and flexibility of the
+system.
+
+\vspace{1em}
+
+Overall, the feedback suggests that Flow's keyboard-driven interaction model
+is powerful for diagram construction, but additional discoverability features
+may be beneficial to reduce the learning curve for new users.
+
+\subsection{Summary}
+
+The functional evaluation demonstrates that the core diagram creation and
+editing capabilities of Flow operate as intended. All participants were able
+to successfully complete the assigned tasks using the implemented features,
+confirming that the system satisfies the primary functional requirements
+related to canvas editing and diagram manipulation.
+\vspace{1em}
+
+The testing results also show that user efficiency improves noticeably after
+a short familiarization period. Completion times decreased between the first
+and second runs for both participants, suggesting that the keyboard-based
+interaction model becomes more efficient once users become comfortable with
+the available commands.
+
+\vspace{1em}
+
+While the core functionality performed correctly, the evaluation also
+identified usability challenges for first-time users. In particular,
+participants experienced difficulty remembering keyboard shortcuts and
+distinguishing between certain interaction modes. These observations suggest
+that improved command discoverability and documentation could further
+enhance the user experience.
+
+\vspace{1em}
+
+Overall, the implemented system successfully meets the functional goals
+outlined in the SRS while also revealing opportunities for future usability
+improvements.
 
 \section{Nonfunctional Requirements Evaluation}
 
