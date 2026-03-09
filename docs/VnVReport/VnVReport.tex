@@ -17,10 +17,10 @@
 
 \begin{document}
 
-\title{Verification and Validation Report: \progname} 
+\title{Verification and Validation Report: \progname}
 \author{\authname}
 \date{\today}
-	
+
 \maketitle
 
 \pagenumbering{roman}
@@ -40,10 +40,10 @@ Date 2 & 1.1 & Notes\\
 \section{Symbols, Abbreviations and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
+\begin{tabular}{l l}
+  \toprule
   \textbf{symbol} & \textbf{description}\\
-  \midrule 
+  \midrule
   T & Test\\
   \bottomrule
 \end{tabular}\\
@@ -69,90 +69,90 @@ This document ...
 \section{Nonfunctional Requirements Evaluation}
 
 \subsection{Usability}
-		
+
 \subsection{Performance}
 
 \subsection{etc.}
-	
-\section{Comparison to Existing Implementation}	
+
+\section{Comparison to Existing Implementation}
 \setlength{\parindent}{0pt}
 % This section will not be appropriate for every project.
 
 \subsection{Pen and Paper}
 
-Pen-and-paper note taking allows quick sketches and diagrams, but it lacks digital 
-advantages such as editing, sharing, and organization. Notes cannot easily be 
+Pen-and-paper note taking allows quick sketches and diagrams, but it lacks digital
+advantages such as editing, sharing, and organization. Notes cannot easily be
 rearranged or modified without rewriting large portions.
 
 \vspace{1em}
 
-The Flow prototype improves on this by allowing users to freely edit diagrams and 
-text on a digital canvas. Shapes and text boxes can be moved, resized, and modified 
-without recreating the content. This allows iterative editing that is not possible 
+The Flow prototype improves on this by allowing users to freely edit diagrams and
+text on a digital canvas. Shapes and text boxes can be moved, resized, and modified
+without recreating the content. This allows iterative editing that is not possible
 with traditional handwritten notes.
 
 \subsection{Tablet-Based Note Taking}
 
-Tablet systems such as the iPad with Apple Pencil allow freehand diagramming and 
-handwritten notes. While flexible, these solutions require specialized hardware and 
+Tablet systems such as the iPad with Apple Pencil allow freehand diagramming and
+handwritten notes. While flexible, these solutions require specialized hardware and
 often rely on handwriting input, which may be slower than typing for many users.
 
 \vspace{1em}
 
-Flow instead targets keyboard-based workflows and runs on standard desktop computers. 
-The prototype demonstrates keyboard-driven editing and diagram manipulation, allowing 
+Flow instead targets keyboard-based workflows and runs on standard desktop computers.
+The prototype demonstrates keyboard-driven editing and diagram manipulation, allowing
 users to create structured notes and diagrams without requiring additional hardware.
 
 \subsection{Traditional Text Editors}
 
-Applications such as Microsoft Word or Google Docs support structured text editing 
-but provide limited support for integrated diagram creation. Diagrams often require 
+Applications such as Microsoft Word or Google Docs support structured text editing
+but provide limited support for integrated diagram creation. Diagrams often require
 external tools or inserted images.
 
 \vspace{1em}
 
-The Flow prototype integrates diagram creation directly into the editing workspace. 
-Users can insert geometric shapes and connect them with arrows directly on the canvas 
-while simultaneously editing text content. This removes the need to switch between separate 
+The Flow prototype integrates diagram creation directly into the editing workspace.
+Users can insert geometric shapes and connect them with arrows directly on the canvas
+while simultaneously editing text content. This removes the need to switch between separate
 diagramming tools.
 
 \subsection{Mouse-Driven Diagram Editors}
 
-Tools such as Draw.io or OneNote allow diagram creation but rely heavily on mouse-based 
+Tools such as Draw.io or OneNote allow diagram creation but rely heavily on mouse-based
 interaction and menu navigation. Creating shapes or connections often requires multiple UI interactions.
 
 \vspace{1em}
 
-Flow differs by emphasizing keyboard-driven interaction. The current prototype demonstrates 
-Vim-style navigation and keyboard commands that allow users to manipulate shapes, text boxes, 
+Flow differs by emphasizing keyboard-driven interaction. The current prototype demonstrates
+Vim-style navigation and keyboard commands that allow users to manipulate shapes, text boxes,
 and diagram elements without relying on extensive mouse interaction.
 
 \subsection{Text-Based Diagram Languages}
 
-Diagram languages such as Mermaid or PlantUML allow diagrams to be described using text. While 
+Diagram languages such as Mermaid or PlantUML allow diagrams to be described using text. While
 powerful, they require a separate compilation or rendering step to visualize the diagram.
 
 \vspace{1em}
 
-Flow eliminates this separation by providing direct manipulation of diagram elements on the 
-canvas. The rendering engine updates the diagram in real time as the user edits elements, avoiding 
+Flow eliminates this separation by providing direct manipulation of diagram elements on the
+canvas. The rendering engine updates the diagram in real time as the user edits elements, avoiding
 the write–compile–preview workflow required by text-based diagram languages.
 
 \subsection{Document Markup Languages}
 
-Document preparation systems such as \LaTeX{} or Typst support complex document layouts and diagram 
-generation. However, these systems rely on writing structured markup code and are typically designed 
+Document preparation systems such as \LaTeX{} or Typst support complex document layouts and diagram
+generation. However, these systems rely on writing structured markup code and are typically designed
 for page-based documents rather than an interactive canvas.
 
 \vspace{1em}
 
-Flow instead uses a canvas-based editing environment where diagram elements and text boxes can be 
-freely positioned. The prototype supports interactive editing of shapes and text elements, which allows 
+Flow instead uses a canvas-based editing environment where diagram elements and text boxes can be
+freely positioned. The prototype supports interactive editing of shapes and text elements, which allows
 users to experiment with diagram layouts more quickly than code-based document systems.
 
 \subsection{Summary}
 
-The Flow prototype demonstrates that a keyboard-driven, canvas-based note-taking system can combine 
+The Flow prototype demonstrates that a keyboard-driven, canvas-based note-taking system can combine
 advantages from multiple existing approaches. Compared to existing tools, the system:
 
 \begin{itemize}
@@ -162,8 +162,8 @@ advantages from multiple existing approaches. Compared to existing tools, the sy
 \item Provides a flexible canvas for positioning text and diagrams
 \end{itemize}
 
-Although the current implementation does not yet include persistent storage, exporting, or collaboration 
-features, the prototype validates the feasibility of the core interaction model and demonstrates improvements 
+Although the current implementation does not yet include persistent storage, exporting, or collaboration
+features, the prototype validates the feasibility of the core interaction model and demonstrates improvements
 over several existing approaches.
 
 
@@ -171,16 +171,193 @@ over several existing approaches.
 
 \section{Changes Due to Testing}
 
-\wss{This section should highlight how feedback from the users and from 
-the supervisor (when one exists) shaped the final product.  In particular 
-the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}
+Following the Rev 0 demonstration, comprehensive feedback was received
+from both the course professor and teaching assistant. This feedback
+directly influenced the project's direction and implementation
+priorities, resulting in significant improvements to the system's
+design, usability planning, and development approach. Additionally,
+usability tests were conducted with outside users to gather real-world
+insights and further improve the product based on actual user interactions.
+
+\subsection{Feedback Summary}
+
+\subsubsection{Professor Feedback}
+The professor provided detailed feedback during Rev 0 highlighting both strengths
+and areas for improvement:
+
+\begin{itemize}
+\item \textbf{Positive Recognition}: The demonstration effectively
+  showcased the classroom note-taking concept, representing a
+  significant improvement over the Proof of Concept demo. The project
+  vision was described as "exciting to see come together."
+
+\item \textbf{Productivity Report Enhancement}: The demo plan section
+  in the productivity report required more detailed planning and
+  structure, similar to the presentation format.
+
+\item \textbf{Team Dynamics}: Noted the unusual absence of regular team
+  meetings, though acknowledged this approach appears effective for the
+  team.
+
+\item \textbf{Usability Testing Planning}: Emphasized the critical
+  importance of comprehensive usability testing, requiring detailed
+  planning addressing who, when, where, what, and how aspects. Specific
+  guidance included:
+  \begin{itemize}
+  \item \textbf{What}: Define specific tasks for test subjects to
+    perform
+  \item \textbf{How}: Establish clear metrics for measuring usability,
+    likely focusing on user interviews
+  \item \textbf{Planning}: Questions should be prepared in advance
+  \end{itemize}
+
+\item \textbf{Feature Prioritization}: Recommended implementing PDF
+  export functionality as a high priority, while "flow" file saving
+  could be deprioritized.
+
+\item \textbf{Architecture Decision}: The team must decide between
+  infinite canvas or separate pages for adding additional slides/
+  diagrams.
+
+\item \textbf{Work Distribution}: Identified uneven workload
+  distribution, with excessive work being done by one team member
+  (Ethan), which is undesirable for a capstone project.
+\end{itemize}
+
+\subsubsection{Teaching Assistant Feedback}
+The TA provided additional insights complementing the professor's
+assessment:
+
+\begin{itemize}
+\item \textbf{Demo Quality}: Described the demonstration as "smooth and
+  impressive" with much clearer project vision compared to the PoC
+  demo.
+
+\item \textbf{Usability Testing Considerations}: Emphasized the
+  importance of considering users' prerequisite knowledge (such as Vim
+  proficiency) and how this affects test result interpretation.
+
+\item \textbf{Feature Prioritization}: Reinforced the need to prioritize
+  features critical to the final demonstration.
+\end{itemize}
+
+\subsubsection{User Testing Feedback}
+We conducted a usability test with an individual that has a technical
+background but is not part of the development team. The user was
+asked to perform a series of tasks using the current prototype,
+and their interactions were observed and recorded.
+The user provided the follow feedback:
+
+\begin{itemize}
+\item \textbf{Auto Linking Mode}: The user suggested that an auto-linking
+mode where the system automatically creates a line connection between two
+shapes upon object creation. New shapes will automatically connect to the
+most recently created shape. This would reduce the number of steps required
+to create a diagram and make it easier.
+
+\item \textbf{Select All}: The user requested a "select all" feature that
+allows users to select all objects and elements on the canvas with a single
+command. A simple feature that would improve the quality of life for users.
+
+\item \textbf{Custom Icons}: The user suggests adding custom icons such as
+different circuit symbols and having keybinds such as "ii" to insert an icon
+and have fuzzy find a list of available icons.
+
+\item \textbf{Anchor points}: THe user suggests adding custom anchor points
+when adding a custom icon. This would allow users to specify where the connection
+points of their icons are, making it easier to when creating diagrams that
+require custom icons.
+
+\item \textbf{End Remarks and Comparisons}: The user expressed that the current
+prototype would be a great product and made a comparison to other circuit makers
+in typst which they were not quite fond of. They expressed that the product would
+be great at drawing circuits if provided with a few more features listed above.
+\end{itemize}
+
+\subsection{Changes Implemented in Response to Feedback}
+
+\subsubsection{Architecture Decision: Infinite Canvas vs. Separate Pages}
+Following the professor's recommendation, the team conducted an
+architectural analysis and decided to implement both approaches.
+This decision was based on:
+
+\begin{itemize}
+\item This would be similar to OneNote's format, which is a popular
+note-taking application
+\item Better alignment with the classroom note-taking workflow. The
+infinite canvas allows users to freely position and organize their notes,
+while the seperate pages will help with organization and navigation.
+\end{itemize}
+
+\subsubsection{PDF Export Implementation}
+Prioritizing the professor's recommendation, PDF export functionality
+will be implemented as a core feature, allowing users to export their
+diagrams in a widely compatible format suitable for sharing and
+archiving.
+
+\subsubsection{Work Distribution Improvements}
+Addressing the concern about uneven workload distribution, the team
+implemented several measures:
+
+\begin{itemize}
+\item Clear task assignment and rotation across different project areas
+\item Regular code review processes to ensure knowledge sharing
+\item Documentation improvements to facilitate team-wide understanding
+\end{itemize}
+
+\subsubsection{User Testing Feedback Integration}
+Earlier usability testing produced several feature suggestions from a
+technical user outside the development team. To address these items,
+we took the following steps:
+
+\begin{itemize}
+\item Prototyping an "auto-linking" mode: new shapes automatically connect to
+  the most recently created object, reducing steps to draw diagrams.
+
+\item Adding a global \texttt{select all} command, enabling users to
+  highlight every canvas element with one keystroke.
+
+\item Looking into extending the icon insertion system to support custom
+  symbols with a fuzzy-find picker and permitted definition of custom
+  anchor points for those icons to control connection locations.
+
+\item Implementing miscellaneous quality-of-life tweaks (keyboard hints,
+  clearer messages) based on the user's general remarks.
+
+\item Considering additional suggestions (circuit symbol libraries, advanced
+  anchoring) in the project backlog for future iterations.
+\end{itemize}
+
+\subsection{Impact on Project Quality}
+
+The feedback-driven changes significantly enhanced the project's overall
+quality:
+
+\begin{itemize}
+\item \textbf{Enhanced Architecture}: The infinite canvas and separate
+  pages decision provides a more intuitive and flexible user experience
+  aligned with the target workflow.
+
+\item \textbf{Increased Robustness}: PDF export functionality addresses
+  a critical user requirement for document sharing and archiving.
+
+\item \textbf{Better Team Dynamics}: Improved work distribution ensures
+  all team members develop relevant skills and contribute meaningfully
+  to the project.
+
+\end{itemize}
+
+The verification and validation process, through structured feedback
+collection and responsive implementation, has ensured that the Flow
+project evolves based on expert guidance and user needs, resulting in
+a higher-quality final product that better serves its intended
+educational purpose.
 
 \section{Automated Testing}
-		
+
 \section{Trace to Requirements}
-		
-\section{Trace to Modules}		
+
+\section{Trace to Modules}
 
 \section{Code Coverage Metrics}
 
@@ -196,7 +373,7 @@ graduate attribute of Reflection.
 \input{../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable?
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
   \item Which parts of this document stemmed from speaking to your client(s) or
