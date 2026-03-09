@@ -71,6 +71,21 @@ This document ...
 \subsection{Usability}
 		
 \subsection{Performance}
+The performance was determined by using electrons clock to track the time when the program gets the input and the time after then new frame has been drawn. 
+
+It was found to take around 0.1 to 0.2 ms to insert a empty circle and around 33 ms to insert a text box into an empty document. 
+
+These numbers did not notably change with 100+ shapes in the document but at 300+ shapes the latency increased by around .2 ms for circles and around 3 ms for text boxes. 
+
+\begin{center}
+\begin{tabular}{ c c c }
+   \# Shapes &Circle & Text Box \\ 
+ 0   & 0.1ms & 33.2ms \\  
+ 100 & 0.2ms & 31.6ms\\
+ 200 & 0.2ms & 32.0ms \\
+ 300 & 0.3ms & 33.5ms \\
+\end{tabular}
+\end{center}
 
 \subsection{etc.}
 	
