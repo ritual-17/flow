@@ -959,7 +959,7 @@ F242 & The system shall autosave changes at regular intervals (smaller than or e
 \end{tabular}
 \end{table}
 
-\begin{table}[htbp]
+\begin{table}[H]
 \centering
 \caption{Traceability Matrix for Non-Functional Requirements}
 \begin{tabular}{|p{2.5cm}|p{6cm}|p{6cm}|}
@@ -1003,112 +1003,250 @@ NF216 & Security of local data (no background network traffic). & Test-F216: Che
 
 \subsection{Unit Testing Scope}
 
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
+% \wss{What modules are outside of the scope.  If there are modules that are
+%   developed by someone else, then you would say here if you aren't planning on
+%   verifying them.  There may also be modules that are part of your software, but
+%   have a lower priority for verification than others.  If this is the case,
+%   explain your rationale for the ranking of module importance.}
+
+The unit tests focuses on modules that implement the core logic of Flow, particularly those
+responsible for command interpretation, geometry manipulation, and history management. These 
+components were prioritized because they directly affect the application of user operations 
+and the internal state of the system. Unit tests therefore verify functionality within the 
+Commands Parser Module (M6), Geometry State Module (M11), Geometry State Mutator Module 
+(M12), and Undo Redo Module (M13). The tests target representative behaviors such as 
+parsing multi-key commands, switching modes, manipulating selected shapes (e.g., 
+translating or deleting objects), creating and positioning diagram elements such as 
+arrows and squares, and performing undo and redo operations.
+
+Some modules are not tested in isolation but are exercised indirectly through these tests. 
+For example, the Shape Interface Module (M8) and Geometry State Parser Module (M4) are 
+involved when shapes are created, modified, or interpreted as part of command execution. 
+Because these modules primarily support the functionality of higher-level modules, their 
+behavior is verified through tests that manipulate geometry or execute commands rather than 
+through standalone unit tests.
+
+Several modules were excluded from the unit testing scope because their functionality has
+not yet been implemented. These include the File Interface Module (M3), which will 
+handle file operations such as importing pdf files, Geometry State Converter Module (M5), 
+which will convert between internal geometry representations and external formats, the User 
+Preference Module (M9), which is intended to store configurable user settings, and the 
+User Persistence Module (M14), which will manage saving and restoring user state 
+between sessions.
+
+Finally, modules primarily responsible for user interaction and rendering, such as the 
+Display Interface Module (M1) and Input Interface Module (M2), were considered lower 
+priority for unit testing. These modules largely depend on external UI frameworks and 
+graphical behavior that is better evaluated through integration and usability testing 
+rather than isolated unit tests. As a result, the current unit testing effort focuses on 
+verifying the correctness of the system's internal logic and code quality whereas
+higher-level testing methods, such as a usability test, are used to evaluate user-facing 
+behavior.
 
 \subsection{Tests for Functional Requirements}
 
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
+% \wss{Most of the verification will be through automated unit testing.  If
+%   appropriate specific modules can be verified by a non-testing based
+%   technique.  That can also be documented in this section.}
 
-\subsubsection{Module 1}
+\subsubsection{File Interface Module (M3)}
 
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-
-Initial State:
-
-Input:
-
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed:
-
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-
-Initial State:
-
-Input:
-
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed:
-
-\item{...\\}
-
-\end{enumerate}
-
-\subsubsection{Module 2}
-
-...
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
-
-\subsubsection{Module ?}
+% \wss{Include a blurb here to explain why the subsections below cover the module.
+%   References to the MIS would be good.  You will want tests from a black box
+%   perspective and from a white box perspective.  Explain to the reader how the
+%   tests were selected.}
 
 \begin{enumerate}
 
 \item{test-id1\\}
 
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-
-Initial State:
-
-Input/Condition:
-
-Output/Result:
-
-How test will be performed:
-
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
+Type: 
 
 Initial State:
 
 Input:
 
-Output:
+Output: 
+
+Test Case Derivation: 
 
 How test will be performed:
 
 \end{enumerate}
 
-\subsubsection{Module ?}
 
-...
+\subsubsection{Commands Parser Module (M6)}
 
-\subsection{Traceability Between Test Cases and Modules}
+\begin{enumerate}
 
-\wss{Provide evidence that all of the modules have been considered.}
+\item{test-id1\\}
+
+Type: 
+
+Initial State:
+
+Input:
+
+Output: 
+
+Test Case Derivation: 
+
+How test will be performed:
+
+\end{enumerate}
+
+
+\subsubsection{Mode Commands Module (M7)}
+
+\begin{enumerate}
+
+\item{test-id1\\}
+
+Type: 
+
+Initial State:
+
+Input:
+
+Output: 
+
+Test Case Derivation: 
+
+How test will be performed:
+
+\end{enumerate}
+
+
+\subsubsection{Text Buffer Module (M10)}
+
+\begin{enumerate}
+
+\item{test-id1\\}
+
+Type: 
+
+Initial State:
+
+Input:
+
+Output: 
+
+Test Case Derivation: 
+
+How test will be performed:
+
+\end{enumerate}
+
+
+\subsubsection{Geometry State Module (M11)}
+
+\begin{enumerate}
+
+\item{test-id1\\}
+
+Type: 
+
+Initial State:
+
+Input:
+
+Output: 
+
+Test Case Derivation: 
+
+How test will be performed:
+
+\end{enumerate}
+
+
+\subsubsection{Geometry State Mutator Module (M12)}
+
+\begin{enumerate}
+
+\item{test-id1\\}
+
+Type: 
+
+Initial State:
+
+Input:
+
+Output: 
+
+Test Case Derivation: 
+
+How test will be performed:
+
+\end{enumerate}
+
+
+\subsubsection{Undo Redo Module (M13)}
+
+\begin{enumerate}
+
+\item{test-id1\\}
+
+Type: 
+
+Initial State:
+
+Input:
+
+Output: 
+
+Test Case Derivation: 
+
+How test will be performed:
+
+\end{enumerate}
+
+% \subsection{Tests for Nonfunctional Requirements}
+
+% \wss{If there is a module that needs to be independently assessed for
+%   performance, those test cases can go here.  In some projects, planning for
+%   nonfunctional tests of units will not be that relevant.}
+
+% \wss{These tests may involve collecting performance data from previously
+%   mentioned functional tests.}
+
+% \subsubsection{Module ?}
+
+% \begin{enumerate}
+
+% \item{test-id1\\}
+
+% Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
+%   be automatic}
+
+% Initial State:
+
+% Input/Condition:
+
+% Output/Result:
+
+% How test will be performed:
+
+% \item{test-id2\\}
+
+% Type: Functional, Dynamic, Manual, Static etc.
+
+% Initial State:
+
+% Input:
+
+% Output:
+
+% How test will be performed:
+
+% \end{enumerate}
+
+% \subsubsection{Module ?}
+
+% ...
+
+% \subsection{Traceability Between Test Cases and Modules}
+
+% \wss{Provide evidence that all of the modules have been considered.}
 
 \bibliographystyle{plainnat}
 
