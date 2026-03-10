@@ -1,6 +1,7 @@
-import { enablePatches, setAutoFreeze } from 'immer';
+import { enableMapSet, enablePatches, setAutoFreeze } from 'immer';
 
 setAutoFreeze(false);
 
-// Enable patches for immer
+// Enable Map and Set support in immer
 enablePatches();
+enableMapSet();
