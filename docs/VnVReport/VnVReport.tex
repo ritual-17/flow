@@ -3,6 +3,8 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{float}
 \hypersetup{
     colorlinks,
     citecolor=black,
@@ -207,6 +209,91 @@ improvements.
 \section{Nonfunctional Requirements Evaluation}
 
 \subsection{Usability}
+
+NF217 was the primary requirement evaluated in this section, focusing on 
+visual consistency and an intuitive UI layout. To evaluate this, a usability 
+study was done where participants interacted with Flow while completing 
+diagram creation tasks. After completing the tasks, participants 
+filled out a questionnaire evaluating aspects of the interface such as mode
+clarity, intuitiveness, and perceived ease of learning. Participants also 
+provided background information about their existing note-taking workflows 
+to contextualize their responses. The study involved two participants, 
+both of whom were familiar with digital note-taking tools and regularly 
+take notes on tablets or other digital platforms.
+
+\vspace{1em}
+
+Participants were asked to rate how clearly the interface communicated the 
+current editing mode (e.g., Insert, Normal, Visual) on a scale from 1 to 5. 
+As shown in Figure~\ref{fig:modeClarity}, the average rating was 4.5/5, 
+indicating that users were generally able to identify the current mode and 
+understand the visual cues provided by the interface. Participants also 
+evaluated the overall intuitiveness of the system. Both users reported 
+that the system felt intuitive once commands were demonstrated, 
+suggesting that the layout and interaction model are conceptually 
+understandable despite being command-driven.
+
+\vspace{1em}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Images/ModeClarity.png}
+\caption{Mode Clarity Rating (1--5)}
+\label{fig:modeClarity}
+\end{figure}
+
+\vspace{1em}
+
+However, responses related to switching to the app were more moderate. When 
+asked how likely they would be to use Flow over their existing note-taking 
+tools, participants gave responses around the 2-3 out of 5 range. More 
+specifically, Table \ref{tab:likelihood} below describes the average ratings
+for adoping flow over other methods of note-taking. This indicates that 
+while the interface was understandable, they were not immediately inclined
+to replace their current workflows. Similarly, when asked about potential 
+barriers to adopting Flow full-time, responses were split between 
+“lack of features or maturity” and “too difficult to learn.”, seen in the 
+pie graph in Figure \ref{fig:dealBreaker}. These responses suggest that 
+while the interface is relatively clear and consistent, the learning curve 
+and perceived feature completeness may affect early adoption.
+
+\vspace{1em}
+
+Overall, the results indicate that Flow successfully communicates its modal 
+interface and maintains a consistent layout, supporting the usability 
+requirement. Participants were able to understand the system's structure 
+and reported that the interaction model felt intuitive once commands were 
+learned. However, the results also highlighted areas for improvement, 
+including reducing the perceived learning barrier and expanding 
+functionality. Based on these observations, the requirement for visual 
+consistency and intuitive UI layout is considered largely satisfied, though 
+further refinement may improve user adoption and long-term usability.
+
+\vspace{1em}
+
+\begin{table}[H]
+\centering
+\label{tab:likelihood}
+\begin{tabular}{|l|c|}
+  \hline
+  \textbf{Tool} & \textbf{Avg Rating} \\ \hline
+  Pen \& Paper & 2.5 \\ \hline
+  Tablet & 2.5 \\ \hline
+  Online Docs & 3 \\ \hline
+  Online Notes & 3 \\ \hline
+  Online Drawing & 3 \\ \hline
+\end{tabular}
+\caption{Likelihood of Using Flow Over Existing Tools (1--5)}
+\end{table}
+
+\vspace{1em}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Images/DealBreaker.png}
+\caption{Deal breaker to Adopting Flow Full-Time}
+\label{fig:dealBreaker}
+\end{figure}
 
 \subsection{Performance}
 The performance was determined by using electrons clock to track the time when the program gets the input and the time after then new frame has been drawn. 
