@@ -35,6 +35,7 @@
 \toprule {\bf Date} & {\bf Developer(s)} & {\bf Change}\\
 \midrule
 22/09/2025 & Hussain, Oliver, Jeff, Kevin, Ethan & Initial Release\\
+09/03/2026 & Hussain, Ethan & Update Unit Testing\\
 \bottomrule
 \end{tabularx}
 
@@ -722,14 +723,14 @@ Initial State: Application launched with no open document.
 
 Input: User creates a new note and types text content.
 
-Output: 
+Output:
 % \wss{The expected result for the given inputs.  Output is not how you
 % are going to return the results of the test.  The output is the expected
 % result.}
 A new note file is created and displayed in the editor window. Typed content appears
 immediately in the canvas with no delay.
 
-Test Case Derivation: 
+Test Case Derivation:
 % \wss{Justify the expected value given in the Output field}
 The expected outcome is derived from F211 in the SRS, which specifies that users can create and edit notes in real time.
 The test verifies that note objects are correctly instantiated and rendered without performance issues.
@@ -745,11 +746,11 @@ Initial State: Canvas open with editing mode enabled.
 
 Input: User inserts a shape (rectangle) and moves it across the canvas.
 
-Output: 
+Output:
 % \wss{The expected result for the given inputs}
 The shape appears correctly and follows the user’s movement without lag or distortion.
 
-Test Case Derivation: 
+Test Case Derivation:
 % \wss{Justify the expected value given in the Output field}
 Expected behavior is defined by F214 and F216, requiring that the user can freely reposition and resize elements.
 The expected value is that the object’s final position and dimensions match those in the test specification.
@@ -849,11 +850,11 @@ Type: Dynamic, Manual.
 
 Initial State: Application launched with an empty open note and a flag to show latency.
 
-Input/Condition: Adding shapes and text 
+Input/Condition: Adding shapes and text
 
-Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms. 
+Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms.
 
-How test will be performed: The tester will open a note and then attempt to add a shape and a text box, noting the latency for each. 
+How test will be performed: The tester will open a note and then attempt to add a shape and a text box, noting the latency for each.
 
 \item{test-NF218}
 
@@ -861,11 +862,11 @@ Type: Dynamic, Manual.
 
 Initial State: Application launched with a flag to show latency and an open note that contains \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes.
 
-Input/Condition: Adding shapes and text to the current note. 
+Input/Condition: Adding shapes and text to the current note.
 
-Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms. 
+Output/Result: Shapes or text are shown on screen within \textit{DISPLAY\_LATENCY}. ms.
 
-How test will be performed: The tester will open a pre-made note with \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes note and then attempt to add another shape, taking note of the latency. 
+How test will be performed: The tester will open a pre-made note with \textit{SHAPE\_LOAD\_TEST\_COUNT}. shapes note and then attempt to add another shape, taking note of the latency.
 
 \end{enumerate}
 
@@ -881,9 +882,9 @@ Initial State: Empty Linux, Windows, Mac computer.
 
 Input/Condition: Creating and opening note, adding shapes and text.
 
-Output/Result: Shapes or text are shown on screen  
+Output/Result: Shapes or text are shown on screen
 
-How test will be performed: The tester will open the program on various different operating systems to test if they function on each platform. 
+How test will be performed: The tester will open the program on various different operating systems to test if they function on each platform.
 
 \item{test-NF214}
 
@@ -893,9 +894,9 @@ Initial State: Application launched with an open empty note.
 
 Input/Condition: Adding shapes and text via keyboard short cuts
 
-Output/Result: Shapes or text are shown on screen when short cuts are used. 
+Output/Result: Shapes or text are shown on screen when short cuts are used.
 
-How test will be performed: The tester will open a note and then attempt to add a note and a shape and a text box via the corresponding short cut. 
+How test will be performed: The tester will open a note and then attempt to add a note and a shape and a text box via the corresponding short cut.
 
 \item{test-NF217}
 
@@ -905,9 +906,9 @@ Initial State: Application launched without a note.
 
 Input: Have and external user try to create a note without Mouse and survey them.
 
-Output: Survey results and screen recording that will provide insight to user habits. 
+Output: Survey results and screen recording that will provide insight to user habits.
 
-How test will be performed: We will have an external user create a note and then try to add multiple shapes, text and formatted text to the note. All of this should be done without the user using the mouse. We will record their actions and ask them some survey questions once they are done. 
+How test will be performed: We will have an external user create a note and then try to add multiple shapes, text and formatted text to the note. All of this should be done without the user using the mouse. We will record their actions and ask them some survey questions once they are done.
 
 \end{enumerate}
 
@@ -923,7 +924,7 @@ Initial State: Application launched with an open empty note.
 
 Input/Condition: Adding shapes and text via keyboard short cuts
 
-How test will be performed: See (test-F217, F243). We then compare it after opening to the one that was saved to see if there any differences. Additionally, we will attempt to close a note without saving and check it the autosave catches it 
+How test will be performed: See (test-F217, F243). We then compare it after opening to the one that was saved to see if there any differences. Additionally, we will attempt to close a note without saving and check it the autosave catches it
 
 \item{test-NF216}
 
@@ -1010,37 +1011,37 @@ NF216 & Security of local data (no background network traffic). & Test-F216: Che
 %   explain your rationale for the ranking of module importance.}
 
 The unit tests focuses on modules that implement the core logic of Flow, particularly those
-responsible for command interpretation, geometry manipulation, and history management. These 
-components were prioritized because they directly affect the application of user operations 
-and the internal state of the system. Unit tests therefore verify functionality within the 
-Commands Parser Module (M6), Geometry State Module (M11), Geometry State Mutator Module 
-(M12), and Undo Redo Module (M13). The tests target representative behaviors such as 
-parsing multi-key commands, switching modes, manipulating selected shapes (e.g., 
-translating or deleting objects), creating and positioning diagram elements such as 
+responsible for command interpretation, geometry manipulation, and history management. These
+components were prioritized because they directly affect the application of user operations
+and the internal state of the system. Unit tests therefore verify functionality within the
+Commands Parser Module (M6), Geometry State Module (M11), Geometry State Mutator Module
+(M12), and Undo Redo Module (M13). The tests target representative behaviors such as
+parsing multi-key commands, switching modes, manipulating selected shapes (e.g.,
+translating or deleting objects), creating and positioning diagram elements such as
 arrows and squares, and performing undo and redo operations.
 
-Some modules are not tested in isolation but are exercised indirectly through these tests. 
-For example, the Shape Interface Module (M8) and Geometry State Parser Module (M4) are 
-involved when shapes are created, modified, or interpreted as part of command execution. 
-Because these modules primarily support the functionality of higher-level modules, their 
-behavior is verified through tests that manipulate geometry or execute commands rather than 
+Some modules are not tested in isolation but are exercised indirectly through these tests.
+For example, the Shape Interface Module (M8) and Geometry State Parser Module (M4) are
+involved when shapes are created, modified, or interpreted as part of command execution.
+Because these modules primarily support the functionality of higher-level modules, their
+behavior is verified through tests that manipulate geometry or execute commands rather than
 through standalone unit tests.
 
 Several modules were excluded from the unit testing scope because their functionality has
-not yet been implemented. These include the File Interface Module (M3), which will 
-handle file operations such as importing pdf files, Geometry State Converter Module (M5), 
-which will convert between internal geometry representations and external formats, the User 
-Preference Module (M9), which is intended to store configurable user settings, and the 
-User Persistence Module (M14), which will manage saving and restoring user state 
+not yet been implemented. These include the File Interface Module (M3), which will
+handle file operations such as importing pdf files, Geometry State Converter Module (M5),
+which will convert between internal geometry representations and external formats, the User
+Preference Module (M9), which is intended to store configurable user settings, and the
+User Persistence Module (M14), which will manage saving and restoring user state
 between sessions.
 
-Finally, modules primarily responsible for user interaction and rendering, such as the 
-Display Interface Module (M1) and Input Interface Module (M2), were considered lower 
-priority for unit testing. These modules largely depend on external UI frameworks and 
-graphical behavior that is better evaluated through integration and usability testing 
-rather than isolated unit tests. As a result, the current unit testing effort focuses on 
+Finally, modules primarily responsible for user interaction and rendering, such as the
+Display Interface Module (M1) and Input Interface Module (M2), were considered lower
+priority for unit testing. These modules largely depend on external UI frameworks and
+graphical behavior that is better evaluated through integration and usability testing
+rather than isolated unit tests. As a result, the current unit testing effort focuses on
 verifying the correctness of the system's internal logic and code quality whereas
-higher-level testing methods, such as a usability test, are used to evaluate user-facing 
+higher-level testing methods, such as a usability test, are used to evaluate user-facing
 behavior.
 
 \subsection{Tests for Functional Requirements}
@@ -1060,15 +1061,17 @@ behavior.
 
 \item{test-id1\\}
 
-Type: 
+\textbf{This functionality is not implemented yet and therefore not tested yet.}
+
+Type:
 
 Initial State:
 
 Input:
 
-Output: 
+Output:
 
-Test Case Derivation: 
+Test Case Derivation:
 
 How test will be performed:
 
@@ -1079,104 +1082,107 @@ How test will be performed:
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{M6.T1\\}
 
-Type: 
+Type: Unit, Automatic.
 
-Initial State:
+Initial State: Editor in Normal mode
 
-Input:
+Input: 'i' (switch to Insert mode)
 
-Output: 
+Output: 'enterInsertMode' (a valid command name)
 
-Test Case Derivation: 
+Test Case Derivation:
 
-How test will be performed:
-
-\end{enumerate}
-
-
-\subsubsection{Mode Commands Module (M7)}
-
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: 
-
-Initial State:
-
-Input:
-
-Output: 
-
-Test Case Derivation: 
+This output is derived from the expected behavior of the command parser, which
+    should correctly interpret the 'i' command as a mode switch to Insert mode.
 
 How test will be performed:
 
-\end{enumerate}
+Unit test that can be run manually or automatically as part of the CI pipeline.
 
+\item{M6.T2\\}
 
-\subsubsection{Text Buffer Module (M10)}
+Type: Unit, Automatic.
 
-\begin{enumerate}
+Initial State: Editor in Insert mode, Document is empty
 
-\item{test-id1\\}
+Input: 'c' (create a circle)
 
-Type: 
+Output: 'createCircle' (a valid command name)
 
-Initial State:
+Test Case Derivation:
 
-Input:
-
-Output: 
-
-Test Case Derivation: 
+This output is derived from the expected behavior of the command parser, which
+    should correctly interpret the 'c' command as a shape creation command to create a circle.
 
 How test will be performed:
 
-\end{enumerate}
+Unit test that can be run manually or automatically as part of the CI pipeline.
 
+\end{enumerate}
 
 \subsubsection{Geometry State Module (M11)}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{M11.T1\\}
 
-Type: 
+Type: Unit, Automatic.
 
-Initial State:
+Initial State: None
 
-Input:
+Input: createNewDocument('testDoc')
 
-Output: 
+Output: A new document object with the name 'testDoc' and an empty geometry state.
 
-Test Case Derivation: 
+Test Case Derivation:
+This output is derived from the expected behavior of the geometry state module, which
+    should correctly initialize a new document with the specified name and an empty state.
 
 How test will be performed:
+Unit test that can be run manually or automatically as part of the CI pipeline.
 
 \end{enumerate}
-
 
 \subsubsection{Geometry State Mutator Module (M12)}
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{M12.T1\\}
 
-Type: 
+Type: Unit, Automatic.
 
-Initial State:
+Initial State: An empty document 'document', cursor position (via Editor state)
 
-Input:
+Input: createCircle(document, editor)
 
-Output: 
+Output: A new circle shape is added to the document's geometry state at the cursor position.
 
-Test Case Derivation: 
+Test Case Derivation:
+This output is derived from the expected behavior of the geometry state mutator module, which
+    should correctly update the document's geometry state to include new shapes when they are added.
 
 How test will be performed:
+Unit test that can be run manually or automatically as part of the CI pipeline.
 
+
+\item{M12.T2\\}
+
+Type: Unit, Automatic.
+
+Initial State: A document with a circle, current selection on the circle (via Editor state)
+
+Input: translateSelectionDown(document, editor), defined TRANSLATE\_AMOUNT
+
+Output: The circle's position in the document's geometry state is updated to be TRANSLATE\_AMOUNT units down from its original position.
+
+Test Case Derivation:
+This output is derived from the expected behavior of the geometry state mutator module, which
+    should correctly update the position of selected shapes in the document's geometry state when translation commands are executed.
+
+How test will be performed:
+Unit test that can be run manually or automatically as part of the CI pipeline.
 \end{enumerate}
 
 
@@ -1184,19 +1190,56 @@ How test will be performed:
 
 \begin{enumerate}
 
-\item{test-id1\\}
+\item{M13.T1\\}
 
-Type: 
+Type: Unit, Automatic.
 
-Initial State:
+Initial State: A document with no history.
 
-Input:
+Input: undo(initialDocument)
 
-Output: 
+Output: initialDocument (no change since there is no history)
 
-Test Case Derivation: 
+Test Case Derivation:
+This output is derived from the expected behavior of the undo redo module, which
+    should not alter the document state when an undo command is issued with no history.
 
 How test will be performed:
+Unit test that can be run manually or automatically as part of the CI pipeline.
+
+\item{M13.T2\\}
+
+Type: Unit, Automatic.
+
+Initial State: A document with one action in history (e.g., a circle was created).
+
+Input: undo(document)
+
+Output: document with the circle removed (reverted to the state before the circle was created).
+
+Test Case Derivation:
+This output is derived from the expected behavior of the undo redo module, which
+    should correctly revert the document state to the previous state when an undo command is issued.
+
+How test will be performed:
+Unit test that can be run manually or automatically as part of the CI pipeline.
+
+\item{M13.T3\\}
+
+Type: Unit, Automatic.
+
+Initial State: A document with an undid action in the redo history (e.g., a circle was created, then undone).
+
+Input: redo(document)
+
+Output: document with the circle re-added (reverted to the state before the undo was executed).
+
+Test Case Derivation:
+This output is derived from the expected behavior of the undo redo module, which
+    should correctly reapply the last undone action to the document state when a redo command is issued.
+
+How test will be performed:
+Unit test that can be run manually or automatically as part of the CI pipeline.
 
 \end{enumerate}
 
@@ -1261,11 +1304,11 @@ This is where you can place additional information.
 \subsection{Symbolic Parameters}
 
 \begin{description}
-  \item[DISPLAY\_LATENCY] - 30. Expected Latency in milliseconds. 
+  \item[DISPLAY\_LATENCY] - 30. Expected Latency in milliseconds.
 \end{description}
 
 \begin{description}
-  \item[SHAPE\_LOAD\_TEST\_COUNT] - 500.  Amount of shapes used for stress testing.: 
+  \item[SHAPE\_LOAD\_TEST\_COUNT] - 500.  Amount of shapes used for stress testing.:
 \end{description}
 
 \begin{description}
@@ -1282,9 +1325,9 @@ Their values are defined in this section for easy maintenance.\\
 
 1. How difficult was it to find the short-cuts you needed?
 
-2. What short-cuts felt the least intuitive? 
+2. What short-cuts felt the least intuitive?
 
-3. What short-cuts felt the most intuitive? 
+3. What short-cuts felt the most intuitive?
 
 4. Are their any missing short-cuts that you would want to have?
 
@@ -1307,8 +1350,8 @@ graduate attribute of Lifelong Learning.
 \begin{enumerate}
   \item What went well while writing this deliverable?
   \begin{itemize}
-    \item Chengze - I worked on the system tests section as well as the traceability matrix 
-    that connects the tests to the functional requirements. I think the team collaborated well 
+    \item Chengze - I worked on the system tests section as well as the traceability matrix
+    that connects the tests to the functional requirements. I think the team collaborated well
     to ensure that the tests covered all necessary aspects of the system. Also, I got more familiar
     with the SRS document while writing the tests, which helped me understand the project better. After
     the previous deliverables, me and the team both got more comfortable with the LaTeX format and GitHub workflow,
@@ -1336,18 +1379,18 @@ graduate attribute of Lifelong Learning.
       documents a bit) was very smooth. Since the SRS was well organized and
       most of the members were familiar with it's contents, we were able to
       efficiently reference it and complete the VnV Plan at a good pace.
-    \item Kevin -What went well during this deliverable is our groups ability to communicate and assign 
-    work. We managed to have everyone assigned parts of the VnV document much in advance giving us time 
-    work on it. This also let us look over the VnV, estimating the amount of work expected, and properly 
+    \item Kevin -What went well during this deliverable is our groups ability to communicate and assign
+    work. We managed to have everyone assigned parts of the VnV document much in advance giving us time
+    work on it. This also let us look over the VnV, estimating the amount of work expected, and properly
     plan on time to finish it.
   \end{itemize}
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
   \begin{itemize}
-    \item Chengze - I initially had trouble aligning the LaTeX tables and ensuring proper formatting. I resolved 
-    this by researching the float and tabularx environments and asking for peer feedback. Additionally, I got confused 
+    \item Chengze - I initially had trouble aligning the LaTeX tables and ensuring proper formatting. I resolved
+    this by researching the float and tabularx environments and asking for peer feedback. Additionally, I got confused
     on merge the pull requests when I need to make sure my branch is up to date with the main branch. I resolved this by
-    learning how to rebase my branch onto the main branch before merging. Which is a result of smooth communication with 
+    learning how to rebase my branch onto the main branch before merging. Which is a result of smooth communication with
     team lead Ethan.
     \item Ethan - Honestly, this deliverable went pretty smoothly. There were
       some issues that arose with the GitHub Actions build system that were
@@ -1418,15 +1461,15 @@ graduate attribute of Lifelong Learning.
   mastering the skill?  Of the identified approaches, which will each team
   member pursue, and why did they make this choice?
   \begin{itemize}
-    \item Chengze - As the Quality Assurance Tester, I will focus on improving my 
-    ability to design and execute effective test cases that ensure all features 
-    meet the SRS specifications. First, I plan to strengthen my practical testing 
-    skills by using tools like Jest and Playwright to create and run both manual 
-    and automated tests, which will help me better identify issues and verify functionality. 
-    Second, I aim to refine my understanding of QA methodologies by studying professional 
-    testing resources and documentation practices to improve how I record and communicate 
-    test results. Since my role centers on maintaining the reliability and quality of the 
-    product, these skills will help me ensure that our software performs as intended and 
+    \item Chengze - As the Quality Assurance Tester, I will focus on improving my
+    ability to design and execute effective test cases that ensure all features
+    meet the SRS specifications. First, I plan to strengthen my practical testing
+    skills by using tools like Jest and Playwright to create and run both manual
+    and automated tests, which will help me better identify issues and verify functionality.
+    Second, I aim to refine my understanding of QA methodologies by studying professional
+    testing resources and documentation practices to improve how I record and communicate
+    test results. Since my role centers on maintaining the reliability and quality of the
+    product, these skills will help me ensure that our software performs as intended and
     meets all functional requirements.
     \item Ethan - I will be picking up the code coverage metric integration
       work. For acquiring this skill, two approaches would be reading the
@@ -1472,17 +1515,17 @@ graduate attribute of Lifelong Learning.
     guides or videos, that will assist me in acquiring this skill.
     \item Kevin - I would like to focus on building an automated testing pipeline
      with GitHub actions. As our project already had some issues with GitHub
-      actions. Currently it attempts to compile the latex files. We had issues 
+      actions. Currently it attempts to compile the latex files. We had issues
       where we were doing bad merges and GitHub managed to catch them and display
-       errors. By understanding how this works we can have a more robust system 
-       that can not only just test our documentation, but allow us to make sure 
-       that new features don't cause breaking changes. To acquire this skill, 
+       errors. By understanding how this works we can have a more robust system
+       that can not only just test our documentation, but allow us to make sure
+       that new features don't cause breaking changes. To acquire this skill,
        Place I could find information would be GitHub's official website which
        provides an explanation and documentation on how to implement actions onto
-       our repository. If I have any errors or specific questions I can look on 
-       websites like stackOverflow that are more dedicated to solving errors.  
-       I will most likely use the documentation as my primary method of learning 
-       and implementing GitHub actions as it would contain the most general 
+       our repository. If I have any errors or specific questions I can look on
+       websites like stackOverflow that are more dedicated to solving errors.
+       I will most likely use the documentation as my primary method of learning
+       and implementing GitHub actions as it would contain the most general
        information on how to get started.
   \end{itemize}
 \end{enumerate}
