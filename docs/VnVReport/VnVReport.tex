@@ -65,12 +65,165 @@ Date 2 & 1.1 & Notes\\
 This document ...
 
 \section{Functional Requirements Evaluation}
+\setlength{\parindent}{0pt}
+
+\subsection{Functional User Testing}
+User testing was conducted to evaluate whether the implemented editing and
+canvas manipulation functionality satisfies the functional requirements
+specified in the SRS. Participants were asked to perform a series of diagram
+creation tasks using Flow for the first time. These tasks involved inserting
+shapes, connecting elements with lines, and positioning objects on the
+canvas using the keyboard-driven interaction model.
+
+\vspace{1em}
+
+Two participants completed the testing procedure. Each participant performed
+the same task twice in order to observe how performance changed after gaining
+familiarity with the interface.
+
+\vspace{1em}
+
+The first participant completed the task in approximately 3 minutes and
+7 seconds during the first run and made roughly ten errors. Most of these
+errors occurred because the participant was initially unaware that they could
+switch between line mode and anchor-line mode in order to continue the same
+line between shapes. After becoming familiar with this behavior, the
+participant completed the second run in approximately 1 minute and 49 seconds
+with only one or two minor errors.
+
+\vspace{1em}
+
+The second participant required approximately 8 minutes and 46 seconds to
+complete the first run and approximately 6 minutes and 23 seconds for the
+second run. During these runs, the participant performed several accidental
+operations that required undo actions and occasionally forgot how to execute
+specific commands, such as adding text to a shape or switching interaction
+modes.
+
+\vspace{1em}
+
+Despite these initial usability challenges, both participants were able to
+successfully complete the required diagram creation tasks. The reduction in
+completion time between runs suggests that users become more efficient after
+a short familiarization period with the keyboard-driven workflow.
+
+\vspace{1em}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c c c c}
+\toprule
+Participant & Run & Completion Time & Errors / Issues \\
+\midrule
+User 1 & Run 1 & 3:07 & $\sim$10 errors \\
+User 1 & Run 2 & 1:49 & 1--2 errors \\
+User 2 & Run 1 & 8:46 & 2 undo, 3 command issues \\
+User 2 & Run 2 & 6:23 & 3 undo, 3 command issues \\
+\bottomrule
+\end{tabular}
+\caption{Summary of Functional User Testing Results}
+\end{table}
+
+
+\vspace{1em}
+
+Overall, the testing results indicate that the implemented editing and canvas
+manipulation functionality operates as intended. Users were able to create
+and manipulate diagram elements and complete the assigned tasks successfully.
+However, the tests also reveal that the keyboard-driven interface introduces
+a learning curve for first-time users, particularly when remembering
+available commands and interaction modes.
+
+
+\subsection{User Feedback}
+
+After completing the testing tasks, participants were asked a series of
+questions about their experience using Flow. The goal of these questions was
+to evaluate how intuitive the system felt to first-time users and to identify
+areas where the interaction design could be improved.
+
+\vspace{1em}
+
+Participants highlighted the line creation mode as one of the most effective
+features of the system. In particular, the automatic snapping behavior and
+the ability to extend connections between shapes without manually selecting
+connection points were viewed as highly convenient when constructing
+diagram structures. Users also noted that positioning elements on the canvas
+felt intuitive compared to text-based diagram tools.
+
+\vspace{1em}
+
+Several usability challenges were also identified during testing. Both users
+reported difficulty remembering all available keyboard shortcuts during
+their initial interaction with the system. One participant suggested that a
+reference sheet or command palette could help users discover available
+commands more easily.
+
+\vspace{1em}
+
+Participants also suggested several potential feature improvements,
+including support for inserting custom icons, automatic linking of shapes
+during diagram creation, and the ability to select all elements on the
+canvas. These suggestions indicate potential directions for future
+development that could further improve the usability and flexibility of the
+system.
+
+\vspace{1em}
+
+Overall, the feedback suggests that Flow's keyboard-driven interaction model
+is powerful for diagram construction, but additional discoverability features
+may be beneficial to reduce the learning curve for new users.
+
+\subsection{Summary}
+
+The functional evaluation demonstrates that the core diagram creation and
+editing capabilities of Flow operate as intended. All participants were able
+to successfully complete the assigned tasks using the implemented features,
+confirming that the system satisfies the primary functional requirements
+related to canvas editing and diagram manipulation.
+\vspace{1em}
+
+The testing results also show that user efficiency improves noticeably after
+a short familiarization period. Completion times decreased between the first
+and second runs for both participants, suggesting that the keyboard-based
+interaction model becomes more efficient once users become comfortable with
+the available commands.
+
+\vspace{1em}
+
+While the core functionality performed correctly, the evaluation also
+identified usability challenges for first-time users. In particular,
+participants experienced difficulty remembering keyboard shortcuts and
+distinguishing between certain interaction modes. These observations suggest
+that improved command discoverability and documentation could further
+enhance the user experience.
+
+\vspace{1em}
+
+Overall, the implemented system successfully meets the functional goals
+outlined in the SRS while also revealing opportunities for future usability
+improvements.
 
 \section{Nonfunctional Requirements Evaluation}
 
 \subsection{Usability}
 
 \subsection{Performance}
+The performance was determined by using electrons clock to track the time when the program gets the input and the time after then new frame has been drawn.
+
+It was found to take around 0.1 to 0.2 ms to insert an empty circle and around 33 ms to insert a text box into an empty document.
+
+These numbers did not notably change with 100+ shapes in the document but at 300+ shapes the latency increased by around .2 ms for circles and around 3 ms for text boxes.
+
+\begin{center}
+\begin{tabular}{ c c c }
+   \# Shapes &Circle & Text Box \\
+ 0   & 0.1ms & 33.2ms \\
+ 100 & 0.2ms & 31.6ms\\
+ 200 & 0.2ms & 32.0ms \\
+ 300 & 0.3ms & 33.5ms \\
+\end{tabular}
+\end{center}
 
 \subsection{etc.}
 
@@ -171,6 +324,201 @@ over several existing approaches.
 
 \section{Changes Due to Testing}
 
+Following the Rev 0 demonstration, comprehensive feedback was received
+from both the course professor and teaching assistant. This feedback
+directly influenced the project's direction and implementation
+priorities, resulting in significant improvements to the system's
+design, usability planning, and development approach. Additionally,
+usability tests were conducted with outside users to gather real-world
+insights and further improve the product based on actual user interactions.
+
+\subsection{Feedback Summary}
+
+\subsubsection{Professor Feedback}
+The professor provided detailed feedback during Rev 0 highlighting both strengths
+and areas for improvement:
+
+\begin{itemize}
+\item \textbf{Positive Recognition}: The demonstration effectively
+  showcased the classroom note-taking concept, representing a
+  significant improvement over the Proof of Concept demo. The project
+  vision was described as "exciting to see come together."
+
+\item \textbf{Productivity Report Enhancement}: The demo plan section
+  in the productivity report required more detailed planning and
+  structure, similar to the presentation format.
+
+\item \textbf{Usability Testing Planning}: Emphasized the critical
+  importance of comprehensive usability testing, requiring detailed
+  planning addressing who, when, where, what, and how aspects. Specific
+  guidance included:
+  \begin{itemize}
+  \item \textbf{What}: Define specific tasks for test subjects to
+    perform
+  \item \textbf{How}: Establish clear metrics for measuring usability,
+    likely focusing on user interviews
+  \item \textbf{Planning}: Questions should be prepared in advance
+  \end{itemize}
+
+\item \textbf{Feature Prioritization}: Recommended implementing PDF
+  export functionality as a high priority, while "flow" file saving
+  could be deprioritized. Additionally, The team must decide between
+  infinite canvas or separate pages for adding additional slides/
+  diagrams.
+\end{itemize}
+
+\subsubsection{Teaching Assistant Feedback}
+The TA provided additional insights complementing the professor's
+assessment:
+
+\begin{itemize}
+\item \textbf{Demo Quality}: Described the demonstration as "smooth and
+  impressive" with much clearer project vision compared to the PoC
+  demo.
+
+\item \textbf{Usability Testing Considerations}: Emphasized the
+  importance of considering users' prerequisite knowledge (such as Vim
+  proficiency) and how this affects test result interpretation.
+
+\item \textbf{Feature Prioritization}: Reinforced the need to prioritize
+  features critical to the final demonstration.
+\end{itemize}
+
+\subsubsection{User Testing Feedback}
+We conducted a usability test with two individuals that have a technical
+background, but is not part of the development team. The users were
+asked to perform a series of tasks using the current prototype,
+and their interactions were observed and recorded.
+The users provided the following feedback:
+
+\begin{itemize}
+\item \textbf{Auto Linking Mode}: The users suggested that an auto-linking
+mode where the system automatically creates a line connection between two
+shapes upon object creation. New shapes will automatically connect to the
+most recently created shape. This would reduce the number of steps required
+to create a diagram and make it easier.
+
+\item \textbf{Select All}: The users requested a "select all" feature that
+allows users to select all objects and elements on the canvas with a single
+command. A simple feature that would improve the quality of life for users.
+
+\item \textbf{Custom Icons}: The users suggest adding custom icons such as
+different circuit symbols and having keybinds such as "ii" to insert an icon
+and have fuzzy find a list of available icons.
+
+\item \textbf{Anchor points}: The users suggest adding custom anchor points
+when adding a custom icon. This would allow users to specify where the connection
+points of their icons are, making it easier to create diagrams that
+require custom icons.
+
+\item \textbf{End Remarks and Comparisons}: The user expressed that the current
+prototype would be a great product and made a comparison to other circuit makers
+in typst which they were not quite fond of. They expressed that the product would
+be great at drawing circuits if provided with a few more features listed above.
+\end{itemize}
+
+\subsection{Future Changes To Be Implemented in Response to Feedback}
+
+\subsubsection{Architecture Decision: Infinite Canvas vs. Separate Pages}
+Following the professor's recommendation, the team conducted an
+architectural analysis and is still deciding on a solution.
+This decision will be based on:
+
+\begin{itemize}
+\item While implementing both solutions would be ideal, we have considered
+time constraints as an issue, and would prioritize implementing one
+solution over the other.
+\item Better alignment with the classroom note-taking workflow. The
+infinite canvas would allow users to freely position and organize their notes;
+however, the separate pages will help with organization and navigation.
+\item In the end, the team decided that we will provide support for uploading
+and viewing a PDF slide, whether that be through an infinite canvas,
+multiple pages, or both.
+\end{itemize}
+
+\subsubsection{PDF Export Implementation}
+Prioritizing the professor's recommendation, PDF export functionality
+will be implemented as a core feature, allowing users to export their
+diagrams in a widely compatible format suitable for sharing and
+archiving.
+
+\subsubsection{Work Distribution Improvements}
+Addressing the concern about uneven workload distribution, the team
+implemented several measures:
+
+\begin{itemize}
+\item Clear task assignment and rotation across different project areas
+\item Regular code review processes to ensure knowledge sharing
+\item Documentation improvements to facilitate team-wide understanding
+\end{itemize}
+
+\subsubsection{User Testing Feedback Integration}
+Earlier usability testing produced several feature suggestions from
+technical users outside the development team. To address these items,
+we took the following steps:
+
+\begin{itemize}
+\item Prototyping an "auto-linking" mode: new shapes automatically connect to
+  the most recently created object, reducing steps to draw diagrams.
+
+\item Adding a global \texttt{select all} command, enabling users to
+  highlight every canvas element with one keystroke.
+
+\item Looking into extending the icon insertion system to support custom
+  symbols with a fuzzy-find picker and permitted definition of custom
+  anchor points for those icons to control connection locations.
+
+\item Implementing miscellaneous quality-of-life tweaks (keyboard hints,
+  clearer messages) based on the user's general remarks.
+
+\item Considering additional suggestions (circuit symbol libraries, advanced
+  anchoring) in the project backlog for future iterations.
+\end{itemize}
+
+\subsection{Changes Already Implemented in Response to Feedback}
+The team has already implemented several changes in response to feedback/testing
+from internal usage and the POC demo:
+
+\begin{itemize}
+\item \textbf{Keybinding Layout}: We have put more thought and effort into the keybinding layout,
+ensuring that it is more intuitive and easier to learn for users familiar with Vim-style keybindings.
+This was well recieved during user testing and has improved the overall usability of the prototype.
+
+\item \textbf{Visual Indicators}: We have added visual indicators for the different modes users are able
+to be in (normal, insert, visual). Now the cursor will change based on the mode, signaling to
+the user which mode they are in. This has helped users understand the current state of the application
+and has reduced confusion during interactions.
+
+\item \textbf{Line Anchor Points}: A small but impactful change was the addition of anchor points for line connections.
+This allows users to connect to created lines instead of just shapes, enabling more complex diagrams and improving the
+flexibility of the system. This was a direct result of internal testing and POC feedback.
+
+\end{itemize}
+
+\subsection{Impact on Project Quality}
+
+The feedback-driven changes significantly enhanced the project's overall
+quality:
+
+\begin{itemize}
+\item \textbf{Enhanced Architecture}: The infinite canvas and separate
+  pages decision provides a more intuitive and flexible user experience
+  aligned with the target workflow.
+
+\item \textbf{Increased Robustness}: PDF export functionality addresses
+  a critical user requirement for document sharing and archiving.
+
+\item \textbf{Better Team Dynamics}: Improved work distribution ensures
+  all team members develop relevant skills and contribute meaningfully
+  to the project.
+
+\end{itemize}
+
+The verification and validation process, through structured feedback
+collection and responsive implementation, has ensured that the Flow
+project evolves based on expert guidance and user needs, resulting in
+a higher-quality final product that better serves its intended
+educational purpose.
 \wss{This section should highlight how feedback from the users and from
 the supervisor (when one exists) shaped the final product.  In particular
 the feedback from the Rev 0 demo to the supervisor (or to potential users)
@@ -178,7 +526,98 @@ should be highlighted.}
 
 \section{Automated Testing}
 
+As outlined in the VnV Plan, we implemented automated testing using the
+\texttt{Jest} framework. We also projected the use of \texttt{Playwright} in the
+original plan, but as of this report, we have not used it for any testing. Due
+to the rapid development and changes made to the app, we have not invested the
+time to create end-to-end tests at this point that may be more brittle than
+unit tests and slow down development speed. Additionally, usage/integration of
+\texttt{Coveralls} was discussed in the plan, but has not been added at this
+point due to time constraints and its relatively low priority. We have been
+able to use Jest to check code coverage.
+
+
+Automated tests are run via GitHub Actions and run on every new PR.
+
 \section{Trace to Requirements}
+
+This section provides traceability between the requirements defined in the
+Software Requirements Specification (SRS) and the verification activities
+performed during testing. Each requirement is linked to one or more test
+cases described in the Verification and Validation Plan. The results of the
+tests demonstrate whether the implementation satisfies the specified
+requirements.
+
+Functional requirements are validated primarily through automated system
+tests that simulate user interactions with the application. These tests
+verify core functionality such as creating notes, manipulating diagram
+elements, and performing file management operations.
+
+Non-functional requirements are evaluated through a combination of manual
+tests, usability evaluation, and performance measurements. These tests assess
+system responsiveness, usability, cross-platform compatibility, and data
+integrity.
+
+Table~\ref{tab:reqTrace} summarizes the mapping between SRS requirements and
+the test cases used to verify them.
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{p{1.8cm} p{6.8cm} p{2.8cm} p{3.5cm}}
+\toprule
+\textbf{Req ID} & \textbf{Requirement Description} & \textbf{Test Case} & \textbf{Result} \\
+\midrule
+
+F211 & The system shall allow users to create and edit notes.
+& test-F211 & Pass \\
+
+F214 & The system shall allow users to insert and manipulate shapes on the canvas.
+& test-F214 & Pass \\
+
+F217 & The system shall allow users to save and reopen notes.
+& test-F217 & Not Implemented Yet \\
+
+F243 & The system shall allow users to export notes as PDF files.
+& test-F243 & Not Implemented Yet \\
+
+NF211 & The system shall provide low-latency input and rendering during editing operations.
+& test-NF211 & Pass \\
+
+NF218 & The system shall maintain acceptable performance when handling a large number of shapes or objects.
+& test-NF218 & Pass \\
+
+NF213 & The system shall support execution on Windows, macOS, and Linux platforms.
+& test-NF213 & Pass \\
+
+NF214 & The system shall provide accessible keyboard shortcuts for editing operations.
+& test-NF214 & Pass \\
+
+NF217 & The system shall provide an intuitive and consistent user interface.
+& test-NF217 & Pass \\
+
+NF212 & The system shall maintain local data persistence and autosave functionality.
+& test-NF212 & Not Implemented Yet \\
+
+NF215 & The system shall maintain file integrity during save and export operations.
+& test-NF215 & Not Implemented Yet \\
+
+NF216 & The system shall not perform background network communication.
+& test-NF216 & Pass \\
+
+\bottomrule
+\end{tabular}
+\caption{Traceability Between Requirements and Test Cases}
+\label{tab:reqTrace}
+\end{table}
+
+The results indicate that all implemented requirements were successfully
+verified through the corresponding tests for features that have been implemented
+so far. No critical failures were observed during the verification process,
+demonstrating that the implemented systemsatisfies the functional and non-functional
+requirements specified in the
+SRS.
+
+\vspace{25em}
 
 \section{Trace to Modules}
 
@@ -198,17 +637,37 @@ graduate attribute of Reflection.
 \begin{enumerate}
   \item What went well while writing this deliverable?
   \begin{itemize}
-    \item Ethan:
-    \item Hussain: In this deliverable, we were finally able to get useful, 
-    concrete feedback from other people. This was the first time we had a 
-    chance to officially show our work to people outside of our team, and it 
+    \item Ethan: One thing that went well during this deliverable was that it
+      motivated the team to conduct testing in preparation for writing it. This
+      included conducting user testing and writing more unit tests. The
+      usability testing was especially helpful and fun, as it was the first
+      time we got to see how people outside of our team interacted with our
+      project. Overall we got some really good feedback. Additionally this
+      report helped us to organize the features we can prioritize based on user
+      feedback as we move towards the final demo.
+    \item Hussain: In this deliverable, we were finally able to get useful,
+    concrete feedback from other people. This was the first time we had a
+    chance to officially show our work to people outside of our team, and it
     was very helpful. Although we are also stakeholders in this project, showing
-    other people that are not as close to the project allowed us to get a 
+    other people that are not as close to the project allowed us to get a
     different perspective on our work, pointing out things that we had overlooked.
-    From this feedback, I look forward to improving our project and making it 
+    From this feedback, I look forward to improving our project and making it
     more user-friendly.
-    \item Jeffrey:
-    \item Chegnze:
+    \item Jeffrey: In this deliverable, we were able to get a lot of feedback and
+    put them to action. As a team, we were able to finally get a feel for what
+    our users want and how they interact with our product. This was a very important
+    step for us, as it was one of the first times we were able to get concrete feedback
+    from users which helped guide our development. Additionally, we were able to create
+    tests which will be very helpful for us in the future, as it will allow us to catch bugs and
+    ensure that our code is working as expected. Overall, I think this was a very productive
+    deliverable.
+    \item Chengze: One thing that went well during this deliverable was being able to
+    see how new users interacted with Flow. Watching people use the system for the
+    first time helped us understand which parts of the interface were intuitive and
+    which parts were confusing. It was helpful to get feedback from people outside
+    the team because they noticed things that we had overlooked. Overall, this
+    testing gave us a better idea of how users actually experience our product and
+    what we should improve going forward.
     \item Kevin: One thing that went well writing this deliverable was having
      a proper plan for what were were going to do for our VnV in our VnV
       plan. Even if we had to change our tests due to parts of our program
@@ -217,21 +676,37 @@ graduate attribute of Reflection.
          tests also gave us a better idea of what we need to work on next as
           both the feedback from our usability testing and our testing gave
            us a better idea of what the project needs. 
+
   \end{itemize}
 
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
   \begin{itemize}
-    \item Ethan:
+    \item Ethan: One pain point was catching up on testing. We had not written
+      a lot of unit tests before this deliverable, so we had quite a bit of
+      code to cover in a short amount of time. Additionally, the traceability
+      was a bit difficult to work on as our code/module organization has
+      naturally evolved and changed from our original MG. This is something
+      that we will aim to update for the final documentation.
     \item Hussain: One pain point that I experienced during this deliverable was
     the fact that we did not fully consider the unit testing description, when
     planning on completing the deliverable. Though we successfully made the
     unit tests for different parts of our project, we did not have a clear plan
-    on how we will categorize them and how we will present them in the report. 
-    This caused a bit more last-minute planning and organization, which was
-    a bit stressful. 
-    \item Jeffrey:
-    \item Chegnze:
+    on how we will categorize them and how we will present them in the report.
+    This caused a bit more last-minute planning and organization, which was a bit stressful. 
+    \item Jeffrey: One of the biggest pain points I experienced during this deliverable
+    was when we were creating tests for our software. I personally create numerous tests for
+    specific features I implemented; however, was not aware of how we were supposed to document
+    these for the VnV report. This caused a lot of last-minute work to figure out how to categorize and present
+    our tests in the report. In the future, I will make sure to have a clear plan for how to document
+    tests in the report, so that I can avoid this kind of last-minute stress.
+    \item Chengze: One challenge I had during this deliverable was figuring out how to
+    present the user testing results clearly in the report. We collected a lot of
+    feedback and timing data, but it took some time to decide what information was
+    most important to include. To solve this, I focused on linking the testing
+    results back to the functional requirements and organizing them in a clearer
+    structure. This helped make the evaluation section easier to understand and
+    showed how the tests relate to the requirements.
     \item Kevin: While having unit test written already was very helpful in
      directing our testing, one pain point of this deliverable was having to
       work around the changes and undecided parts of our plan. For example,
