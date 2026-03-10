@@ -209,16 +209,16 @@ improvements.
 \subsection{Usability}
 
 \subsection{Performance}
-The performance was determined by using electrons clock to track the time when the program gets the input and the time after then new frame has been drawn. 
+The performance was determined by using electrons clock to track the time when the program gets the input and the time after then new frame has been drawn.
 
-It was found to take around 0.1 to 0.2 ms to insert an empty circle and around 33 ms to insert a text box into an empty document. 
+It was found to take around 0.1 to 0.2 ms to insert an empty circle and around 33 ms to insert a text box into an empty document.
 
-These numbers did not notably change with 100+ shapes in the document but at 300+ shapes the latency increased by around .2 ms for circles and around 3 ms for text boxes. 
+These numbers did not notably change with 100+ shapes in the document but at 300+ shapes the latency increased by around .2 ms for circles and around 3 ms for text boxes.
 
 \begin{center}
 \begin{tabular}{ c c c }
-   \# Shapes &Circle & Text Box \\ 
- 0   & 0.1ms & 33.2ms \\  
+   \# Shapes &Circle & Text Box \\
+ 0   & 0.1ms & 33.2ms \\
  100 & 0.2ms & 31.6ms\\
  200 & 0.2ms & 32.0ms \\
  300 & 0.3ms & 33.5ms \\
@@ -486,11 +486,11 @@ This was well recieved during user testing and has improved the overall usabilit
 
 \item \textbf{Visual Indicators}: We have added visual indicators for the different modes users are able
 to be in (normal, insert, visual). Now the cursor will change based on the mode, signaling to
-the user which mode they are in. This has helped users understand the current state of the application 
-and has reduced confusion during interactions. 
+the user which mode they are in. This has helped users understand the current state of the application
+and has reduced confusion during interactions.
 
-\item \textbf{Line Anchor Points}: A small but impactful change was the addition of anchor points for line connections. 
-This allows users to connect to created lines instead of just shapes, enabling more complex diagrams and improving the 
+\item \textbf{Line Anchor Points}: A small but impactful change was the addition of anchor points for line connections.
+This allows users to connect to created lines instead of just shapes, enabling more complex diagrams and improving the
 flexibility of the system. This was a direct result of internal testing and POC feedback.
 
 \end{itemize}
@@ -568,40 +568,40 @@ the test cases used to verify them.
 \textbf{Req ID} & \textbf{Requirement Description} & \textbf{Test Case} & \textbf{Result} \\
 \midrule
 
-F211 & The system shall allow users to create and edit notes. 
+F211 & The system shall allow users to create and edit notes.
 & test-F211 & Pass \\
 
-F214 & The system shall allow users to insert and manipulate shapes on the canvas. 
+F214 & The system shall allow users to insert and manipulate shapes on the canvas.
 & test-F214 & Pass \\
 
-F217 & The system shall allow users to save and reopen notes. 
+F217 & The system shall allow users to save and reopen notes.
 & test-F217 & Not Implemented Yet \\
 
-F243 & The system shall allow users to export notes as PDF files. 
+F243 & The system shall allow users to export notes as PDF files.
 & test-F243 & Not Implemented Yet \\
 
-NF211 & The system shall provide low-latency input and rendering during editing operations. 
+NF211 & The system shall provide low-latency input and rendering during editing operations.
 & test-NF211 & Pass \\
 
-NF218 & The system shall maintain acceptable performance when handling a large number of shapes or objects. 
+NF218 & The system shall maintain acceptable performance when handling a large number of shapes or objects.
 & test-NF218 & Pass \\
 
-NF213 & The system shall support execution on Windows, macOS, and Linux platforms. 
+NF213 & The system shall support execution on Windows, macOS, and Linux platforms.
 & test-NF213 & Pass \\
 
-NF214 & The system shall provide accessible keyboard shortcuts for editing operations. 
+NF214 & The system shall provide accessible keyboard shortcuts for editing operations.
 & test-NF214 & Pass \\
 
-NF217 & The system shall provide an intuitive and consistent user interface. 
+NF217 & The system shall provide an intuitive and consistent user interface.
 & test-NF217 & Pass \\
 
-NF212 & The system shall maintain local data persistence and autosave functionality. 
+NF212 & The system shall maintain local data persistence and autosave functionality.
 & test-NF212 & Not Implemented Yet \\
 
-NF215 & The system shall maintain file integrity during save and export operations. 
+NF215 & The system shall maintain file integrity during save and export operations.
 & test-NF215 & Not Implemented Yet \\
 
-NF216 & The system shall not perform background network communication. 
+NF216 & The system shall not perform background network communication.
 & test-NF216 & Pass \\
 
 \bottomrule
@@ -611,14 +611,13 @@ NF216 & The system shall not perform background network communication.
 \end{table}
 
 The results indicate that all implemented requirements were successfully
-verified through the corresponding tests for features that have been implemented 
-so far. No critical failures were observed during the verification process, 
-demonstrating that the implemented systemsatisfies the functional and non-functional 
+verified through the corresponding tests for features that have been implemented
+so far. No critical failures were observed during the verification process,
+demonstrating that the implemented systemsatisfies the functional and non-functional
 requirements specified in the
 SRS.
 
 \vspace{25em}
-		
 \section{Trace to Modules}		
 This section relates between the modules defined in the Module Interface Specification (MIS) and the tests being performed. Every test is related to one or modules in defined in the MIS. The results of the tests show that the modules are properly implemented. 
 Table~\ref{tab:reqTrace} summarizes the mapping between MIS modules and
@@ -755,6 +754,7 @@ test-NF216 & The system shall not perform background network communication.
 \label{tab:reqTrace}
 \end{table}
 
+
 \section{Code Coverage Metrics}
 
 \bibliographystyle{plainnat}
@@ -771,14 +771,21 @@ graduate attribute of Reflection.
 \begin{enumerate}
   \item What went well while writing this deliverable?
   \begin{itemize}
-    \item Ethan:
-    \item Hussain: In this deliverable, we were finally able to get useful, 
-    concrete feedback from other people. This was the first time we had a 
-    chance to officially show our work to people outside of our team, and it 
+    \item Ethan: One thing that went well during this deliverable was that it
+      motivated the team to conduct testing in preparation for writing it. This
+      included conducting user testing and writing more unit tests. The
+      usability testing was especially helpful and fun, as it was the first
+      time we got to see how people outside of our team interacted with our
+      project. Overall we got some really good feedback. Additionally this
+      report helped us to organize the features we can prioritize based on user
+      feedback as we move towards the final demo.
+    \item Hussain: In this deliverable, we were finally able to get useful,
+    concrete feedback from other people. This was the first time we had a
+    chance to officially show our work to people outside of our team, and it
     was very helpful. Although we are also stakeholders in this project, showing
-    other people that are not as close to the project allowed us to get a 
+    other people that are not as close to the project allowed us to get a
     different perspective on our work, pointing out things that we had overlooked.
-    From this feedback, I look forward to improving our project and making it 
+    From this feedback, I look forward to improving our project and making it
     more user-friendly.
     \item Jeffrey: In this deliverable, we were able to get a lot of feedback and
     put them to action. As a team, we were able to finally get a feel for what
@@ -801,14 +808,19 @@ graduate attribute of Reflection.
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
   \begin{itemize}
-    \item Ethan:
+    \item Ethan: One pain point was catching up on testing. We had not written
+      a lot of unit tests before this deliverable, so we had quite a bit of
+      code to cover in a short amount of time. Additionally, the traceability
+      was a bit difficult to work on as our code/module organization has
+      naturally evolved and changed from our original MG. This is something
+      that we will aim to update for the final documentation.
     \item Hussain: One pain point that I experienced during this deliverable was
     the fact that we did not fully consider the unit testing description, when
     planning on completing the deliverable. Though we successfully made the
     unit tests for different parts of our project, we did not have a clear plan
-    on how we will categorize them and how we will present them in the report. 
+    on how we will categorize them and how we will present them in the report.
     This caused a bit more last-minute planning and organization, which was
-    a bit stressful. 
+    a bit stressful.
     \item Jeffrey: One of the biggest pain points I experienced during this deliverable
     was when we were creating tests for our software. I personally create numerous tests for
     specific features I implemented; however, was not aware of how we were supposed to document
