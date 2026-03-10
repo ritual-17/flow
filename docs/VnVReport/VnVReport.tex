@@ -620,6 +620,140 @@ SRS.
 \vspace{25em}
 		
 \section{Trace to Modules}		
+This section relates between the modules defined in the Module Interface Specification (MIS) and the tests being performed. Every test is related to one or modules in defined in the MIS. The results of the tests show that the modules are properly implemented. 
+Table~\ref{tab:reqTrace} summarizes the mapping between MIS modules and
+the test cases used to verify them. 
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{p{1.8cm} p{2.6cm} p{7cm} p{1.8cm}}
+\toprule
+\textbf{Test Case} & \textbf{Test Requirement Description} & \textbf{Related Modules} & \textbf{Test Status} \\
+\midrule
+
+test-F211 & The system shall allow users to create and edit notes. 
+& Display Interface Module, 
+
+, Input Interface Module,  
+
+, Geometry State Parser Module, 
+
+, Geometry State Converter Module,
+
+, Commands Parser Module, 
+
+, Mode Commands Module, 
+
+, Shape Interface Module, 
+
+, Text Buffer Module
+
+, Geometry State Module
+
+, Geometry State Mutator Module& Pass \\
+
+test-F214 & The system shall allow users to insert and manipulate shapes on the canvas. 
+& Display Interface Module
+
+, Input Interface Module
+
+, Geometry State Parser Module
+
+, Geometry State Converter Module
+
+, Commands Parser Module
+
+, Mode Commands Module
+
+, Shape Interface Module
+
+, Geometry State Module
+
+, Geometry State Mutator Module
+& Pass \\
+
+test-F217 & The system shall allow users to save and reopen notes. 
+& Input Interface Module
+
+, File Interface Module
+
+, Commands Parser Module
+
+, Mode Commands Module
+
+, User Persistence Module
+
+ & Not Implemented Yet \\
+
+test-F243 & The system shall allow users to export notes as PDF files. 
+& Input Interface Module
+
+, File Interface Module & Not Implemented Yet \\
+
+test-NF211 & The system shall provide low-latency input and rendering during editing operations. 
+& Display Interface Module
+
+, Input Interface Module 
+
+, Commands Parser Module
+
+, Mode Commands Module & Pass \\
+
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{p{1.8cm} p{2.6cm} p{7cm} p{1.8cm}}
+\toprule
+test-NF218 & The system shall maintain acceptable performance when handling a large number of shapes or objects. 
+& Display Interface Module
+
+, Input Interface Module 
+
+, Commands Parser Module
+
+, Mode Commands Module  & Pass \\
+
+test-NF213 & The system shall support execution on Windows, macOS, and Linux platforms. 
+& N/A & Pass \\
+
+test-NF214 & The system shall provide accessible keyboard shortcuts for editing operations. 
+& Input Interface Module
+
+, Commands Parser Module
+
+, Mode Commands Module
+
+, User Preference Module & Pass \\
+
+test-NF217 & The system shall provide an intuitive and consistent user interface. 
+& Display Interface Module
+
+, User Preference Module& Pass \\
+
+test-NF212 & The system shall maintain local data persistence and autosave functionality. 
+& File Interface Module
+
+, User Persistence Module & Not Implemented Yet \\
+\end{tabular}
+\end{table}
+\begin{table}[htbp]
+\centering
+\begin{tabular}{p{1.8cm} p{2.6cm} p{7cm} p{1.8cm}}
+\toprule
+test-NF215 & The system shall maintain file integrity during save and export operations. 
+& File Interface Module
+
+, User Persistence Module & Not Implemented Yet \\
+
+test-NF216 & The system shall not perform background network communication. 
+& N/A & Pass \\
+
+\bottomrule
+\end{tabular}
+\caption{Traceability Between Requirements and Test Cases}
+\label{tab:reqTrace}
+\end{table}
 
 \section{Code Coverage Metrics}
 
