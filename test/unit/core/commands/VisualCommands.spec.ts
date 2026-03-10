@@ -15,9 +15,6 @@ import {
   visualUp,
 } from '@renderer/core/commands/VisualCommands';
 import * as Transform from '@renderer/core/geometry/Transform';
-import { enableMapSet } from 'immer';
-
-enableMapSet();
 
 // Mock structuredClone for Node.js environment
 global.structuredClone = jest.fn((obj) => JSON.parse(JSON.stringify(obj)));
