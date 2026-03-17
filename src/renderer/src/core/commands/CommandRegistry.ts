@@ -1,6 +1,7 @@
 // Maps command name to handler
 //
 
+import { autoLinkAddToLine, autoLinkCircle } from '@renderer/core/commands/AutoLinkCommands';
 import {
   cursorDown,
   cursorLeft,
@@ -114,6 +115,10 @@ function commandFromName(command: string): CommandFunction | null {
       return createSquare;
     case 'createTextBox':
       return createTextBox;
+    case 'autoLinkCircle':
+      return autoLinkCircle;
+    case 'autoLinkAddToLine':
+      return autoLinkAddToLine;
     case 'selectNextSearchResult':
       return selectNextSearchResult;
     case 'selectPreviousSearchResult':

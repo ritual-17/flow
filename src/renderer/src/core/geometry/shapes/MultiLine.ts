@@ -9,6 +9,12 @@ export type MultiLine = IShapeBase & {
   arrowEnd?: boolean;
 };
 
+export const MultiLine = {
+  build,
+  fromStartingPoint,
+  addPoint,
+};
+
 type LinePoint = Coordinate | AnchorRef;
 
 export function build(attrs: Partial<MultiLine>): MultiLine {

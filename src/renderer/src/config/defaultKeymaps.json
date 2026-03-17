@@ -54,7 +54,9 @@
     "ArrowUp": "up",
     "ArrowDown": "down",
     "ArrowLeft": "left",
-    "ArrowRight": "right"
+    "ArrowRight": "right",
+    "c": "autoLinkCircle",
+    "<Space>": "autoLinkAddToLine"
   },
   "visual": {
     "j": "visualDown",

@@ -149,15 +149,23 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return nearest;
   }
 
-  getNearestAnchorPoint(point: Coordinate): AnchorPoint | null {
+  // pass anchorPointOwner to filter anchor points to only those belonging to the specified shape
+  getNearestAnchorPoint(point: Coordinate, anchorPointOwner?: ShapeId): AnchorPoint | null {
     const searchBox = new Flatten.Box(
       point.x - this.SEARCH_RADIUS,
       point.y - this.SEARCH_RADIUS,
       point.x + this.SEARCH_RADIUS,
       point.y + this.SEARCH_RADIUS,
     );
-    const candidates = this.set.search(searchBox);
-    const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
+
+    let domainCandidates: Shape[] = [];
+    if (anchorPointOwner) {
+      const ownerShape = this.getDomainShapeById(anchorPointOwner);
+      domainCandidates = [ownerShape];
+    } else {
+      const candidates = this.set.search(searchBox);
+      domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
+    }
 
     let nearestPoint: AnchorPoint | null = null;
     let minDistance = Infinity;

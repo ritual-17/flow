@@ -27,3 +27,8 @@ export function generateAnchorPoints(circle: Circle): AnchorPoint[] {
     { position: 3, ownerId, x: x - radius, y }, // left
   ];
 }
+
+export const Circle = {
+  build,
+  generateAnchorPoints,
+};
