@@ -6,6 +6,7 @@ import { Document } from '@renderer/core/document/Document';
 import {
   clearBoxSelectAnchor,
   Mode,
+  setCurrentLineId,
   setCurrentTextBox,
   setPreviousShapeId,
 } from '@renderer/core/editor/Editor';
@@ -53,5 +54,6 @@ async function onExitTextMode(args: CommandArgs): Promise<CommandResult> {
 async function onExitAutoLinkInsertMode(args: CommandArgs): Promise<CommandResult> {
   let { editor } = args;
   editor = setPreviousShapeId(editor, null);
+  editor = setCurrentLineId(editor, null);
   return [editor, args.document];
 }

@@ -4,7 +4,7 @@ import {
   updateShapeInDocument,
 } from '@renderer/core/commands/ManipulationCommands';
 import { Document } from '@renderer/core/document/Document';
-import { setPreviousShapeId } from '@renderer/core/editor/Editor';
+import { setCurrentLineId, setPreviousShapeId } from '@renderer/core/editor/Editor';
 import { AnchorRef, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
@@ -55,6 +55,7 @@ export function autoLinkAddToLine(
         newLine,
       );
       updatedEditor = setPreviousShapeId(updatedEditor, newShape?.id || newLine.id);
+      updatedEditor = setCurrentLineId(updatedEditor, newLine.id);
       break;
     }
     case 'point': {
@@ -67,8 +68,12 @@ export function autoLinkAddToLine(
         id: previousShape.id, // reuse the same ID to replace the point with a line
         points: [previousShape, nextPoint],
       });
-      updatedDocument = updateShapeInDocument(args, newLine);
+      updatedDocument = updateShapeInDocument(
+        { ...args, document: updatedDocument, editor: updatedEditor },
+        newLine,
+      );
       updatedEditor = setPreviousShapeId(updatedEditor, newShape?.id || newLine.id);
+      updatedEditor = setCurrentLineId(updatedEditor, newLine.id);
       break;
     }
     default: {
@@ -79,8 +84,12 @@ export function autoLinkAddToLine(
       newLine = MultiLine.build({
         points: [lastPoint, nextPoint],
       });
-      updatedDocument = addShapeToDocument(args, newLine);
+      updatedDocument = addShapeToDocument(
+        { ...args, document: updatedDocument, editor: updatedEditor },
+        newLine,
+      );
       updatedEditor = setPreviousShapeId(updatedEditor, newShape?.id || newLine.id);
+      updatedEditor = setCurrentLineId(updatedEditor, newLine.id);
     }
   }
   return [updatedEditor, updatedDocument];
