@@ -42,6 +42,15 @@ export class FlattenSpatialIndex implements SpatialIndex {
       a[2].localeCompare(b[2]), // id
   );
 
+  constructor(shapes: Shape[] = []) {
+    const lines = shapes.filter(isLine);
+    const nonLines = shapes.filter((shape) => !isLine(shape));
+
+    // add non-line shapes first so that line shapes can resolve any anchor refs to them
+    nonLines.forEach((shape) => this.addShape(shape));
+    lines.forEach((shape) => this.addShape(shape));
+  }
+
   addShape(shape: Shape): void {
     const resolvedShape = this.resolveShapePoints(shape);
     const flat = toFlatten(resolvedShape);
@@ -373,7 +382,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
 
   private getDomainShapeById(id: ShapeId): Shape {
     const shape = this.idToShapeMap.get(id);
-    if (!shape) throw new Error('Shape not found');
+    if (!shape) throw new Error('Shape not found with id ' + id);
 
     return shape.domainShape;
   }

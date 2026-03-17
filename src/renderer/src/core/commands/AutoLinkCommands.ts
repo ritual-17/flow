@@ -9,29 +9,31 @@ import { AnchorRef, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/S
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
-import {
-  isAnchorRef,
-  resolveAnchorPoint,
-  resolveLinePoints,
-} from '@renderer/core/geometry/utils/AnchorPoints';
+import { isAnchorRef, resolveAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function autoLinkCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
   const circle = Circle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, circle);
-  return linkPreviousShape({ ...args, document: updatedDocument }, circle);
+  return autoLinkAddToLine({ ...args, document: updatedDocument }, circle);
 }
 
-export function autoLinkAddToLine(args: CommandArgs): CommandResult {
+export function autoLinkAddToLine(
+  args: CommandArgs,
+  newShape?: Exclude<Shape, MultiLine | Point>,
+): CommandResult {
   let { document: updatedDocument, editor: updatedEditor } = args;
+
   if (!updatedEditor.previousShapeId) {
-    const point = Point.build({
-      x: updatedEditor.cursorPosition.x,
-      y: updatedEditor.cursorPosition.y,
-    });
-    updatedDocument = addShapeToDocument(args, point);
-    updatedEditor = setPreviousShapeId(updatedEditor, point.id);
+    const previousShape =
+      newShape ||
+      Point.build({
+        x: updatedEditor.cursorPosition.x,
+        y: updatedEditor.cursorPosition.y,
+      });
+    updatedDocument = addShapeToDocument(args, previousShape);
+    updatedEditor = setPreviousShapeId(updatedEditor, previousShape.id);
     return [updatedEditor, updatedDocument];
   }
   const previousShape = Document.getShapeById(updatedDocument, updatedEditor.previousShapeId);
@@ -41,56 +43,46 @@ export function autoLinkAddToLine(args: CommandArgs): CommandResult {
   let newLine: MultiLine;
   switch (previousShape.type) {
     case 'multi-line': {
-      newLine = MultiLine.addPoint(previousShape, {
-        x: updatedEditor.cursorPosition.x,
-        y: updatedEditor.cursorPosition.y,
-      });
+      const lastPoint = MultiLine.getLastPoint(previousShape);
+      const nextPoint = newShape
+        ? getNewShapePoint(args, newShape, lastPoint)
+        : updatedEditor.cursorPosition;
+      console.log('Next point for new multi-line:', nextPoint);
+
+      newLine = MultiLine.addPoint(previousShape, nextPoint);
       updatedDocument = updateShapeInDocument(
         { ...args, document: updatedDocument, editor: updatedEditor },
         newLine,
       );
+      updatedEditor = setPreviousShapeId(updatedEditor, newShape?.id || newLine.id);
       break;
     }
     case 'point': {
+      const lastPoint = previousShape;
+      const nextPoint = newShape
+        ? getNewShapePoint(args, newShape, lastPoint)
+        : updatedEditor.cursorPosition;
+
       newLine = MultiLine.build({
         id: previousShape.id, // reuse the same ID to replace the point with a line
-        points: [previousShape, updatedEditor.cursorPosition],
+        points: [previousShape, nextPoint],
       });
       updatedDocument = updateShapeInDocument(args, newLine);
+      updatedEditor = setPreviousShapeId(updatedEditor, newShape?.id || newLine.id);
       break;
     }
     default: {
-      const previousPoint = getPreviousShapePoint(args, updatedEditor.previousShapeId);
+      const lastPoint = getPreviousShapePoint(args, updatedEditor.previousShapeId);
+      const nextPoint = newShape
+        ? getNewShapePoint(args, newShape, lastPoint)
+        : updatedEditor.cursorPosition;
       newLine = MultiLine.build({
-        points: [previousPoint, updatedEditor.cursorPosition],
+        points: [lastPoint, nextPoint],
       });
       updatedDocument = addShapeToDocument(args, newLine);
+      updatedEditor = setPreviousShapeId(updatedEditor, newShape?.id || newLine.id);
     }
   }
-  updatedEditor = setPreviousShapeId(updatedEditor, newLine.id);
-  return [updatedEditor, updatedDocument];
-}
-
-function linkPreviousShape(
-  args: CommandArgs,
-  newShape: Exclude<Shape, MultiLine | Point>,
-): CommandResult {
-  const { document, editor } = args;
-
-  if (!editor.previousShapeId) {
-    const updatedEditor = setPreviousShapeId(editor, newShape.id);
-    return [updatedEditor, document];
-  }
-
-  const previousPoint = getPreviousShapePoint(args, editor.previousShapeId);
-  const nextPoint = getNewShapePoint(args, newShape, previousPoint);
-
-  const linkingLine = MultiLine.build({
-    points: [previousPoint, nextPoint],
-  });
-
-  const updatedDocument = addShapeToDocument(args, linkingLine);
-  const updatedEditor = setPreviousShapeId(editor, newShape.id);
   return [updatedEditor, updatedDocument];
 }
 
@@ -98,31 +90,12 @@ function getPreviousShapePoint(
   args: CommandArgs,
   previousShapeId: ShapeId,
 ): AnchorRef | Coordinate {
-  const { document, editor, spatialIndex } = args;
-  const previousShape = Document.getShapeById(document, previousShapeId);
-  console.log(previousShape);
-  if (!previousShape) {
-    throw new Error(`Previous shape with ID ${editor.previousShapeId} not found`);
+  const { editor, spatialIndex } = args;
+  const point = spatialIndex.getNearestAnchorPoint(editor.cursorPosition, previousShapeId);
+  if (!point) {
+    throw new Error(`No anchor point found for shape with ID ${editor.previousShapeId}`);
   }
-  switch (previousShape.type) {
-    case 'multi-line': {
-      const points = resolveLinePoints(document, previousShape);
-      if (points.length === 0) {
-        throw new Error(`Previous multi-line shape with ID ${previousShape.id} has no points`);
-      }
-      return points[points.length - 1];
-    }
-    case 'point': {
-      return previousShape;
-    }
-    default: {
-      const point = spatialIndex.getNearestAnchorPoint(editor.cursorPosition, previousShapeId);
-      if (!point) {
-        throw new Error(`No anchor point found for shape with ID ${editor.previousShapeId}`);
-      }
-      return { shapeId: previousShapeId, position: point.position };
-    }
-  }
+  return { shapeId: previousShapeId, position: point.position };
 }
 
 function getNewShapePoint(

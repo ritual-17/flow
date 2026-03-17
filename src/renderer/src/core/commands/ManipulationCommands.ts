@@ -386,6 +386,10 @@ export function cycleArrowOnSelection(args: CommandArgs): [Editor, DocumentModel
     targetShapeIds = [editor.currentLineId];
   }
 
+  if (editor.mode === 'auto-link-insert' && editor.previousShapeId) {
+    targetShapeIds = [editor.previousShapeId];
+  }
+
   // If nothing selected/targeted yet, fall back to nearest shape to cursor
   if (targetShapeIds.length === 0) {
     const nearest = args.spatialIndex.getNearestShape(editor.cursorPosition);

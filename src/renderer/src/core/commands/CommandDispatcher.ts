@@ -126,8 +126,7 @@ export class CommandDispatcher {
     isHistoryCommand: boolean,
   ): void {
     // rebuild spatial index with updated document
-    this.spatialIndex = new FlattenSpatialIndex();
-    afterDocument.shapes.forEach((shape) => this.spatialIndex.addShape(shape));
+    this.spatialIndex = new FlattenSpatialIndex(afterDocument.shapes.values().toArray());
 
     // record the command in history before updating the state
     if (afterDocument !== beforeDocument && !isHistoryCommand) {

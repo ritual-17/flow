@@ -13,6 +13,7 @@ export const MultiLine = {
   build,
   fromStartingPoint,
   addPoint,
+  getLastPoint,
 };
 
 type LinePoint = Coordinate | AnchorRef;
@@ -49,4 +50,11 @@ export function addPoint(line: MultiLine, point: LinePoint): MultiLine {
     ...line,
     points: [...line.points, point],
   };
+}
+
+export function getLastPoint(line: MultiLine): LinePoint {
+  if (line.points.length === 0) {
+    throw new Error('MultiLine has no points');
+  }
+  return line.points[line.points.length - 1];
 }
