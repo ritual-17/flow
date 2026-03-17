@@ -56,6 +56,9 @@
     "ArrowLeft": "left",
     "ArrowRight": "right",
     "c": "autoLinkCircle",
+    "r": "autoLinkRectangle",
+    "s": "autoLinkSquare",
+    "t": "autoLinkTextBox",
     "<Space>": "autoLinkAddToLine",
     "e": "toggleArrow"
   },

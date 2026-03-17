@@ -21,7 +21,10 @@ throws error if compilation fails. this is important because it prevents
 the user from exiting text editing mode while the content is in a bad
 state.
 **/
-export async function compileShapeTextContent(shape: Shape, newText?: string): Promise<Shape> {
+export async function compileShapeTextContent<T extends Shape>(
+  shape: T,
+  newText?: string,
+): Promise<T> {
   const text = newText !== undefined ? newText : shape.label.text;
   const compiledHTMLElement = await ImageCompiler.compileFromText(text);
   const { width: scaledWidth, height: scaledHeight } = ImageCompiler.getScaledDimensions(

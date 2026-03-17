@@ -9,6 +9,10 @@ import { AnchorRef, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/S
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
+import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
+import { Square } from '@renderer/core/geometry/shapes/Square';
+import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
+import { Transform } from '@renderer/core/geometry/Transform';
 import { isAnchorRef, resolveAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function autoLinkCircle(args: CommandArgs): CommandResult {
@@ -17,6 +21,30 @@ export function autoLinkCircle(args: CommandArgs): CommandResult {
 
   const updatedDocument = addShapeToDocument(args, circle);
   return autoLinkAddToLine({ ...args, document: updatedDocument }, circle);
+}
+
+export function autoLinkRectangle(args: CommandArgs): CommandResult {
+  const { x, y } = args.editor.cursorPosition;
+  const rectangle = Rectangle.build({ x, y });
+
+  const updatedDocument = addShapeToDocument(args, rectangle);
+  return autoLinkAddToLine({ ...args, document: updatedDocument }, rectangle);
+}
+
+export function autoLinkSquare(args: CommandArgs): CommandResult {
+  const { x, y } = args.editor.cursorPosition;
+  const square = Square.build({ x, y });
+
+  const updatedDocument = addShapeToDocument(args, square);
+  return autoLinkAddToLine({ ...args, document: updatedDocument }, square);
+}
+
+export async function autoLinkTextBox(args: CommandArgs): Promise<CommandResult> {
+  const { x, y } = args.editor.cursorPosition;
+  const textBox = await Transform.compileShapeTextContent(TextBox.build({ x, y }));
+
+  const updatedDocument = addShapeToDocument(args, textBox);
+  return autoLinkAddToLine({ ...args, document: updatedDocument }, textBox);
 }
 
 export function autoLinkAddToLine(
