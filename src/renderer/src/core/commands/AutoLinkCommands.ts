@@ -5,11 +5,15 @@ import {
 } from '@renderer/core/commands/ManipulationCommands';
 import { Document } from '@renderer/core/document/Document';
 import { setPreviousShapeId } from '@renderer/core/editor/Editor';
-import { AnchorPoint, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { Circle } from '@renderer/core/geometry/shapes/Circle';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { Point } from '@renderer/core/geometry/shapes/Point';
-import { resolveLinePoints } from '@renderer/core/geometry/utils/AnchorPoints';
+import {
+  isAnchorRef,
+  resolveAnchorPoint,
+  resolveLinePoints,
+} from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function autoLinkCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
@@ -75,7 +79,7 @@ function linkPreviousShape(
 function getPreviousShapePoint(
   args: CommandArgs,
   previousShapeId: ShapeId,
-): AnchorPoint | Coordinate {
+): AnchorRef | Coordinate {
   const { document, editor, spatialIndex } = args;
   const previousShape = Document.getShapeById(document, previousShapeId);
   console.log(previousShape);
@@ -98,7 +102,7 @@ function getPreviousShapePoint(
       if (!point) {
         throw new Error(`No anchor point found for shape with ID ${editor.previousShapeId}`);
       }
-      return point;
+      return { shapeId: previousShapeId, position: point.position };
     }
   }
 }
@@ -106,11 +110,17 @@ function getPreviousShapePoint(
 function getNewShapePoint(
   args: CommandArgs,
   newShape: Exclude<Shape, MultiLine | Point>,
-  previousPoint: Coordinate,
-): Coordinate {
+  previousPoint: Coordinate | AnchorRef,
+): AnchorRef {
+  if (isAnchorRef(previousPoint)) {
+    previousPoint = resolveAnchorPoint(
+      Document.getShapeById(args.document, previousPoint.shapeId)!,
+      previousPoint.position,
+    );
+  }
   const point = args.spatialIndex.getNearestAnchorPoint(previousPoint, newShape.id);
   if (!point) {
     throw new Error(`No anchor point found for new shape with ID ${newShape.id}`);
   }
-  return point;
+  return { shapeId: newShape.id, position: point.position };
 }
