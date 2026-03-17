@@ -26,6 +26,12 @@ export function autoLinkCircle(args: CommandArgs): CommandResult {
 export function autoLinkAddToLine(args: CommandArgs): CommandResult {
   let { document: updatedDocument, editor: updatedEditor } = args;
   if (!updatedEditor.previousShapeId) {
+    const point = Point.build({
+      x: updatedEditor.cursorPosition.x,
+      y: updatedEditor.cursorPosition.y,
+    });
+    updatedDocument = addShapeToDocument(args, point);
+    updatedEditor = setPreviousShapeId(updatedEditor, point.id);
     return [updatedEditor, updatedDocument];
   }
   const previousShape = Document.getShapeById(updatedDocument, updatedEditor.previousShapeId);
@@ -33,21 +39,33 @@ export function autoLinkAddToLine(args: CommandArgs): CommandResult {
     throw new Error(`Previous shape with ID ${updatedEditor.previousShapeId} not found`);
   }
   let newLine: MultiLine;
-  if (previousShape.type === 'multi-line') {
-    newLine = MultiLine.addPoint(previousShape, {
-      x: updatedEditor.cursorPosition.x,
-      y: updatedEditor.cursorPosition.y,
-    });
-    updatedDocument = updateShapeInDocument(
-      { ...args, document: updatedDocument, editor: updatedEditor },
-      newLine,
-    );
-  } else {
-    const previousPoint = getPreviousShapePoint(args, updatedEditor.previousShapeId);
-    newLine = MultiLine.build({
-      points: [previousPoint, updatedEditor.cursorPosition],
-    });
-    updatedDocument = addShapeToDocument(args, newLine);
+  switch (previousShape.type) {
+    case 'multi-line': {
+      newLine = MultiLine.addPoint(previousShape, {
+        x: updatedEditor.cursorPosition.x,
+        y: updatedEditor.cursorPosition.y,
+      });
+      updatedDocument = updateShapeInDocument(
+        { ...args, document: updatedDocument, editor: updatedEditor },
+        newLine,
+      );
+      break;
+    }
+    case 'point': {
+      newLine = MultiLine.build({
+        id: previousShape.id, // reuse the same ID to replace the point with a line
+        points: [previousShape, updatedEditor.cursorPosition],
+      });
+      updatedDocument = updateShapeInDocument(args, newLine);
+      break;
+    }
+    default: {
+      const previousPoint = getPreviousShapePoint(args, updatedEditor.previousShapeId);
+      newLine = MultiLine.build({
+        points: [previousPoint, updatedEditor.cursorPosition],
+      });
+      updatedDocument = addShapeToDocument(args, newLine);
+    }
   }
   updatedEditor = setPreviousShapeId(updatedEditor, newLine.id);
   return [updatedEditor, updatedDocument];
