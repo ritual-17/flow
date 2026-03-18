@@ -59,7 +59,7 @@ export function KeyboardHandler() {
       }
 
       // handle ctrl/meta + arrow keys or hjkl for fast movement
-      if (e.ctrlKey || e.metaKey) {
+      if (mode !== 'anchor-line' && (e.ctrlKey || e.metaKey)) {
         if (e.key === 'ArrowUp' || e.key === 'k') {
           e.preventDefault();
           appendCommandBuffer('<C-ArrowUp>');
