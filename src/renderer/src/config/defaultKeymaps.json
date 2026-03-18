@@ -110,7 +110,8 @@
     "<Shift-ArrowDown>": "translateSelectionDown",
     "<Shift-ArrowRight>": "translateSelectionRight",
     "<Shift-ArrowLeft>": "translateSelectionLeft",
-    "<Space>": "toggleBoxSelect"
+    "<Space>": "toggleBoxSelect",
+    "e": "toggleArrow"
   },
   "text": {},
   "command": {
