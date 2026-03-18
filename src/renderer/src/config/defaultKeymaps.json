@@ -18,6 +18,7 @@
     "V": "enterVisualBlockMode",
     "t": "enterTextMode",
     "T": "enterTextModeForNearestTextBox",
+    "I": "enterAutoLinkInsertMode",
     "dd": "deleteLine",
     "yy": "yankLine",
     "p": "pasteAfter",
@@ -45,6 +46,22 @@
     "r": "createRectangle",
     "s": "createSquare"
   },
+  "auto-link-insert": {
+    "j": "down",
+    "k": "up",
+    "h": "left",
+    "l": "right",
+    "ArrowUp": "up",
+    "ArrowDown": "down",
+    "ArrowLeft": "left",
+    "ArrowRight": "right",
+    "c": "autoLinkCircle",
+    "r": "autoLinkRectangle",
+    "s": "autoLinkSquare",
+    "t": "autoLinkTextBox",
+    "<Space>": "autoLinkAddToLine",
+    "e": "toggleArrow"
+  },
   "visual": {
     "j": "visualDown",
     "k": "visualUp",
@@ -69,7 +86,8 @@
     "N": "selectPreviousSearchResult",
     "<Space>": "toggleSelectShapeAtCursor",
     "V": "enterVisualBlockMode",
-    "M": "moveCursorToMiddle"
+    "M": "moveCursorToMiddle",
+    "e": "toggleArrow"
   },
   "visual-block": {
     "v": "enterVisualMode",
@@ -92,7 +110,8 @@
     "<Shift-ArrowDown>": "translateSelectionDown",
     "<Shift-ArrowRight>": "translateSelectionRight",
     "<Shift-ArrowLeft>": "translateSelectionLeft",
-    "<Space>": "toggleBoxSelect"
+    "<Space>": "toggleBoxSelect",
+    "e": "toggleArrow"
   },
   "text": {},
   "command": {

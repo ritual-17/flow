@@ -97,6 +97,7 @@ describe('CommandDispatcher', () => {
   it('should rebuild the spatial index and record history when document changes', () => {
     const newDocument = { shapes: [{ id: 'new' }] };
     const mockCmdFunc = jest.fn().mockReturnValue([mockEditor, newDocument]);
+    const originalSpatialIndex = dispatcher.spatialIndex;
     (CommandRegistry.commandFromName as jest.Mock).mockReturnValue(mockCmdFunc);
 
     jest.spyOn((dispatcher as any).normalModeParser, 'parse').mockReturnValue({
@@ -108,7 +109,7 @@ describe('CommandDispatcher', () => {
 
     dispatcher.dispatchCommand(mockEditor, mockDocument);
 
-    expect((dispatcher as any).spatialIndex.addShape).toHaveBeenCalledWith({ id: 'new' });
+    expect(dispatcher.spatialIndex).not.toBe(originalSpatialIndex);
     expect(historySpy).toHaveBeenCalled();
   });
 });

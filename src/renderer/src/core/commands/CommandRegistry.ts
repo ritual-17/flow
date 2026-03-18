@@ -2,11 +2,19 @@
 //
 
 import {
+  autoLinkAddToLine,
+  autoLinkCircle,
+  autoLinkRectangle,
+  autoLinkSquare,
+  autoLinkTextBox,
+} from '@renderer/core/commands/AutoLinkCommands';
+import {
   cursorDown,
   cursorLeft,
   cursorRight,
   cursorUp,
   enterAnchorLineMode,
+  enterAutoLinkInsertMode,
   enterCommandMode,
   enterInsertMode,
   enterLineMode,
@@ -93,6 +101,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterTextModeForNearestTextBox;
     case 'enterTextModeFromLineMode':
       return enterTextModeFromLineMode;
+    case 'enterAutoLinkInsertMode':
+      return enterAutoLinkInsertMode;
     case 'up':
       return cursorUp;
     case 'down':
@@ -111,6 +121,16 @@ function commandFromName(command: string): CommandFunction | null {
       return createSquare;
     case 'createTextBox':
       return createTextBox;
+    case 'autoLinkCircle':
+      return autoLinkCircle;
+    case 'autoLinkRectangle':
+      return autoLinkRectangle;
+    case 'autoLinkSquare':
+      return autoLinkSquare;
+    case 'autoLinkTextBox':
+      return autoLinkTextBox;
+    case 'autoLinkAddToLine':
+      return autoLinkAddToLine;
     case 'selectNextSearchResult':
       return selectNextSearchResult;
     case 'selectPreviousSearchResult':
