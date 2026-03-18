@@ -13,6 +13,7 @@ impact the state of the document.
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { previousModeExitCleanup } from '@renderer/core/commands/modes/onExit';
 import { toggleBoxSelect, toggleSelectShapeAtPoint } from '@renderer/core/commands/VisualCommands';
+import { updateBoxSelection } from '@renderer/core/commands/VisualCommands';
 import {
   clearBoxSelectAnchor,
   clearSelection,
@@ -204,44 +205,56 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
   ];
 }
 
-function cursorUpFast({ editor, document }: CommandArgs): CommandResult {
-  return [
-    setCursorPosition(editor, {
-      x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y - FAST_CURSOR_MOVE_AMOUNT,
-    }),
-    document,
-  ];
+function cursorUpFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  let updatedEditor = setCursorPosition(editor, {
+    x: editor.cursorPosition.x,
+    y: editor.cursorPosition.y - FAST_CURSOR_MOVE_AMOUNT,
+  });
+
+  if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+
+  return [updatedEditor, document];
 }
 
-function cursorDownFast({ editor, document }: CommandArgs): CommandResult {
-  return [
-    setCursorPosition(editor, {
-      x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y + FAST_CURSOR_MOVE_AMOUNT,
-    }),
-    document,
-  ];
+function cursorDownFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  let updatedEditor = setCursorPosition(editor, {
+    x: editor.cursorPosition.x,
+    y: editor.cursorPosition.y + FAST_CURSOR_MOVE_AMOUNT,
+  });
+
+  if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+
+  return [updatedEditor, document];
 }
 
-function cursorLeftFast({ editor, document }: CommandArgs): CommandResult {
-  return [
-    setCursorPosition(editor, {
-      x: editor.cursorPosition.x - FAST_CURSOR_MOVE_AMOUNT,
-      y: editor.cursorPosition.y,
-    }),
-    document,
-  ];
+function cursorLeftFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  let updatedEditor = setCursorPosition(editor, {
+    x: editor.cursorPosition.x - FAST_CURSOR_MOVE_AMOUNT,
+    y: editor.cursorPosition.y,
+  });
+
+  if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+
+  return [updatedEditor, document];
 }
 
-function cursorRightFast({ editor, document }: CommandArgs): CommandResult {
-  return [
-    setCursorPosition(editor, {
-      x: editor.cursorPosition.x + FAST_CURSOR_MOVE_AMOUNT,
-      y: editor.cursorPosition.y,
-    }),
-    document,
-  ];
+function cursorRightFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  let updatedEditor = setCursorPosition(editor, {
+    x: editor.cursorPosition.x + FAST_CURSOR_MOVE_AMOUNT,
+    y: editor.cursorPosition.y,
+  });
+
+  if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+
+  return [updatedEditor, document];
 }
 
 function moveCursorToMiddle({ editor, document }: CommandArgs): CommandResult {
