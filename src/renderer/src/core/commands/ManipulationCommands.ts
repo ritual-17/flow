@@ -63,7 +63,7 @@ export async function createTextBox(args: CommandArgs): Promise<CommandResult> {
   return [args.editor, updatedDocument];
 }
 
-const TRANSLATE_AMOUNT = 50;
+const TRANSLATE_AMOUNT = 10;
 export function translateSelectionUp(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: 0, deltaY: -TRANSLATE_AMOUNT });
 }
