@@ -58,35 +58,34 @@ export function KeyboardHandler() {
         return;
       }
 
-      // handle ctrl/meta + arrow keys or hjkl for fast movement
-      if (mode !== 'anchor-line' && (e.ctrlKey || e.metaKey)) {
-        if (e.key === 'ArrowUp' || e.key === 'k') {
-          e.preventDefault();
-          appendCommandBuffer('<C-ArrowUp>');
-          return;
-        }
-
-        if (e.key === 'ArrowDown' || e.key === 'j') {
-          e.preventDefault();
-          appendCommandBuffer('<C-ArrowDown>');
-          return;
-        }
-
-        if (e.key === 'ArrowLeft' || e.key === 'h') {
-          e.preventDefault();
-          appendCommandBuffer('<C-ArrowLeft>');
-          return;
-        }
-
-        if (e.key === 'ArrowRight' || e.key === 'l') {
-          e.preventDefault();
-          appendCommandBuffer('<C-ArrowRight>');
-          return;
-        }
-      }
-
       // handle shift+arrow keys
       if (e.shiftKey) {
+        if (e.ctrlKey || e.metaKey) {
+          if (e.key === 'ArrowUp' || e.key === 'k') {
+            e.preventDefault();
+            appendCommandBuffer('<C-Shift-Up>');
+            return;
+          }
+
+          if (e.key === 'ArrowDown' || e.key === 'j') {
+            e.preventDefault();
+            appendCommandBuffer('<C-Shift-Down>');
+            return;
+          }
+
+          if (e.key === 'ArrowLeft' || e.key === 'h') {
+            e.preventDefault();
+            appendCommandBuffer('<C-Shift-Left>');
+            return;
+          }
+
+          if (e.key === 'ArrowRight' || e.key === 'l') {
+            e.preventDefault();
+            appendCommandBuffer('<C-Shift-Right>');
+            return;
+          }
+        }
+
         if (e.key === 'ArrowUp') {
           e.preventDefault();
           appendCommandBuffer('<Shift-ArrowUp>');
@@ -108,6 +107,33 @@ export function KeyboardHandler() {
         if (e.key === 'ArrowRight') {
           e.preventDefault();
           appendCommandBuffer('<Shift-ArrowRight>');
+          return;
+        }
+      }
+
+      // handle ctrl/meta + arrow keys or hjkl for fast movement
+      if ((e.ctrlKey || e.metaKey) && mode !== 'anchor-line') {
+        if (e.key === 'ArrowUp' || e.key === 'k') {
+          e.preventDefault();
+          appendCommandBuffer('<C-Up>');
+          return;
+        }
+
+        if (e.key === 'ArrowDown' || e.key === 'j') {
+          e.preventDefault();
+          appendCommandBuffer('<C-Down>');
+          return;
+        }
+
+        if (e.key === 'ArrowLeft' || e.key === 'h') {
+          e.preventDefault();
+          appendCommandBuffer('<C-Left>');
+          return;
+        }
+
+        if (e.key === 'ArrowRight' || e.key === 'l') {
+          e.preventDefault();
+          appendCommandBuffer('<C-Right>');
           return;
         }
       }

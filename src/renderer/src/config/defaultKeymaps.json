@@ -1,14 +1,10 @@
 {
   "all": {
     "<Esc>": "enterNormalMode",
-    "<C-ArrowUp>": "fastUp",
-    "<C-ArrowDown>": "fastDown",
-    "<C-ArrowLeft>": "fastLeft",
-    "<C-ArrowRight>": "fastRight",
-    "<C-h>": "fastLeft",
-    "<C-j>": "fastDown",
-    "<C-k>": "fastUp",
-    "<C-l>": "fastRight"
+    "<C-Up>": "fastUp",
+    "<C-Down>": "fastDown",
+    "<C-Left>": "fastLeft",
+    "<C-Right>": "fastRight"
   },
   "normal": {
     "j": "down",
@@ -73,6 +69,10 @@
     "<Shift-ArrowDown>": "translateSelectionDown",
     "<Shift-ArrowRight>": "translateSelectionRight",
     "<Shift-ArrowLeft>": "translateSelectionLeft",
+    "<C-Shift-Up>": "translateFastSelectionUp",
+    "<C-Shift-Down>": "translateFastSelectionDown",
+    "<C-Shift-Right>": "translateFastSelectionRight",
+    "<C-Shift-Left>": "translateFastSelectionLeft",
     "n": "selectNextSearchResult",
     "N": "selectPreviousSearchResult",
     "<Space>": "toggleSelectShapeAtCursor",
@@ -100,6 +100,10 @@
     "<Shift-ArrowDown>": "translateSelectionDown",
     "<Shift-ArrowRight>": "translateSelectionRight",
     "<Shift-ArrowLeft>": "translateSelectionLeft",
+    "<C-Shift-Up>": "translateFastSelectionUp",
+    "<C-Shift-Down>": "translateFastSelectionDown",
+    "<C-Shift-Right>": "translateFastSelectionRight",
+    "<C-Shift-Left>": "translateFastSelectionLeft",
     "<Space>": "toggleBoxSelect"
   },
   "text": {},

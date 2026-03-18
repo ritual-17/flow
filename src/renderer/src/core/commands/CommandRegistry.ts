@@ -36,6 +36,10 @@ import {
   paste,
   redo,
   startNewLine,
+  translateFastSelectionDown,
+  translateFastSelectionLeft,
+  translateFastSelectionRight,
+  translateFastSelectionUp,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -147,6 +151,14 @@ function commandFromName(command: string): CommandFunction | null {
       return translateSelectionLeft;
     case 'translateSelectionRight':
       return translateSelectionRight;
+    case 'translateFastSelectionUp':
+      return translateFastSelectionUp;
+    case 'translateFastSelectionDown':
+      return translateFastSelectionDown;
+    case 'translateFastSelectionLeft':
+      return translateFastSelectionLeft;
+    case 'translateFastSelectionRight':
+      return translateFastSelectionRight;
     case 'deleteSelection':
       return deleteSelection;
     case 'yankSelection':
