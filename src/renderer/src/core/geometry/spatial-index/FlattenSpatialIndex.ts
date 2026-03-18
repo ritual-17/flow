@@ -1,6 +1,7 @@
 import Flatten from '@flatten-js/core';
 import {
   AnchorPoint,
+  AnchorRef,
   Coordinate,
   isLine,
   isPoint,
@@ -12,9 +13,9 @@ import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
 import { Direction, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import {
-  getAnchorPoints,
+  getAllAnchorCoordinates,
   isAnchorRef,
-  resolveAnchorPoint,
+  resolveAnchorRefCoordinate,
 } from '@renderer/core/geometry/utils/AnchorPoints';
 import BTree from 'sorted-btree';
 
@@ -179,7 +180,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     let nearestPoint: AnchorPoint | null = null;
     let minDistance = Infinity;
     for (const candidate of domainCandidates) {
-      const anchorPoints = getAnchorPoints(candidate);
+      const anchorPoints = getAllAnchorCoordinates(candidate);
       for (const anchorPoint of anchorPoints) {
         const distance = this.distanceBetweenPoints(point, anchorPoint);
         if (distance < minDistance) {
@@ -223,14 +224,14 @@ export class FlattenSpatialIndex implements SpatialIndex {
         let resolvedB: Coordinate;
 
         if (isAnchorRef(pointA)) {
-          const resolvedPointA = resolveAnchorPoint(candidate, pointA.position);
+          const resolvedPointA = resolveAnchorRefCoordinate(candidate, pointA.position);
           resolvedA = { x: resolvedPointA.x, y: resolvedPointA.y };
         } else {
           resolvedA = pointA;
         }
 
         if (isAnchorRef(pointB)) {
-          const resolvedPointB = resolveAnchorPoint(candidate, pointB.position);
+          const resolvedPointB = resolveAnchorRefCoordinate(candidate, pointB.position);
           resolvedB = { x: resolvedPointB.x, y: resolvedPointB.y };
         } else {
           resolvedB = pointB;
@@ -242,7 +243,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
         };
       } else {
         if (isAnchorRef(centerPointRaw)) {
-          const resolvedPoint = resolveAnchorPoint(candidate, centerPointRaw.position);
+          const resolvedPoint = resolveAnchorRefCoordinate(candidate, centerPointRaw.position);
           centerPoint = { x: resolvedPoint.x, y: resolvedPoint.y };
         } else {
           centerPoint = centerPointRaw;
@@ -264,41 +265,47 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return null;
   }
 
-  getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint {
+  getNextAnchorRef(currentAnchor: AnchorRef, direction: Direction): AnchorRef {
+    const currentAnchorPoint = resolveAnchorRefCoordinate(
+      this.getDomainShapeById(currentAnchor.shapeId),
+      currentAnchor.position,
+    );
+
     // can optimize by searching only in the direction
     const searchBox = new Flatten.Box(
-      currentAnchor.x - this.SEARCH_RADIUS,
-      currentAnchor.y - this.SEARCH_RADIUS,
-      currentAnchor.x + this.SEARCH_RADIUS,
-      currentAnchor.y + this.SEARCH_RADIUS,
+      currentAnchorPoint.x - this.SEARCH_RADIUS,
+      currentAnchorPoint.y - this.SEARCH_RADIUS,
+      currentAnchorPoint.x + this.SEARCH_RADIUS,
+      currentAnchorPoint.y + this.SEARCH_RADIUS,
     );
     const candidates = this.set.search(searchBox);
     const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
 
-    let nextAnchor: AnchorPoint = currentAnchor;
+    let nextAnchor = currentAnchorPoint;
     let minDistance = Infinity;
 
     for (const candidate of domainCandidates) {
-      const anchorPoints = getAnchorPoints(candidate);
-      for (const anchorPoint of anchorPoints) {
+      const anchorPoints = getAllAnchorCoordinates(candidate);
+      for (let anchorIndex = 0; anchorIndex < anchorPoints.length; anchorIndex++) {
+        const anchorPoint = anchorPoints[anchorIndex];
         let isInDirection = false;
         switch (direction) {
           case 'up':
-            isInDirection = anchorPoint.y < currentAnchor.y;
+            isInDirection = anchorPoint.y < currentAnchorPoint.y;
             break;
           case 'down':
-            isInDirection = anchorPoint.y > currentAnchor.y;
+            isInDirection = anchorPoint.y > currentAnchorPoint.y;
             break;
           case 'left':
-            isInDirection = anchorPoint.x < currentAnchor.x;
+            isInDirection = anchorPoint.x < currentAnchorPoint.x;
             break;
           case 'right':
-            isInDirection = anchorPoint.x > currentAnchor.x;
+            isInDirection = anchorPoint.x > currentAnchorPoint.x;
             break;
         }
 
         if (isInDirection) {
-          const distance = this.distanceBetweenPoints(currentAnchor, anchorPoint);
+          const distance = this.distanceBetweenPoints(currentAnchorPoint, anchorPoint);
           if (distance < minDistance) {
             minDistance = distance;
             nextAnchor = {
@@ -394,7 +401,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
       if (!isAnchorRef(pt)) return pt;
 
       const refShape = this.getDomainShapeById(pt.shapeId);
-      const anchorPoint = resolveAnchorPoint(refShape, pt.position);
+      const anchorPoint = resolveAnchorRefCoordinate(refShape, pt.position);
 
       // track line references for future updates
       if (!this.shapeLineRefs.has(refShape.id)) {

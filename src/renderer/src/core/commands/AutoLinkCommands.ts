@@ -13,7 +13,7 @@ import { Rectangle } from '@renderer/core/geometry/shapes/Rectangle';
 import { Square } from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { Transform } from '@renderer/core/geometry/Transform';
-import { isAnchorRef, resolveAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
+import { resolvePointCoordinate } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function autoLinkCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
@@ -140,13 +140,8 @@ function getNewShapePoint(
   newShape: Exclude<Shape, MultiLine | Point>,
   previousPoint: Coordinate | AnchorRef,
 ): AnchorRef {
-  if (isAnchorRef(previousPoint)) {
-    previousPoint = resolveAnchorPoint(
-      Document.getShapeById(args.document, previousPoint.shapeId)!,
-      previousPoint.position,
-    );
-  }
-  const point = args.spatialIndex.getNearestAnchorPoint(previousPoint, newShape.id);
+  const coord = resolvePointCoordinate(args.document, previousPoint);
+  const point = args.spatialIndex.getNearestAnchorPoint(coord, newShape.id);
   if (!point) {
     throw new Error(`No anchor point found for new shape with ID ${newShape.id}`);
   }

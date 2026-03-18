@@ -37,12 +37,12 @@ function jumpToAnchorPoint(
   { editor, document, spatialIndex }: CommandArgs,
   direction: Direction,
 ): CommandResult {
-  const currentAnchorPoint = editor.currentAnchorPoint;
-  if (!currentAnchorPoint) {
+  const currentAnchorRef = editor.currentAnchorRef;
+  if (!currentAnchorRef) {
     return [editor, document];
   }
 
-  const nextAnchorPoint = spatialIndex.getNextAnchorPoint(currentAnchorPoint, direction);
+  const nextAnchorPoint = spatialIndex.getNextAnchorRef(currentAnchorRef, direction);
   let updatedEditor = editor;
   if (nextAnchorPoint) {
     updatedEditor = produce(editor, (draft) => {

@@ -1,4 +1,11 @@
-import { AnchorPoint, AnchorRef, buildBaseShape, IShapeBase } from '@renderer/core/geometry/Shape';
+import {
+  AnchorPoint,
+  AnchorRef,
+  buildBaseShape,
+  IShapeBase,
+  Shape,
+} from '@renderer/core/geometry/Shape';
+import { resolveAnchorCoordinate } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export type Point = IShapeBase & {
   type: 'point';
@@ -8,6 +15,7 @@ export type Point = IShapeBase & {
 
 export const Point = {
   build,
+  fromAnchorRef,
 };
 
 export function build(attrs: Partial<Point>): Point {
@@ -20,4 +28,14 @@ export function build(attrs: Partial<Point>): Point {
   };
 
   return point;
+}
+
+export function fromAnchorRef(shape: Shape, ref: AnchorRef): Point {
+  const anchorCoordinate = resolveAnchorCoordinate(shape, ref.position);
+
+  return Point.build({
+    x: anchorCoordinate.x,
+    y: anchorCoordinate.y,
+    ref: ref,
+  });
 }

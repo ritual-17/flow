@@ -59,13 +59,8 @@ export type AnchorRef = { shapeId: ShapeId; position: number };
 export type LinePoint = Coordinate | AnchorRef;
 
 // TODO: remove AnchorPoint and references to it. Use AnchorRef instead.
-export type AnchorPoint = {
-  ownerId: ShapeId; // the shape this anchor point belongs to
-  userId?: ShapeId; // the shape that is using this anchor point
-  position: number; // where along the shape's perimeter the anchor point is located
-  x: number;
-  y: number;
-};
+export type AnchorPoint = AnchorRef & Coordinate;
+
 // maybe to be added, or we could possibly stick to multiline only
 // export type Line = IShapeBase & {
 //   type: 'line';
