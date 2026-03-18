@@ -1,6 +1,14 @@
 {
   "all": {
-    "<Esc>": "enterNormalMode"
+    "<Esc>": "enterNormalMode",
+    "<C-ArrowUp>": "fastUp",
+    "<C-ArrowDown>": "fastDown",
+    "<C-ArrowLeft>": "fastLeft",
+    "<C-ArrowRight>": "fastRight",
+    "<C-h>": "fastLeft",
+    "<C-j>": "fastDown",
+    "<C-k>": "fastUp",
+    "<C-l>": "fastRight"
   },
   "normal": {
     "j": "down",

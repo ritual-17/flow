@@ -3,9 +3,13 @@
 
 import {
   cursorDown,
+  cursorDownFast,
   cursorLeft,
+  cursorLeftFast,
   cursorRight,
+  cursorRightFast,
   cursorUp,
+  cursorUpFast,
   enterAnchorLineMode,
   enterCommandMode,
   enterInsertMode,
@@ -101,6 +105,14 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorLeft;
     case 'right':
       return cursorRight;
+    case 'fastUp':
+      return cursorUpFast;
+    case 'fastDown':
+      return cursorDownFast;
+    case 'fastLeft':
+      return cursorLeftFast;
+    case 'fastRight':
+      return cursorRightFast;
     case 'moveCursorToMiddle':
       return moveCursorToMiddle;
     case 'createCircle':

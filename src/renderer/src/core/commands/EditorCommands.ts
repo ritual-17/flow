@@ -25,6 +25,7 @@ import {
 } from '@renderer/core/editor/Editor';
 
 const CURSOR_MOVE_AMOUNT = 10;
+const FAST_CURSOR_MOVE_AMOUNT = 50;
 
 async function enterNormalMode(args: CommandArgs): Promise<CommandResult> {
   // disabling because it is complaining updatedDocument is not reassigned
@@ -203,6 +204,46 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
   ];
 }
 
+function cursorUpFast({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: editor.cursorPosition.x,
+      y: editor.cursorPosition.y - FAST_CURSOR_MOVE_AMOUNT,
+    }),
+    document,
+  ];
+}
+
+function cursorDownFast({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: editor.cursorPosition.x,
+      y: editor.cursorPosition.y + FAST_CURSOR_MOVE_AMOUNT,
+    }),
+    document,
+  ];
+}
+
+function cursorLeftFast({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: editor.cursorPosition.x - FAST_CURSOR_MOVE_AMOUNT,
+      y: editor.cursorPosition.y,
+    }),
+    document,
+  ];
+}
+
+function cursorRightFast({ editor, document }: CommandArgs): CommandResult {
+  return [
+    setCursorPosition(editor, {
+      x: editor.cursorPosition.x + FAST_CURSOR_MOVE_AMOUNT,
+      y: editor.cursorPosition.y,
+    }),
+    document,
+  ];
+}
+
 function moveCursorToMiddle({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
@@ -250,6 +291,10 @@ export {
   cursorDown,
   cursorLeft,
   cursorRight,
+  cursorUpFast,
+  cursorDownFast,
+  cursorLeftFast,
+  cursorRightFast,
   moveCursorToMiddle,
   selectNextSearchResult,
   selectPreviousSearchResult,

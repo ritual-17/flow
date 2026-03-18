@@ -58,6 +58,33 @@ export function KeyboardHandler() {
         return;
       }
 
+      // handle ctrl/meta + arrow keys or hjkl for fast movement
+      if (e.ctrlKey || e.metaKey) {
+        if (e.key === 'ArrowUp' || e.key === 'k') {
+          e.preventDefault();
+          appendCommandBuffer('<C-ArrowUp>');
+          return;
+        }
+
+        if (e.key === 'ArrowDown' || e.key === 'j') {
+          e.preventDefault();
+          appendCommandBuffer('<C-ArrowDown>');
+          return;
+        }
+
+        if (e.key === 'ArrowLeft' || e.key === 'h') {
+          e.preventDefault();
+          appendCommandBuffer('<C-ArrowLeft>');
+          return;
+        }
+
+        if (e.key === 'ArrowRight' || e.key === 'l') {
+          e.preventDefault();
+          appendCommandBuffer('<C-ArrowRight>');
+          return;
+        }
+      }
+
       // handle shift+arrow keys
       if (e.shiftKey) {
         if (e.key === 'ArrowUp') {
