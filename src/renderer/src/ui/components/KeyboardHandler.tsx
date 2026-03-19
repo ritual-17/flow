@@ -61,25 +61,25 @@ export function KeyboardHandler() {
       // handle shift+arrow keys
       if (e.shiftKey) {
         if (e.ctrlKey) {
-          if (e.key === 'ArrowUp' || e.key === 'k') {
+          if (e.key === 'ArrowUp' || e.key === 'K') {
             e.preventDefault();
             appendCommandBuffer('<C-Shift-Up>');
             return;
           }
 
-          if (e.key === 'ArrowDown' || e.key === 'j') {
+          if (e.key === 'ArrowDown' || e.key === 'J') {
             e.preventDefault();
             appendCommandBuffer('<C-Shift-Down>');
             return;
           }
 
-          if (e.key === 'ArrowLeft' || e.key === 'h') {
+          if (e.key === 'ArrowLeft' || e.key === 'H') {
             e.preventDefault();
             appendCommandBuffer('<C-Shift-Left>');
             return;
           }
 
-          if (e.key === 'ArrowRight' || e.key === 'l') {
+          if (e.key === 'ArrowRight' || e.key === 'L') {
             e.preventDefault();
             appendCommandBuffer('<C-Shift-Right>');
             return;
