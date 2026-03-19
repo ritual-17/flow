@@ -63,7 +63,8 @@ export async function createTextBox(args: CommandArgs): Promise<CommandResult> {
   return [args.editor, updatedDocument];
 }
 
-const TRANSLATE_AMOUNT = 50;
+const TRANSLATE_AMOUNT = 10;
+const FAST_TRANSLATE_AMOUNT = 50;
 export function translateSelectionUp(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: 0, deltaY: -TRANSLATE_AMOUNT });
 }
@@ -75,6 +76,18 @@ export function translateSelectionLeft(args: CommandArgs): [Editor, DocumentMode
 }
 export function translateSelectionRight(args: CommandArgs): [Editor, DocumentModel] {
   return translateSelection(args, { deltaX: TRANSLATE_AMOUNT, deltaY: 0 });
+}
+export function translateFastSelectionUp(args: CommandArgs): [Editor, DocumentModel] {
+  return translateSelection(args, { deltaX: 0, deltaY: -FAST_TRANSLATE_AMOUNT });
+}
+export function translateFastSelectionDown(args: CommandArgs): [Editor, DocumentModel] {
+  return translateSelection(args, { deltaX: 0, deltaY: FAST_TRANSLATE_AMOUNT });
+}
+export function translateFastSelectionLeft(args: CommandArgs): [Editor, DocumentModel] {
+  return translateSelection(args, { deltaX: -FAST_TRANSLATE_AMOUNT, deltaY: 0 });
+}
+export function translateFastSelectionRight(args: CommandArgs): [Editor, DocumentModel] {
+  return translateSelection(args, { deltaX: FAST_TRANSLATE_AMOUNT, deltaY: 0 });
 }
 
 function translateSelection(

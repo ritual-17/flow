@@ -13,6 +13,7 @@ impact the state of the document.
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { previousModeExitCleanup } from '@renderer/core/commands/modes/onExit';
 import { toggleBoxSelect, toggleSelectShapeAtPoint } from '@renderer/core/commands/VisualCommands';
+import { updateBoxSelection } from '@renderer/core/commands/VisualCommands';
 import {
   clearBoxSelectAnchor,
   clearSelection,
@@ -25,6 +26,7 @@ import {
 } from '@renderer/core/editor/Editor';
 
 const CURSOR_MOVE_AMOUNT = 10;
+const FAST_CURSOR_MOVE_AMOUNT = 50;
 
 async function enterNormalMode(args: CommandArgs): Promise<CommandResult> {
   // disabling because it is complaining updatedDocument is not reassigned
@@ -208,6 +210,58 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
   ];
 }
 
+function cursorUpFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  let updatedEditor = setCursorPosition(editor, {
+    x: editor.cursorPosition.x,
+    y: editor.cursorPosition.y - FAST_CURSOR_MOVE_AMOUNT,
+  });
+
+  if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+
+  return [updatedEditor, document];
+}
+
+function cursorDownFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  let updatedEditor = setCursorPosition(editor, {
+    x: editor.cursorPosition.x,
+    y: editor.cursorPosition.y + FAST_CURSOR_MOVE_AMOUNT,
+  });
+
+  if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+
+  return [updatedEditor, document];
+}
+
+function cursorLeftFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  let updatedEditor = setCursorPosition(editor, {
+    x: editor.cursorPosition.x - FAST_CURSOR_MOVE_AMOUNT,
+    y: editor.cursorPosition.y,
+  });
+
+  if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+
+  return [updatedEditor, document];
+}
+
+function cursorRightFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
+  let updatedEditor = setCursorPosition(editor, {
+    x: editor.cursorPosition.x + FAST_CURSOR_MOVE_AMOUNT,
+    y: editor.cursorPosition.y,
+  });
+
+  if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
+    updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
+  }
+
+  return [updatedEditor, document];
+}
+
 function moveCursorToMiddle({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
@@ -256,6 +310,10 @@ export {
   cursorDown,
   cursorLeft,
   cursorRight,
+  cursorUpFast,
+  cursorDownFast,
+  cursorLeftFast,
+  cursorRightFast,
   moveCursorToMiddle,
   selectNextSearchResult,
   selectPreviousSearchResult,

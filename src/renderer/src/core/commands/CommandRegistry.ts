@@ -10,9 +10,13 @@ import {
 } from '@renderer/core/commands/AutoLinkCommands';
 import {
   cursorDown,
+  cursorDownFast,
   cursorLeft,
+  cursorLeftFast,
   cursorRight,
+  cursorRightFast,
   cursorUp,
+  cursorUpFast,
   enterAnchorLineMode,
   enterAutoLinkInsertMode,
   enterCommandMode,
@@ -40,6 +44,10 @@ import {
   paste,
   redo,
   startNewLine,
+  translateFastSelectionDown,
+  translateFastSelectionLeft,
+  translateFastSelectionRight,
+  translateFastSelectionUp,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -111,6 +119,14 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorLeft;
     case 'right':
       return cursorRight;
+    case 'fastUp':
+      return cursorUpFast;
+    case 'fastDown':
+      return cursorDownFast;
+    case 'fastLeft':
+      return cursorLeftFast;
+    case 'fastRight':
+      return cursorRightFast;
     case 'moveCursorToMiddle':
       return moveCursorToMiddle;
     case 'createCircle':
@@ -155,6 +171,14 @@ function commandFromName(command: string): CommandFunction | null {
       return translateSelectionLeft;
     case 'translateSelectionRight':
       return translateSelectionRight;
+    case 'translateFastSelectionUp':
+      return translateFastSelectionUp;
+    case 'translateFastSelectionDown':
+      return translateFastSelectionDown;
+    case 'translateFastSelectionLeft':
+      return translateFastSelectionLeft;
+    case 'translateFastSelectionRight':
+      return translateFastSelectionRight;
     case 'deleteSelection':
       return deleteSelection;
     case 'yankSelection':

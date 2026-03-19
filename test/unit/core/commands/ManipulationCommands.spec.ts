@@ -150,7 +150,7 @@ describe('createTextBox', () => {
   });
 });
 
-const TRANSLATE_AMOUNT = 50;
+const TRANSLATE_AMOUNT = 10;
 describe('translateSelectionUp', () => {
   it('moves all selected shapes up by TRANSLATE_AMOUNT', () => {
     const c = CircleShape.build({ id: 'c1', x: 100, y: 200 });

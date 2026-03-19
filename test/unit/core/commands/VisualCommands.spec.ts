@@ -209,7 +209,7 @@ describe('VisualCommands', () => {
       history: mockHistory,
       args: {},
     });
-    expect(updatedDocument.shapes.get('shape1')?.y).toEqual(50);
+    expect(updatedDocument.shapes.get('shape1')?.y).toEqual(90);
   });
 
   it('should translate selected shapes right', () => {
@@ -223,7 +223,7 @@ describe('VisualCommands', () => {
       history: mockHistory,
       args: {},
     });
-    expect(updatedDocument.shapes.get('shape1')?.x).toEqual(150);
+    expect(updatedDocument.shapes.get('shape1')?.x).toEqual(110);
   });
 
   // deleting selection test
