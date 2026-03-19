@@ -60,7 +60,7 @@ export function KeyboardHandler() {
 
       // handle shift+arrow keys
       if (e.shiftKey) {
-        if (e.ctrlKey || e.metaKey) {
+        if (e.ctrlKey) {
           if (e.key === 'ArrowUp' || e.key === 'k') {
             e.preventDefault();
             appendCommandBuffer('<C-Shift-Up>');
@@ -112,7 +112,7 @@ export function KeyboardHandler() {
       }
 
       // handle ctrl/meta + arrow keys or hjkl for fast movement
-      if ((e.ctrlKey || e.metaKey) && mode !== 'anchor-line') {
+      if (e.ctrlKey && mode !== 'anchor-line') {
         if (e.key === 'ArrowUp' || e.key === 'k') {
           e.preventDefault();
           appendCommandBuffer('<C-Up>');
