@@ -6,6 +6,11 @@ export type Square = IShapeBase & {
   height: number;
 };
 
+export const Square = {
+  build,
+  generateAnchorPoints,
+};
+
 export function build(attrs: Partial<Square>): Square {
   const square: Square = {
     type: 'square',

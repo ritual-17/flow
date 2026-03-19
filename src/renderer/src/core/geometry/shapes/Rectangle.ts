@@ -6,6 +6,11 @@ export type Rectangle = IShapeBase & {
   height: number;
 };
 
+export const Rectangle = {
+  build,
+  generateAnchorPoints,
+};
+
 export function build(attrs: Partial<Rectangle>): Rectangle {
   const rectangle: Rectangle = {
     type: 'rectangle',

@@ -42,6 +42,15 @@ export class FlattenSpatialIndex implements SpatialIndex {
       a[2].localeCompare(b[2]), // id
   );
 
+  constructor(shapes: Shape[] = []) {
+    const lines = shapes.filter(isLine);
+    const nonLines = shapes.filter((shape) => !isLine(shape));
+
+    // add non-line shapes first so that line shapes can resolve any anchor refs to them
+    nonLines.forEach((shape) => this.addShape(shape));
+    lines.forEach((shape) => this.addShape(shape));
+  }
+
   addShape(shape: Shape): void {
     const resolvedShape = this.resolveShapePoints(shape);
     const flat = toFlatten(resolvedShape);
@@ -149,15 +158,23 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return nearest;
   }
 
-  getNearestAnchorPoint(point: Coordinate): AnchorPoint | null {
+  // pass anchorPointOwner to filter anchor points to only those belonging to the specified shape
+  getNearestAnchorPoint(point: Coordinate, anchorPointOwner?: ShapeId): AnchorPoint | null {
     const searchBox = new Flatten.Box(
       point.x - this.SEARCH_RADIUS,
       point.y - this.SEARCH_RADIUS,
       point.x + this.SEARCH_RADIUS,
       point.y + this.SEARCH_RADIUS,
     );
-    const candidates = this.set.search(searchBox);
-    const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
+
+    let domainCandidates: Shape[] = [];
+    if (anchorPointOwner) {
+      const ownerShape = this.getDomainShapeById(anchorPointOwner);
+      domainCandidates = [ownerShape];
+    } else {
+      const candidates = this.set.search(searchBox);
+      domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
+    }
 
     let nearestPoint: AnchorPoint | null = null;
     let minDistance = Infinity;
@@ -365,7 +382,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
 
   private getDomainShapeById(id: ShapeId): Shape {
     const shape = this.idToShapeMap.get(id);
-    if (!shape) throw new Error('Shape not found');
+    if (!shape) throw new Error('Shape not found with id ' + id);
 
     return shape.domainShape;
   }

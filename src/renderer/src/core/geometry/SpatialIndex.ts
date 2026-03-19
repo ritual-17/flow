@@ -13,7 +13,7 @@ export interface SpatialIndex {
   searchInArea(area: { xMin: number; xMax: number; yMin: number; yMax: number }): Shape[];
   searchAtPoint(point: Coordinate): Shape[];
   getNearestShape(point: Coordinate): Shape | null;
-  getNearestAnchorPoint(point: Coordinate): AnchorPoint | null;
+  getNearestAnchorPoint(point: Coordinate, anchorPointOwner?: ShapeId): AnchorPoint | null;
   getNearestLineCenter(point: Coordinate): { line: MultiLine; point: Coordinate } | null;
   getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint;
   getNextShape(point: Coordinate, backward?: boolean): Shape | null;

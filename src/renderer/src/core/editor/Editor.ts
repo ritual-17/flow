@@ -12,6 +12,7 @@ export interface Editor {
   boxSelectAnchor?: { x: number; y: number };
   currentAnchorPoint: AnchorPoint | null;
   currentLineId: ShapeId | null;
+  previousShapeId: ShapeId | null; // for auto-linking, to keep track of the last shape that was linked from
   statusMessage: string;
   currentTextBox: TextBoxEditingState | null;
 }
@@ -29,7 +30,8 @@ export type Mode =
   | 'command'
   | 'text'
   | 'line'
-  | 'anchor-line';
+  | 'anchor-line'
+  | 'auto-link-insert';
 
 // any modification to the editor state should go through these functions
 // below are just some helper functions to create and update the editor state
@@ -43,6 +45,7 @@ function createEditor(): Editor {
     clipboard: [],
     currentAnchorPoint: null,
     currentLineId: null,
+    previousShapeId: null,
     boxSelectAnchor: undefined,
     statusMessage: '',
     currentTextBox: null,
@@ -162,6 +165,12 @@ function setStatus(editor: Editor, message: string): Editor {
   });
 }
 
+function setPreviousShapeId(editor: Editor, shapeId: ShapeId | null): Editor {
+  return produce(editor, (draft) => {
+    draft.previousShapeId = shapeId;
+  });
+}
+
 export {
   createEditor,
   setMode,
@@ -182,4 +191,5 @@ export {
   clearBoxSelectAnchor,
   setStatus,
   setCurrentTextBox,
+  setPreviousShapeId,
 };

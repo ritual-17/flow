@@ -6,6 +6,10 @@ export type Point = IShapeBase & {
   ref: AnchorRef | null;
 };
 
+export const Point = {
+  build,
+};
+
 export function build(attrs: Partial<Point>): Point {
   const point: Point = {
     type: 'point',

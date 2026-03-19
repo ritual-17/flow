@@ -395,7 +395,7 @@ export function cycleArrowOnSelection(args: CommandArgs): [Editor, DocumentModel
   let targetShapeIds = selectedShapeIds;
 
   // If we're in line-editing modes and have a currentLineId, prefer that (so toggling affects the line being created)
-  if ((editor.mode === 'line' || editor.mode === 'anchor-line') && editor.currentLineId) {
+  if (['line', 'anchor-line', 'auto-link-insert'].includes(editor.mode) && editor.currentLineId) {
     targetShapeIds = [editor.currentLineId];
   }
 
