@@ -174,8 +174,8 @@ async function enterAutoLinkInsertMode(args: CommandArgs): Promise<CommandResult
 function cursorUp({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
+      x: Math.max(0, editor.cursorPosition.x),
+      y: Math.max(0, editor.cursorPosition.y - CURSOR_MOVE_AMOUNT),
     }),
     document,
   ];
@@ -184,8 +184,8 @@ function cursorUp({ editor, document }: CommandArgs): CommandResult {
 function cursorDown({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
+      x: Math.max(0, editor.cursorPosition.x),
+      y: Math.max(0, editor.cursorPosition.y + CURSOR_MOVE_AMOUNT),
     }),
     document,
   ];
@@ -194,8 +194,8 @@ function cursorDown({ editor, document }: CommandArgs): CommandResult {
 function cursorLeft({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x - CURSOR_MOVE_AMOUNT,
-      y: editor.cursorPosition.y,
+      x: Math.max(0, editor.cursorPosition.x - CURSOR_MOVE_AMOUNT),
+      y: Math.max(0, editor.cursorPosition.y),
     }),
     document,
   ];
@@ -204,8 +204,8 @@ function cursorLeft({ editor, document }: CommandArgs): CommandResult {
 function cursorRight({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x + CURSOR_MOVE_AMOUNT,
-      y: editor.cursorPosition.y,
+      x: Math.max(0, editor.cursorPosition.x + CURSOR_MOVE_AMOUNT),
+      y: Math.max(0, editor.cursorPosition.y),
     }),
     document,
   ];
@@ -213,8 +213,8 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
 
 function cursorUpFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   let updatedEditor = setCursorPosition(editor, {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y - FAST_CURSOR_MOVE_AMOUNT,
+    x: Math.max(0, editor.cursorPosition.x),
+    y: Math.max(0, editor.cursorPosition.y - FAST_CURSOR_MOVE_AMOUNT),
   });
 
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
@@ -226,8 +226,8 @@ function cursorUpFast({ editor, document, spatialIndex }: CommandArgs): CommandR
 
 function cursorDownFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   let updatedEditor = setCursorPosition(editor, {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y + FAST_CURSOR_MOVE_AMOUNT,
+    x: Math.max(0, editor.cursorPosition.x),
+    y: Math.max(0, editor.cursorPosition.y + FAST_CURSOR_MOVE_AMOUNT),
   });
 
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
@@ -239,8 +239,8 @@ function cursorDownFast({ editor, document, spatialIndex }: CommandArgs): Comman
 
 function cursorLeftFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   let updatedEditor = setCursorPosition(editor, {
-    x: editor.cursorPosition.x - FAST_CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
+    x: Math.max(0, editor.cursorPosition.x - FAST_CURSOR_MOVE_AMOUNT),
+    y: Math.max(0, editor.cursorPosition.y),
   });
 
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
@@ -252,8 +252,8 @@ function cursorLeftFast({ editor, document, spatialIndex }: CommandArgs): Comman
 
 function cursorRightFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   let updatedEditor = setCursorPosition(editor, {
-    x: editor.cursorPosition.x + FAST_CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
+    x: Math.max(0, editor.cursorPosition.x + FAST_CURSOR_MOVE_AMOUNT),
+    y: Math.max(0, editor.cursorPosition.y),
   });
 
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {

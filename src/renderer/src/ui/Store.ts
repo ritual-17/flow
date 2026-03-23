@@ -44,9 +44,18 @@ export const useStore = create<DocumentStore>((set) => ({
   setViewport: (vp: Partial<Viewport>) =>
     set((state) => ({ viewport: { ...state.viewport, ...vp } })),
   pan: (dx: number, dy: number) =>
-    set((state) => ({
-      viewport: { ...state.viewport, x: state.viewport.x + dx, y: state.viewport.y + dy },
-    })),
+    set((state) => {
+      const newX = state.viewport.x + dx;
+      const newY = state.viewport.y + dy;
+
+      return {
+        viewport: {
+          ...state.viewport,
+          x: Math.min(0, newX),
+          y: Math.min(0, newY),
+        },
+      };
+    }),
   update: (newEditor, newDocument) => set({ editor: newEditor, document: newDocument }),
   updateEditor: (newEditor) => set({ editor: newEditor }),
   updateDocument: (newDocument) => set({ document: newDocument }),
@@ -81,11 +90,16 @@ export const useStore = create<DocumentStore>((set) => ({
     set({ editor: updatedEditor });
   },
   centerViewportOn: (x: number, y: number, canvasWidth: number, canvasHeight: number) =>
-    set((state) => ({
-      viewport: {
-        ...state.viewport,
-        x: -(x - canvasWidth / 2),
-        y: -(y - canvasHeight / 2),
-      },
-    })),
+    set(() => {
+      const targetX = Math.min(0, x - canvasWidth / 2);
+      const targetY = Math.min(0, y - canvasHeight / 2);
+
+      return {
+        viewport: {
+          x: targetX,
+          y: targetY,
+          zoom: 1,
+        },
+      };
+    }),
 }));

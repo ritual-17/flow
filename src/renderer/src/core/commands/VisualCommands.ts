@@ -156,8 +156,8 @@ export function toggleBoxSelect({ editor, document }: CommandArgs): CommandResul
 
 export function visualUp({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
+    x: Math.max(0, editor.cursorPosition.x),
+    y: Math.max(0, editor.cursorPosition.y - CURSOR_MOVE_AMOUNT),
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {
@@ -168,8 +168,8 @@ export function visualUp({ editor, document, spatialIndex }: CommandArgs): Comma
 
 export function visualDown({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
+    x: Math.max(0, editor.cursorPosition.x),
+    y: Math.max(0, editor.cursorPosition.y + CURSOR_MOVE_AMOUNT),
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {
@@ -180,8 +180,8 @@ export function visualDown({ editor, document, spatialIndex }: CommandArgs): Com
 
 export function visualLeft({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
-    x: editor.cursorPosition.x - CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
+    x: Math.max(0, editor.cursorPosition.x - CURSOR_MOVE_AMOUNT),
+    y: Math.max(0, editor.cursorPosition.y),
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {
@@ -192,8 +192,8 @@ export function visualLeft({ editor, document, spatialIndex }: CommandArgs): Com
 
 export function visualRight({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
-    x: editor.cursorPosition.x + CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
+    x: Math.max(0, editor.cursorPosition.x + CURSOR_MOVE_AMOUNT),
+    y: Math.max(0, editor.cursorPosition.y),
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {

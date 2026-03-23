@@ -25,10 +25,13 @@ import {
   translateShape,
 } from '@renderer/core/geometry/Transform';
 import { AnchorPointDereferencer } from '@renderer/core/geometry/utils/AnchorPointDereferencer';
-import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
+import { getAnchorPoint, isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function createCircle(args: CommandArgs): CommandResult {
-  const { x, y } = args.editor.cursorPosition;
+  let { x, y } = args.editor.cursorPosition;
+  // Clamp position to ensure circle doesn't start with negative coordinates
+  x = Math.max(50, x); // radius is 50
+  y = Math.max(50, y);
   const circle = Circle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, circle);
@@ -37,7 +40,10 @@ export function createCircle(args: CommandArgs): CommandResult {
 }
 
 export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
-  const { x, y } = args.editor.cursorPosition;
+  let { x, y } = args.editor.cursorPosition;
+  // Clamp position to ensure rectangle doesn't start with negative coordinates
+  x = Math.max(0, x);
+  y = Math.max(0, y);
   const rectangle = Rectangle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, rectangle);
@@ -46,7 +52,10 @@ export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
 }
 
 export function createSquare(args: CommandArgs): [Editor, DocumentModel] {
-  const { x, y } = args.editor.cursorPosition;
+  let { x, y } = args.editor.cursorPosition;
+  // Clamp position to ensure square doesn't start with negative coordinates
+  x = Math.max(0, x);
+  y = Math.max(0, y);
   const square = Square.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, square);
@@ -55,7 +64,10 @@ export function createSquare(args: CommandArgs): [Editor, DocumentModel] {
 }
 
 export async function createTextBox(args: CommandArgs): Promise<CommandResult> {
-  const { x, y } = args.editor.cursorPosition;
+  let { x, y } = args.editor.cursorPosition;
+  // Clamp position to ensure textBox doesn't start with negative coordinates
+  x = Math.max(0, x);
+  y = Math.max(0, y);
   const textBox = await Transform.compileShapeTextContent(TextBox.build({ x, y }));
 
   const updatedDocument = addShapeToDocument(args, textBox);
@@ -101,12 +113,15 @@ function translateSelection(
     throw new Error('No shapes selected to translate');
   }
 
+  const selectedShapes = selectedShapeIds.map((id) => Document.getShapeById(document, id));
+  if (!canTranslateShapes(document, selectedShapes, { deltaX, deltaY })) {
+    return [editor, document];
+  }
+
   let updatedEditor = editor;
   updatedEditor = clearBoxSelectAnchor(updatedEditor);
 
-  const updatedShapes = selectedShapeIds
-    .map((id) => Document.getShapeById(document, id))
-    .map((shape) => translateShape(shape, { deltaX, deltaY }));
+  const updatedShapes = selectedShapes.map((shape) => translateShape(shape, { deltaX, deltaY }));
 
   const updatedDocument = updateShapesInDocument(
     { ...args, editor: updatedEditor, document },
@@ -114,6 +129,55 @@ function translateSelection(
   );
 
   return [updatedEditor, updatedDocument];
+}
+
+function canTranslateShapes(
+  document: DocumentModel,
+  shapes: Shape[],
+  { deltaX, deltaY }: { deltaX: number; deltaY: number },
+): boolean {
+  return shapes.every((shape) => {
+    const min = getShapeMinPoint(shape, document);
+    return min.x + deltaX >= 0 && min.y + deltaY >= 0;
+  });
+}
+
+function getShapeMinPoint(shape: Shape, document: DocumentModel): { x: number; y: number } {
+  if (shape.type === 'circle') {
+    return { x: shape.x - shape.radius, y: shape.y - shape.radius };
+  }
+
+  if (shape.type === 'multi-line') {
+    const points = shape.points;
+    if (points.length === 0) {
+      return { x: shape.x, y: shape.y };
+    }
+
+    let minX = Number.POSITIVE_INFINITY;
+    let minY = Number.POSITIVE_INFINITY;
+
+    for (const point of points) {
+      let x: number;
+      let y: number;
+
+      if (isAnchorRef(point)) {
+        const anchorPoint = getAnchorPoint(document, point);
+        x = anchorPoint.x;
+        y = anchorPoint.y;
+      } else {
+        x = point.x;
+        y = point.y;
+      }
+
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+    }
+
+    return { x: minX, y: minY };
+  }
+
+  // For point, rectangle, square, textBox, pdf and others use shape origin.
+  return { x: shape.x, y: shape.y };
 }
 
 export function addAnchorPointToLine(args: CommandArgs): CommandResult {
