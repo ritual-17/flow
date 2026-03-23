@@ -5,13 +5,15 @@ import { Coordinate, Shape } from '@renderer/core/geometry/Shape';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { ImageCompiler } from '@renderer/core/geometry/text/ImageCompiler';
 import { isAnchorRef, resolveLineCoordinates } from '@renderer/core/geometry/utils/AnchorPoints';
-import { generateId } from '@renderer/core/utils/id';
 
 // this is done this way so the data stays immutable
 export function translateShape<T extends Shape>(
   shape: T,
   { deltaX, deltaY }: { deltaX: number; deltaY: number },
 ): T {
+  if (shape.type === 'multi-line') {
+    return translateMultiLine(shape, { deltaX, deltaY }) as T;
+  }
   return {
     ...shape,
     x: shape.x + deltaX,
@@ -67,13 +69,6 @@ export async function compileShapeTextContent<T extends Shape>(
   };
 }
 
-export function cloneWithNewId<T extends Shape>(shape: T): T {
-  return {
-    ...shape,
-    id: generateId(),
-  };
-}
-
 export function getSelectionCenter(document: DocumentModel, shapes: Shape[]): Coordinate {
   const points = shapes.flatMap((shape) => {
     if (shape.type === 'multi-line') {
@@ -95,6 +90,5 @@ export function getSelectionCenter(document: DocumentModel, shapes: Shape[]): Co
 export const Transform = {
   translateShape,
   compileShapeTextContent,
-  cloneWithNewId,
   getSelectionCenter,
 };

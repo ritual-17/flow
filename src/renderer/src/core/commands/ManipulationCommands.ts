@@ -19,7 +19,6 @@ import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
 import * as Square from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
-  cloneWithNewId,
   getSelectionCenter,
   Transform,
   translateMultiLine,
@@ -27,6 +26,7 @@ import {
 } from '@renderer/core/geometry/Transform';
 import { AnchorPointDereferencer } from '@renderer/core/geometry/utils/AnchorPointDereferencer';
 import { newPointFromAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
+import { cloneShapes } from '@renderer/core/geometry/utils/clone';
 
 export function createCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
@@ -280,7 +280,7 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
   };
   const translatedLines = dereferencedLines.map((line) => translateMultiLine(line, delta));
   const translatedShapes = clonedNonLines.map((shape) => translateShape(shape, delta));
-  const shapesToYank = [...translatedLines, ...translatedShapes];
+  const shapesToYank = [...translatedShapes, ...translatedLines];
 
   const count = shapesToYank.length;
   const word = count === 1 ? 'object' : 'objects';
@@ -336,14 +336,14 @@ export async function paste(args: CommandArgs): Promise<CommandResult> {
   const cursor = updatedEditor.cursorPosition;
 
   // 1. Clone with new IDs, 2. Position at cursor, 3. compile, 4. Insert each into document (via loop),
-  const clonedShapes = await Promise.all(
-    updatedEditor.clipboard
-      .map(cloneWithNewId)
+  const clonedShapes = cloneShapes(updatedEditor.clipboard);
+  const shapesToPaste = await Promise.all(
+    clonedShapes
       .map((shape) => translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }))
       .map((shape) => Transform.compileShapeTextContent(shape)),
   );
 
-  for (const shape of clonedShapes) {
+  for (const shape of shapesToPaste) {
     updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
   }
 
