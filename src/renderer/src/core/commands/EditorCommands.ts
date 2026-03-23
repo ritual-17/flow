@@ -295,6 +295,10 @@ function selectPreviousSearchResult({
   }
   return [updatedEditor, document];
 }
+function selectAllShapes({ editor, document }: CommandArgs): CommandResult {
+  const allShapeIds = Array.from(document.shapes.keys());
+  return [setSelectedShapes(editor, allShapeIds), document];
+}
 
 export {
   enterInsertMode,
@@ -319,4 +323,5 @@ export {
   moveCursorToMiddle,
   selectNextSearchResult,
   selectPreviousSearchResult,
+  selectAllShapes,
 };

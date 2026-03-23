@@ -95,7 +95,8 @@
     "<Space>": "toggleSelectShapeAtCursor",
     "V": "enterVisualBlockMode",
     "M": "moveCursorToMiddle",
-    "e": "toggleArrow"
+    "e": "toggleArrow",
+    "<C-a>": "selectAllShapes"
   },
   "visual-block": {
     "v": "enterVisualMode",
@@ -123,7 +124,8 @@
     "<C-Shift-Right>": "translateFastSelectionRight",
     "<C-Shift-Left>": "translateFastSelectionLeft",
     "<Space>": "toggleBoxSelect",
-    "e": "toggleArrow"
+    "e": "toggleArrow",
+    "<C-a>": "selectAllShapes"
   },
   "text": {},
   "command": {
