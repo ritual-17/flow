@@ -11,17 +11,18 @@ import {
   setMode,
   setStatus,
 } from '@renderer/core/editor/Editor';
-import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { isLine, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
-import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
+import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import * as Point from '@renderer/core/geometry/shapes/Point';
 import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
 import * as Square from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
-  cloneShape,
+  cloneWithNewId,
   getSelectionCenter,
   Transform,
+  translateMultiLine,
   translateShape,
 } from '@renderer/core/geometry/Transform';
 import { AnchorPointDereferencer } from '@renderer/core/geometry/utils/AnchorPointDereferencer';
@@ -267,12 +268,19 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
   const center = getSelectionCenter(document, selectedShapes);
 
   // copy and translate to origin
-  const shapesToYank = selectedShapes.map((shape) =>
-    translateShape(structuredClone(shape), {
-      deltaX: -center.x,
-      deltaY: -center.y,
-    }),
-  ); // deep copy
+  const clonedShapes = selectedShapes.map((shape) => structuredClone(shape));
+  const clonedLines = clonedShapes.filter((shape) => shape.type === 'multi-line');
+  const clonedNonLines = clonedShapes.filter((shape) => shape.type !== 'multi-line');
+
+  const dereferencedLines = dereferenceLinesForYank(args, clonedLines, clonedNonLines);
+
+  const delta = {
+    deltaX: -center.x,
+    deltaY: -center.y,
+  };
+  const translatedLines = dereferencedLines.map((line) => translateMultiLine(line, delta));
+  const translatedShapes = clonedNonLines.map((shape) => translateShape(shape, delta));
+  const shapesToYank = [...translatedLines, ...translatedShapes];
 
   const count = shapesToYank.length;
   const word = count === 1 ? 'object' : 'objects';
@@ -285,6 +293,29 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
   updatedEditor = setMode(updatedEditor, 'normal');
 
   return [updatedEditor, document];
+}
+
+// get shapes included in the selection
+// dereference AnchorRefs that reference shapes not included in the selection
+function dereferenceLinesForYank(
+  args: CommandArgs,
+  lines: MultiLine[],
+  nonLines: Exclude<Shape, MultiLine>[],
+): MultiLine[] {
+  const { document } = args;
+  const nonLineIds = new Set(nonLines.map((shape) => shape.id));
+
+  const dereferenceShapes = document.shapes
+    .values()
+    .toArray()
+    .filter((shape) => !nonLineIds.has(shape.id));
+
+  const updatedLines = new AnchorPointDereferencer(
+    lines,
+    dereferenceShapes,
+  ).populateLinePointsFromReferences();
+
+  return updatedLines;
 }
 
 export async function paste(args: CommandArgs): Promise<CommandResult> {
@@ -307,7 +338,7 @@ export async function paste(args: CommandArgs): Promise<CommandResult> {
   // 1. Clone with new IDs, 2. Position at cursor, 3. compile, 4. Insert each into document (via loop),
   const clonedShapes = await Promise.all(
     updatedEditor.clipboard
-      .map(cloneShape)
+      .map(cloneWithNewId)
       .map((shape) => translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }))
       .map((shape) => Transform.compileShapeTextContent(shape)),
   );
@@ -340,7 +371,9 @@ function helperRemoveShapes(args: CommandArgs, shapeIds: ShapeId[]): [DocumentMo
   const { document, spatialIndex, editor } = args;
   const referencingLines = spatialIndex.getReferencingShapeIds(shapeIds);
 
-  const lines = referencingLines.map((id) => Document.getShapeById(document, id));
+  const lines = referencingLines
+    .map((id) => Document.getShapeById(document, id))
+    .filter((shape) => isLine(shape));
   const refs = shapeIds.map((id) => Document.getShapeById(document, id));
 
   const updatedLines = new AnchorPointDereferencer(lines, refs).populateLinePointsFromReferences();
