@@ -127,7 +127,7 @@ function setClipboard(editor: Editor, shapes: Shape[]): Editor {
   });
 }
 
-function setCurrentAnchorPoint(editor: Editor, anchorRef: AnchorRef | null): Editor {
+function setCurrentAnchorRef(editor: Editor, anchorRef: AnchorRef | null): Editor {
   return produce(editor, (draft) => {
     draft.currentAnchorRef = anchorRef;
   });
@@ -185,7 +185,7 @@ export {
   setCommandBuffer,
   addToCommandHistory,
   setClipboard,
-  setCurrentAnchorPoint,
+  setCurrentAnchorRef,
   setCurrentLineId,
   setBoxSelectAnchor,
   clearBoxSelectAnchor,

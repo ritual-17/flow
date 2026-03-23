@@ -17,7 +17,7 @@ import { updateBoxSelection } from '@renderer/core/commands/VisualCommands';
 import {
   clearBoxSelectAnchor,
   clearSelection,
-  setCurrentAnchorPoint,
+  setCurrentAnchorRef,
   setCurrentLineId,
   setCurrentTextBox,
   setCursorPosition,
@@ -138,7 +138,7 @@ async function enterAnchorLineMode(args: CommandArgs): Promise<CommandResult> {
   if (nearestAnchorPoint) {
     const anchorCoordinate = resolvePointCoordinate(updatedDocument, nearestAnchorPoint);
     updatedEditor = setCursorPosition(updatedEditor, anchorCoordinate);
-    updatedEditor = setCurrentAnchorPoint(updatedEditor, nearestAnchorPoint);
+    updatedEditor = setCurrentAnchorRef(updatedEditor, nearestAnchorPoint);
     return [setMode(updatedEditor, 'anchor-line'), updatedDocument];
   }
 
