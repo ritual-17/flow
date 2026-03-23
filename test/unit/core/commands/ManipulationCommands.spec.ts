@@ -22,7 +22,7 @@ import {
   createEditor,
   Editor,
   setClipboard,
-  setCurrentAnchorPoint,
+  setCurrentAnchorRef,
   setCurrentLineId,
   setCursorPosition,
   setMode,
@@ -534,8 +534,8 @@ describe('addAnchorPointToLine', () => {
     const doc = makeDoc(circle);
     const spatialIndex = new FlattenSpatialIndex();
     spatialIndex.addShape(circle);
-    const anchorPoint = { ownerId: 'anchor-src', position: 0, x: 100, y: 50 };
-    const editor = setCurrentAnchorPoint(createEditor(), anchorPoint);
+    const anchorRef = { shapeId: 'anchor-src', position: 0 };
+    const editor = setCurrentAnchorRef(createEditor(), anchorRef);
     const args = makeArgs({ editor, document: doc, spatialIndex });
     const [updatedEditor, updatedDoc] = ManipulationCommands.addAnchorPointToLine(args);
     const shapes = Array.from(updatedDoc.shapes.values());
@@ -553,8 +553,8 @@ describe('addAnchorPointToLine', () => {
     const spatialIndex = new FlattenSpatialIndex();
     spatialIndex.addShape(circle);
     spatialIndex.addShape(startPoint);
-    const anchorPoint = { ownerId: 'anc2-src', position: 2, x: 100, y: 150 };
-    let editor = setCurrentAnchorPoint(createEditor(), anchorPoint);
+    const anchorRef = { shapeId: 'anc2-src', position: 2 };
+    let editor = setCurrentAnchorRef(createEditor(), anchorRef);
     editor = setCurrentLineId(editor, 'anc2-start');
     const args = makeArgs({ editor, document: doc, spatialIndex });
     const [, updatedDoc] = ManipulationCommands.addAnchorPointToLine(args);
@@ -575,8 +575,8 @@ describe('addAnchorPointToLine', () => {
     const spatialIndex = new FlattenSpatialIndex();
     spatialIndex.addShape(circle);
     spatialIndex.addShape(line);
-    const anchorPoint = { ownerId: 'anc3-src', position: 0, x: 200, y: 150 };
-    let editor = setCurrentAnchorPoint(createEditor(), anchorPoint);
+    const anchorRef = { shapeId: 'anc3-src', position: 0 };
+    let editor = setCurrentAnchorRef(createEditor(), anchorRef);
     editor = setCurrentLineId(editor, 'anc3-line');
     const args = makeArgs({ editor, document: doc, spatialIndex });
     const [, updatedDoc] = ManipulationCommands.addAnchorPointToLine(args);
