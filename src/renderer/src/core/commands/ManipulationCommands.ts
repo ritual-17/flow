@@ -9,6 +9,7 @@ import {
   setClipboard,
   setCurrentLineId,
   setMode,
+  setSelectedShapes,
   setStatus,
 } from '@renderer/core/editor/Editor';
 import { isLine, Shape, ShapeId } from '@renderer/core/geometry/Shape';
@@ -346,6 +347,12 @@ export async function paste(args: CommandArgs): Promise<CommandResult> {
   for (const shape of shapesToPaste) {
     updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
   }
+
+  updatedEditor = setSelectedShapes(
+    updatedEditor,
+    shapesToPaste.map((shape) => shape.id),
+  );
+  updatedEditor = setMode(updatedEditor, 'visual');
 
   return [updatedEditor, updatedDocument];
 }
