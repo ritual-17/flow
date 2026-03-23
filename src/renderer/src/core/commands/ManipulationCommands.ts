@@ -161,7 +161,7 @@ function getShapeMinPoint(shape: Shape, document: DocumentModel): { x: number; y
       let y: number;
 
       if (isAnchorRef(point)) {
-        const anchorPoint = getAnchorPoint(document, point);
+        const anchorPoint = newPointFromAnchorRef(document, point);
         x = anchorPoint.x;
         y = anchorPoint.y;
       } else {
