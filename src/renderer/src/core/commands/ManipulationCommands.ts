@@ -11,7 +11,7 @@ import {
   setMode,
   setStatus,
 } from '@renderer/core/editor/Editor';
-import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
 import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
 import * as Point from '@renderer/core/geometry/shapes/Point';
@@ -25,7 +25,7 @@ import {
   translateShape,
 } from '@renderer/core/geometry/Transform';
 import { AnchorPointDereferencer } from '@renderer/core/geometry/utils/AnchorPointDereferencer';
-import { getAnchorPoint } from '@renderer/core/geometry/utils/AnchorPoints';
+import { newPointFromAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export function createCircle(args: CommandArgs): CommandResult {
   const { x, y } = args.editor.cursorPosition;
@@ -122,19 +122,14 @@ export function addAnchorPointToLine(args: CommandArgs): CommandResult {
   let updatedEditor = editor;
   let updatedDocument = document;
 
-  const currentAnchorPoint = editor.currentAnchorPoint;
+  const currentAnchorRef = editor.currentAnchorRef;
   const currentLineId = editor.currentLineId;
 
-  if (!currentAnchorPoint) throw new Error('No current anchor point to add to line');
-
-  const currentAnchorRef: AnchorRef = {
-    shapeId: currentAnchorPoint.ownerId,
-    position: currentAnchorPoint.position,
-  };
+  if (!currentAnchorRef) throw new Error('No current anchor point to add to line');
 
   if (!currentLineId) {
     // need to add a point rather than a line because we only have one point so far
-    const newLineStartingPoint = getAnchorPoint(updatedDocument, currentAnchorRef);
+    const newLineStartingPoint = newPointFromAnchorRef(updatedDocument, currentAnchorRef);
 
     updatedDocument = addShapeToDocument(args, newLineStartingPoint);
     updatedEditor = setCurrentLineId(updatedEditor, newLineStartingPoint.id);

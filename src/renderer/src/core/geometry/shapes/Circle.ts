@@ -1,4 +1,4 @@
-import { AnchorPoint, buildBaseShape, IShapeBase } from '@renderer/core/geometry/Shape';
+import { buildBaseShape, Coordinate, IShapeBase } from '@renderer/core/geometry/Shape';
 
 export type Circle = IShapeBase & {
   type: 'circle';
@@ -16,19 +16,18 @@ export function build(attrs: Partial<Circle>): Circle {
   return circle;
 }
 
-export function generateAnchorPoints(circle: Circle): AnchorPoint[] {
+export function generateAnchorCoordinates(circle: Circle): Coordinate[] {
   const { x, y, radius } = circle;
-  const ownerId = circle.id;
 
   return [
-    { position: 0, ownerId, x, y: y - radius }, // top
-    { position: 1, ownerId, x: x + radius, y }, // right
-    { position: 2, ownerId, x, y: y + radius }, // bottom
-    { position: 3, ownerId, x: x - radius, y }, // left
+    { x, y: y - radius }, // top
+    { x: x + radius, y }, // right
+    { x, y: y + radius }, // bottom
+    { x: x - radius, y }, // left
   ];
 }
 
 export const Circle = {
   build,
-  generateAnchorPoints,
+  generateAnchorCoordinates,
 };

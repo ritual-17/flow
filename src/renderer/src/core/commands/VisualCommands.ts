@@ -15,6 +15,7 @@ import {
 } from '@renderer/core/editor/Editor';
 import { Direction } from '@renderer/core/geometry/SpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
+import { resolvePointCoordinate } from '@renderer/core/geometry/utils/AnchorPoints';
 import { produce } from 'immer';
 
 const CURSOR_MOVE_AMOUNT = 10;
@@ -37,19 +38,17 @@ function jumpToAnchorPoint(
   { editor, document, spatialIndex }: CommandArgs,
   direction: Direction,
 ): CommandResult {
-  const currentAnchorPoint = editor.currentAnchorPoint;
-  if (!currentAnchorPoint) {
+  const currentAnchorRef = editor.currentAnchorRef;
+  if (!currentAnchorRef) {
     return [editor, document];
   }
 
-  const nextAnchorPoint = spatialIndex.getNextAnchorPoint(currentAnchorPoint, direction);
-  let updatedEditor = editor;
-  if (nextAnchorPoint) {
-    updatedEditor = produce(editor, (draft) => {
-      draft.currentAnchorPoint = nextAnchorPoint;
-      draft.cursorPosition = { x: nextAnchorPoint.x, y: nextAnchorPoint.y };
-    });
-  }
+  const nextAnchorRef = spatialIndex.getNextAnchorRef(currentAnchorRef, direction);
+  const nextAnchorCoords = resolvePointCoordinate(document, nextAnchorRef);
+  const updatedEditor = produce(editor, (draft) => {
+    draft.currentAnchorRef = nextAnchorRef;
+    draft.cursorPosition = nextAnchorCoords;
+  });
 
   return [updatedEditor, document];
 }

@@ -1,5 +1,5 @@
 import { Document, DocumentModel } from '@renderer/core/document/Document';
-import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { produce } from 'immer';
 
 export interface Editor {
@@ -10,7 +10,7 @@ export interface Editor {
   commandHistory: string[];
   clipboard: Shape[]; // stores copies of shapes relative to the center of the selection
   boxSelectAnchor?: { x: number; y: number };
-  currentAnchorPoint: AnchorPoint | null;
+  currentAnchorRef: AnchorRef | null;
   currentLineId: ShapeId | null;
   previousShapeId: ShapeId | null; // for auto-linking, to keep track of the last shape that was linked from
   statusMessage: string;
@@ -43,7 +43,7 @@ function createEditor(): Editor {
     commandBuffer: '',
     commandHistory: [],
     clipboard: [],
-    currentAnchorPoint: null,
+    currentAnchorRef: null,
     currentLineId: null,
     previousShapeId: null,
     boxSelectAnchor: undefined,
@@ -127,9 +127,9 @@ function setClipboard(editor: Editor, shapes: Shape[]): Editor {
   });
 }
 
-function setCurrentAnchorPoint(editor: Editor, anchorPoint: AnchorPoint | null): Editor {
+function setCurrentAnchorRef(editor: Editor, anchorRef: AnchorRef | null): Editor {
   return produce(editor, (draft) => {
-    draft.currentAnchorPoint = anchorPoint;
+    draft.currentAnchorRef = anchorRef;
   });
 }
 
@@ -185,7 +185,7 @@ export {
   setCommandBuffer,
   addToCommandHistory,
   setClipboard,
-  setCurrentAnchorPoint,
+  setCurrentAnchorRef,
   setCurrentLineId,
   setBoxSelectAnchor,
   clearBoxSelectAnchor,

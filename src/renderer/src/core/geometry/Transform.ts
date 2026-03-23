@@ -51,10 +51,6 @@ export function cloneShape(shape: Shape): Shape {
   return {
     ...shape,
     id: generateId(),
-    anchorPoints: shape.anchorPoints.map((a) => ({
-      ...a,
-      ownerId: shape.id,
-    })),
   };
 }
 
