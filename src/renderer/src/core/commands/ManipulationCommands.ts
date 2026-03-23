@@ -264,7 +264,7 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
 
   const selectedShapes = editor.selectedShapeIds.map((id) => Document.getShapeById(document, id));
 
-  const center = getSelectionCenter(selectedShapes);
+  const center = getSelectionCenter(document, selectedShapes);
 
   // copy and translate to origin
   const shapesToYank = selectedShapes.map((shape) =>

@@ -1,7 +1,9 @@
 // Transformation utilities for shapes, e.g. rotate, scale, translate
 
-import { Shape } from '@renderer/core/geometry/Shape';
+import { DocumentModel } from '@renderer/core/document/Document';
+import { Coordinate, Shape } from '@renderer/core/geometry/Shape';
 import { ImageCompiler } from '@renderer/core/geometry/text/ImageCompiler';
+import { resolveLineCoordinates } from '@renderer/core/geometry/utils/AnchorPoints';
 import { generateId } from '@renderer/core/utils/id';
 
 // this is done this way so the data stays immutable
@@ -54,9 +56,17 @@ export function cloneShape(shape: Shape): Shape {
   };
 }
 
-export function getSelectionCenter(shapes: Shape[]): { x: number; y: number } {
-  const xs = shapes.map((s) => s.x);
-  const ys = shapes.map((s) => s.y);
+export function getSelectionCenter(document: DocumentModel, shapes: Shape[]): Coordinate {
+  const points = shapes.flatMap((shape) => {
+    if (shape.type === 'multi-line') {
+      return resolveLineCoordinates(document, shape);
+    }
+
+    return { x: shape.x, y: shape.y };
+  });
+
+  const xs = points.map((s) => s.x);
+  const ys = points.map((s) => s.y);
 
   return {
     x: (Math.min(...xs) + Math.max(...xs)) / 2,
