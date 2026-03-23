@@ -136,32 +136,29 @@ export function KeyboardHandler() {
           appendCommandBuffer('<C-Right>');
           return;
         }
-      }
 
-      // handle alt/option + arrow keys or hjkl for viewport scrolling
-      if (e.altKey) {
-        // Normal scrolling with Alt
-        if (e.key === 'ArrowUp' || e.key === 'k') {
+        // Viewport scrolling with Ctrl + (u, d, ,, .)
+        if (e.key === 'u') {
           e.preventDefault();
-          updateCommandBuffer('<Alt-Up>');
+          updateCommandBuffer('<View-Up>');
           return;
         }
 
-        if (e.key === 'ArrowDown' || e.key === 'j') {
+        if (e.key === 'd') {
           e.preventDefault();
-          updateCommandBuffer('<Alt-Down>');
+          updateCommandBuffer('<View-Down>');
           return;
         }
 
-        if (e.key === 'ArrowLeft' || e.key === 'h') {
+        if (e.key === ',') {
           e.preventDefault();
-          updateCommandBuffer('<Alt-Left>');
+          updateCommandBuffer('<View-Left>');
           return;
         }
 
-        if (e.key === 'ArrowRight' || e.key === 'l') {
+        if (e.key === '.') {
           e.preventDefault();
-          updateCommandBuffer('<Alt-Right>');
+          updateCommandBuffer('<View-Right>');
           return;
         }
       }
