@@ -12,7 +12,6 @@ export function isAnchorRef(point: Coordinate | AnchorRef): point is AnchorRef {
   return 'shapeId' in point;
 }
 
-// export function resolveAnchorPoint(shape: Shape, position: number): Coordinate {
 /** * Resolves the anchor point for a given shape and position.
  * @param shape The shape for which to resolve the anchor point.
  * @param position The position index of the anchor point to resolve.
@@ -51,7 +50,6 @@ export function resolvePointCoordinate(
   }
 }
 
-// export function getAnchorPoints(shape: Shape): AnchorPoint[] {
 export function getAllAnchorCoordinates(shape: Shape): Coordinate[] {
   switch (shape.type) {
     case 'circle':
