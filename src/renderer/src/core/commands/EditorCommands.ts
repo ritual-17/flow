@@ -309,6 +309,30 @@ function selectPreviousSearchResult({
   return [updatedEditor, document];
 }
 
+function scrollViewportUp({ editor, document }: CommandArgs): CommandResult {
+  const { pan } = useStore.getState();
+  pan(0, FAST_CURSOR_MOVE_AMOUNT);
+  return [editor, document];
+}
+
+function scrollViewportDown({ editor, document }: CommandArgs): CommandResult {
+  const { pan } = useStore.getState();
+  pan(0, -FAST_CURSOR_MOVE_AMOUNT);
+  return [editor, document];
+}
+
+function scrollViewportLeft({ editor, document }: CommandArgs): CommandResult {
+  const { pan } = useStore.getState();
+  pan(FAST_CURSOR_MOVE_AMOUNT, 0);
+  return [editor, document];
+}
+
+function scrollViewportRight({ editor, document }: CommandArgs): CommandResult {
+  const { pan } = useStore.getState();
+  pan(-FAST_CURSOR_MOVE_AMOUNT, 0);
+  return [editor, document];
+}
+
 export {
   enterInsertMode,
   enterNormalMode,
@@ -331,6 +355,10 @@ export {
   cursorRightFast,
   moveCursorToMiddle,
   centerViewportOnCursor,
+  scrollViewportUp,
+  scrollViewportDown,
+  scrollViewportLeft,
+  scrollViewportRight,
   selectNextSearchResult,
   selectPreviousSearchResult,
 };

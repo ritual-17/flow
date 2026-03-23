@@ -4,7 +4,11 @@
     "<C-Up>": "fastUp",
     "<C-Down>": "fastDown",
     "<C-Left>": "fastLeft",
-    "<C-Right>": "fastRight"
+    "<C-Right>": "fastRight",
+    "<Alt-Up>": "scrollViewportUp",
+    "<Alt-Down>": "scrollViewportDown",
+    "<Alt-Left>": "scrollViewportLeft",
+    "<Alt-Right>": "scrollViewportRight"
   },
   "normal": {
     "j": "down",
