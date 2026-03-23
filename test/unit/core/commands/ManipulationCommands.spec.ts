@@ -81,17 +81,25 @@ function makeArgsWithSelection(shapes: ReturnType<typeof CircleShape.build>[]): 
 
 describe('createCircle', () => {
   it('adds a circle to the document at the cursor position', () => {
-    const args = makeArgs({ editor: { cursorPosition: { x: 42, y: 88 } } });
+    const args = makeArgs({ editor: { cursorPosition: { x: 62, y: 88 } } });
     const [, doc] = ManipulationCommands.createCircle(args);
     const shapes = Array.from(doc.shapes.values());
     expect(shapes).toHaveLength(1);
     expect(shapes[0].type).toBe('circle');
-    expect(shapes[0].x).toBe(42);
+    expect(shapes[0].x).toBe(62);
     expect(shapes[0].y).toBe(88);
   });
 
-  it('adds the circle to the spatial index', () => {
+  it('clamps circle position to prevent negative coordinates', () => {
     const args = makeArgs({ editor: { cursorPosition: { x: 10, y: 20 } } });
+    const [, doc] = ManipulationCommands.createCircle(args);
+    const shapes = Array.from(doc.shapes.values());
+    expect(shapes[0].x).toBe(50); // clamped from 10 to 50
+    expect(shapes[0].y).toBe(50); // clamped from 20 to 50
+  });
+
+  it('adds the circle to the spatial index', () => {
+    const args = makeArgs({ editor: { cursorPosition: { x: 60, y: 70 } } });
     const [, doc] = ManipulationCommands.createCircle(args);
     const id = Array.from(doc.shapes.keys())[0];
     expect(args.spatialIndex.getShapes().map((s) => s.id)).toContain(id);
@@ -114,6 +122,14 @@ describe('createRectangle', () => {
     expect(shapes[0].y).toBe(15);
   });
 
+  it('clamps rectangle position to prevent negative coordinates', () => {
+    const args = makeArgs({ editor: { cursorPosition: { x: -10, y: -20 } } });
+    const [, doc] = ManipulationCommands.createRectangle(args);
+    const shapes = Array.from(doc.shapes.values());
+    expect(shapes[0].x).toBe(0); // clamped from -10 to 0
+    expect(shapes[0].y).toBe(0); // clamped from -20 to 0
+  });
+
   it('adds it to the spatial index', () => {
     const args = makeArgs();
     const [, _doc] = ManipulationCommands.createRectangle(args);
@@ -131,6 +147,14 @@ describe('createSquare', () => {
     expect(shapes[0].x).toBe(200);
     expect(shapes[0].y).toBe(300);
   });
+
+  it('clamps square position to prevent negative coordinates', () => {
+    const args = makeArgs({ editor: { cursorPosition: { x: -5, y: -15 } } });
+    const [, doc] = ManipulationCommands.createSquare(args);
+    const shapes = Array.from(doc.shapes.values());
+    expect(shapes[0].x).toBe(0); // clamped from -5 to 0
+    expect(shapes[0].y).toBe(0); // clamped from -15 to 0
+  });
 });
 
 describe('createTextBox', () => {
@@ -141,6 +165,14 @@ describe('createTextBox', () => {
     expect(shapes[0].type).toBe('textBox');
     expect(shapes[0].x).toBe(55);
     expect(shapes[0].y).toBe(66);
+  });
+
+  it('clamps textBox position to prevent negative coordinates', async () => {
+    const args = makeArgs({ editor: { cursorPosition: { x: -30, y: -40 } } });
+    const [, doc] = await ManipulationCommands.createTextBox(args);
+    const shapes = Array.from(doc.shapes.values());
+    expect(shapes[0].x).toBe(0); // clamped from -30 to 0
+    expect(shapes[0].y).toBe(0); // clamped from -40 to 0
   });
 
   it('adds the textBox to the spatial index', async () => {
@@ -166,9 +198,9 @@ describe('translateSelectionUp', () => {
   });
 
   it('clears the boxSelectAnchor on the returned editor', () => {
-    const c = CircleShape.build({ id: 'c2', x: 0, y: 0 });
+    const c = CircleShape.build({ id: 'c2', x: 100, y: 100 });
     let args = makeArgsWithSelection([c]);
-    args = { ...args, editor: { ...args.editor, boxSelectAnchor: { x: 5, y: 5 } } };
+    args = { ...args, editor: { ...args.editor, boxSelectAnchor: { x: 105, y: 105 } } };
     const [editor] = ManipulationCommands.translateSelectionUp(args);
     expect(editor.boxSelectAnchor).toBeUndefined();
   });
@@ -202,12 +234,12 @@ describe('translateSelectionRight', () => {
   });
 
   it('translates multiple selected shapes', () => {
-    const c1 = CircleShape.build({ id: 'mr1', x: 0, y: 0 });
-    const c2 = CircleShape.build({ id: 'mr2', x: 50, y: 50 });
+    const c1 = CircleShape.build({ id: 'mr1', x: 50, y: 50 });
+    const c2 = CircleShape.build({ id: 'mr2', x: 100, y: 100 });
     const args = makeArgsWithSelection([c1, c2]);
     const [, doc] = ManipulationCommands.translateSelectionRight(args);
-    expect(Document.getShapeById(doc, 'mr1').x).toBe(0 + TRANSLATE_AMOUNT);
-    expect(Document.getShapeById(doc, 'mr2').x).toBe(50 + TRANSLATE_AMOUNT);
+    expect(Document.getShapeById(doc, 'mr1').x).toBe(50 + TRANSLATE_AMOUNT);
+    expect(Document.getShapeById(doc, 'mr2').x).toBe(100 + TRANSLATE_AMOUNT);
   });
 
   it('updates the spatial index after translation', () => {
@@ -216,6 +248,17 @@ describe('translateSelectionRight', () => {
     ManipulationCommands.translateSelectionRight(args);
     const indexed = args.spatialIndex.getShapes().find((s) => s.id === 'si1');
     expect(indexed?.x).toBe(100 + TRANSLATE_AMOUNT);
+  });
+
+  it('does not translate when any part of the selection would cross into negative coordinates', () => {
+    const c = CircleShape.build({ id: 'neg1', x: 15, y: 15, radius: 10 });
+    const args = makeArgsWithSelection([c]);
+
+    const [, doc] = ManipulationCommands.translateSelectionLeft(args);
+
+    // Attempting to move left by 10 would place circle left edge at -5.
+    expect(Document.getShapeById(doc, 'neg1').x).toBe(15);
+    expect(Document.getShapeById(doc, 'neg1').y).toBe(15);
   });
 });
 
