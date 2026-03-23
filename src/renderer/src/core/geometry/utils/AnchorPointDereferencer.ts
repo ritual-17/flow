@@ -1,6 +1,9 @@
 import { AnchorRef, Coordinate, Shape } from '@renderer/core/geometry/Shape';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
-import { isAnchorRef, resolveAnchorCoordinate } from '@renderer/core/geometry/utils/AnchorPoints';
+import {
+  isAnchorRef,
+  resolveAnchorRefCoordinate,
+} from '@renderer/core/geometry/utils/AnchorPoints';
 
 export class AnchorPointDereferencer {
   lines: Shape[];
@@ -32,7 +35,7 @@ export class AnchorPointDereferencer {
   private dereferenceAnchorPoint(point: AnchorRef) {
     const reference = this.refs.find((r) => r.id === point.shapeId);
     if (reference) {
-      const coordinate: Coordinate = resolveAnchorCoordinate(reference, point.position);
+      const coordinate: Coordinate = resolveAnchorRefCoordinate(reference, point.position);
 
       return coordinate;
     } else {

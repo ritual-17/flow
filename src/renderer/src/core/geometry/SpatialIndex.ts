@@ -1,4 +1,4 @@
-import { AnchorPoint, AnchorRef, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Coordinate, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 
@@ -13,7 +13,7 @@ export interface SpatialIndex {
   searchInArea(area: { xMin: number; xMax: number; yMin: number; yMax: number }): Shape[];
   searchAtPoint(point: Coordinate): Shape[];
   getNearestShape(point: Coordinate): Shape | null;
-  getNearestAnchorPoint(point: Coordinate, anchorPointOwner?: ShapeId): AnchorPoint | null;
+  getNearestAnchorRef(point: Coordinate, anchorPointOwner?: ShapeId): AnchorRef | null;
   getNearestLineCenter(point: Coordinate): { line: MultiLine; point: Coordinate } | null;
   getNextAnchorRef(currentAnchor: AnchorRef, direction: Direction): AnchorRef;
   getNextShape(point: Coordinate, backward?: boolean): Shape | null;

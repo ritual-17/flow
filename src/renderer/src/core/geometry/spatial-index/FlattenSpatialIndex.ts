@@ -1,6 +1,5 @@
 import Flatten from '@flatten-js/core';
 import {
-  AnchorPoint,
   AnchorRef,
   Coordinate,
   isLine,
@@ -160,7 +159,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
   }
 
   // pass anchorPointOwner to filter anchor points to only those belonging to the specified shape
-  getNearestAnchorPoint(point: Coordinate, anchorPointOwner?: ShapeId): AnchorPoint | null {
+  getNearestAnchorRef(point: Coordinate, anchorPointOwner?: ShapeId): AnchorRef | null {
     const searchBox = new Flatten.Box(
       point.x - this.SEARCH_RADIUS,
       point.y - this.SEARCH_RADIUS,
@@ -177,17 +176,17 @@ export class FlattenSpatialIndex implements SpatialIndex {
       domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
     }
 
-    let nearestPoint: AnchorPoint | null = null;
+    let nearestPoint: AnchorRef | null = null;
     let minDistance = Infinity;
     for (const candidate of domainCandidates) {
-      const anchorPoints = getAllAnchorCoordinates(candidate);
-      for (const anchorPoint of anchorPoints) {
-        const distance = this.distanceBetweenPoints(point, anchorPoint);
+      const anchorCoords = getAllAnchorCoordinates(candidate);
+      anchorCoords.forEach((coord, index) => {
+        const distance = this.distanceBetweenPoints(point, coord);
         if (distance < minDistance) {
           minDistance = distance;
-          nearestPoint = anchorPoint;
+          nearestPoint = { shapeId: candidate.id, position: index };
         }
-      }
+      });
     }
 
     return nearestPoint;
@@ -281,13 +280,12 @@ export class FlattenSpatialIndex implements SpatialIndex {
     const candidates = this.set.search(searchBox);
     const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
 
-    let nextAnchor = currentAnchorPoint;
+    let nextAnchor = currentAnchor;
     let minDistance = Infinity;
 
     for (const candidate of domainCandidates) {
       const anchorPoints = getAllAnchorCoordinates(candidate);
-      for (let anchorIndex = 0; anchorIndex < anchorPoints.length; anchorIndex++) {
-        const anchorPoint = anchorPoints[anchorIndex];
+      anchorPoints.forEach((anchorPoint, index) => {
         let isInDirection = false;
         switch (direction) {
           case 'up':
@@ -308,16 +306,10 @@ export class FlattenSpatialIndex implements SpatialIndex {
           const distance = this.distanceBetweenPoints(currentAnchorPoint, anchorPoint);
           if (distance < minDistance) {
             minDistance = distance;
-            nextAnchor = {
-              x: anchorPoint.x,
-              y: anchorPoint.y,
-              ownerId: anchorPoint.ownerId,
-              position: anchorPoint.position,
-              userId: anchorPoint.userId,
-            };
+            nextAnchor = { shapeId: candidate.id, position: index };
           }
         }
-      }
+      });
     }
 
     return nextAnchor;

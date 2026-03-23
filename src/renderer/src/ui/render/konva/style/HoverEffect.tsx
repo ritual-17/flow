@@ -1,5 +1,5 @@
 import { Shape as DomainShape } from '@renderer/core/geometry/Shape';
-import { getAnchorPoints } from '@renderer/core/geometry/utils/AnchorPoints';
+import { getAllAnchorCoordinates } from '@renderer/core/geometry/utils/AnchorPoints';
 import { useStore } from '@renderer/ui/Store';
 import { Circle as KonvaCircle } from 'react-konva';
 
@@ -17,7 +17,7 @@ export const HoverEffect = ({ shape, selectedPoint }: HoverEffectProps) => {
     return null;
   }
 
-  const anchorPoints = getAnchorPoints(shape);
+  const anchorPoints = getAllAnchorCoordinates(shape);
   return (
     <>
       {anchorPoints.map((point, index) => {

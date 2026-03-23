@@ -24,6 +24,7 @@ import {
   setMode,
   setSelectedShapes,
 } from '@renderer/core/editor/Editor';
+import { resolvePointCoordinate } from '@renderer/core/geometry/utils/AnchorPoints';
 
 const CURSOR_MOVE_AMOUNT = 10;
 const FAST_CURSOR_MOVE_AMOUNT = 50;
@@ -131,11 +132,12 @@ async function enterAnchorLineMode(args: CommandArgs): Promise<CommandResult> {
   // disabling because it is complaining updatedDocument is not reassigned
   // eslint-disable-next-line prefer-const
   let [updatedEditor, updatedDocument] = await previousModeExitCleanup(args);
-  const nearestAnchorPoint = spatialIndex.getNearestAnchorPoint(updatedEditor.cursorPosition);
+  const nearestAnchorPoint = spatialIndex.getNearestAnchorRef(updatedEditor.cursorPosition);
 
   // if there is an anchor point nearby, snap to it, otherwise just enter line mode starting at the cursor
   if (nearestAnchorPoint) {
-    updatedEditor = setCursorPosition(updatedEditor, nearestAnchorPoint);
+    const anchorCoordinate = resolvePointCoordinate(updatedDocument, nearestAnchorPoint);
+    updatedEditor = setCursorPosition(updatedEditor, anchorCoordinate);
     updatedEditor = setCurrentAnchorPoint(updatedEditor, nearestAnchorPoint);
     return [setMode(updatedEditor, 'anchor-line'), updatedDocument];
   }

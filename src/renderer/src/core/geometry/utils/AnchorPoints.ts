@@ -75,7 +75,7 @@ function getAnchorCoordinate(document: DocumentModel, ref: AnchorRef): Coordinat
     return null;
   }
   const shape = Document.getShapeById(document, ref.shapeId);
-  const anchorPoint = resolveAnchorCoordinate(shape, ref.position);
+  const anchorPoint = resolveAnchorRefCoordinate(shape, ref.position);
 
   return { x: anchorPoint.x, y: anchorPoint.y };
 }

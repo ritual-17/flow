@@ -123,16 +123,13 @@ export function autoLinkAddToLine(
   return [updatedEditor, updatedDocument];
 }
 
-function getPreviousShapePoint(
-  args: CommandArgs,
-  previousShapeId: ShapeId,
-): AnchorRef | Coordinate {
+function getPreviousShapePoint(args: CommandArgs, previousShapeId: ShapeId): AnchorRef {
   const { editor, spatialIndex } = args;
-  const point = spatialIndex.getNearestAnchorPoint(editor.cursorPosition, previousShapeId);
+  const point = spatialIndex.getNearestAnchorRef(editor.cursorPosition, previousShapeId);
   if (!point) {
     throw new Error(`No anchor point found for shape with ID ${editor.previousShapeId}`);
   }
-  return { shapeId: previousShapeId, position: point.position };
+  return point;
 }
 
 function getNewShapePoint(
@@ -141,9 +138,9 @@ function getNewShapePoint(
   previousPoint: Coordinate | AnchorRef,
 ): AnchorRef {
   const coord = resolvePointCoordinate(args.document, previousPoint);
-  const point = args.spatialIndex.getNearestAnchorPoint(coord, newShape.id);
+  const point = args.spatialIndex.getNearestAnchorRef(coord, newShape.id);
   if (!point) {
     throw new Error(`No anchor point found for new shape with ID ${newShape.id}`);
   }
-  return { shapeId: newShape.id, position: point.position };
+  return point;
 }
