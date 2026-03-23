@@ -129,7 +129,9 @@
     "<C-Shift-Right>": "translateFastSelectionRight",
     "<C-Shift-Left>": "translateFastSelectionLeft",
     "<Space>": "toggleBoxSelect",
-    "e": "toggleArrow"
+    "e": "toggleArrow",
+    "M": "moveCursorToMiddle",
+    "m": "moveScreenToCursor"
   },
   "text": {},
   "command": {
