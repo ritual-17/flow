@@ -20,7 +20,7 @@
     "ArrowLeft": "left",
     "ArrowRight": "right",
     "M": "moveCursorToMiddle",
-    "m": "moveScreenToCursor",
+    "zz": "moveScreenToCursor",
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
@@ -100,7 +100,7 @@
     "<Space>": "toggleSelectShapeAtCursor",
     "V": "enterVisualBlockMode",
     "M": "moveCursorToMiddle",
-    "m": "moveScreenToCursor",
+    "zz": "moveScreenToCursor",
     "e": "toggleArrow"
   },
   "visual-block": {
@@ -131,7 +131,7 @@
     "<Space>": "toggleBoxSelect",
     "e": "toggleArrow",
     "M": "moveCursorToMiddle",
-    "m": "moveScreenToCursor"
+    "zz": "moveScreenToCursor"
   },
   "text": {},
   "command": {
