@@ -91,8 +91,8 @@ export const useStore = create<DocumentStore>((set) => ({
   },
   centerViewportOn: (x: number, y: number, canvasWidth: number, canvasHeight: number) =>
     set(() => {
-      const targetX = Math.min(0, x - canvasWidth / 2);
-      const targetY = Math.min(0, y - canvasHeight / 2);
+      const targetX = Math.min(0, -(x - canvasWidth / 2));
+      const targetY = Math.min(0, -(y - canvasHeight / 2));
 
       return {
         viewport: {
