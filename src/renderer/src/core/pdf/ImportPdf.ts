@@ -1,3 +1,4 @@
+import { useStore } from '@renderer/ui/Store';
 import * as pdfjsLib from 'pdfjs-dist';
 import workerSrc from 'pdfjs-dist/build/pdf.worker.min?url';
 
@@ -10,6 +11,7 @@ export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
   const rawPdfData = await window.api.pdf.pick();
   if (!rawPdfData) return null;
 
+  const { viewport } = useStore.getState();
   const loadingTask = pdfjsLib.getDocument({ data: rawPdfData.data });
   const pdf = await loadingTask.promise;
 
@@ -18,8 +20,8 @@ export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
   const slides: PdfSlide[] = [];
 
   // OneNote-style stacking: pages down the canvas
-  const startX = 50;
-  let currentY = 50;
+  const startX = viewport.x + 50;
+  let currentY = viewport.y + 50;
 
   // Adjust scale here
   const scale = 1.5;
