@@ -16,6 +16,7 @@
     "ArrowLeft": "left",
     "ArrowRight": "right",
     "M": "moveCursorToMiddle",
+    "m": "moveScreenToCursor",
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
@@ -95,6 +96,7 @@
     "<Space>": "toggleSelectShapeAtCursor",
     "V": "enterVisualBlockMode",
     "M": "moveCursorToMiddle",
+    "m": "moveScreenToCursor",
     "e": "toggleArrow"
   },
   "visual-block": {

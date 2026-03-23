@@ -33,6 +33,7 @@ export interface DocumentStore {
   updateCommandBuffer: (command: string) => void;
   appendCommandBuffer: (char: string) => void;
   updateCurrentTextBoxContent: (content: string) => void;
+  centerViewportOn: (x: number, y: number, canvasWidth: number, canvasHeight: number) => void;
 }
 
 export const useStore = create<DocumentStore>((set) => ({
@@ -79,4 +80,12 @@ export const useStore = create<DocumentStore>((set) => ({
     });
     set({ editor: updatedEditor });
   },
+  centerViewportOn: (x: number, y: number, canvasWidth: number, canvasHeight: number) =>
+    set((state) => ({
+      viewport: {
+        ...state.viewport,
+        x: -(x - canvasWidth / 2),
+        y: -(y - canvasHeight / 2),
+      },
+    })),
 }));

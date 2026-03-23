@@ -24,6 +24,7 @@ import {
   setMode,
   setSelectedShapes,
 } from '@renderer/core/editor/Editor';
+import { useStore } from '@renderer/ui/Store';
 
 const CURSOR_MOVE_AMOUNT = 10;
 const FAST_CURSOR_MOVE_AMOUNT = 50;
@@ -272,6 +273,20 @@ function moveCursorToMiddle({ editor, document }: CommandArgs): CommandResult {
   ];
 }
 
+function centerViewportOnCursor({ editor, document }: CommandArgs): CommandResult {
+  const cursor = editor.cursorPosition;
+  if (!cursor) return [editor, document];
+
+  const { centerViewportOn } = useStore.getState();
+
+  const canvasWidth = window.innerWidth;
+  const canvasHeight = window.innerHeight - 24; // status bar
+
+  centerViewportOn(cursor.x, cursor.y, canvasWidth, canvasHeight);
+
+  return [editor, document];
+}
+
 function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const nextShape = spatialIndex.getNextShape(editor.cursorPosition);
   let updatedEditor = editor;
@@ -315,6 +330,7 @@ export {
   cursorLeftFast,
   cursorRightFast,
   moveCursorToMiddle,
+  centerViewportOnCursor,
   selectNextSearchResult,
   selectPreviousSearchResult,
 };
