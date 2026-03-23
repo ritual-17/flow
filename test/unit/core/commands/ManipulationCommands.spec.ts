@@ -81,12 +81,12 @@ function makeArgsWithSelection(shapes: ReturnType<typeof CircleShape.build>[]): 
 
 describe('createCircle', () => {
   it('adds a circle to the document at the cursor position', () => {
-    const args = makeArgs({ editor: { cursorPosition: { x: 42, y: 88 } } });
+    const args = makeArgs({ editor: { cursorPosition: { x: 62, y: 88 } } });
     const [, doc] = ManipulationCommands.createCircle(args);
     const shapes = Array.from(doc.shapes.values());
     expect(shapes).toHaveLength(1);
     expect(shapes[0].type).toBe('circle');
-    expect(shapes[0].x).toBe(42);
+    expect(shapes[0].x).toBe(62);
     expect(shapes[0].y).toBe(88);
   });
 
