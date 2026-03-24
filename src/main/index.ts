@@ -62,6 +62,19 @@ app.whenReady().then(() => {
     return await pickPdfFile();
   });
 
+  ipcMain.handle('flow:pdf:export', async (_, pdfData: ArrayBuffer): Promise<boolean> => {
+    const result = await dialog.showSaveDialog({
+      title: 'Export PDF',
+      defaultPath: 'export.pdf',
+      filters: [{ name: 'PDF', extensions: ['pdf'] }],
+    });
+
+    if (result.canceled || !result.filePath) return false;
+
+    fs.writeFileSync(result.filePath, Buffer.from(pdfData));
+    return true;
+  });
+
   createWindow();
 
   app.on('activate', function () {
