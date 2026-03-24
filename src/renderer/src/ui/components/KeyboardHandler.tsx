@@ -111,6 +111,13 @@ export function KeyboardHandler() {
         }
       }
 
+      // handle ctrl+e for export
+      if (e.ctrlKey && e.key === 'e') {
+        e.preventDefault();
+        appendCommandBuffer('<C-e>');
+        return;
+      }
+
       // handle ctrl/meta + arrow keys or hjkl for fast movement
       if (e.ctrlKey && mode !== 'anchor-line') {
         if (e.key === 'ArrowUp' || e.key === 'k') {

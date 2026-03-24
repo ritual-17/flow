@@ -33,7 +33,8 @@
     "N": "selectPreviousSearchResult",
     "a": "enterLineMode",
     "A": "enterAnchorLineMode",
-    "f": "importPdf"
+    "f": "importPdf",
+    "<C-e>": "exportPdf"
   },
   "insert": {
     "j": "down",
