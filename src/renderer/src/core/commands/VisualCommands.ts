@@ -200,3 +200,7 @@ export function visualRight({ editor, document, spatialIndex }: CommandArgs): Co
   }
   return [updatedEditor, document];
 }
+
+export function toggleHelp({ editor, document }: CommandArgs): CommandResult {
+  return [editor, document];
+}

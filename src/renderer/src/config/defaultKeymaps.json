@@ -5,6 +5,7 @@
     "<C-Down>": "fastDown",
     "<C-Left>": "fastLeft",
     "<C-Right>": "fastRight",
+    "`": "toggleHelp",
     "<View-Up>": "scrollViewportUp",
     "<View-Down>": "scrollViewportDown",
     "<View-Left>": "scrollViewportLeft",
