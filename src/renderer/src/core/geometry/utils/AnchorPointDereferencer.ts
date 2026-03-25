@@ -6,21 +6,21 @@ import {
 } from '@renderer/core/geometry/utils/AnchorPoints';
 
 export class AnchorPointDereferencer {
-  lines: Shape[];
+  lines: MultiLine[];
   refs: Shape[];
 
-  constructor(lines: Shape[], refs: Shape[]) {
+  constructor(lines: MultiLine[], refs: Shape[]) {
     this.lines = lines;
     this.refs = refs;
   }
 
-  populateLinePointsFromReferences(): Shape[] {
+  populateLinePointsFromReferences(): MultiLine[] {
     const updatedLines = this.lines.map((line) => this.updateLinePoints(line));
 
     return updatedLines;
   }
 
-  private updateLinePoints(line: Shape): Shape {
+  private updateLinePoints(line: MultiLine): MultiLine {
     if (line.type !== 'multi-line') return line;
 
     const updatedPoints: MultiLine['points'] = line.points
