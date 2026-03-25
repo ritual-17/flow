@@ -539,5 +539,24 @@ export function cycleArrowOnSelection(args: CommandArgs): [Editor, DocumentModel
     updatedShapes,
   );
 
+  // Status message showing error state in visual mode
+  let statusMessage = 'Arrow state: ';
+  const firstUpdatedShape = updatedShapes[0];
+  if (firstUpdatedShape && firstUpdatedShape.type === 'multi-line') {
+    const start = !!firstUpdatedShape.arrowStart;
+    const end = !!firstUpdatedShape.arrowEnd;
+    if (!start && !end) {
+      statusMessage += 'none';
+    } else if (!start && end) {
+      statusMessage += 'end only';
+    } else if (start && end) {
+      statusMessage += 'both';
+    } else if (start && !end) {
+      statusMessage += 'start only';
+    }
+  }
+
+  updatedEditor = setStatus(updatedEditor, statusMessage);
+
   return [updatedEditor, updatedDocument];
 }

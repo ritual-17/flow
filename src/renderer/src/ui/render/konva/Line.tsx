@@ -8,11 +8,17 @@ import { Arrow as KonvaArrow, Line as KonvaLine } from 'react-konva';
 type DomainLine = MultiLine;
 
 // TODO: support styling
-// TODO: support hovered and selected props
 const ARROW_POINTER_LENGTH = 12;
 const ARROW_POINTER_WIDTH = 10;
+const SELECTED_STROKE_WIDTH = 3;
+const DEFAULT_STROKE_WIDTH = 2;
 
-const Line: ShapeComponent<DomainLine> = ({ shape, stroke }: ShapeComponentProps<DomainLine>) => {
+const Line: ShapeComponent<DomainLine> = ({
+  shape,
+  stroke,
+  selected,
+  hovered,
+}: ShapeComponentProps<DomainLine> & { selected?: boolean; hovered?: boolean }) => {
   const resolved = useResolvedPoints(shape);
   const points = resolved.flatMap((pt) => [pt.x, pt.y]);
 
@@ -41,14 +47,17 @@ const Line: ShapeComponent<DomainLine> = ({ shape, stroke }: ShapeComponentProps
         ]
       : null;
 
+  const strokeWidth = selected ? SELECTED_STROKE_WIDTH : DEFAULT_STROKE_WIDTH;
+
   return (
     <>
-      <KonvaLine points={points} stroke={stroke} />
+      <KonvaLine points={points} stroke={stroke} strokeWidth={strokeWidth} />
       {shape.arrowEnd && endSegment && (
         <KonvaArrow
           points={endSegment}
           fill={stroke}
           stroke={stroke}
+          strokeWidth={strokeWidth}
           pointerLength={ARROW_POINTER_LENGTH}
           pointerWidth={ARROW_POINTER_WIDTH}
         />
@@ -58,6 +67,7 @@ const Line: ShapeComponent<DomainLine> = ({ shape, stroke }: ShapeComponentProps
           points={startSegment}
           fill={stroke}
           stroke={stroke}
+          strokeWidth={strokeWidth}
           pointerLength={ARROW_POINTER_LENGTH}
           pointerWidth={ARROW_POINTER_WIDTH}
         />

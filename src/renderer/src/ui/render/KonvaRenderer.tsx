@@ -36,7 +36,7 @@ function KonvaRenderer() {
 
         return (
           <Group key={`group-${shape.id}`}>
-            <Component key={shape.id} shape={shape} stroke={stroke} />
+            <Component key={shape.id} shape={shape} stroke={stroke} selected={selected} hovered={hovered} />
             {hovered && <HoverEffect shape={shape} />}
             <Label shape={shape} />
           </Group>
@@ -51,7 +51,7 @@ function KonvaRenderer() {
         const stroke = selected ? 'blue' : shape.lineColor;
         return (
           <Group key={`group-${shape.id}`}>
-            <Component key={shape.id} shape={shape} stroke={stroke} />
+            <Component key={shape.id} shape={shape} stroke={stroke} selected={selected} hovered={hovered} />
             {hovered && <HoverEffect shape={shape} />}
           </Group>
         );
