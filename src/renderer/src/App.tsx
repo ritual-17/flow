@@ -1,5 +1,6 @@
 import { setCursorPosition } from '@renderer/core/editor/Editor';
 import { Canvas } from '@renderer/ui/components/Canvas';
+import { HelpMenu } from '@renderer/ui/components/HelpMenu';
 import { KeyboardHandler } from '@renderer/ui/components/KeyboardHandler';
 import { StatusBar } from '@renderer/ui/components/StatusBar';
 import { useStore } from '@renderer/ui/Store';
@@ -38,11 +39,14 @@ function App(): React.JSX.Element {
 
   return (
     <div className='flex flex-col h-screen w-screen bg-[#1e1f22] text-gray-300 font-mono overflow-hidden'>
+      <HelpMenu />
       <Canvas
         width={windowSize.width - STATUS_BAR_HEIGHT}
         height={windowSize.height - STATUS_BAR_HEIGHT}
       />
+
       <StatusBar />
+
       <KeyboardHandler />
     </div>
   );

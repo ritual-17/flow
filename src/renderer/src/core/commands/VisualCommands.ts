@@ -12,6 +12,7 @@ import {
   pushSelectedShapes,
   setBoxSelectAnchor,
   setCursorPosition,
+  toggleHelpMenu,
 } from '@renderer/core/editor/Editor';
 import { Direction } from '@renderer/core/geometry/SpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
@@ -198,5 +199,12 @@ export function visualRight({ editor, document, spatialIndex }: CommandArgs): Co
   if (editor.boxSelectAnchor) {
     updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
+  return [updatedEditor, document];
+}
+
+export function toggleHelp({ editor, document }: CommandArgs): CommandResult {
+  let updatedEditor = editor;
+  updatedEditor = toggleHelpMenu(updatedEditor);
+
   return [updatedEditor, document];
 }

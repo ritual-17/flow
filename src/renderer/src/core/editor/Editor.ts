@@ -15,6 +15,7 @@ export interface Editor {
   previousShapeId: ShapeId | null; // for auto-linking, to keep track of the last shape that was linked from
   statusMessage: string;
   currentTextBox: TextBoxEditingState | null;
+  helpMenuOpen: boolean;
 }
 
 export interface TextBoxEditingState {
@@ -49,6 +50,7 @@ function createEditor(): Editor {
     boxSelectAnchor: undefined,
     statusMessage: '',
     currentTextBox: null,
+    helpMenuOpen: false,
   };
 }
 
@@ -171,6 +173,12 @@ function setPreviousShapeId(editor: Editor, shapeId: ShapeId | null): Editor {
   });
 }
 
+function toggleHelpMenu(editor: Editor): Editor {
+  return produce(editor, (draft) => {
+    draft.helpMenuOpen = !editor.helpMenuOpen;
+  });
+}
+
 export {
   createEditor,
   setMode,
@@ -192,4 +200,5 @@ export {
   setStatus,
   setCurrentTextBox,
   setPreviousShapeId,
+  toggleHelpMenu,
 };
