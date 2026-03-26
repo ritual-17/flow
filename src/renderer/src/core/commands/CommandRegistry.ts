@@ -2,11 +2,24 @@
 //
 
 import {
+  autoLinkAddToLine,
+  autoLinkCircle,
+  autoLinkRectangle,
+  autoLinkSquare,
+  autoLinkTextBox,
+} from '@renderer/core/commands/AutoLinkCommands';
+import {
+  centerViewportOnCursor,
   cursorDown,
+  cursorDownFast,
   cursorLeft,
+  cursorLeftFast,
   cursorRight,
+  cursorRightFast,
   cursorUp,
+  cursorUpFast,
   enterAnchorLineMode,
+  enterAutoLinkInsertMode,
   enterCommandMode,
   enterInsertMode,
   enterLineMode,
@@ -17,6 +30,10 @@ import {
   enterVisualBlockMode,
   enterVisualMode,
   moveCursorToMiddle,
+  scrollViewportDown,
+  scrollViewportLeft,
+  scrollViewportRight,
+  scrollViewportUp,
   selectNextSearchResult,
   selectPreviousSearchResult,
 } from '@renderer/core/commands/EditorCommands';
@@ -32,6 +49,10 @@ import {
   paste,
   redo,
   startNewLine,
+  translateFastSelectionDown,
+  translateFastSelectionLeft,
+  translateFastSelectionRight,
+  translateFastSelectionUp,
   translateSelectionDown,
   translateSelectionLeft,
   translateSelectionRight,
@@ -39,7 +60,7 @@ import {
   undo,
   yankSelection,
 } from '@renderer/core/commands/ManipulationCommands';
-import { importPdf } from '@renderer/core/commands/PdfCommands';
+import { exportPdf, importPdf } from '@renderer/core/commands/PdfCommands';
 import {
   jumpToDownAnchorPoint,
   jumpToLeftAnchorPoint,
@@ -93,6 +114,8 @@ function commandFromName(command: string): CommandFunction | null {
       return enterTextModeForNearestTextBox;
     case 'enterTextModeFromLineMode':
       return enterTextModeFromLineMode;
+    case 'enterAutoLinkInsertMode':
+      return enterAutoLinkInsertMode;
     case 'up':
       return cursorUp;
     case 'down':
@@ -101,8 +124,26 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorLeft;
     case 'right':
       return cursorRight;
+    case 'fastUp':
+      return cursorUpFast;
+    case 'fastDown':
+      return cursorDownFast;
+    case 'fastLeft':
+      return cursorLeftFast;
+    case 'fastRight':
+      return cursorRightFast;
     case 'moveCursorToMiddle':
       return moveCursorToMiddle;
+    case 'moveScreenToCursor':
+      return centerViewportOnCursor;
+    case 'scrollViewportUp':
+      return scrollViewportUp;
+    case 'scrollViewportDown':
+      return scrollViewportDown;
+    case 'scrollViewportLeft':
+      return scrollViewportLeft;
+    case 'scrollViewportRight':
+      return scrollViewportRight;
     case 'createCircle':
       return createCircle;
     case 'createRectangle':
@@ -111,6 +152,16 @@ function commandFromName(command: string): CommandFunction | null {
       return createSquare;
     case 'createTextBox':
       return createTextBox;
+    case 'autoLinkCircle':
+      return autoLinkCircle;
+    case 'autoLinkRectangle':
+      return autoLinkRectangle;
+    case 'autoLinkSquare':
+      return autoLinkSquare;
+    case 'autoLinkTextBox':
+      return autoLinkTextBox;
+    case 'autoLinkAddToLine':
+      return autoLinkAddToLine;
     case 'selectNextSearchResult':
       return selectNextSearchResult;
     case 'selectPreviousSearchResult':
@@ -135,6 +186,14 @@ function commandFromName(command: string): CommandFunction | null {
       return translateSelectionLeft;
     case 'translateSelectionRight':
       return translateSelectionRight;
+    case 'translateFastSelectionUp':
+      return translateFastSelectionUp;
+    case 'translateFastSelectionDown':
+      return translateFastSelectionDown;
+    case 'translateFastSelectionLeft':
+      return translateFastSelectionLeft;
+    case 'translateFastSelectionRight':
+      return translateFastSelectionRight;
     case 'deleteSelection':
       return deleteSelection;
     case 'yankSelection':
@@ -158,6 +217,8 @@ function commandFromName(command: string): CommandFunction | null {
       return visualRight;
     case 'importPdf':
       return importPdf;
+    case 'exportPdf':
+      return exportPdf;
     case 'undo':
       return undo;
     case 'redo':

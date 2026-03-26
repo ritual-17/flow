@@ -1,5 +1,5 @@
 import { Document, DocumentModel } from '@renderer/core/document/Document';
-import { AnchorPoint, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import { produce } from 'immer';
 
 export interface Editor {
@@ -10,8 +10,9 @@ export interface Editor {
   commandHistory: string[];
   clipboard: Shape[]; // stores copies of shapes relative to the center of the selection
   boxSelectAnchor?: { x: number; y: number };
-  currentAnchorPoint: AnchorPoint | null;
+  currentAnchorRef: AnchorRef | null;
   currentLineId: ShapeId | null;
+  previousShapeId: ShapeId | null; // for auto-linking, to keep track of the last shape that was linked from
   statusMessage: string;
   currentTextBox: TextBoxEditingState | null;
 }
@@ -29,7 +30,8 @@ export type Mode =
   | 'command'
   | 'text'
   | 'line'
-  | 'anchor-line';
+  | 'anchor-line'
+  | 'auto-link-insert';
 
 // any modification to the editor state should go through these functions
 // below are just some helper functions to create and update the editor state
@@ -41,8 +43,9 @@ function createEditor(): Editor {
     commandBuffer: '',
     commandHistory: [],
     clipboard: [],
-    currentAnchorPoint: null,
+    currentAnchorRef: null,
     currentLineId: null,
+    previousShapeId: null,
     boxSelectAnchor: undefined,
     statusMessage: '',
     currentTextBox: null,
@@ -124,9 +127,9 @@ function setClipboard(editor: Editor, shapes: Shape[]): Editor {
   });
 }
 
-function setCurrentAnchorPoint(editor: Editor, anchorPoint: AnchorPoint | null): Editor {
+function setCurrentAnchorRef(editor: Editor, anchorRef: AnchorRef | null): Editor {
   return produce(editor, (draft) => {
-    draft.currentAnchorPoint = anchorPoint;
+    draft.currentAnchorRef = anchorRef;
   });
 }
 
@@ -162,6 +165,12 @@ function setStatus(editor: Editor, message: string): Editor {
   });
 }
 
+function setPreviousShapeId(editor: Editor, shapeId: ShapeId | null): Editor {
+  return produce(editor, (draft) => {
+    draft.previousShapeId = shapeId;
+  });
+}
+
 export {
   createEditor,
   setMode,
@@ -176,10 +185,11 @@ export {
   setCommandBuffer,
   addToCommandHistory,
   setClipboard,
-  setCurrentAnchorPoint,
+  setCurrentAnchorRef,
   setCurrentLineId,
   setBoxSelectAnchor,
   clearBoxSelectAnchor,
   setStatus,
   setCurrentTextBox,
+  setPreviousShapeId,
 };

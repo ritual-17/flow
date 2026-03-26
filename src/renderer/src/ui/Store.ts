@@ -8,22 +8,54 @@ import {
 } from '@renderer/core/editor/Editor';
 import { create } from 'zustand';
 
+type Viewport = {
+  x: number;
+  y: number;
+  zoom: number;
+};
+
+const initialViewport: Viewport = {
+  x: 0,
+  y: 0,
+  zoom: 1,
+};
+
 export interface DocumentStore {
   editor: Editor;
   document: DocumentModel;
   commandDispatcher: CommandDispatcher;
+  viewport: Viewport;
+  setViewport: (vp: Partial<Viewport>) => void;
+  pan: (dx: number, dy: number) => void;
   update: (newEditor: Editor, newDocument: DocumentModel) => void;
   updateEditor: (newEditor: Editor) => void;
   updateDocument: (newDocument: DocumentModel) => void;
   updateCommandBuffer: (command: string) => void;
   appendCommandBuffer: (char: string) => void;
   updateCurrentTextBoxContent: (content: string) => void;
+  centerViewportOn: (x: number, y: number, canvasWidth: number, canvasHeight: number) => void;
 }
 
 export const useStore = create<DocumentStore>((set) => ({
   editor: createEditor(),
   document: Document.createNewDocument('Untitled'),
   commandDispatcher: new CommandDispatcher(set),
+  viewport: initialViewport,
+  setViewport: (vp: Partial<Viewport>) =>
+    set((state) => ({ viewport: { ...state.viewport, ...vp } })),
+  pan: (dx: number, dy: number) =>
+    set((state) => {
+      const newX = state.viewport.x + dx;
+      const newY = state.viewport.y + dy;
+
+      return {
+        viewport: {
+          ...state.viewport,
+          x: Math.min(0, newX),
+          y: Math.min(0, newY),
+        },
+      };
+    }),
   update: (newEditor, newDocument) => set({ editor: newEditor, document: newDocument }),
   updateEditor: (newEditor) => set({ editor: newEditor }),
   updateDocument: (newDocument) => set({ document: newDocument }),
@@ -57,4 +89,17 @@ export const useStore = create<DocumentStore>((set) => ({
     });
     set({ editor: updatedEditor });
   },
+  centerViewportOn: (x: number, y: number, canvasWidth: number, canvasHeight: number) =>
+    set(() => {
+      const targetX = Math.min(0, -(x - canvasWidth / 2));
+      const targetY = Math.min(0, -(y - canvasHeight / 2));
+
+      return {
+        viewport: {
+          x: targetX,
+          y: targetY,
+          zoom: 1,
+        },
+      };
+    }),
 }));

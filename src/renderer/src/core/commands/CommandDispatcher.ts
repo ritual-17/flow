@@ -1,6 +1,7 @@
 import { CommandParser, ParseResult } from '@renderer/core/commands/CommandParser';
 import * as CommandRegistry from '@renderer/core/commands/CommandRegistry';
 import { AnchorLineModeParser } from '@renderer/core/commands/parsers/AnchorLineModeParser';
+import { AutoLinkInsertModeParser } from '@renderer/core/commands/parsers/AutoLinkInsertModeParser';
 import { InsertModeParser } from '@renderer/core/commands/parsers/InsertModeParser';
 import { LineModeParser } from '@renderer/core/commands/parsers/LineModeParser';
 import { NormalModeParser } from '@renderer/core/commands/parsers/NormalModeParser';
@@ -30,6 +31,7 @@ export class CommandDispatcher {
   private lineModeParser: CommandParser = new LineModeParser();
   private anchorLineModeParser: CommandParser = new AnchorLineModeParser();
   private textModeParser: CommandParser = new TextModeParser();
+  private autoLinkInsertModeParser: CommandParser = new AutoLinkInsertModeParser();
 
   private history = new History<DocumentModel>();
 
@@ -124,8 +126,7 @@ export class CommandDispatcher {
     isHistoryCommand: boolean,
   ): void {
     // rebuild spatial index with updated document
-    this.spatialIndex = new FlattenSpatialIndex();
-    afterDocument.shapes.forEach((shape) => this.spatialIndex.addShape(shape));
+    this.spatialIndex = new FlattenSpatialIndex(afterDocument.shapes.values().toArray());
 
     // record the command in history before updating the state
     if (afterDocument !== beforeDocument && !isHistoryCommand) {
@@ -156,6 +157,8 @@ export class CommandDispatcher {
         return this.anchorLineModeParser;
       case 'text':
         return this.textModeParser;
+      case 'auto-link-insert':
+        return this.autoLinkInsertModeParser;
       default:
         // update this
         throw new Error(`Unknown editor mode: ${editor.mode}`);
