@@ -23,7 +23,6 @@ function getShapeBounds(shape: Shape): {
       };
     case 'rectangle':
     case 'square':
-    case 'textBox':
     case 'pdf':
       return {
         minX: shape.x,
@@ -31,6 +30,16 @@ function getShapeBounds(shape: Shape): {
         maxX: shape.x + shape.width,
         maxY: shape.y + shape.height,
       };
+    case 'textBox': {
+      const w = shape.label.compiledImageMeta?.width ?? shape.width;
+      const h = shape.label.compiledImageMeta?.height ?? shape.height;
+      return {
+        minX: shape.x,
+        minY: shape.y,
+        maxX: shape.x + w,
+        maxY: shape.y + h,
+      };
+    }
     case 'multi-line': {
       const coords = shape.points.filter((p) => !isAnchorRef(p)) as {
         x: number;
