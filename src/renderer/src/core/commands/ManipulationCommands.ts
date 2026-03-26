@@ -8,6 +8,7 @@ import {
   Editor,
   setClipboard,
   setCurrentLineId,
+  setCurrentTextBox,
   setMode,
   setStatus,
 } from '@renderer/core/editor/Editor';
@@ -72,7 +73,13 @@ export async function createTextBox(args: CommandArgs): Promise<CommandResult> {
 
   const updatedDocument = addShapeToDocument(args, textBox);
 
-  return [args.editor, updatedDocument];
+  let updatedEditor = setMode(args.editor, 'text');
+  updatedEditor = setCurrentTextBox(updatedEditor, {
+    id: textBox.id,
+    content: textBox.label.text,
+  });
+
+  return [updatedEditor, updatedDocument];
 }
 
 const TRANSLATE_AMOUNT = 10;
