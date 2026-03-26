@@ -6,7 +6,8 @@ import {
   clearBoxSelectAnchor,
   clearSelection,
   Editor,
-  helperCheckCursorInViewport,
+  helperKeepCursorInViewport,
+  helperPanViewportForItem,
   setClipboard,
   setCurrentLineId,
   setCurrentTextBox,
@@ -139,9 +140,8 @@ function translateSelection(
     updatedShapes,
   );
 
-  helperCheckCursorInViewport(transalateDirection, updatedEditor, updatedShapes);
-  // TODO: move cursor if not in viewpoint (maybe make another helper function to keep cursor in viewport)
-  // TODO: change naming of funciton to helperUpdateViewport or something
+  helperPanViewportForItem(transalateDirection, updatedEditor, updatedShapes);
+  updatedEditor = helperKeepCursorInViewport(transalateDirection, updatedEditor);
   return [updatedEditor, updatedDocument];
 }
 

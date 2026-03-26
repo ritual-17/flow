@@ -9,7 +9,7 @@ import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegis
 import {
   clearBoxSelectAnchor,
   Editor,
-  helperCheckCursorInViewport,
+  helperPanViewportForItem,
   pushSelectedShapes,
   setBoxSelectAnchor,
   setCursorPosition,
@@ -163,7 +163,7 @@ export function visualUp({ editor, document, spatialIndex }: CommandArgs): Comma
   if (editor.boxSelectAnchor) {
     updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
-  helperCheckCursorInViewport('up', updatedEditor);
+  helperPanViewportForItem('up', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -176,7 +176,7 @@ export function visualDown({ editor, document, spatialIndex }: CommandArgs): Com
   if (editor.boxSelectAnchor) {
     updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
-  helperCheckCursorInViewport('down', updatedEditor);
+  helperPanViewportForItem('down', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -189,7 +189,7 @@ export function visualLeft({ editor, document, spatialIndex }: CommandArgs): Com
   if (editor.boxSelectAnchor) {
     updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
-  helperCheckCursorInViewport('left', updatedEditor);
+  helperPanViewportForItem('left', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -202,6 +202,6 @@ export function visualRight({ editor, document, spatialIndex }: CommandArgs): Co
   if (editor.boxSelectAnchor) {
     updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
-  helperCheckCursorInViewport('right', updatedEditor);
+  helperPanViewportForItem('right', updatedEditor);
   return [updatedEditor, document];
 }

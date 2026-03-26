@@ -172,7 +172,7 @@ function setPreviousShapeId(editor: Editor, shapeId: ShapeId | null): Editor {
   });
 }
 
-function helperCheckCursorInViewport(
+function helperPanViewportForItem(
   lastMovement: 'up' | 'down' | 'left' | 'right' | 'shape',
   editor,
   shapes: Shape[] = [],
@@ -188,9 +188,14 @@ function helperCheckCursorInViewport(
     anchorItemY = cursor.y;
   // shapes are being translated
   if (shapes.length) {
-    // TO-DO: if movement left make x min, if movement up make y min
-    anchorItemX = Math.max(...shapes.map((s) => s.x));
-    anchorItemY = Math.max(...shapes.map((s) => s.y));
+    anchorItemX =
+      lastMovement === 'left'
+        ? Math.min(...shapes.map((s) => s.x))
+        : Math.max(...shapes.map((s) => s.x));
+    anchorItemY =
+      lastMovement === 'up'
+        ? Math.min(...shapes.map((s) => s.y))
+        : Math.max(...shapes.map((s) => s.y));
   }
   console.log(anchorItemX, cursor.x, shapes);
   const { pan } = useStore.getState();
@@ -220,6 +225,28 @@ function helperCheckCursorInViewport(
   return;
 }
 
+function helperKeepCursorInViewport(
+  lastMovement: 'up' | 'down' | 'left' | 'right' | 'shape',
+  editor,
+) {
+  const cursor = editor.cursorPosition;
+  const cursorMoveAmount = 50,
+    buffer = 50;
+  const { viewport } = useStore.getState();
+  let updatedEditor = editor;
+
+  if (lastMovement === 'up' && cursor.y > -viewport.y + window.innerHeight - buffer) {
+    updatedEditor = setCursorPosition(editor, { x: cursor.x, y: cursor.y - cursorMoveAmount });
+  } else if (lastMovement === 'down' && cursor.y < -viewport.y + buffer) {
+    updatedEditor = setCursorPosition(editor, { x: cursor.x, y: cursor.y + cursorMoveAmount });
+  } else if (lastMovement === 'left' && cursor.x > -viewport.x + window.innerWidth - buffer) {
+    updatedEditor = setCursorPosition(editor, { x: cursor.x - cursorMoveAmount, y: cursor.y });
+  } else if (lastMovement === 'right' && cursor.x < -viewport.x + buffer) {
+    updatedEditor = setCursorPosition(editor, { x: cursor.x + cursorMoveAmount, y: cursor.y });
+  }
+  return updatedEditor;
+}
+
 export {
   createEditor,
   setMode,
@@ -241,5 +268,6 @@ export {
   setStatus,
   setCurrentTextBox,
   setPreviousShapeId,
-  helperCheckCursorInViewport,
+  helperPanViewportForItem,
+  helperKeepCursorInViewport,
 };

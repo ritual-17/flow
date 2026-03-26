@@ -17,7 +17,8 @@ import { updateBoxSelection } from '@renderer/core/commands/VisualCommands';
 import {
   clearBoxSelectAnchor,
   clearSelection,
-  helperCheckCursorInViewport,
+  helperKeepCursorInViewport,
+  helperPanViewportForItem,
   setCurrentAnchorRef,
   setCurrentLineId,
   setCurrentTextBox,
@@ -179,7 +180,7 @@ function cursorUp({ editor, document }: CommandArgs): CommandResult {
     x: Math.max(0, editor.cursorPosition.x),
     y: Math.max(0, editor.cursorPosition.y - CURSOR_MOVE_AMOUNT),
   });
-  helperCheckCursorInViewport('up', updatedEditor);
+  helperPanViewportForItem('up', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -188,7 +189,7 @@ function cursorDown({ editor, document }: CommandArgs): CommandResult {
     x: Math.max(0, editor.cursorPosition.x),
     y: Math.max(0, editor.cursorPosition.y + CURSOR_MOVE_AMOUNT),
   });
-  helperCheckCursorInViewport('down', updatedEditor);
+  helperPanViewportForItem('down', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -197,7 +198,7 @@ function cursorLeft({ editor, document }: CommandArgs): CommandResult {
     x: Math.max(0, editor.cursorPosition.x - CURSOR_MOVE_AMOUNT),
     y: Math.max(0, editor.cursorPosition.y),
   });
-  helperCheckCursorInViewport('left', updatedEditor);
+  helperPanViewportForItem('left', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -206,7 +207,7 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
     x: Math.max(0, editor.cursorPosition.x + CURSOR_MOVE_AMOUNT),
     y: Math.max(0, editor.cursorPosition.y),
   });
-  helperCheckCursorInViewport('right', updatedEditor);
+  helperPanViewportForItem('right', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -219,7 +220,7 @@ function cursorUpFast({ editor, document, spatialIndex }: CommandArgs): CommandR
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
     updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
-  helperCheckCursorInViewport('up', updatedEditor);
+  helperPanViewportForItem('up', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -232,7 +233,7 @@ function cursorDownFast({ editor, document, spatialIndex }: CommandArgs): Comman
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
     updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
-  helperCheckCursorInViewport('down', updatedEditor);
+  helperPanViewportForItem('down', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -245,7 +246,7 @@ function cursorLeftFast({ editor, document, spatialIndex }: CommandArgs): Comman
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
     updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
-  helperCheckCursorInViewport('left', updatedEditor);
+  helperPanViewportForItem('left', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -258,7 +259,7 @@ function cursorRightFast({ editor, document, spatialIndex }: CommandArgs): Comma
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
     updatedEditor = updateBoxSelection(updatedEditor, spatialIndex);
   }
-  helperCheckCursorInViewport('right', updatedEditor);
+  helperPanViewportForItem('right', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -299,7 +300,7 @@ function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs)
   if (nextShape) {
     updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
   }
-  helperCheckCursorInViewport('shape', updatedEditor);
+  helperPanViewportForItem('shape', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -313,7 +314,7 @@ function selectPreviousSearchResult({
   if (nextShape) {
     updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
   }
-  helperCheckCursorInViewport('shape', updatedEditor);
+  helperPanViewportForItem('shape', updatedEditor);
   return [updatedEditor, document];
 }
 function selectAllShapes({ editor, document }: CommandArgs): CommandResult {
@@ -328,25 +329,29 @@ function selectAllShapes({ editor, document }: CommandArgs): CommandResult {
 function scrollViewportUp({ editor, document }: CommandArgs): CommandResult {
   const { pan } = useStore.getState();
   pan(0, FAST_CURSOR_MOVE_AMOUNT);
-  return [editor, document];
+  const updatedEditor = helperKeepCursorInViewport('up', editor);
+  return [updatedEditor, document];
 }
 
 function scrollViewportDown({ editor, document }: CommandArgs): CommandResult {
   const { pan } = useStore.getState();
   pan(0, -FAST_CURSOR_MOVE_AMOUNT);
-  return [editor, document];
+  const updatedEditor = helperKeepCursorInViewport('down', editor);
+  return [updatedEditor, document];
 }
 
 function scrollViewportLeft({ editor, document }: CommandArgs): CommandResult {
   const { pan } = useStore.getState();
   pan(FAST_CURSOR_MOVE_AMOUNT, 0);
-  return [editor, document];
+  const updatedEditor = helperKeepCursorInViewport('left', editor);
+  return [updatedEditor, document];
 }
 
 function scrollViewportRight({ editor, document }: CommandArgs): CommandResult {
   const { pan } = useStore.getState();
   pan(-FAST_CURSOR_MOVE_AMOUNT, 0);
-  return [editor, document];
+  const updatedEditor = helperKeepCursorInViewport('right', editor);
+  return [updatedEditor, document];
 }
 
 function returnToFirstPosition({ editor, document }: CommandArgs): CommandResult {
