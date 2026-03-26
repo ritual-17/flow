@@ -17,6 +17,12 @@ const commonModuleNameMapper = {
   // Maps pdfjs-dist to the mock
   '^pdfjs-dist$': '<rootDir>/test/mocks/pdfjs-mock.ts',
 
+  // Maps konva to the mock (konva uses ESM which Jest cannot parse)
+  '^konva$': '<rootDir>/test/mocks/konva-mock.ts',
+
+  // Maps jspdf to the mock (jspdf uses ESM which Jest cannot parse)
+  '^jspdf$': '<rootDir>/test/mocks/jspdf-mock.ts',
+
   // Maps the pdf.worker.min.js to the mock
   '^pdfjs-dist/build/pdf.worker.min\\?url$': '<rootDir>/test/mocks/file-mock.js',
 };
