@@ -1,9 +1,14 @@
-import { AnchorPoint, buildBaseShape, IShapeBase } from '@renderer/core/geometry/Shape';
+import { buildBaseShape, Coordinate, IShapeBase } from '@renderer/core/geometry/Shape';
 
 export type Square = IShapeBase & {
   type: 'square';
   width: number;
   height: number;
+};
+
+export const Square = {
+  build,
+  generateAnchorPoints: generateAnchorCoordinates,
 };
 
 export function build(attrs: Partial<Square>): Square {
@@ -18,14 +23,13 @@ export function build(attrs: Partial<Square>): Square {
   return square;
 }
 
-export function generateAnchorPoints(square: Square): AnchorPoint[] {
+export function generateAnchorCoordinates(square: Square): Coordinate[] {
   const { x, y, width, height } = square;
-  const ownerId = square.id;
 
   return [
-    { ownerId, position: 0, x: x + width / 2, y: y }, // top center
-    { ownerId, position: 1, x: x + width, y: y + height / 2 }, // middle right
-    { ownerId, position: 2, x: x + width / 2, y: y + height }, // bottom center
-    { ownerId, position: 3, x: x, y: y + height / 2 }, // middle left
+    { x: x + width / 2, y: y }, // top center
+    { x: x + width, y: y + height / 2 }, // middle right
+    { x: x + width / 2, y: y + height }, // bottom center
+    { x: x, y: y + height / 2 }, // middle left
   ];
 }

@@ -1,8 +1,8 @@
-import { AnchorPoint, buildBaseShape, IShapeBase, ShapeId } from '@renderer/core/geometry/Shape';
+import { buildBaseShape, Coordinate, IShapeBase, ShapeId } from '@renderer/core/geometry/Shape';
 
 export const PDF = {
   build,
-  generateAnchorPoints,
+  generateAnchorCoordinates,
 };
 
 export type PdfSlide = IShapeBase & {
@@ -33,13 +33,13 @@ export function build(attrs: Partial<PdfSlide>): PdfSlide {
   };
 }
 
-export function generateAnchorPoints(pdf: PdfSlide): AnchorPoint[] {
-  const { x, y, width, height, id: ownerId } = pdf;
+export function generateAnchorCoordinates(pdf: PdfSlide): Coordinate[] {
+  const { x, y, width, height } = pdf;
 
   return [
-    { ownerId, position: 0, x: x + width / 2, y }, // top
-    { ownerId, position: 1, x: x + width, y: y + height / 2 }, // right
-    { ownerId, position: 2, x: x + width / 2, y: y + height }, // bottom
-    { ownerId, position: 3, x, y: y + height / 2 }, // left
+    { x: x + width / 2, y }, // top
+    { x: x + width, y: y + height / 2 }, // right
+    { x: x + width / 2, y: y + height }, // bottom
+    { x, y: y + height / 2 }, // left
   ];
 }

@@ -10,6 +10,7 @@ declare global {
 
       pdf: {
         pick: () => Promise<LoadedPdfFile | null>;
+        export: (pdfData: ArrayBuffer) => Promise<boolean>;
       };
     };
   }

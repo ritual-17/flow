@@ -7,6 +7,7 @@ const api = {
 
   pdf: {
     pick: () => ipcRenderer.invoke('flow:pdf:pick'),
+    export: (pdfData: ArrayBuffer) => ipcRenderer.invoke('flow:pdf:export', pdfData),
   },
 };
 

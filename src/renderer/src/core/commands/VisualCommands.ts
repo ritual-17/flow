@@ -15,6 +15,7 @@ import {
 } from '@renderer/core/editor/Editor';
 import { Direction } from '@renderer/core/geometry/SpatialIndex';
 import { SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
+import { resolvePointCoordinate } from '@renderer/core/geometry/utils/AnchorPoints';
 import { produce } from 'immer';
 
 const CURSOR_MOVE_AMOUNT = 10;
@@ -37,19 +38,17 @@ function jumpToAnchorPoint(
   { editor, document, spatialIndex }: CommandArgs,
   direction: Direction,
 ): CommandResult {
-  const currentAnchorPoint = editor.currentAnchorPoint;
-  if (!currentAnchorPoint) {
+  const currentAnchorRef = editor.currentAnchorRef;
+  if (!currentAnchorRef) {
     return [editor, document];
   }
 
-  const nextAnchorPoint = spatialIndex.getNextAnchorPoint(currentAnchorPoint, direction);
-  let updatedEditor = editor;
-  if (nextAnchorPoint) {
-    updatedEditor = produce(editor, (draft) => {
-      draft.currentAnchorPoint = nextAnchorPoint;
-      draft.cursorPosition = { x: nextAnchorPoint.x, y: nextAnchorPoint.y };
-    });
-  }
+  const nextAnchorRef = spatialIndex.getNextAnchorRef(currentAnchorRef, direction);
+  const nextAnchorCoords = resolvePointCoordinate(document, nextAnchorRef);
+  const updatedEditor = produce(editor, (draft) => {
+    draft.currentAnchorRef = nextAnchorRef;
+    draft.cursorPosition = nextAnchorCoords;
+  });
 
   return [updatedEditor, document];
 }
@@ -156,8 +155,8 @@ export function toggleBoxSelect({ editor, document }: CommandArgs): CommandResul
 
 export function visualUp({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
+    x: Math.max(0, editor.cursorPosition.x),
+    y: Math.max(0, editor.cursorPosition.y - CURSOR_MOVE_AMOUNT),
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {
@@ -168,8 +167,8 @@ export function visualUp({ editor, document, spatialIndex }: CommandArgs): Comma
 
 export function visualDown({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
+    x: Math.max(0, editor.cursorPosition.x),
+    y: Math.max(0, editor.cursorPosition.y + CURSOR_MOVE_AMOUNT),
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {
@@ -180,8 +179,8 @@ export function visualDown({ editor, document, spatialIndex }: CommandArgs): Com
 
 export function visualLeft({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
-    x: editor.cursorPosition.x - CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
+    x: Math.max(0, editor.cursorPosition.x - CURSOR_MOVE_AMOUNT),
+    y: Math.max(0, editor.cursorPosition.y),
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {
@@ -192,8 +191,8 @@ export function visualLeft({ editor, document, spatialIndex }: CommandArgs): Com
 
 export function visualRight({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   const newPosition = {
-    x: editor.cursorPosition.x + CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
+    x: Math.max(0, editor.cursorPosition.x + CURSOR_MOVE_AMOUNT),
+    y: Math.max(0, editor.cursorPosition.y),
   };
   let updatedEditor = setCursorPosition(editor, newPosition);
   if (editor.boxSelectAnchor) {

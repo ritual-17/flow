@@ -1,6 +1,6 @@
 import Flatten from '@flatten-js/core';
 import {
-  AnchorPoint,
+  AnchorRef,
   Coordinate,
   isLine,
   isPoint,
@@ -12,9 +12,9 @@ import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import { fromFlatten, toFlatten } from '@renderer/core/geometry/spatial-index/FlattenAdapter';
 import { Direction, SpatialIndex } from '@renderer/core/geometry/SpatialIndex';
 import {
-  getAnchorPoints,
+  getAllAnchorCoordinates,
   isAnchorRef,
-  resolveAnchorPoint,
+  resolveAnchorRefCoordinate,
 } from '@renderer/core/geometry/utils/AnchorPoints';
 import BTree from 'sorted-btree';
 
@@ -41,6 +41,15 @@ export class FlattenSpatialIndex implements SpatialIndex {
       a[1] - b[1] || // x
       a[2].localeCompare(b[2]), // id
   );
+
+  constructor(shapes: Shape[] = []) {
+    const lines = shapes.filter(isLine);
+    const nonLines = shapes.filter((shape) => !isLine(shape));
+
+    // add non-line shapes first so that line shapes can resolve any anchor refs to them
+    nonLines.forEach((shape) => this.addShape(shape));
+    lines.forEach((shape) => this.addShape(shape));
+  }
 
   addShape(shape: Shape): void {
     const resolvedShape = this.resolveShapePoints(shape);
@@ -117,8 +126,92 @@ export class FlattenSpatialIndex implements SpatialIndex {
   }
 
   searchAtPoint(point: Coordinate): Shape[] {
+    // First, try exact hit detection
     const hits = this.set.hit(new Flatten.Point(point.x, point.y));
-    return hits.map((hit) => this.getDomainShape(hit));
+    const shapes = hits.map((hit) => this.getDomainShape(hit));
+
+    // If no shapes found, use tolerance-based search for lines
+    // Lines are hard to select with exact hit detection, so we use a small radius
+    if (shapes.length === 0) {
+      const LINE_SELECTION_TOLERANCE = 5; // pixels
+      const searchBox = new Flatten.Box(
+        point.x - LINE_SELECTION_TOLERANCE,
+        point.y - LINE_SELECTION_TOLERANCE,
+        point.x + LINE_SELECTION_TOLERANCE,
+        point.y + LINE_SELECTION_TOLERANCE,
+      );
+      const candidates = this.set.search(searchBox);
+      const lineHits = candidates
+        .map((candidate) => this.getDomainShape(candidate))
+        .filter((shape) => shape.type === 'multi-line');
+
+      // Sort by distance to click point so closest line is first
+      // This allows selecting lines even when they overlap
+      const sortedLineHits = lineHits.sort((a, b) => {
+        const distA = this.distanceFromPointToShape(point, a);
+        const distB = this.distanceFromPointToShape(point, b);
+        return distA - distB;
+      });
+
+      return sortedLineHits;
+    }
+
+    return shapes;
+  }
+
+  private distanceFromPointToShape(point: Coordinate, shape: Shape): number {
+    if (shape.type !== 'multi-line') {
+      return this.distanceBetweenPoints(point, shape);
+    }
+
+    const multiLine = shape as MultiLine;
+    let minDistance = Infinity;
+
+    // Find minimum distance from point to any line segment
+    for (let i = 0; i < multiLine.points.length - 1; i++) {
+      const p1Raw = multiLine.points[i];
+      const p2Raw = multiLine.points[i + 1];
+
+      // Resolve anchor references to coordinates
+      const p1 = isAnchorRef(p1Raw)
+        ? resolveAnchorRefCoordinate(this.getDomainShapeById(p1Raw.shapeId), p1Raw.position)
+        : p1Raw;
+
+      const p2 = isAnchorRef(p2Raw)
+        ? resolveAnchorRefCoordinate(this.getDomainShapeById(p2Raw.shapeId), p2Raw.position)
+        : p2Raw;
+
+      const distance = this.distanceFromPointToSegment(point, p1, p2);
+      minDistance = Math.min(minDistance, distance);
+    }
+
+    return minDistance;
+  }
+
+  private distanceFromPointToSegment(
+    point: Coordinate,
+    segmentStart: Coordinate,
+    segmentEnd: Coordinate,
+  ): number {
+    const dx = segmentEnd.x - segmentStart.x;
+    const dy = segmentEnd.y - segmentStart.y;
+    const lengthSq = dx * dx + dy * dy;
+
+    if (lengthSq === 0) {
+      // Segment is a point
+      return this.distanceBetweenPoints(point, segmentStart);
+    }
+
+    // Calculate projection of point onto segment
+    let t = ((point.x - segmentStart.x) * dx + (point.y - segmentStart.y) * dy) / lengthSq;
+    t = Math.max(0, Math.min(1, t));
+
+    const projectedPoint = {
+      x: segmentStart.x + t * dx,
+      y: segmentStart.y + t * dy,
+    };
+
+    return this.distanceBetweenPoints(point, projectedPoint);
   }
 
   getNearestShape(point: Coordinate): Shape | null {
@@ -149,27 +242,35 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return nearest;
   }
 
-  getNearestAnchorPoint(point: Coordinate): AnchorPoint | null {
+  // pass anchorPointOwner to filter anchor points to only those belonging to the specified shape
+  getNearestAnchorRef(point: Coordinate, anchorPointOwner?: ShapeId): AnchorRef | null {
     const searchBox = new Flatten.Box(
       point.x - this.SEARCH_RADIUS,
       point.y - this.SEARCH_RADIUS,
       point.x + this.SEARCH_RADIUS,
       point.y + this.SEARCH_RADIUS,
     );
-    const candidates = this.set.search(searchBox);
-    const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
 
-    let nearestPoint: AnchorPoint | null = null;
+    let domainCandidates: Shape[] = [];
+    if (anchorPointOwner) {
+      const ownerShape = this.getDomainShapeById(anchorPointOwner);
+      domainCandidates = [ownerShape];
+    } else {
+      const candidates = this.set.search(searchBox);
+      domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
+    }
+
+    let nearestPoint: AnchorRef | null = null;
     let minDistance = Infinity;
     for (const candidate of domainCandidates) {
-      const anchorPoints = getAnchorPoints(candidate);
-      for (const anchorPoint of anchorPoints) {
-        const distance = this.distanceBetweenPoints(point, anchorPoint);
+      const anchorCoords = getAllAnchorCoordinates(candidate);
+      anchorCoords.forEach((coord, index) => {
+        const distance = this.distanceBetweenPoints(point, coord);
         if (distance < minDistance) {
           minDistance = distance;
-          nearestPoint = anchorPoint;
+          nearestPoint = { shapeId: candidate.id, position: index };
         }
-      }
+      });
     }
 
     return nearestPoint;
@@ -206,14 +307,14 @@ export class FlattenSpatialIndex implements SpatialIndex {
         let resolvedB: Coordinate;
 
         if (isAnchorRef(pointA)) {
-          const resolvedPointA = resolveAnchorPoint(candidate, pointA.position);
+          const resolvedPointA = resolveAnchorRefCoordinate(candidate, pointA.position);
           resolvedA = { x: resolvedPointA.x, y: resolvedPointA.y };
         } else {
           resolvedA = pointA;
         }
 
         if (isAnchorRef(pointB)) {
-          const resolvedPointB = resolveAnchorPoint(candidate, pointB.position);
+          const resolvedPointB = resolveAnchorRefCoordinate(candidate, pointB.position);
           resolvedB = { x: resolvedPointB.x, y: resolvedPointB.y };
         } else {
           resolvedB = pointB;
@@ -225,7 +326,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
         };
       } else {
         if (isAnchorRef(centerPointRaw)) {
-          const resolvedPoint = resolveAnchorPoint(candidate, centerPointRaw.position);
+          const resolvedPoint = resolveAnchorRefCoordinate(candidate, centerPointRaw.position);
           centerPoint = { x: resolvedPoint.x, y: resolvedPoint.y };
         } else {
           centerPoint = centerPointRaw;
@@ -247,53 +348,52 @@ export class FlattenSpatialIndex implements SpatialIndex {
     return null;
   }
 
-  getNextAnchorPoint(currentAnchor: AnchorPoint, direction: Direction): AnchorPoint {
+  getNextAnchorRef(currentAnchor: AnchorRef, direction: Direction): AnchorRef {
+    const currentAnchorPoint = resolveAnchorRefCoordinate(
+      this.getDomainShapeById(currentAnchor.shapeId),
+      currentAnchor.position,
+    );
+
     // can optimize by searching only in the direction
     const searchBox = new Flatten.Box(
-      currentAnchor.x - this.SEARCH_RADIUS,
-      currentAnchor.y - this.SEARCH_RADIUS,
-      currentAnchor.x + this.SEARCH_RADIUS,
-      currentAnchor.y + this.SEARCH_RADIUS,
+      currentAnchorPoint.x - this.SEARCH_RADIUS,
+      currentAnchorPoint.y - this.SEARCH_RADIUS,
+      currentAnchorPoint.x + this.SEARCH_RADIUS,
+      currentAnchorPoint.y + this.SEARCH_RADIUS,
     );
     const candidates = this.set.search(searchBox);
     const domainCandidates = candidates.map((candidate) => this.getDomainShape(candidate));
 
-    let nextAnchor: AnchorPoint = currentAnchor;
+    let nextAnchor = currentAnchor;
     let minDistance = Infinity;
 
     for (const candidate of domainCandidates) {
-      const anchorPoints = getAnchorPoints(candidate);
-      for (const anchorPoint of anchorPoints) {
+      const anchorPoints = getAllAnchorCoordinates(candidate);
+      anchorPoints.forEach((anchorPoint, index) => {
         let isInDirection = false;
         switch (direction) {
           case 'up':
-            isInDirection = anchorPoint.y < currentAnchor.y;
+            isInDirection = anchorPoint.y < currentAnchorPoint.y;
             break;
           case 'down':
-            isInDirection = anchorPoint.y > currentAnchor.y;
+            isInDirection = anchorPoint.y > currentAnchorPoint.y;
             break;
           case 'left':
-            isInDirection = anchorPoint.x < currentAnchor.x;
+            isInDirection = anchorPoint.x < currentAnchorPoint.x;
             break;
           case 'right':
-            isInDirection = anchorPoint.x > currentAnchor.x;
+            isInDirection = anchorPoint.x > currentAnchorPoint.x;
             break;
         }
 
         if (isInDirection) {
-          const distance = this.distanceBetweenPoints(currentAnchor, anchorPoint);
+          const distance = this.distanceBetweenPoints(currentAnchorPoint, anchorPoint);
           if (distance < minDistance) {
             minDistance = distance;
-            nextAnchor = {
-              x: anchorPoint.x,
-              y: anchorPoint.y,
-              ownerId: anchorPoint.ownerId,
-              position: anchorPoint.position,
-              userId: anchorPoint.userId,
-            };
+            nextAnchor = { shapeId: candidate.id, position: index };
           }
         }
-      }
+      });
     }
 
     return nextAnchor;
@@ -365,7 +465,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
 
   private getDomainShapeById(id: ShapeId): Shape {
     const shape = this.idToShapeMap.get(id);
-    if (!shape) throw new Error('Shape not found');
+    if (!shape) throw new Error('Shape not found with id ' + id);
 
     return shape.domainShape;
   }
@@ -377,7 +477,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
       if (!isAnchorRef(pt)) return pt;
 
       const refShape = this.getDomainShapeById(pt.shapeId);
-      const anchorPoint = resolveAnchorPoint(refShape, pt.position);
+      const anchorPoint = resolveAnchorRefCoordinate(refShape, pt.position);
 
       // track line references for future updates
       if (!this.shapeLineRefs.has(refShape.id)) {
