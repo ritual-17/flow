@@ -114,7 +114,13 @@ function fromFlatten(flat: Flatten.AnyShape, original: Shape): Shape {
     return fromFlattenPoint(flat, original);
   }
   if (flat.constructor === Flatten.Polygon && original.type === 'textBox') {
-    return fromFlattenTextBox(flat, original);
+    return fromFlattenBox(flat, original);
+  }
+  if (flat.constructor === Flatten.Polygon && original.type === 'rectangle') {
+    return fromFlattenBox(flat, original);
+  }
+  if (flat.constructor === Flatten.Polygon && original.type === 'square') {
+    return fromFlattenBox(flat, original);
   }
   throw new Error('Shape type mismatch');
 }
@@ -136,7 +142,10 @@ function fromFlattenPoint(flat: Flatten.Point, original: Point): Point {
   };
 }
 
-function fromFlattenTextBox(flat: Flatten.Polygon, original: TextBox): TextBox {
+function fromFlattenBox<T extends TextBox | Rectangle | Square>(
+  flat: Flatten.Polygon,
+  original: T,
+): T {
   const vertices = (flat as Flatten.Polygon).vertices;
   const xMin = Math.min(...vertices.map((v) => v.x));
   const yMin = Math.min(...vertices.map((v) => v.y));

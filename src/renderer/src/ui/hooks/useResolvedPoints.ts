@@ -5,5 +5,5 @@ import { useStore } from '@renderer/ui/Store';
 export const useResolvedPoints = (shape: MultiLine) => {
   const document = useStore((state) => state.document);
 
-  return AnchorPoints.resolveLinePoints(document, shape);
+  return AnchorPoints.resolveLineCoordinates(document, shape);
 };

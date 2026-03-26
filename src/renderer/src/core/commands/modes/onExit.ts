@@ -3,13 +3,20 @@
 import { CommandArgs, CommandResult } from '@renderer/core/commands/CommandRegistry';
 import { updateShapeInDocument } from '@renderer/core/commands/ManipulationCommands';
 import { Document } from '@renderer/core/document/Document';
-import { clearBoxSelectAnchor, setCurrentTextBox } from '@renderer/core/editor/Editor';
+import {
+  clearBoxSelectAnchor,
+  Mode,
+  setCurrentLineId,
+  setCurrentTextBox,
+  setPreviousShapeId,
+} from '@renderer/core/editor/Editor';
 import { compileShapeTextContent } from '@renderer/core/geometry/Transform';
 
 type OnExitCommandFunction = (args: CommandArgs) => Promise<CommandResult>;
-const onExitCommands: { [mode: string]: OnExitCommandFunction } = {
+const onExitCommands: { [K in Mode]?: OnExitCommandFunction } = {
   text: onExitTextMode,
   'visual-block': onExitVisualBlockMode,
+  'auto-link-insert': onExitAutoLinkInsertMode,
   // add other modes here if they need cleanup on exit
 };
 
@@ -42,4 +49,11 @@ async function onExitTextMode(args: CommandArgs): Promise<CommandResult> {
   // clear the current text box being edited
   const updatedEditor = setCurrentTextBox(editor, null);
   return [updatedEditor, updatedDocument];
+}
+
+async function onExitAutoLinkInsertMode(args: CommandArgs): Promise<CommandResult> {
+  let { editor } = args;
+  editor = setPreviousShapeId(editor, null);
+  editor = setCurrentLineId(editor, null);
+  return [editor, args.document];
 }
