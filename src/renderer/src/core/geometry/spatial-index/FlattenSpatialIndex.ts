@@ -128,7 +128,11 @@ export class FlattenSpatialIndex implements SpatialIndex {
   searchAtPoint(point: Coordinate): Shape[] {
     // First, try exact hit detection
     const hits = this.set.hit(new Flatten.Point(point.x, point.y));
-    const shapes = hits.map((hit) => this.getDomainShape(hit));
+    let shapes = hits.map((hit) => this.getDomainShape(hit));
+    const nonSlides = shapes.filter((shape) => shape.type !== 'pdf');
+    if (nonSlides.length > 0) {
+      shapes = nonSlides;
+    }
 
     // If no shapes found, use tolerance-based search for lines
     // Lines are hard to select with exact hit detection, so we use a small radius
