@@ -142,6 +142,31 @@ export function KeyboardHandler() {
           appendCommandBuffer('<C-Right>');
           return;
         }
+
+        // Viewport scrolling with Ctrl + (u, d, ,, .)
+        if (e.key === 'u') {
+          e.preventDefault();
+          updateCommandBuffer('<View-Up>');
+          return;
+        }
+
+        if (e.key === 'd') {
+          e.preventDefault();
+          updateCommandBuffer('<View-Down>');
+          return;
+        }
+
+        if (e.key === ',') {
+          e.preventDefault();
+          updateCommandBuffer('<View-Left>');
+          return;
+        }
+
+        if (e.key === '.') {
+          e.preventDefault();
+          updateCommandBuffer('<View-Right>');
+          return;
+        }
       }
 
       // handle arrow keys

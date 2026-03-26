@@ -25,6 +25,7 @@ import {
   setSelectedShapes,
 } from '@renderer/core/editor/Editor';
 import { resolvePointCoordinate } from '@renderer/core/geometry/utils/AnchorPoints';
+import { useStore } from '@renderer/ui/Store';
 
 const CURSOR_MOVE_AMOUNT = 10;
 const FAST_CURSOR_MOVE_AMOUNT = 50;
@@ -175,8 +176,8 @@ async function enterAutoLinkInsertMode(args: CommandArgs): Promise<CommandResult
 function cursorUp({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y - CURSOR_MOVE_AMOUNT,
+      x: Math.max(0, editor.cursorPosition.x),
+      y: Math.max(0, editor.cursorPosition.y - CURSOR_MOVE_AMOUNT),
     }),
     document,
   ];
@@ -185,8 +186,8 @@ function cursorUp({ editor, document }: CommandArgs): CommandResult {
 function cursorDown({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x,
-      y: editor.cursorPosition.y + CURSOR_MOVE_AMOUNT,
+      x: Math.max(0, editor.cursorPosition.x),
+      y: Math.max(0, editor.cursorPosition.y + CURSOR_MOVE_AMOUNT),
     }),
     document,
   ];
@@ -195,8 +196,8 @@ function cursorDown({ editor, document }: CommandArgs): CommandResult {
 function cursorLeft({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x - CURSOR_MOVE_AMOUNT,
-      y: editor.cursorPosition.y,
+      x: Math.max(0, editor.cursorPosition.x - CURSOR_MOVE_AMOUNT),
+      y: Math.max(0, editor.cursorPosition.y),
     }),
     document,
   ];
@@ -205,8 +206,8 @@ function cursorLeft({ editor, document }: CommandArgs): CommandResult {
 function cursorRight({ editor, document }: CommandArgs): CommandResult {
   return [
     setCursorPosition(editor, {
-      x: editor.cursorPosition.x + CURSOR_MOVE_AMOUNT,
-      y: editor.cursorPosition.y,
+      x: Math.max(0, editor.cursorPosition.x + CURSOR_MOVE_AMOUNT),
+      y: Math.max(0, editor.cursorPosition.y),
     }),
     document,
   ];
@@ -214,8 +215,8 @@ function cursorRight({ editor, document }: CommandArgs): CommandResult {
 
 function cursorUpFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   let updatedEditor = setCursorPosition(editor, {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y - FAST_CURSOR_MOVE_AMOUNT,
+    x: Math.max(0, editor.cursorPosition.x),
+    y: Math.max(0, editor.cursorPosition.y - FAST_CURSOR_MOVE_AMOUNT),
   });
 
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
@@ -227,8 +228,8 @@ function cursorUpFast({ editor, document, spatialIndex }: CommandArgs): CommandR
 
 function cursorDownFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   let updatedEditor = setCursorPosition(editor, {
-    x: editor.cursorPosition.x,
-    y: editor.cursorPosition.y + FAST_CURSOR_MOVE_AMOUNT,
+    x: Math.max(0, editor.cursorPosition.x),
+    y: Math.max(0, editor.cursorPosition.y + FAST_CURSOR_MOVE_AMOUNT),
   });
 
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
@@ -240,8 +241,8 @@ function cursorDownFast({ editor, document, spatialIndex }: CommandArgs): Comman
 
 function cursorLeftFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   let updatedEditor = setCursorPosition(editor, {
-    x: editor.cursorPosition.x - FAST_CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
+    x: Math.max(0, editor.cursorPosition.x - FAST_CURSOR_MOVE_AMOUNT),
+    y: Math.max(0, editor.cursorPosition.y),
   });
 
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
@@ -253,8 +254,8 @@ function cursorLeftFast({ editor, document, spatialIndex }: CommandArgs): Comman
 
 function cursorRightFast({ editor, document, spatialIndex }: CommandArgs): CommandResult {
   let updatedEditor = setCursorPosition(editor, {
-    x: editor.cursorPosition.x + FAST_CURSOR_MOVE_AMOUNT,
-    y: editor.cursorPosition.y,
+    x: Math.max(0, editor.cursorPosition.x + FAST_CURSOR_MOVE_AMOUNT),
+    y: Math.max(0, editor.cursorPosition.y),
   });
 
   if (updatedEditor.mode === 'visual-block' && updatedEditor.boxSelectAnchor) {
@@ -272,6 +273,20 @@ function moveCursorToMiddle({ editor, document }: CommandArgs): CommandResult {
     }),
     document,
   ];
+}
+
+function centerViewportOnCursor({ editor, document }: CommandArgs): CommandResult {
+  const cursor = editor.cursorPosition;
+  if (!cursor) return [editor, document];
+
+  const { centerViewportOn } = useStore.getState();
+
+  const canvasWidth = window.innerWidth;
+  const canvasHeight = window.innerHeight - 24; // status bar
+
+  centerViewportOn(cursor.x, cursor.y, canvasWidth, canvasHeight);
+
+  return [editor, document];
 }
 
 function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs): CommandResult {
@@ -305,6 +320,30 @@ function selectAllShapes({ editor, document }: CommandArgs): CommandResult {
   return [setSelectedShapes(updatedEditor, allShapeIds), document];
 }
 
+function scrollViewportUp({ editor, document }: CommandArgs): CommandResult {
+  const { pan } = useStore.getState();
+  pan(0, FAST_CURSOR_MOVE_AMOUNT);
+  return [editor, document];
+}
+
+function scrollViewportDown({ editor, document }: CommandArgs): CommandResult {
+  const { pan } = useStore.getState();
+  pan(0, -FAST_CURSOR_MOVE_AMOUNT);
+  return [editor, document];
+}
+
+function scrollViewportLeft({ editor, document }: CommandArgs): CommandResult {
+  const { pan } = useStore.getState();
+  pan(FAST_CURSOR_MOVE_AMOUNT, 0);
+  return [editor, document];
+}
+
+function scrollViewportRight({ editor, document }: CommandArgs): CommandResult {
+  const { pan } = useStore.getState();
+  pan(-FAST_CURSOR_MOVE_AMOUNT, 0);
+  return [editor, document];
+}
+
 export {
   enterInsertMode,
   enterNormalMode,
@@ -326,6 +365,11 @@ export {
   cursorLeftFast,
   cursorRightFast,
   moveCursorToMiddle,
+  centerViewportOnCursor,
+  scrollViewportUp,
+  scrollViewportDown,
+  scrollViewportLeft,
+  scrollViewportRight,
   selectNextSearchResult,
   selectPreviousSearchResult,
   selectAllShapes,

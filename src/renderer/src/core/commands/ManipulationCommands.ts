@@ -9,26 +9,31 @@ import {
   setClipboard,
   setCurrentLineId,
   setMode,
+  setSelectedShapes,
   setStatus,
 } from '@renderer/core/editor/Editor';
-import { Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { isLine, Shape, ShapeId } from '@renderer/core/geometry/Shape';
 import * as Circle from '@renderer/core/geometry/shapes/Circle';
-import * as MultiLine from '@renderer/core/geometry/shapes/MultiLine';
+import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import * as Point from '@renderer/core/geometry/shapes/Point';
 import * as Rectangle from '@renderer/core/geometry/shapes/Rectangle';
 import * as Square from '@renderer/core/geometry/shapes/Square';
 import { TextBox } from '@renderer/core/geometry/shapes/TextBox';
 import {
-  cloneShape,
   getSelectionCenter,
   Transform,
+  translateMultiLine,
   translateShape,
 } from '@renderer/core/geometry/Transform';
 import { AnchorPointDereferencer } from '@renderer/core/geometry/utils/AnchorPointDereferencer';
-import { newPointFromAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
+import { isAnchorRef, newPointFromAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
+import { cloneShapes } from '@renderer/core/geometry/utils/clone';
 
 export function createCircle(args: CommandArgs): CommandResult {
-  const { x, y } = args.editor.cursorPosition;
+  let { x, y } = args.editor.cursorPosition;
+  // Clamp position to ensure circle doesn't start with negative coordinates
+  x = Math.max(50, x); // radius is 50
+  y = Math.max(50, y);
   const circle = Circle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, circle);
@@ -37,7 +42,10 @@ export function createCircle(args: CommandArgs): CommandResult {
 }
 
 export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
-  const { x, y } = args.editor.cursorPosition;
+  let { x, y } = args.editor.cursorPosition;
+  // Clamp position to ensure rectangle doesn't start with negative coordinates
+  x = Math.max(0, x);
+  y = Math.max(0, y);
   const rectangle = Rectangle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, rectangle);
@@ -46,7 +54,10 @@ export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
 }
 
 export function createSquare(args: CommandArgs): [Editor, DocumentModel] {
-  const { x, y } = args.editor.cursorPosition;
+  let { x, y } = args.editor.cursorPosition;
+  // Clamp position to ensure square doesn't start with negative coordinates
+  x = Math.max(0, x);
+  y = Math.max(0, y);
   const square = Square.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, square);
@@ -55,7 +66,10 @@ export function createSquare(args: CommandArgs): [Editor, DocumentModel] {
 }
 
 export async function createTextBox(args: CommandArgs): Promise<CommandResult> {
-  const { x, y } = args.editor.cursorPosition;
+  let { x, y } = args.editor.cursorPosition;
+  // Clamp position to ensure textBox doesn't start with negative coordinates
+  x = Math.max(0, x);
+  y = Math.max(0, y);
   const textBox = await Transform.compileShapeTextContent(TextBox.build({ x, y }));
 
   const updatedDocument = addShapeToDocument(args, textBox);
@@ -101,12 +115,15 @@ function translateSelection(
     throw new Error('No shapes selected to translate');
   }
 
+  const selectedShapes = selectedShapeIds.map((id) => Document.getShapeById(document, id));
+  if (!canTranslateShapes(document, selectedShapes, { deltaX, deltaY })) {
+    return [editor, document];
+  }
+
   let updatedEditor = editor;
   updatedEditor = clearBoxSelectAnchor(updatedEditor);
 
-  const updatedShapes = selectedShapeIds
-    .map((id) => Document.getShapeById(document, id))
-    .map((shape) => translateShape(shape, { deltaX, deltaY }));
+  const updatedShapes = selectedShapes.map((shape) => translateShape(shape, { deltaX, deltaY }));
 
   const updatedDocument = updateShapesInDocument(
     { ...args, editor: updatedEditor, document },
@@ -114,6 +131,55 @@ function translateSelection(
   );
 
   return [updatedEditor, updatedDocument];
+}
+
+function canTranslateShapes(
+  document: DocumentModel,
+  shapes: Shape[],
+  { deltaX, deltaY }: { deltaX: number; deltaY: number },
+): boolean {
+  return shapes.every((shape) => {
+    const min = getShapeMinPoint(shape, document);
+    return min.x + deltaX >= 0 && min.y + deltaY >= 0;
+  });
+}
+
+function getShapeMinPoint(shape: Shape, document: DocumentModel): { x: number; y: number } {
+  if (shape.type === 'circle') {
+    return { x: shape.x - shape.radius, y: shape.y - shape.radius };
+  }
+
+  if (shape.type === 'multi-line') {
+    const points = shape.points;
+    if (points.length === 0) {
+      return { x: shape.x, y: shape.y };
+    }
+
+    let minX = Number.POSITIVE_INFINITY;
+    let minY = Number.POSITIVE_INFINITY;
+
+    for (const point of points) {
+      let x: number;
+      let y: number;
+
+      if (isAnchorRef(point)) {
+        const anchorPoint = newPointFromAnchorRef(document, point);
+        x = anchorPoint.x;
+        y = anchorPoint.y;
+      } else {
+        x = point.x;
+        y = point.y;
+      }
+
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+    }
+
+    return { x: minX, y: minY };
+  }
+
+  // For point, rectangle, square, textBox, pdf and others use shape origin.
+  return { x: shape.x, y: shape.y };
 }
 
 export function addAnchorPointToLine(args: CommandArgs): CommandResult {
@@ -264,15 +330,22 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
 
   const selectedShapes = editor.selectedShapeIds.map((id) => Document.getShapeById(document, id));
 
-  const center = getSelectionCenter(selectedShapes);
+  const center = getSelectionCenter(document, selectedShapes);
 
   // copy and translate to origin
-  const shapesToYank = selectedShapes.map((shape) =>
-    translateShape(structuredClone(shape), {
-      deltaX: -center.x,
-      deltaY: -center.y,
-    }),
-  ); // deep copy
+  const clonedShapes = selectedShapes.map((shape) => structuredClone(shape));
+  const clonedLines = clonedShapes.filter((shape) => shape.type === 'multi-line');
+  const clonedNonLines = clonedShapes.filter((shape) => shape.type !== 'multi-line');
+
+  const dereferencedLines = dereferenceLinesForYank(args, clonedLines, clonedNonLines);
+
+  const delta = {
+    deltaX: -center.x,
+    deltaY: -center.y,
+  };
+  const translatedLines = dereferencedLines.map((line) => translateMultiLine(line, delta));
+  const translatedShapes = clonedNonLines.map((shape) => translateShape(shape, delta));
+  const shapesToYank = [...translatedShapes, ...translatedLines];
 
   const count = shapesToYank.length;
   const word = count === 1 ? 'object' : 'objects';
@@ -285,6 +358,29 @@ export function yankSelection(args: CommandArgs): [Editor, DocumentModel] {
   updatedEditor = setMode(updatedEditor, 'normal');
 
   return [updatedEditor, document];
+}
+
+// get shapes included in the selection
+// dereference AnchorRefs that reference shapes not included in the selection
+function dereferenceLinesForYank(
+  args: CommandArgs,
+  lines: MultiLine[],
+  nonLines: Exclude<Shape, MultiLine>[],
+): MultiLine[] {
+  const { document } = args;
+  const nonLineIds = new Set(nonLines.map((shape) => shape.id));
+
+  const dereferenceShapes = document.shapes
+    .values()
+    .toArray()
+    .filter((shape) => !nonLineIds.has(shape.id));
+
+  const updatedLines = new AnchorPointDereferencer(
+    lines,
+    dereferenceShapes,
+  ).populateLinePointsFromReferences();
+
+  return updatedLines;
 }
 
 export async function paste(args: CommandArgs): Promise<CommandResult> {
@@ -305,16 +401,22 @@ export async function paste(args: CommandArgs): Promise<CommandResult> {
   const cursor = updatedEditor.cursorPosition;
 
   // 1. Clone with new IDs, 2. Position at cursor, 3. compile, 4. Insert each into document (via loop),
-  const clonedShapes = await Promise.all(
-    updatedEditor.clipboard
-      .map(cloneShape)
+  const clonedShapes = cloneShapes(updatedEditor.clipboard);
+  const shapesToPaste = await Promise.all(
+    clonedShapes
       .map((shape) => translateShape(shape, { deltaX: cursor.x, deltaY: cursor.y }))
       .map((shape) => Transform.compileShapeTextContent(shape)),
   );
 
-  for (const shape of clonedShapes) {
+  for (const shape of shapesToPaste) {
     updatedDocument = addShapeToDocument({ ...args, document: updatedDocument }, shape);
   }
+
+  updatedEditor = setSelectedShapes(
+    updatedEditor,
+    shapesToPaste.map((shape) => shape.id),
+  );
+  updatedEditor = setMode(updatedEditor, 'visual');
 
   return [updatedEditor, updatedDocument];
 }
@@ -340,7 +442,9 @@ function helperRemoveShapes(args: CommandArgs, shapeIds: ShapeId[]): [DocumentMo
   const { document, spatialIndex, editor } = args;
   const referencingLines = spatialIndex.getReferencingShapeIds(shapeIds);
 
-  const lines = referencingLines.map((id) => Document.getShapeById(document, id));
+  const lines = referencingLines
+    .map((id) => Document.getShapeById(document, id))
+    .filter((shape) => isLine(shape));
   const refs = shapeIds.map((id) => Document.getShapeById(document, id));
 
   const updatedLines = new AnchorPointDereferencer(lines, refs).populateLinePointsFromReferences();
