@@ -344,6 +344,23 @@ function scrollViewportRight({ editor, document }: CommandArgs): CommandResult {
   return [editor, document];
 }
 
+function returnToFirstPosition({ editor, document }: CommandArgs): CommandResult {
+  const { centerViewportOn } = useStore.getState();
+
+  const canvasWidth = window.innerWidth;
+  const canvasHeight = window.innerHeight - 24; // status bar
+
+  centerViewportOn(0, 0, canvasWidth, canvasHeight);
+
+  return [
+    setCursorPosition(editor, {
+      x: 0,
+      y: 0,
+    }),
+    document,
+  ];
+}
+
 export {
   enterInsertMode,
   enterNormalMode,
@@ -366,6 +383,7 @@ export {
   cursorRightFast,
   moveCursorToMiddle,
   centerViewportOnCursor,
+  returnToFirstPosition,
   scrollViewportUp,
   scrollViewportDown,
   scrollViewportLeft,
