@@ -359,8 +359,8 @@ function returnToFirstPosition({ editor, document }: CommandArgs): CommandResult
 
   return [
     setCursorPosition(editor, {
-      x: 0,
-      y: 0,
+      x: canvasWidth / 2,
+      y: canvasHeight / 2,
     }),
     document,
   ];
