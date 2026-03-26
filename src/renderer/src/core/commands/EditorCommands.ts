@@ -310,6 +310,15 @@ function selectPreviousSearchResult({
   }
   return [updatedEditor, document];
 }
+function selectAllShapes({ editor, document }: CommandArgs): CommandResult {
+  console.log('selecting all shapes, current mode: ', editor.mode);
+  let updatedEditor = editor;
+  if (editor.mode !== 'visual' && editor.mode !== 'visual-block') {
+    updatedEditor = setMode(editor, 'visual');
+  }
+  const allShapeIds = Array.from(document.shapes.keys());
+  return [setSelectedShapes(updatedEditor, allShapeIds), document];
+}
 
 function scrollViewportUp({ editor, document }: CommandArgs): CommandResult {
   const { pan } = useStore.getState();
@@ -363,4 +372,5 @@ export {
   scrollViewportRight,
   selectNextSearchResult,
   selectPreviousSearchResult,
+  selectAllShapes,
 };

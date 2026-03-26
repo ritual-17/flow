@@ -30,6 +30,7 @@ import {
   enterVisualBlockMode,
   enterVisualMode,
   moveCursorToMiddle,
+  selectAllShapes,
   scrollViewportDown,
   scrollViewportLeft,
   scrollViewportRight,
@@ -166,6 +167,8 @@ function commandFromName(command: string): CommandFunction | null {
       return selectNextSearchResult;
     case 'selectPreviousSearchResult':
       return selectPreviousSearchResult;
+    case 'selectAllShapes':
+      return selectAllShapes;
     case 'downAnchor':
       return jumpToDownAnchorPoint;
     case 'upAnchor':

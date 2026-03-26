@@ -39,6 +39,7 @@
     "a": "enterLineMode",
     "A": "enterAnchorLineMode",
     "f": "importPdf",
+    "<C-a>": "selectAllShapes",
     "<C-e>": "exportPdf"
   },
   "insert": {
@@ -102,7 +103,8 @@
     "V": "enterVisualBlockMode",
     "M": "moveCursorToMiddle",
     "zz": "moveScreenToCursor",
-    "e": "toggleArrow"
+    "e": "toggleArrow",
+    "<C-a>": "selectAllShapes"
   },
   "visual-block": {
     "v": "enterVisualMode",
@@ -131,6 +133,7 @@
     "<C-Shift-Left>": "translateFastSelectionLeft",
     "<Space>": "toggleBoxSelect",
     "e": "toggleArrow",
+    "<C-a>": "selectAllShapes",
     "M": "moveCursorToMiddle",
     "zz": "moveScreenToCursor"
   },
