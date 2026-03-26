@@ -28,6 +28,7 @@ export function HelpMenu() {
           transition: 'right 0.3s ease',
           display: 'flex',
           flexDirection: 'column',
+          zIndex: 1000,
         }}
       >
         <h2>Help Menu. Mode: {mode.toUpperCase()}</h2>

@@ -22,6 +22,12 @@
     "ArrowRight": "right"
   },
   "normal": {
+    "i": "enterInsertMode",
+    "v": "enterVisualMode",
+    "V": "enterVisualBlockMode",
+    "t": "enterTextMode",
+    "T": "enterTextModeForNearestTextBox",
+    "I": "enterAutoLinkInsertMode",
     "j": "down",
     "k": "up",
     "h": "left",
@@ -33,12 +39,6 @@
     "M": "moveCursorToMiddle",
     "zz": "moveScreenToCursor",
     "x": "deleteChar",
-    "i": "enterInsertMode",
-    "v": "enterVisualMode",
-    "V": "enterVisualBlockMode",
-    "t": "enterTextMode",
-    "T": "enterTextModeForNearestTextBox",
-    "I": "enterAutoLinkInsertMode",
     "dd": "deleteLine",
     "yy": "yankLine",
     "p": "pasteAfter",
@@ -152,6 +152,8 @@
     "q!": "forceQuit"
   },
   "line": {
+    "A": "enterAnchorLineMode",
+    "t": "enterTextModeFromLineMode",
     "j": "down",
     "k": "up",
     "h": "left",
@@ -164,11 +166,11 @@
     "s": "squareLine",
     "c": "curvedLine",
     "n": "newLine",
-    "A": "enterAnchorLineMode",
-    "t": "enterTextModeFromLineMode",
     "e": "toggleArrow"
   },
   "anchor-line": {
+    "a": "enterLineMode",
+    "t": "enterTextModeFromLineMode",
     "j": "downAnchor",
     "k": "upAnchor",
     "h": "leftAnchor",
@@ -179,8 +181,6 @@
     "ArrowRight": "rightAnchor",
     "n": "newLine",
     "<Space>": "addAnchorPointToLine",
-    "a": "enterLineMode",
-    "t": "enterTextModeFromLineMode",
     "e": "toggleArrow"
   }
 }
