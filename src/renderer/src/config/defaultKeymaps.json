@@ -39,7 +39,7 @@
     "a": "enterLineMode",
     "A": "enterAnchorLineMode",
     "f": "importPdf",
-    "<C-a>": "selectAllShapes"
+    "<C-a>": "selectAllShapes",
     "<C-e>": "exportPdf"
   },
   "insert": {
