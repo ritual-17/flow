@@ -46,7 +46,7 @@ export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
     };
   }, [initialDoc, mode, setContent]);
 
-  return <div className='absolute w-52 h-44' style={{ top: y, left: x }} ref={editor}></div>;
+  return <div className='absolute w-96 h-44' style={{ top: y, left: x }} ref={editor}></div>;
 };
 
 const PLACEHOLDER = 'Enter text here';
