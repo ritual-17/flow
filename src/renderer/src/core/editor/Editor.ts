@@ -1,5 +1,6 @@
 import { Document, DocumentModel } from '@renderer/core/document/Document';
 import { AnchorRef, Shape, ShapeId } from '@renderer/core/geometry/Shape';
+import { useStore } from '@renderer/ui/Store';
 import { produce } from 'immer';
 
 export interface Editor {
@@ -171,6 +172,27 @@ function setPreviousShapeId(editor: Editor, shapeId: ShapeId | null): Editor {
   });
 }
 
+function helperCheckCursorInViewport(lastMovement: 'up' | 'down' | 'left' | 'right', editor): void {
+  const { viewport } = useStore.getState();
+  const cursor = editor.cursorPosition;
+  const panAmount = 50;
+  if (!cursor) return;
+
+  const buffer = 50; // buffer in pixels to trigger viewport scroll before cursor goes out of view
+
+  const { pan } = useStore.getState();
+  if (lastMovement === 'up' && cursor.y < -viewport.y + buffer) {
+    pan(0, panAmount);
+  } else if (lastMovement === 'down' && cursor.y > -viewport.y + window.innerHeight - buffer) {
+    pan(0, -panAmount);
+  } else if (lastMovement === 'left' && cursor.x < -viewport.x + buffer) {
+    pan(panAmount, 0);
+  } else if (lastMovement === 'right' && cursor.x > -viewport.x + window.innerWidth - buffer) {
+    pan(-panAmount, 0);
+  }
+  return;
+}
+
 export {
   createEditor,
   setMode,
@@ -192,4 +214,5 @@ export {
   setStatus,
   setCurrentTextBox,
   setPreviousShapeId,
+  helperCheckCursorInViewport,
 };
