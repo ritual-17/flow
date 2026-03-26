@@ -1,6 +1,14 @@
 {
   "all": {
-    "<Esc>": "enterNormalMode"
+    "<Esc>": "enterNormalMode",
+    "<C-Up>": "fastUp",
+    "<C-Down>": "fastDown",
+    "<C-Left>": "fastLeft",
+    "<C-Right>": "fastRight",
+    "<View-Up>": "scrollViewportUp",
+    "<View-Down>": "scrollViewportDown",
+    "<View-Left>": "scrollViewportLeft",
+    "<View-Right>": "scrollViewportRight"
   },
   "normal": {
     "j": "down",
@@ -12,12 +20,14 @@
     "ArrowLeft": "left",
     "ArrowRight": "right",
     "M": "moveCursorToMiddle",
+    "zz": "moveScreenToCursor",
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
     "V": "enterVisualBlockMode",
     "t": "enterTextMode",
     "T": "enterTextModeForNearestTextBox",
+    "I": "enterAutoLinkInsertMode",
     "dd": "deleteLine",
     "yy": "yankLine",
     "p": "pasteAfter",
@@ -28,7 +38,8 @@
     "N": "selectPreviousSearchResult",
     "a": "enterLineMode",
     "A": "enterAnchorLineMode",
-    "f": "importPdf"
+    "f": "importPdf",
+    "<C-e>": "exportPdf"
   },
   "insert": {
     "j": "down",
@@ -44,6 +55,22 @@
     "<C-s>": "saveFile",
     "r": "createRectangle",
     "s": "createSquare"
+  },
+  "auto-link-insert": {
+    "j": "down",
+    "k": "up",
+    "h": "left",
+    "l": "right",
+    "ArrowUp": "up",
+    "ArrowDown": "down",
+    "ArrowLeft": "left",
+    "ArrowRight": "right",
+    "c": "autoLinkCircle",
+    "r": "autoLinkRectangle",
+    "s": "autoLinkSquare",
+    "t": "autoLinkTextBox",
+    "<Space>": "autoLinkAddToLine",
+    "e": "toggleArrow"
   },
   "visual": {
     "j": "visualDown",
@@ -65,11 +92,17 @@
     "<Shift-ArrowDown>": "translateSelectionDown",
     "<Shift-ArrowRight>": "translateSelectionRight",
     "<Shift-ArrowLeft>": "translateSelectionLeft",
+    "<C-Shift-Up>": "translateFastSelectionUp",
+    "<C-Shift-Down>": "translateFastSelectionDown",
+    "<C-Shift-Right>": "translateFastSelectionRight",
+    "<C-Shift-Left>": "translateFastSelectionLeft",
     "n": "selectNextSearchResult",
     "N": "selectPreviousSearchResult",
     "<Space>": "toggleSelectShapeAtCursor",
     "V": "enterVisualBlockMode",
-    "M": "moveCursorToMiddle"
+    "M": "moveCursorToMiddle",
+    "zz": "moveScreenToCursor",
+    "e": "toggleArrow"
   },
   "visual-block": {
     "v": "enterVisualMode",
@@ -92,7 +125,14 @@
     "<Shift-ArrowDown>": "translateSelectionDown",
     "<Shift-ArrowRight>": "translateSelectionRight",
     "<Shift-ArrowLeft>": "translateSelectionLeft",
-    "<Space>": "toggleBoxSelect"
+    "<C-Shift-Up>": "translateFastSelectionUp",
+    "<C-Shift-Down>": "translateFastSelectionDown",
+    "<C-Shift-Right>": "translateFastSelectionRight",
+    "<C-Shift-Left>": "translateFastSelectionLeft",
+    "<Space>": "toggleBoxSelect",
+    "e": "toggleArrow",
+    "M": "moveCursorToMiddle",
+    "zz": "moveScreenToCursor"
   },
   "text": {},
   "command": {

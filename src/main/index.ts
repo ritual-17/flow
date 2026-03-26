@@ -1,5 +1,6 @@
 import { electronApp, is, optimizer } from '@electron-toolkit/utils';
-import { app, BrowserWindow, ipcMain, shell } from 'electron';
+import { app, BrowserWindow, dialog, ipcMain, shell } from 'electron';
+import fs from 'fs';
 import { join } from 'path';
 
 import icon from '../../resources/icon.png?asset';
@@ -59,6 +60,19 @@ app.whenReady().then(() => {
 
   ipcMain.handle('flow:pdf:pick', async (): Promise<LoadedPdfFile | null> => {
     return await pickPdfFile();
+  });
+
+  ipcMain.handle('flow:pdf:export', async (_, pdfData: ArrayBuffer): Promise<boolean> => {
+    const result = await dialog.showSaveDialog({
+      title: 'Export PDF',
+      defaultPath: 'export.pdf',
+      filters: [{ name: 'PDF', extensions: ['pdf'] }],
+    });
+
+    if (result.canceled || !result.filePath) return false;
+
+    fs.writeFileSync(result.filePath, Buffer.from(pdfData));
+    return true;
   });
 
   createWindow();

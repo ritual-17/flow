@@ -1,4 +1,4 @@
-import { AnchorPoint, buildBaseShape, IShapeBase } from '@renderer/core/geometry/Shape';
+import { buildBaseShape, Coordinate, IShapeBase } from '@renderer/core/geometry/Shape';
 
 export type TextBox = IShapeBase & {
   type: 'textBox';
@@ -22,8 +22,8 @@ export function build(attrs: Partial<TextBox>): TextBox {
   return textBox;
 }
 
-export function generateAnchorPoints(textBox: TextBox): AnchorPoint[] {
-  const { x, y, id: ownerId } = textBox;
+export function generateAnchorCoordinates(textBox: TextBox): Coordinate[] {
+  const { x, y } = textBox;
   const width = textBox.label.compiledImageMeta
     ? textBox.label.compiledImageMeta.width
     : textBox.width;
@@ -32,14 +32,14 @@ export function generateAnchorPoints(textBox: TextBox): AnchorPoint[] {
     : textBox.height;
 
   return [
-    { ownerId, position: 0, x: x + width / 2, y: y }, // top center
-    { ownerId, position: 1, x: x + width, y: y + height / 2 }, // middle right
-    { ownerId, position: 2, x: x + width / 2, y: y + height }, // bottom center
-    { ownerId, position: 3, x: x, y: y + height / 2 }, // middle left
+    { x: x + width / 2, y: y }, // top center
+    { x: x + width, y: y + height / 2 }, // middle right
+    { x: x + width / 2, y: y + height }, // bottom center
+    { x: x, y: y + height / 2 }, // middle left
   ];
 }
 
 export const TextBox = {
   build,
-  generateAnchorPoints,
+  generateAnchorCoordinates,
 };

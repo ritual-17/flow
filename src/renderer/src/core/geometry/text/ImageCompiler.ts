@@ -80,15 +80,16 @@ async function svgStringToImage(svg: string): Promise<HTMLImageElement> {
     const blob = new Blob([svg], {
       type: 'image/svg+xml;charset=utf-8',
     });
-    const url = URL.createObjectURL(blob);
 
-    const img = new Image();
-    img.onload = () => {
-      resolve(img);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const url = reader.result as string;
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = (e) => reject(e);
+      img.src = url;
     };
-    img.onerror = (e) => {
-      reject(e);
-    };
-    img.src = url;
+    reader.onerror = (e) => reject(e);
+    reader.readAsDataURL(blob);
   });
 }
