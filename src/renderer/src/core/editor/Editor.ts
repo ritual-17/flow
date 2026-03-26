@@ -175,6 +175,7 @@ function setPreviousShapeId(editor: Editor, shapeId: ShapeId | null): Editor {
 function helperCheckCursorInViewport(
   lastMovement: 'up' | 'down' | 'left' | 'right' | 'shape',
   editor,
+  shapes: Shape[] = [],
 ): void {
   const { viewport } = useStore.getState();
   const cursor = editor.cursorPosition;
@@ -183,28 +184,37 @@ function helperCheckCursorInViewport(
 
   const buffer = 50; // buffer in pixels to trigger viewport scroll before cursor goes out of view
 
+  let anchorItemX = cursor.x,
+    anchorItemY = cursor.y;
+  // shapes are being translated
+  if (shapes.length) {
+    // TO-DO: if movement left make x min, if movement up make y min
+    anchorItemX = Math.max(...shapes.map((s) => s.x));
+    anchorItemY = Math.max(...shapes.map((s) => s.y));
+  }
+  console.log(anchorItemX, cursor.x, shapes);
   const { pan } = useStore.getState();
-  if (lastMovement === 'up' && cursor.y < -viewport.y + buffer) {
+  if (lastMovement === 'up' && anchorItemY < -viewport.y + buffer) {
     pan(0, panAmount);
-  } else if (lastMovement === 'down' && cursor.y > -viewport.y + window.innerHeight - buffer) {
+  } else if (lastMovement === 'down' && anchorItemY > -viewport.y + window.innerHeight - buffer) {
     pan(0, -panAmount);
-  } else if (lastMovement === 'left' && cursor.x < -viewport.x + buffer) {
+  } else if (lastMovement === 'left' && anchorItemX < -viewport.x + buffer) {
     pan(panAmount, 0);
-  } else if (lastMovement === 'right' && cursor.x > -viewport.x + window.innerWidth - buffer) {
+  } else if (lastMovement === 'right' && anchorItemX > -viewport.x + window.innerWidth - buffer) {
     pan(-panAmount, 0);
   } else if (
     lastMovement === 'shape' &&
-    (cursor.y > -viewport.y + window.innerHeight - buffer ||
-      cursor.x < -viewport.x + buffer ||
-      cursor.x < -viewport.x + buffer ||
-      cursor.x > -viewport.x + window.innerWidth - buffer)
+    (anchorItemY < -viewport.y + buffer ||
+      anchorItemY > -viewport.y + window.innerHeight - buffer ||
+      anchorItemX < -viewport.x + buffer ||
+      anchorItemX > -viewport.x + window.innerWidth - buffer)
   ) {
     const { centerViewportOn } = useStore.getState();
 
     const canvasWidth = window.innerWidth;
     const canvasHeight = window.innerHeight - 24; // status bar
 
-    centerViewportOn(cursor.x, cursor.y, canvasWidth, canvasHeight);
+    centerViewportOn(anchorItemX, anchorItemY, canvasWidth, canvasHeight);
   }
 
   return;
