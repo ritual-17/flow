@@ -41,8 +41,11 @@ export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
 
     const imageDataUrl = canvas.toDataURL('image/png');
 
-    const slideWidth = canvas.width * (2 / 3);
-    const slideHeight = canvas.height * (2 / 3);
+    // const slideWidth = canvas.width * (2 / 3);
+    // const slideHeight = canvas.height * (2 / 3);
+
+    const slideWidth = canvas.width * 1.2;
+    const slideHeight = canvas.height * 1.2;
 
     slides.push(
       PDF.build({
