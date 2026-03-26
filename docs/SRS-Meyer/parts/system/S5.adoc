@@ -11,13 +11,13 @@ endif::[]
 | Requirement ID | Description | Priority | Rationale
 
 | F211 | Create, open, edit, and delete notes | **High** | Fundamental to all system operations; without it, the app cannot fulfill its main purpose.  
-| F212 | Organize notes into folders and subfolders | **High** | Core for content management and navigation.  
+| F212 | Organize notes into folders and subfolders | **Medium** | Core for content management and navigation but not essential for basic functionality.  
 | F213 | Insert text boxes and edit content | **High** | Enables primary user interaction for note-taking.  
 | F214 | Insert predefined geometric shapes (circle, rectangle, etc.) | **High** | Core to diagramming capability and differentiates the app from plain text editors.  
 | F215 | Move, resize, and position text boxes or shapes | **High** | Essential for flexible diagram creation.  
 | F216 | Pan and zoom canvas | **Medium** | Important for large diagrams but not critical to minimal function.  
 | F217 | Save and load notes from local storage | **High** | Data persistence and continuity.  
-| F218 | Export notes (PDF, PNG, Markdown) | **Medium** | Important for sharing, but not needed for MVP.  
+| F243 | Export notes (PDF, PNG, Markdown) | **Medium** | Important for sharing, but not needed for MVP.  
 | F219 | Undo/redo editing actions | **Medium** | Improves usability; can be implemented incrementally.  
 | F220 | Optional: sync or backup to cloud | **Low** | Value-add feature, non-critical for core offline operation.  
 |===
@@ -33,7 +33,7 @@ endif::[]
 | NF214 | Accessible keyboard shortcuts and discoverable command palette | **High** | Core to product identity and usability.  
 | NF215 | File integrity during save/export (atomic operations) | **High** | Ensures stability and prevents corruption.  
 | NF216 | Security of local data (no background network traffic) | **Medium** | Supports user privacy, non-blocking for MVP.  
-| NF217 | Visual consistency and intuitive UI layout | **Medium** | Improves user experience, can evolve iteratively.  
+| NF217 | Visual consistency and intuitive UI layout | **High** | Improves user experience and reduces learning curve, essential for adoption.
 | NF218 | Performance at scale (500+ elements) | **Low** | Optimization target for later releases.  
 |===
 
@@ -52,17 +52,17 @@ endif::[]
 ==== (S.5.4) Prioritization Summary
 
 ===== High Priority
-Core functionality necessary for a minimal viable product:
+Core functionality necessary and critical for the system to meet its primary goals:
 
 * Text and diagram creation/editing — F211–F215, NF211–NF214
 * Local save/load and autosave — F217, NF212, NF215
-* Keyboard command interface and discoverability
+* Command interface and discoverability - NF217
 
 ===== Medium Priority
 Enhancements that improve usability and reach:
 
-* Canvas navigation and export features — F216, F218
-* Cross-platform compatibility and UI refinement — NF213, NF217
+* Canvas navigation and export features — F216, F243
+* Cross-platform compatibility — NF213
 
 ===== Low Priority
 Future or extended features beyond MVP:
@@ -87,7 +87,7 @@ The following table summarizes cross-references between functional (F) and non-f
 | F215 | NF211 | Moving and resizing objects depend on smooth frame updates and responsiveness.
 | F216 | NF211, NF217 | Canvas navigation performance linked to input responsiveness and UI clarity.
 | F217 | NF212, NF215 | Save/load operations depend on autosave and file integrity guarantees.
-| F218 | NF215 | Exporting notes depends on reliable file handling.
+| F243 | NF215 | Exporting notes depends on reliable file handling.
 | F219 | NF211, NF215 | Undo/redo relies on efficient rendering and reliable state management.
 | F220 | NF216 | Cloud sync depends on secure and private local data handling.
 

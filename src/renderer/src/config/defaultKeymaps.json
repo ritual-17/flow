@@ -40,6 +40,7 @@
     "A": "enterAnchorLineMode",
     "f": "importPdf",
     "<C-a>": "selectAllShapes"
+    "<C-e>": "exportPdf"
   },
   "insert": {
     "j": "down",
@@ -155,10 +156,12 @@
     "<Space>": "linePoint",
     "s": "squareLine",
     "c": "curvedLine",
-    "n": "newLine",
+    "x": "newLine",
     "A": "enterAnchorLineMode",
     "t": "enterTextModeFromLineMode",
-    "e": "toggleArrow"
+    "e": "toggleArrow",
+    "n": "selectNextSearchResult",
+    "N": "selectPreviousSearchResult"
   },
   "anchor-line": {
     "j": "downAnchor",
@@ -169,7 +172,7 @@
     "ArrowDown": "downAnchor",
     "ArrowLeft": "leftAnchor",
     "ArrowRight": "rightAnchor",
-    "n": "newLine",
+    "x": "newLine",
     "<Space>": "addAnchorPointToLine",
     "a": "enterLineMode",
     "t": "enterTextModeFromLineMode",
