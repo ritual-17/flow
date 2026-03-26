@@ -11,6 +11,8 @@ import { JSX } from 'react';
 export interface ShapeComponentProps<T extends Shape = Shape> {
   shape: T;
   stroke?: string;
+  selected?: boolean;
+  hovered?: boolean;
 }
 
 export type ShapeComponent<T extends Shape = Shape> = (
