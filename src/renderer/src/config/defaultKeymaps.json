@@ -4,7 +4,11 @@
     "<C-Up>": "fastUp",
     "<C-Down>": "fastDown",
     "<C-Left>": "fastLeft",
-    "<C-Right>": "fastRight"
+    "<C-Right>": "fastRight",
+    "<View-Up>": "scrollViewportUp",
+    "<View-Down>": "scrollViewportDown",
+    "<View-Left>": "scrollViewportLeft",
+    "<View-Right>": "scrollViewportRight"
   },
   "normal": {
     "j": "down",
@@ -16,6 +20,7 @@
     "ArrowLeft": "left",
     "ArrowRight": "right",
     "M": "moveCursorToMiddle",
+    "zz": "moveScreenToCursor",
     "x": "deleteChar",
     "i": "enterInsertMode",
     "v": "enterVisualMode",
@@ -96,6 +101,7 @@
     "<Space>": "toggleSelectShapeAtCursor",
     "V": "enterVisualBlockMode",
     "M": "moveCursorToMiddle",
+    "zz": "moveScreenToCursor",
     "e": "toggleArrow"
   },
   "visual-block": {
@@ -124,7 +130,9 @@
     "<C-Shift-Right>": "translateFastSelectionRight",
     "<C-Shift-Left>": "translateFastSelectionLeft",
     "<Space>": "toggleBoxSelect",
-    "e": "toggleArrow"
+    "e": "toggleArrow",
+    "M": "moveCursorToMiddle",
+    "zz": "moveScreenToCursor"
   },
   "text": {},
   "command": {

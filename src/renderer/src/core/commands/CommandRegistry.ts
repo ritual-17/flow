@@ -9,6 +9,7 @@ import {
   autoLinkTextBox,
 } from '@renderer/core/commands/AutoLinkCommands';
 import {
+  centerViewportOnCursor,
   cursorDown,
   cursorDownFast,
   cursorLeft,
@@ -29,6 +30,10 @@ import {
   enterVisualBlockMode,
   enterVisualMode,
   moveCursorToMiddle,
+  scrollViewportDown,
+  scrollViewportLeft,
+  scrollViewportRight,
+  scrollViewportUp,
   selectNextSearchResult,
   selectPreviousSearchResult,
 } from '@renderer/core/commands/EditorCommands';
@@ -129,6 +134,16 @@ function commandFromName(command: string): CommandFunction | null {
       return cursorRightFast;
     case 'moveCursorToMiddle':
       return moveCursorToMiddle;
+    case 'moveScreenToCursor':
+      return centerViewportOnCursor;
+    case 'scrollViewportUp':
+      return scrollViewportUp;
+    case 'scrollViewportDown':
+      return scrollViewportDown;
+    case 'scrollViewportLeft':
+      return scrollViewportLeft;
+    case 'scrollViewportRight':
+      return scrollViewportRight;
     case 'createCircle':
       return createCircle;
     case 'createRectangle':
