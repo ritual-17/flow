@@ -299,6 +299,7 @@ function selectNextSearchResult({ editor, document, spatialIndex }: CommandArgs)
   if (nextShape) {
     updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
   }
+  helperCheckCursorInViewport('shape', updatedEditor);
   return [updatedEditor, document];
 }
 
@@ -312,6 +313,7 @@ function selectPreviousSearchResult({
   if (nextShape) {
     updatedEditor = setCursorPosition(updatedEditor, { x: nextShape.x, y: nextShape.y });
   }
+  helperCheckCursorInViewport('shape', updatedEditor);
   return [updatedEditor, document];
 }
 function selectAllShapes({ editor, document }: CommandArgs): CommandResult {

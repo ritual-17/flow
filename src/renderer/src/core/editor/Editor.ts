@@ -172,7 +172,10 @@ function setPreviousShapeId(editor: Editor, shapeId: ShapeId | null): Editor {
   });
 }
 
-function helperCheckCursorInViewport(lastMovement: 'up' | 'down' | 'left' | 'right', editor): void {
+function helperCheckCursorInViewport(
+  lastMovement: 'up' | 'down' | 'left' | 'right' | 'shape',
+  editor,
+): void {
   const { viewport } = useStore.getState();
   const cursor = editor.cursorPosition;
   const panAmount = 50;
@@ -189,7 +192,21 @@ function helperCheckCursorInViewport(lastMovement: 'up' | 'down' | 'left' | 'rig
     pan(panAmount, 0);
   } else if (lastMovement === 'right' && cursor.x > -viewport.x + window.innerWidth - buffer) {
     pan(-panAmount, 0);
+  } else if (
+    lastMovement === 'shape' &&
+    (cursor.y > -viewport.y + window.innerHeight - buffer ||
+      cursor.x < -viewport.x + buffer ||
+      cursor.x < -viewport.x + buffer ||
+      cursor.x > -viewport.x + window.innerWidth - buffer)
+  ) {
+    const { centerViewportOn } = useStore.getState();
+
+    const canvasWidth = window.innerWidth;
+    const canvasHeight = window.innerHeight - 24; // status bar
+
+    centerViewportOn(cursor.x, cursor.y, canvasWidth, canvasHeight);
   }
+
   return;
 }
 
