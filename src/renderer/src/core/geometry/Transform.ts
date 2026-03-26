@@ -1,18 +1,40 @@
 // Transformation utilities for shapes, e.g. rotate, scale, translate
 
-import { Shape } from '@renderer/core/geometry/Shape';
+import { DocumentModel } from '@renderer/core/document/Document';
+import { Coordinate, Shape } from '@renderer/core/geometry/Shape';
+import { MultiLine } from '@renderer/core/geometry/shapes/MultiLine';
 import { ImageCompiler } from '@renderer/core/geometry/text/ImageCompiler';
-import { generateId } from '@renderer/core/utils/id';
+import { isAnchorRef, resolveLineCoordinates } from '@renderer/core/geometry/utils/AnchorPoints';
 
 // this is done this way so the data stays immutable
-export function translateShape(
-  shape: Shape,
+export function translateShape<T extends Shape>(
+  shape: T,
   { deltaX, deltaY }: { deltaX: number; deltaY: number },
-): Shape {
+): T {
+  if (shape.type === 'multi-line') {
+    return translateMultiLine(shape, { deltaX, deltaY }) as T;
+  }
   return {
     ...shape,
     x: shape.x + deltaX,
     y: shape.y + deltaY,
+  };
+}
+
+export function translateMultiLine(
+  line: MultiLine,
+  { deltaX, deltaY }: { deltaX: number; deltaY: number },
+): MultiLine {
+  const points = line.points;
+  const translatedPoints = points.map((point) => {
+    if (isAnchorRef(point)) return point;
+
+    return { x: point.x + deltaX, y: point.y + deltaY };
+  });
+
+  return {
+    ...line,
+    points: translatedPoints,
   };
 }
 
@@ -47,16 +69,17 @@ export async function compileShapeTextContent<T extends Shape>(
   };
 }
 
-export function cloneShape(shape: Shape): Shape {
-  return {
-    ...shape,
-    id: generateId(),
-  };
-}
+export function getSelectionCenter(document: DocumentModel, shapes: Shape[]): Coordinate {
+  const points = shapes.flatMap((shape) => {
+    if (shape.type === 'multi-line') {
+      return resolveLineCoordinates(document, shape);
+    }
 
-export function getSelectionCenter(shapes: Shape[]): { x: number; y: number } {
-  const xs = shapes.map((s) => s.x);
-  const ys = shapes.map((s) => s.y);
+    return { x: shape.x, y: shape.y };
+  });
+
+  const xs = points.map((s) => s.x);
+  const ys = points.map((s) => s.y);
 
   return {
     x: (Math.min(...xs) + Math.max(...xs)) / 2,
@@ -67,6 +90,5 @@ export function getSelectionCenter(shapes: Shape[]): { x: number; y: number } {
 export const Transform = {
   translateShape,
   compileShapeTextContent,
-  cloneShape,
   getSelectionCenter,
 };

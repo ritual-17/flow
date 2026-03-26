@@ -60,7 +60,7 @@ import {
   undo,
   yankSelection,
 } from '@renderer/core/commands/ManipulationCommands';
-import { importPdf } from '@renderer/core/commands/PdfCommands';
+import { exportPdf, importPdf } from '@renderer/core/commands/PdfCommands';
 import {
   jumpToDownAnchorPoint,
   jumpToLeftAnchorPoint,
@@ -218,6 +218,8 @@ function commandFromName(command: string): CommandFunction | null {
       return visualRight;
     case 'importPdf':
       return importPdf;
+    case 'exportPdf':
+      return exportPdf;
     case 'undo':
       return undo;
     case 'redo':

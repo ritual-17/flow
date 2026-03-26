@@ -13,7 +13,6 @@
 \usepackage{xfrac}
 \usepackage{tabularx}
 \usepackage{float}
-\usepackage{siunitx}
 \usepackage{booktabs}
 \usepackage{multirow}
 \usepackage[section]{placeins}
@@ -53,8 +52,8 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+10/11/25 & Rev -1 & \\
+21/01/26 & Rev 0 & \\
 \bottomrule
 \end{tabularx}
 
@@ -95,30 +94,54 @@ found at \url{https://github.com/ritual-17/flow}.
 %multiple assignment statement and conditional rules follow the form $(c_1
 %\Rightarrow r_1 | c_2 \Rightarrow r_2 | ... | c_n \Rightarrow r_n )$.
 %
-%The following table summarizes the primitive data types used by \progname. 
+%The following table summarizes the primitive data types used by \progname.
 %
 %\begin{center}
 %\renewcommand{\arraystretch}{1.2}
-%\noindent 
-%\begin{tabular}{l l p{7.5cm}} 
-%\toprule 
-%\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\ 
+%\noindent
+%\begin{tabular}{l l p{7.5cm}}
+%\toprule
+%\textbf{Data Type} & \textbf{Notation} & \textbf{Description}\\
 %\midrule
 %character & char & a single symbol or digit\\
 %integer & $\mathbb{Z}$ & a number without a fractional component in (-$\infty$, $\infty$) \\
 %natural number & $\mathbb{N}$ & a number without a fractional component in [1, $\infty$) \\
 %real & $\mathbb{R}$ & any number in (-$\infty$, $\infty$)\\
 %\bottomrule
-%\end{tabular} 
+%\end{tabular}
 %\end{center}
 
 \noindent
-The specification of \progname \ uses some derived data types: sequences, strings, and
-tuples. Sequences are lists filled with elements of the same data type. Strings
-are sequences of characters. Tuples contain a list of values, potentially of
-different types. In addition, \progname \ uses functions, which
-are defined by the data types of their inputs and outputs. Local functions are
-described by giving their type signature followed by their specification.
+The specification of \progname\ uses several derived data types, including
+sequences, strings, and tuples. Sequences are ordered lists containing elements
+of the same data type. Strings are sequences of characters. Tuples represent a
+finite collection of values, potentially of different types. Functions are
+described by specifying the data types of their inputs and outputs, and local
+functions are documented using their type signatures followed by their
+behavioural descriptions.
+
+\noindent
+Several modules, most notably the Shape Interface Module, operate on geometric
+objects that are placed on a two-dimensional canvas. Shapes are treated
+abstractly and are not tied to a specific rendering or user interface
+implementation. A shape is represented conceptually as a tuple consisting of a
+shape type and a finite set of parameters. The shape type is drawn from a
+predefined set of supported shapes (e.g., rectangle, circle, text box), while
+the parameters describe properties such as position, size, and orientation.
+
+\noindent
+Positions are expressed using Cartesian coordinates in a two-dimensional plane,
+typically represented as $(x, y)$ pairs of real numbers. The canvas may be
+conceptually overlaid with a uniform grid that provides a visual reference and
+optional alignment structure for placing and manipulating shapes. The grid does
+not impose semantic constraints on shape placement, but may be used to support
+consistent positioning, snapping behaviour, or alignment operations. Dimensions
+such as width, height, or radius are represented using real-valued quantities.
+Collections of shapes are represented as sequences of shape tuples. Operations
+on shapes, such as insertion, deletion, movement, resizing, or transformation,
+are described in terms of updates applied to these abstract representations.
+Any constraints on valid coordinates or dimensions are specified explicitly in
+the relevant module interfaces.
 
 \section{Module Decomposition}
 
@@ -142,7 +165,6 @@ described by giving their type signature followed by their specification.
 & \ref{Mode Commands Module} {Mode Commands Module}\\
 & \ref{Shape Interface Module} {Shape Interface Module}\\
 & \ref{User Preference Module} {User Preference Module}\\
-& \ref{Geometry State Parser Module} {Geometry State Parser Module}\\
 \midrule
 
 \multirow{3}{0.3\textwidth}{Software Decision} & \ref{Text Buffer Module} {Text Buffer Module}\\
@@ -160,7 +182,7 @@ described by giving their type signature followed by their specification.
 \newpage
 ~\newpage
 
-\section{MIS}} \label{Display Interface Module} 
+\section{MIS of {Display Interface Module}} \label{Display Interface Module}
 %\wss{Use labels for  cross-referencing}
 
 %\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
@@ -170,10 +192,10 @@ described by giving their type signature followed by their specification.
 \subsection{Module}
 
 %\wss{Short name for the module}
-Display for the system 
+Display for the system
 
 This is the module that will handle the display for the system.
- This is a module that when called updates the display. 
+ This is a module that when called updates the display.
 \subsection{Uses}
 \ref{Geometry State Module} {Geometry State Module}
 
@@ -191,6 +213,8 @@ N/A
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
 display & Shapes & Display to screen & - \\
+resize & width, length & Resize the screen as needed & - \\
+status &  & Show status & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -218,7 +242,19 @@ N/A
 \noindent {display}(Shapes):
 \begin{itemize}
 
-\item output: Outputs Shapes visually on the screen 
+\item output: Outputs Shapes visually on the screen
+\end{itemize}
+
+\noindent {resize}(length,width):
+\begin{itemize}
+
+\item output: Outputs resized version of the current screen
+\end{itemize}
+
+\noindent {status}():
+\begin{itemize}
+
+\item output: Outputs current status of the program e.g. waiting for input, rendering etc.
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -237,7 +273,7 @@ N/A
 N/A
 
 \newpage
-\section{MIS of {Input Interface Module}} \label{Input Interface Module} 
+\section{MIS of {Input Interface Module}} \label{Input Interface Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -247,10 +283,10 @@ N/A
 
 \subsection{Module}
 
-Input Module. Deals with User inputs and passes them on to the \ref{Mode Commands Module}{Mode Commands Module} 
+Input Module. Deals with User inputs and passes them on to the \ref{Mode Commands Module} {Mode Commands Module}
 
 \subsection{Uses}
-\ref{Mode Commands Module} {Mode Commands Module} 
+\ref{Mode Commands Module} {Mode Commands Module}
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -260,7 +296,7 @@ Input Module. Deals with User inputs and passes them on to the \ref{Mode Command
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -274,7 +310,7 @@ Input Module. Deals with User inputs and passes them on to the \ref{Mode Command
 \subsection{Semantics}
 
 \subsubsection{State Variables}
- 
+
 \subsubsection{Environment Variables}
 
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
@@ -294,12 +330,12 @@ Input Module. Deals with User inputs and passes them on to the \ref{Mode Command
 
 \noindent {get\_keyboard\_inputs}():
 \begin{itemize}
-\item output: Data Structure containing all current keyboard inputs. All keys will be off if the user is not using a keyboard. 
+\item output: Data containing all current keyboard inputs. All keys will be off if the user is not using a keyboard.
 \end{itemize}
 
 \noindent {get\_mouse\_inputs}():
 \begin{itemize}
-\item output: Data Structure containing mouse location and inputs. All inputs are off if the user does not have a mouse.
+\item output: Data containing mouse location and inputs. All inputs are off if the user does not have a mouse.
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -317,7 +353,7 @@ Input Module. Deals with User inputs and passes them on to the \ref{Mode Command
 %  have local scope.}
 N/A
 \newpage
-\section{MIS of {File Interface Module}} \label{File Interface Module} 
+\section{MIS of {File Interface Module}} \label{File Interface Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -331,7 +367,7 @@ N/A
 
 \subsection{Uses}
 
-\ref{Mode Commands Module} {Mode Commands Module} 
+\ref{Mode Commands Module} {Mode Commands Module}
 
 \subsection{Syntax}
 
@@ -346,7 +382,7 @@ N/A
 \hline
 {open} & file\_path & opened\_file & Invalid File \\
 \hline
-{save} & file\_path, opened\_note & success & - \\
+{save} & file\_path, opened\_note & success & Saving Error \\
 \hline
 \end{tabular}
 \end{center}
@@ -365,7 +401,7 @@ N/A
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
 \begin{itemize}
-\item File System 
+\item File System
 \end{itemize}
 \subsubsection{Assumptions}
 N/A
@@ -376,13 +412,14 @@ N/A
 
 \noindent {open}(file\_path):
 \begin{itemize}
-\item output: The opened file 
+\item output: The opened file
 \item exception: Invalid File if file is missing or of an incorrect type.
 \end{itemize}
 \noindent {save}(file\_path, opened\_note):
 
 \begin{itemize}
 \item output: If the Module was successful in saving opened\_note to file\_path
+\item exception: No Space if there is not enough space to save the file.
 
 \end{itemize}
 %\wss{A module without environment variables or state variables is unlikely to
@@ -400,7 +437,7 @@ N/A
 %  have local scope.}
 
 \newpage
-\section{MIS of {Geometry State Parser Module}} \label{Geometry State Parser Module} 
+\section{MIS of {Geometry State Parser Module}} \label{Geometry State Parser Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -410,12 +447,13 @@ N/A
 
 \subsection{Module}
 
-File parser takes the file input and parses it into data structure containing all shapes.
+File parser takes the file input and parses it into data structure containing all shapes which is then stored by the \ref{Geometry State Module} {Geometry State Module} which holds all shape data.
 %\wss{Short name for the module}
 
 \subsection{Uses}
 
-N/A
+\ref{Geometry State Module} {Geometry State Module}
+
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -453,7 +491,7 @@ N/A
 
 \noindent {parse}(opened\_file):
 \begin{itemize}
-\item output: Data structure containing all shapes from the given file. 
+\item output: Data structure containing all shapes from the given file.
 \item exception: Invalid File: if the file given is able to be parsed.
 \end{itemize}
 
@@ -472,7 +510,7 @@ N/A
 %  have local scope.}
 
 \newpage
-\section{MIS of {Geometry State Converter Module}} \label{Geometry State Converter Module} 
+\section{MIS of {Geometry State Converter Module}} \label{Geometry State Converter Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -482,16 +520,20 @@ N/A
 
 \subsection{Module}
 
-Note converter that converts notes to files of different file types.
+Note converter that converts notes to files of different file types, sending it to the file interface module
 %\wss{Short name for the module}
 
 \subsection{Uses}
-N/A
+\ref{File Interface Module} {File Interface Module}
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+Legal file types
+\begin{itemize}
+\item{PDF}
+\item{fnote}
+\end{itemize}
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -525,7 +567,7 @@ N/A
 \subsubsection{Access Routine Semantics}
 
 \noindent {convert}(opened\_note, file\_type):
-\begin{itemize} 
+\begin{itemize}
 \item output: file that is ready to be saved on the computer.
 \item exception: Invalid file\_type if the given file type is not compatable with the ones implemented
 \end{itemize}
@@ -546,7 +588,7 @@ N/A
 convert\_*(opened\_note) functions that do the converting once the file type has been determined. (ex convert\_pdf)
 
 \newpage
-\section{MIS of {Commands Parser Module}} \label{Commands Parser Module} 
+\section{MIS of {Commands Parser Module}} \label{Commands Parser Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -557,15 +599,16 @@ convert\_*(opened\_note) functions that do the converting once the file type has
 \subsection{Module}
 
 %\wss{Short name for the module}
-Command Parser, converts keyboard inputs into commands and passes them onto the shape mutator. 
+Command Parser, converts keyboard inputs into commands and passes them onto the shape mutator.
 
 \subsection{Uses}
-\ref{Geometry State Mutator Module}{Geometry State Mutator Module}
+\ref{Geometry State Mutator Module} {Geometry State Mutator Module}
 \ref{User Preference Module} {User Preference Module}
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+
+Command names or ids e.g. ctrl + s -$>$ $<$C-s$>$, d + d -$>$ "dd"
 
 \subsubsection{Exported Access Programs}
 
@@ -574,7 +617,7 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{parse\_commands} & keyboard\_inputs, mouse\_inputs & commands & - \\
+{parse\_commands} & keyboard\_inputs, mouse\_inputs & parsed\_input & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -593,7 +636,7 @@ N/A
 %  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
-Inputs have been already cleaned by the other modules. 
+Inputs have been already cleaned by the other modules.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
@@ -620,7 +663,7 @@ Inputs have been already cleaned by the other modules.
 N/A
 
 \newpage
-\section{MIS of {Mode Commands Module}} \label{Mode Commands Module} 
+\section{MIS of {Mode Commands Module}} \label{Mode Commands Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -630,14 +673,24 @@ N/A
 
 \subsection{Module}
 
-Main Module contains the commands usable in the current mode. 
+Main Module contains the commands usable in the current mode.
 
 \subsection{Uses}
 N/A
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+Modes:
+\begin{itemize}
+\item{normalMode}
+\item{insertMode}
+\item{visualMode}
+\item{commandMode}
+\item{lineMode}
+\item{textMode}
+\end{itemize}
+
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -672,7 +725,7 @@ Mode given will always be a valid mode.
 
 \noindent {get\_commands}(mode):
 \begin{itemize}
-\item output: commands that can be run in the given mode 
+\item output: commands that can be run in the given mode
 \end{itemize}
 %
 %\wss{A module without environment variables or state variables is unlikely to
@@ -689,7 +742,7 @@ N/A
 %  explicitly.  Even if they are implemented, they are not exported; they only
 %  have local scope.}
 
-\newpage\section{MIS of {Shape Interface Module}} \label{Shape Interface Module} 
+\newpage\section{MIS of {Shape Interface Module}} \label{Shape Interface Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -706,7 +759,13 @@ Module that contains information about shapes.
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-Shapes: List of shapes
+Shapes: Types of shapes
+\begin{itemize}
+\item{Rectangle}
+\item{circle}
+\item{Triangle}
+\item{Text Box}
+\end{itemize}
 
 \subsubsection{Exported Access Programs}
 
@@ -744,8 +803,8 @@ N/A
 
 \noindent {create\_shape}(shape\_type, points ):
 \begin{itemize}
-\item output: Shape with type shape\_type using points for location and size. 
-\item exception: Invalid points if the points are not possible for the type of shape.  
+\item output: Shape with type shape\_type using points for location and size.
+\item exception: Invalid points if the points are not possible for the type of shape.
 \end{itemize}
 
 \noindent {move\_shape}():
@@ -769,7 +828,7 @@ N/A
 %  have local scope.}
 
 \newpage
-\section{MIS of {User Preference Module}} \label{User Preference Module} 
+\section{MIS of {User Preference Module}} \label{User Preference Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -791,7 +850,7 @@ N/A
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{4.5cm} p{2cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -832,7 +891,7 @@ Theme preferences: user theme prefrences
 
 \noindent {modify}():
 \begin{itemize}
-\item transition: Has the user input their preferences where the moudles saves it to a file. 
+\item transition: Has the user input their preferences where the moudles saves it to a file.
 \end{itemize}
 
 \noindent {get\_theme\_prefrences}():
@@ -855,7 +914,7 @@ Theme preferences: user theme prefrences
 %  have local scope.}
 
 \newpage
-\section{MIS of {Text Buffer Module}} \label{Text Buffer Module} 
+\section{MIS of {Text Buffer Module}} \label{Text Buffer Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -864,15 +923,16 @@ Theme preferences: user theme prefrences
 %\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
-Text, Module for Text representation in notes. 
+TextBuffer
 %\wss{Short name for the module}
 
 \subsection{Uses}
-N/A
+Geometry State Module (\ref{Geometry State Module})
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+None
 
 \subsubsection{Exported Access Programs}
 
@@ -881,11 +941,13 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{new\_text} & location,text,formatting & text\_box & Invalid Text, Invalid Location \\
+{createText} & location, text, formatting & TextID & Invalid Location \\
 \hline
-{modify\_text} & text\_box,text,formatting & - & Invalid Text  \\
+{modifyText} & TextID, text & - & Text Not Found  \\
 \hline
-{move\_text} & text\_box,location & - & Invalid Location \\
+{moveText} & TextID, newLocation & TextObject & Text Not Found \\
+\hline
+{deleteText} & TextID & - & Text Not Found \\
 \hline
 \end{tabular}
 \end{center}
@@ -896,36 +958,50 @@ N/A
 
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
-N/A
+text : Map$<$TextID, TextObject$>$
+
+\noindent {Where TextObject contains:}
+\begin{itemize}
+\item position : location
+\item content : string
+\end{itemize}
+
 \subsubsection{Environment Variables}
-N/A
+Screen (for rendering text)
+
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
-
+TextIDs are unique and immutable.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent {new\_text}(location,text,formatting):
+\noindent {createText}(location, text, formatting):
 \begin{itemize}
-\item output: Text box at location with text and formatting
-\item exception: Invalid Text, Invalid Location
-\end{itemize}
-
-\noindent {modify\_text}(text\_box,text,formatting):
-\begin{itemize}
-\item transition: Text in text\_box is modified to now contain text with formatting
-\item exception: Invalid Text
-\end{itemize}
-
-\noindent {move\_text}(text\_box,location):
-\begin{itemize}
-\item transition: text\_box is moved to location. 
+\item transition: Text box at location with text and formatting
+\item output: TextID of the created text box
 \item exception: Invalid Location
+\end{itemize}
+
+\noindent {modifyText}(TextID, text):
+\begin{itemize}
+\item transition: Text in text box is modified to now contain text with formatting
+\item exception: Text Not Found
+\end{itemize}
+
+\noindent {moveText}(TextID, newLocation):
+\begin{itemize}
+\item transition: text box is moved to location.
+\item exception: Text Not Found
+\end{itemize}
+\noindent {deleteText}(TextID):
+\begin{itemize}
+\item transition: text box is removed from the text buffer
+\item exception: Text Not Found
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -937,14 +1013,14 @@ N/A
 
 \subsubsection{Local Functions}
 
-N/A
+generateTextID() : TextID
 %\wss{As appropriate} \wss{These functions are for the purpose of specification.
 %  They are not necessarily something that is going to be implemented
 %  explicitly.  Even if they are implemented, they are not exported; they only
 %  have local scope.}
 
 \newpage
-\section{MIS of {Geometry State Module}} \label{Geometry State Module} 
+\section{MIS of {Geometry State Module}} \label{Geometry State Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -954,16 +1030,17 @@ N/A
 
 \subsection{Module}
 
-Geometry State, contains info on all current geometry 
+GeometryState (\ref{Geometry State Module})
 %\wss{Short name for the module}
 
 \subsection{Uses}
-\ref{Shape Interface Module} {Shape Interface Module}
-\ref{Text Buffer Module} {Text Buffer Module}
+None
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
+ShapeType = {Circle, Rectangle, Triangle, TextBox} \\
+LineType = {Line, Arrow}
 
 \subsubsection{Exported Access Programs}
 
@@ -972,9 +1049,11 @@ Geometry State, contains info on all current geometry
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{get\_shapes} & - & shapes & - \\
+{getShapes} & - & Set$<$Shape$>$ & - \\
 \hline
-{get\_text} & - & text\_boxes & - \\
+{getText} & - & Set$<$TextBox$>$ & - \\
+\hline
+{getLines} & - & Set$<$Line$>$ & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -982,8 +1061,11 @@ Geometry State, contains info on all current geometry
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-Shapes: data structure holding all shapes
-Text\_Boxes: data structure holding all Text Boxes
+\begin{itemize}
+\item Shapes : Set$<$Shape$>$
+\item TextBoxes : Set$<$TextBox$>$
+\item Lines : Set$<$Line$>$
+\end{itemize}
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
 
@@ -992,27 +1074,28 @@ Text\_Boxes: data structure holding all Text Boxes
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
-N/A
+None
 \subsubsection{Assumptions}
-N/A
+Geometry is immutable except via Geometry State Mutator Module (\ref{Geometry State Mutator Module}).
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent {get\_shapes}():
+\noindent {getShapes}():
 \begin{itemize}
 \item output: Data Structure containing all shapes
 \end{itemize}
 
-\noindent {get\_text}():
+\noindent {getText}():
 \begin{itemize}
-\item output:  Data structure containing all text boxes
+\item output: Data structure containing all text boxes
 \end{itemize}
 
-
-
-
+\noindent {getLines}():
+\begin{itemize}
+\item output: Data structure containing all lines
+\end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
 %  have a state transition.  In this case a state transition can only occur if
@@ -1022,14 +1105,14 @@ N/A
 %  will have one or the other.}
 
 \subsubsection{Local Functions}
-N/A
+None
 %\wss{As appropriate} \wss{These functions are for the purpose of specification.
 %  They are not necessarily something that is going to be implemented
 %  explicitly.  Even if they are implemented, they are not exported; they only
 %  have local scope.}
 
 \newpage
-\section{MIS of {Geometry State Mutator Module}} \label{Geometry State Mutator Module} 
+\section{MIS of {Geometry State Mutator Module}} \label{Geometry State Mutator Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -1038,15 +1121,13 @@ N/A
 %\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
-Geometry State Mutator Module, Provides methods to mutate the geometry state (add, delete, modify shapes).
+GeometryStateMutator (\ref{Geometry State Mutator Module})
 
 %\wss{Short name for the module}
 
 \subsection{Uses}
-\ref{Commands Parser Module} {Commands Parser Module}
-\ref{Shape Interface Module} {Shape Interface Module}
-\ref{Text Buffer Module} {Text Buffer Module}
-\ref{Geometry State Module} {Geometry State Module}
+{Undo Redo Module} (\ref{Undo Redo Module}),
+{Geometry State Module} (\ref{Geometry State Module})
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
@@ -1058,17 +1139,15 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{delete\_text} & text\_box & - & - \\
+{addShape} & shapeSpec & GeometryID & Invalid Spec \\
 \hline
-{delete\_shapes} & shape & - & - \\
+{addLine} & lineSpec & GeometryID & Invalid Spec \\
 \hline
-{add\_text} & text\_box & - & - \\
+{delete} & GeometryID & - & Not Found \\
 \hline
-{add\_shape} & shape & - & - \\
+{resize} & GeometryID & - & Not Found \\
 \hline
-{modify\_text} & text\_box,text,formatting & - & Invalid Text  \\
-\hline
-{move\_shape} & shape, new\_points & - & Invalid Points \\
+{move} & GeometryID, location & - & Not Found, Invalid Transform \\
 \hline
 \end{tabular}
 \end{center}
@@ -1076,55 +1155,56 @@ N/A
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-Geometry\_State\_Module:Stores the info on the shapes and Text boxes
+None
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
 
 \subsubsection{Environment Variables}
-N/A
+None
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
-N/A
+Mutations must be recorded by Undo Redo Module.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
 \subsubsection{Access Routine Semantics}
 
-\noindent {add\_text}(text\_box):
+\noindent {addShape}(shapeSpec):
 \begin{itemize}
-\item transition: Adds the text\_box to Text\_Boxes
+\item transition: Adds the shape to the canvas
+\item output: GeometryID of the added shape
+\item exception: Invalid Spec if the shapeSpec is invalid
 \end{itemize}
 
-\noindent {add\_shape}(shape):
+\noindent {addLine}(lineSpec):
 \begin{itemize}
-\item transition: Adds the shape to Shapes 
+\item transition: Adds the line to the canvas
+\item output: GeometryID of the added line
+\item exception: Invalid Spec if the lineSpec is invalid
 \end{itemize}
 
-\noindent {delete\_text}(text\_box):
+\noindent {delete}(GeometryID):
 \begin{itemize}
-\item transition: Removes the text\_box to Text\_Boxes
+\item transition: Deletes the shape/line/textbox with the given GeometryID
+\item exception: Not Found if the GeometryID does not exist
 \end{itemize}
 
-
-\noindent {delete\_shape}(shape):
+\noindent {resize}(GeometryID):
 \begin{itemize}
-\item transition: Removes the shape to Shapes 
+\item transition: Resizes the shape/line/textbox with the given GeometryID
+\item exception: Not Found if the GeometryID does not exist
 \end{itemize}
 
-\noindent {modify\_text}(text\_box,text,formatting):
+\noindent {move}(GeometryID, location):
 \begin{itemize}
-\item transition: Text in text\_box is modified to now contain text with formatting
-\item exception: Invalid Text
+\item transition: Moves the shape/line/textbox with the given GeometryID to location
+\item exception: Not Found if the GeometryID does not exist
+\item exception: Invalid Transform if the location is invalid
 \end{itemize}
 
-\noindent {move\_shape}():
-\begin{itemize}
-\item transition: changes the points of the shape to the new points
-\item exception: Invalid points if the points are not possible for the type of shape.
-\end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
 %  have a state transition.  In this case a state transition can only occur if
@@ -1134,14 +1214,14 @@ N/A
 %  will have one or the other.}
 
 \subsubsection{Local Functions}
-N/A
+None
 %\wss{As appropriate} \wss{These functions are for the purpose of specification.
 %  They are not necessarily something that is going to be implemented
 %  explicitly.  Even if they are implemented, they are not exported; they only
 %  have local scope.}
 
 \newpage
-\section{MIS of {Undo Redo Module}} \label{Undo Redo Module} 
+\section{MIS of {Undo Redo Module}} \label{Undo Redo Module}
 %\wss{Use labels for
 %  cross-referencing}
 %
@@ -1150,21 +1230,19 @@ N/A
 %\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
-Undo/Redo Module: manages undo and redo commands.
+UndoRedoModule (\ref{Undo Redo Module})
 %\wss{Short name for the module}
 
 \subsection{Uses}
-\ref{Commands Parser Module} {Commands Parser Module}
-\ref{Geometry State Mutator Module} {Geometry State Mutator Module}
-\ref{File Interface Module} {File Interface Module} 
+{Geometry State Module} (\ref{Geometry State Module})
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
+\begin{tabular}{p{3cm} p{4cm} p{4cm} p{2cm}}
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
@@ -1172,7 +1250,7 @@ N/A
 \hline
 {redo} & - & - & Cant Redo \\
 \hline
-{add\_command} & command & - & - \\
+{addCommand} & command & - & - \\
 \hline
 \end{tabular}
 \end{center}
@@ -1180,8 +1258,10 @@ N/A
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-Previous\_Commands: previous command that can be used for undo
-Redone\_Commands: commands that can be used for redo
+\begin{itemize}
+\item undoStack : Stack$<$Command$>$
+\item redoStack : Stack$<$Command$>$
+\end{itemize}
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
 
@@ -1190,9 +1270,9 @@ Redone\_Commands: commands that can be used for redo
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
-N/A
+None
 \subsubsection{Assumptions}
-N/A
+Commands fully capture inverse operations.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
@@ -1200,22 +1280,19 @@ N/A
 
 \noindent {undo}():
 \begin{itemize}
-\item transition: Uses the Geometry State mutator to undo a previous command.
+\item transition: Pops command from undoStack, executes its inverse, and pushes it onto redoStack
+\item exception: Cant Undo if undoStack is empty
 \end{itemize}
 
 \noindent {redo}():
 \begin{itemize}
-\item transition: Uses the Geometry State mutator to redo a previous command.
+\item transition: Pops command from redoStack, re-executes it, and pushes it onto undoStack
+\item exception: Cant Redo if redoStack is empty
 \end{itemize}
 
-\noindent {redo}():
+\noindent {addCommand}(command):
 \begin{itemize}
-\item transition: Uses the Geometry State mutator to redo a previous command.
-\end{itemize}
-
-\noindent {add\_command}(command):
-\begin{itemize}
-\item transition: Stores the command to use later in case of an undo.
+\item transition: Pushes command onto undoStack and clears redoStack
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -1233,7 +1310,7 @@ N/A
 %  have local scope.}
 
 \newpage
-\section{MIS of {User Persistence Module}} \label{User Persistence Module} 
+\section{MIS of {User Persistence Module}} \label{User Persistence Module}
 %\wss{Use labels for
 %  cross-referencing}
 
@@ -1242,16 +1319,17 @@ N/A
 %\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
-User Persistence Module: Module for saving and loading user preferences and short-cuts.
+UserPersistenceModule (\ref{User Persistence Module})
+
 %\wss{Short name for the module}
 
 \subsection{Uses}
-
+{User Preference Module} (\ref{User Preference Module})
 
 \subsection{Syntax}
 
 \subsubsection{Exported Constants}
-N/A
+None
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -1259,11 +1337,9 @@ N/A
 \hline
 \textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
 \hline
-{save} & commands,theme & - & - \\
+{save} & FilePath & - & IOError \\
 \hline
-{get\_commands} & - & commands & - \\
-\hline
-{get\_theme} & - & theme & - \\
+{load} & FilePath & User Themes and Saves & IOError \\
 \hline
 \end{tabular}
 \end{center}
@@ -1271,19 +1347,19 @@ N/A
 \subsection{Semantics}
 
 \subsubsection{State Variables}
-N/A
+None
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
 
 \subsubsection{Environment Variables}
-N/A
+File System
 
 %\wss{This section is not necessary for all modules.  Its purpose is to capture
 %  when the module has external interaction with the environment, such as for a
 %  device driver, screen interface, keyboard, file, etc.}
 
 \subsubsection{Assumptions}
-N/A
+File format is versioned and backward compatible.
 %\wss{Try to minimize assumptions and anticipate programmer errors via
 %  exceptions, but for practical purposes assumptions are sometimes appropriate.}
 
@@ -1291,18 +1367,16 @@ N/A
 
 \noindent {save}(commands,theme):
 \begin{itemize}
-\item transition: Saves the commands and theme as a file
+\item transition: Saves user preferences to file at FilePath
+\item exception: IOError if there is an issue writing to the file
 \end{itemize}
 
-\noindent {get\_commands}():
+\noindent {load}(FilePath):
 \begin{itemize}
-\item output: User defined commands read from the file
+\item output: User Themes and Saves loaded from file at FilePath
+\item exception: IOError if there is an issue reading from the file
 \end{itemize}
 
-\noindent {get\_theme}():
-\begin{itemize}
-\item output: User preferred themes read from the file
-\end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
 %  have a state transition.  In this case a state transition can only occur if
@@ -1317,7 +1391,7 @@ N/A
 %  They are not necessarily something that is going to be implemented
 %  explicitly.  Even if they are implemented, they are not exported; they only
 %  have local scope.}
-N/A
+None
 \newpage
 
 
@@ -1334,28 +1408,223 @@ N/A
 
 \section*{Appendix --- Reflection}
 
-\wss{Not required for CAS 741 projects}
-
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
 
 \input{../../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable?
+  \begin{itemize}
+    \item Chengze - While we got back on MG and MIS document after some of the implementation,
+    we had a better understanding of the overall design of the project. This allowed us to
+    better fill in the details of each module and their services. In particular, reviewing the
+    specifications helped us identify missing requirements and confirm that our current code
+    matches the intended module responsibilities. Writing this deliverable also made it easier
+    to see how the system should be organized, ensuring that each component has a clear purpose
+    and well-defined interface moving forward.
+    \item Ethan - In this deliverable we got a better idea of how the app would
+      look and work from an architecture standpoint. It let us get a more
+      concrete understanding of how components would be broken down in the code
+      and how they would work together. Additionally, it helped us to write out
+      some scaffold code for our rev 0 and do some work in parallel to better
+      visualize module interactions and dependency.
+    \item Hussain - In this deliverable, we were able to begin thinking more on
+    the development of Flow. By discussing and outlining the different modules
+    and their services, I believe we were able to get a much better
+    understanding of how we can put together a successful application for this
+    project. We were assigned this document close to the due date of Rev0 which
+    is our first real revision of the finished project. This also pushes us to
+    use the decisions made in this document directly in the development of our
+    project.
+    \item Jeffrey - During this deliverable, we began to visualize and
+    actually understand how we wanted our application to work/function.
+    Additionally, as stated in a further section, none of the existing
+    documents required major changes which helped speed the process of
+    this deliverable. Moreover, with a well written MIS, we are now able
+    to proceed with development with a clearer image and better instructions.
+    \item Kevin -What went well in this deliverable was using our previous 
+     work on the MIS made implementing the skeleton or our project much
+      simpler as it was already defined in the design docs. Additionally,
+       having a skeleton to base the docs off of made it easier to find sections where we should have explained more to make implementation easier. 
+  \end{itemize}
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
+    \begin{itemize}
+      \item Chengze - The pain point I experienced during this deliverable
+      was the lack of clarity on some of the module services. Since some of the
+      modules were not fully implemented yet, it was hard to determine what
+      services they should provide. To resolve this, we had to rework on MIS to
+      include more details and make sure the services aligned with the overall
+      design of the project.
+      \item Ethan - Overall I think this was the most challenging deliverable
+        so far. This was where we had to go from ideas to a concrete system
+        design. I have more experience in web development and backend system
+        design, but not as much in designing something like a text editor or
+        geometry manipulation program. It was difficult to think about all of
+        the modules and how they would interact with eachother without writing
+        any code. I helped resolve this by writing out some potentially
+        throw-away code to play with while designing.
+      \item Hussain - A couple pain points I experienced during this
+      deliverable had to do with the poor delegation of work and slower
+      restart into working on the design document. Our group had decided to
+      split the work for the design doc in a same way we did for Rev -1, but
+      this gave some of us more work than others as this time around, the MIS
+      required more work than the MG. In addition to this, some of us were a
+      bit slow (potentially because of the break) in getting back to working
+      on the project. Thankfully, I was able to resolve this by re-delegating
+      some of the work and helping set up a meeting with the TA to discuss
+      the items for the deliverable.
+
+      \item Jeffrey - The biggest pain point I had during this deliverable was
+      trying to keep up with my peers when conceptualizing ideas for our concrete
+      system. Since I only have a handful of experiences with app development, I
+      was having a hard time helping my teammates come up with modules. Luckily,
+      one of the team members Ethan created throw-away code which helped me
+      visualize the system better.
+      \item Kevin - The main pain point while working on this deliverable was
+       getting back into the swing of things after the break. This made our 
+       team less organized and communication slower than we should have for 
+       this deliverable, meaning that work discussion and delegation were 
+       slower. This problem was solved by ensuring that all work and dates 
+       were posted on the group discord ensuring that we can still 
+       communicate and finish our work even if our communication is slower. 
+    \end{itemize}
   \item Which of your design decisions stemmed from speaking to your client(s)
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
   were not, why, and where did they come from?
+    \begin{itemize}
+      \item Most of our design decisions stemmed from the consulting the primary
+      stakeholders of the project, namely ourselves as students and end users of the
+      system. Since the software is intended to be used and evaluated by students
+      with similar technical backgrounds and needs, our group discussions acted as
+      a proxy for client consultation. Particularly, decisions regarding the
+      overall modular decomposition were based on stakeholder discussions. As a
+      group, we agreed to keep the higher-level module structure provided in the
+      template, as it aligned well with the expectations for separation of concerns
+      and maintainability. We then refined this structure by collectively defining
+      the responsibilities and services of each module, which is reflected in the
+      Module Guide.
+
+      \item Many of these stakeholder-driven decisions were mentioned as part of the
+      functional and non-functional requirements outlined in the SRS. The design
+      of individual modules and their interfaces was guided by these requirements,
+      ensuring clear traceability from stakeholder needs to the system-level design.
+
+      \item Some design decisions did not stem directly from stakeholder input but instead
+      came from practical constraints and other experiences. For example, user
+      interface decisions were informed by common design patterns observed in modern
+      drawing and canvas-based applications, helping minimize the learning curve and
+      aligning with user expectations. Similarly, the project timeline was
+      determined based on course deadlines and workload considerations, rather than
+      client input, as these constraints were externally imposed by the course
+      structure.
+    \end{itemize}
   \item While creating the design doc, what parts of your other documents (e.g.
   requirements, hazard analysis, etc), it any, needed to be changed, and why?
+    \begin{itemize}
+      \item While creating the design document, none of the existing documents required
+      major changes. The SRS served as a foundational input to the design process, and the
+      module decomposition and interfaces were created specifically to satisfy the
+      functional and non-functional requirements defined. As a result, the design document
+      did not introduce new requirements or require modifications to the SRS, but instead
+      validated that the requirements were implementable and well-scoped.
+
+      \item Similarly, the Hazard Analysis did not require updates as no new hazards were
+      identified during the design process. However, the design helped clarify how
+      previously identified hazards would be addressed through module separation,
+      controlled state mutation, and undo/redo mechanisms, reinforcing the effectiveness
+      of existing mitigation strategies.
+
+      \item The design document does, however, influence how the Verification and Validation
+      (VnV) Plan would be interpreted and later refined. By clearly defining module
+      responsibilities and interfaces, the design gives more precise unit and integration
+      testing strategies, which would be reflected in future updates to the VnV plan.
+
+    \end{itemize}
   \item What are the limitations of your solution?  Put another way, given
   unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
+    \begin{itemize}
+      \item One of the biggest limitations of our solution is that we are
+      priotizing rapid development and usability over mximum performance
+      and architetural flexibility.To clarify, given our time and
+      resource constraints, we chose technologies that
+      allowed us to build and iterate quickly; however, this
+      would obviously introduce trade offs.
+
+      For instance, our application uses Electron, which is relatively resource-heavy
+      when compared to native solution. We chose this as it enables cross-plateform
+      development and faster prototyping. The cross-platform development is very
+      important to use as the team is spread across multiple platforms. While this
+      seems like a great choice, it also has it's cons such as higher memory usage
+      and reduced performance. With unlimited resources, we could reimplement the
+      application using a more performant, lower-level stack to improve effciency,
+      speed, and responsiveness. For example, we could reimplment our application
+      using Rust or C++.
+
+      \item Another limitation is that currently our code is coupled between frontend
+      and backend. If we had unlimitd time we would completely isolate the backend and
+      business logic behind a well-defined API. This would allow alternative frontends,
+      mobile or web, to be developed independently and would allow us to improve the
+      application's scalability and maintainability.
+
+      \item Additionally, if we were truly given unlimited resources, we would
+      contemplate the idea of adding end-to-end encryption for notes.
+      This would also include stronger authentication mechanisms,
+      secure key management, and regular security audits.
+      While this may seem excessive for a note taking application, the idea
+      of large scale companies using our application might require such measures.
+
+      \item Next, our projet relies on third-party libraries which we use for
+      rendering and geometry-related operations. While the libraies we use are robust
+      and trusted, they are general-prupose tools and not optimized for our application
+      specifically. If we were given an unimited resource such as time, we would like
+      to design and implement custom solutions/libraries tailored to our application's
+      specific requirements. By doing this, we believe it would help improve performance,
+      flexibility, and control over rendering behaviour.
+
+
+    \end{itemize}
   \item Give a brief overview of other design solutions you considered.  What
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
   (LO\_Explores)
+\begin{itemize}
+\item Other design solutions we considered was using a primarily text based 
+note taker or using alternative input methods in combination with a keyboard. As our problem is pretty constrained we did not consider many other options and the solutions proposed by our team were very similar. 
+
+\item The benefits of a primary text based note taker was that it would be easier to code and much more intuitive to users who have used similar software such as notepad or word. However, making it too text focused makes it too similar to the above mentioned programs making ours not valuable for those that can access these other common actions. 
+
+\item Another solution we considered was using alternative input methods such as the microphone to gather input along with the keyboard. It could transcribe the lecture while giving the user the ability to input.  While it would be helpful in gathering information for the note taker, it would also fall outside of our primary goals for the project and could only be considered a stretch goal that could be pursued after the primary goal of the project is properly implemented. 
+
+\end{itemize}
+  \item (After you have implemented another team's module, which means this
+  isn't filled in until after the original deadline). What did you learn by
+  implementing another team's module? Were all the details you needed in the
+  documentation, or did you need to make assumptions, or ask the other team
+  questions?  If your team also had another team implement one of your modules,
+  what was this experience like?  Are there things in your documentation you
+  could have changed to make the process go more smoothly for when an
+  ``outsider'' completes some of the implementation?
+
+  Implementation: \url{https://github.com/SpaceY-Labs/RoCam/pull/262}
+
+
+  The other team's module was well specified and straightforward to implement.
+  We learned how helpful and important clear documentation is for
+  collaboration. We were able to implement the module with little knowledge of
+  the project as a whole and without needing external context for how this
+  module would fit into the larger system. Almost all the details we needed
+  were in the documentation. A couple areas where we made assumptions included
+  the format of the logging files as well as assuming the referenced "OSDData"
+  object structure was JSON. We definitely could have added more detail to our
+  documentation to make it easier for the other team to implement. Writing out
+  steps in plain english made it clear for us what to implement. We also could
+  have specified the exact file path for them to implement. Additionally, the
+  module we were assigned was rather small and easy to understand in isolation.
+  We could have done a better job of breaking up our modules to allow for this
+  type of isolated knowledge requirements during implementation.
+
 \end{enumerate}
 
 

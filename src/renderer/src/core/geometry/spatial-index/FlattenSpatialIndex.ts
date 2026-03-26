@@ -126,8 +126,92 @@ export class FlattenSpatialIndex implements SpatialIndex {
   }
 
   searchAtPoint(point: Coordinate): Shape[] {
+    // First, try exact hit detection
     const hits = this.set.hit(new Flatten.Point(point.x, point.y));
-    return hits.map((hit) => this.getDomainShape(hit));
+    const shapes = hits.map((hit) => this.getDomainShape(hit));
+
+    // If no shapes found, use tolerance-based search for lines
+    // Lines are hard to select with exact hit detection, so we use a small radius
+    if (shapes.length === 0) {
+      const LINE_SELECTION_TOLERANCE = 5; // pixels
+      const searchBox = new Flatten.Box(
+        point.x - LINE_SELECTION_TOLERANCE,
+        point.y - LINE_SELECTION_TOLERANCE,
+        point.x + LINE_SELECTION_TOLERANCE,
+        point.y + LINE_SELECTION_TOLERANCE,
+      );
+      const candidates = this.set.search(searchBox);
+      const lineHits = candidates
+        .map((candidate) => this.getDomainShape(candidate))
+        .filter((shape) => shape.type === 'multi-line');
+
+      // Sort by distance to click point so closest line is first
+      // This allows selecting lines even when they overlap
+      const sortedLineHits = lineHits.sort((a, b) => {
+        const distA = this.distanceFromPointToShape(point, a);
+        const distB = this.distanceFromPointToShape(point, b);
+        return distA - distB;
+      });
+
+      return sortedLineHits;
+    }
+
+    return shapes;
+  }
+
+  private distanceFromPointToShape(point: Coordinate, shape: Shape): number {
+    if (shape.type !== 'multi-line') {
+      return this.distanceBetweenPoints(point, shape);
+    }
+
+    const multiLine = shape as MultiLine;
+    let minDistance = Infinity;
+
+    // Find minimum distance from point to any line segment
+    for (let i = 0; i < multiLine.points.length - 1; i++) {
+      const p1Raw = multiLine.points[i];
+      const p2Raw = multiLine.points[i + 1];
+
+      // Resolve anchor references to coordinates
+      const p1 = isAnchorRef(p1Raw)
+        ? resolveAnchorRefCoordinate(this.getDomainShapeById(p1Raw.shapeId), p1Raw.position)
+        : p1Raw;
+
+      const p2 = isAnchorRef(p2Raw)
+        ? resolveAnchorRefCoordinate(this.getDomainShapeById(p2Raw.shapeId), p2Raw.position)
+        : p2Raw;
+
+      const distance = this.distanceFromPointToSegment(point, p1, p2);
+      minDistance = Math.min(minDistance, distance);
+    }
+
+    return minDistance;
+  }
+
+  private distanceFromPointToSegment(
+    point: Coordinate,
+    segmentStart: Coordinate,
+    segmentEnd: Coordinate,
+  ): number {
+    const dx = segmentEnd.x - segmentStart.x;
+    const dy = segmentEnd.y - segmentStart.y;
+    const lengthSq = dx * dx + dy * dy;
+
+    if (lengthSq === 0) {
+      // Segment is a point
+      return this.distanceBetweenPoints(point, segmentStart);
+    }
+
+    // Calculate projection of point onto segment
+    let t = ((point.x - segmentStart.x) * dx + (point.y - segmentStart.y) * dy) / lengthSq;
+    t = Math.max(0, Math.min(1, t));
+
+    const projectedPoint = {
+      x: segmentStart.x + t * dx,
+      y: segmentStart.y + t * dy,
+    };
+
+    return this.distanceBetweenPoints(point, projectedPoint);
   }
 
   getNearestShape(point: Coordinate): Shape | null {
