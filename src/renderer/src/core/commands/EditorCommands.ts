@@ -266,10 +266,17 @@ function cursorRightFast({ editor, document, spatialIndex }: CommandArgs): Comma
 }
 
 function moveCursorToMiddle({ editor, document }: CommandArgs): CommandResult {
+  const store = useStore.getState();
+
+  // preferred: if store exposes viewport world bounds/position
+  const viewport = store.viewport;
+  const canvasWidth = window.innerWidth;
+  const canvasHeight = window.innerHeight - 24; // status bar
+
   return [
     setCursorPosition(editor, {
-      x: window.innerWidth / 2,
-      y: window.innerHeight / 2,
+      x: -viewport.x + canvasWidth / 2,
+      y: -viewport.y + canvasHeight / 2,
     }),
     document,
   ];
@@ -311,7 +318,6 @@ function selectPreviousSearchResult({
   return [updatedEditor, document];
 }
 function selectAllShapes({ editor, document }: CommandArgs): CommandResult {
-  console.log('selecting all shapes, current mode: ', editor.mode);
   let updatedEditor = editor;
   if (editor.mode !== 'visual' && editor.mode !== 'visual-block') {
     updatedEditor = setMode(editor, 'visual');
