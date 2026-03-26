@@ -17,7 +17,6 @@ const Line: ShapeComponent<DomainLine> = ({
   shape,
   stroke,
   selected,
-  hovered,
 }: ShapeComponentProps<DomainLine> & { selected?: boolean; hovered?: boolean }) => {
   const resolved = useResolvedPoints(shape);
   const points = resolved.flatMap((pt) => [pt.x, pt.y]);

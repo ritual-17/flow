@@ -129,7 +129,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
     // First, try exact hit detection
     const hits = this.set.hit(new Flatten.Point(point.x, point.y));
     const shapes = hits.map((hit) => this.getDomainShape(hit));
-    
+
     // If no shapes found, use tolerance-based search for lines
     // Lines are hard to select with exact hit detection, so we use a small radius
     if (shapes.length === 0) {
@@ -144,7 +144,7 @@ export class FlattenSpatialIndex implements SpatialIndex {
       const lineHits = candidates
         .map((candidate) => this.getDomainShape(candidate))
         .filter((shape) => shape.type === 'multi-line');
-      
+
       // Sort by distance to click point so closest line is first
       // This allows selecting lines even when they overlap
       const sortedLineHits = lineHits.sort((a, b) => {
@@ -152,16 +152,16 @@ export class FlattenSpatialIndex implements SpatialIndex {
         const distB = this.distanceFromPointToShape(point, b);
         return distA - distB;
       });
-      
+
       return sortedLineHits;
     }
-    
+
     return shapes;
   }
 
   private distanceFromPointToShape(point: Coordinate, shape: Shape): number {
     if (shape.type !== 'multi-line') {
-      return this.distanceBetweenPoints(point, shape as any);
+      return this.distanceBetweenPoints(point, shape);
     }
 
     const multiLine = shape as MultiLine;
@@ -174,17 +174,11 @@ export class FlattenSpatialIndex implements SpatialIndex {
 
       // Resolve anchor references to coordinates
       const p1 = isAnchorRef(p1Raw)
-        ? resolveAnchorRefCoordinate(
-            this.getDomainShapeById(p1Raw.shapeId),
-            p1Raw.position,
-          )
+        ? resolveAnchorRefCoordinate(this.getDomainShapeById(p1Raw.shapeId), p1Raw.position)
         : p1Raw;
 
       const p2 = isAnchorRef(p2Raw)
-        ? resolveAnchorRefCoordinate(
-            this.getDomainShapeById(p2Raw.shapeId),
-            p2Raw.position,
-          )
+        ? resolveAnchorRefCoordinate(this.getDomainShapeById(p2Raw.shapeId), p2Raw.position)
         : p2Raw;
 
       const distance = this.distanceFromPointToSegment(point, p1, p2);
