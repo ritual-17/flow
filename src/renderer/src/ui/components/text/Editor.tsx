@@ -2,9 +2,9 @@ import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { useStore } from '@renderer/ui/Store';
-import { Vim, vim } from '@replit/codemirror-vim';
+import { getCM, Vim, vim } from '@replit/codemirror-vim';
 import { basicSetup } from 'codemirror';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 type EditorProps = {
   initialDoc?: string;
@@ -22,9 +22,18 @@ Vim.noremap('P', '"+P', 'normal');
 export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
   const editor = useRef<HTMLDivElement>(null);
   const mode = useStore((state) => state.editor.mode);
+  const [vimMode, setVimMode] = useState<string>('normal');
 
   useEffect(() => {
     const handleWrite = EditorView.updateListener.of((update) => {
+      // Defer mode check to next tick so vim state is fully updated before reading
+      setTimeout(() => {
+        const cm = getCM(update.view);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const currentMode = (cm as any)?.state?.vim?.mode ?? 'normal';
+        setVimMode(currentMode);
+      }, 0);
+
       if (!update.docChanged) return; // ignores updates that don't change the document e.g. cursor movements
 
       const doc = update.state.doc.toString();
@@ -46,7 +55,17 @@ export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
     };
   }, [initialDoc, mode, setContent]);
 
-  return <div className='absolute w-52 h-44' style={{ top: y, left: x }} ref={editor}></div>;
+  return (
+    <div className='absolute flex flex-col' style={{ top: y, left: x }}>
+      <div className='w-80 min-h-8' ref={editor} />
+      <div
+        className='text-xs font-bold px-2 py-0.5 w-80'
+        style={{ backgroundColor: '#2c2d30', color: '#9da5b0' }}
+      >
+        {vimMode.toUpperCase()}
+      </div>
+    </div>
+  );
 };
 
 const PLACEHOLDER = 'Enter text here';
