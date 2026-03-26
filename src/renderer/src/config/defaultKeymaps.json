@@ -11,6 +11,16 @@
     "<View-Left>": "scrollViewportLeft",
     "<View-Right>": "scrollViewportRight"
   },
+  "help": {
+    "j": "down",
+    "k": "up",
+    "h": "left",
+    "l": "right",
+    "ArrowUp": "up",
+    "ArrowDown": "down",
+    "ArrowLeft": "left",
+    "ArrowRight": "right"
+  },
   "normal": {
     "j": "down",
     "k": "up",
