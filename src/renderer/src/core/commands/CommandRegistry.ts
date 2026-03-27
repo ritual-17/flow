@@ -69,6 +69,7 @@ import {
   jumpToRightAnchorPoint,
   jumpToUpAnchorPoint,
   toggleBoxSelect,
+  toggleHelp,
   toggleSelectShapeAtPoint,
   visualDown,
   visualLeft,
@@ -229,6 +230,8 @@ function commandFromName(command: string): CommandFunction | null {
       return undo;
     case 'redo':
       return redo;
+    case 'toggleHelp':
+      return toggleHelp;
     default:
       return null;
   }

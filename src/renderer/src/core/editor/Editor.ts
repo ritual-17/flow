@@ -16,6 +16,7 @@ export interface Editor {
   previousShapeId: ShapeId | null; // for auto-linking, to keep track of the last shape that was linked from
   statusMessage: string;
   currentTextBox: TextBoxEditingState | null;
+  helpMenuOpen: boolean;
 }
 
 export interface TextBoxEditingState {
@@ -50,6 +51,7 @@ function createEditor(): Editor {
     boxSelectAnchor: undefined,
     statusMessage: '',
     currentTextBox: null,
+    helpMenuOpen: false,
   };
 }
 
@@ -174,7 +176,7 @@ function setPreviousShapeId(editor: Editor, shapeId: ShapeId | null): Editor {
 
 function helperPanViewportForItem(
   lastMovement: 'up' | 'down' | 'left' | 'right' | 'shape',
-  editor,
+  editor: Editor,
   shapes: Shape[] = [],
 ): void {
   const { viewport } = useStore.getState();
@@ -227,7 +229,7 @@ function helperPanViewportForItem(
 
 function helperKeepCursorInViewport(
   lastMovement: 'up' | 'down' | 'left' | 'right' | 'shape',
-  editor,
+  editor: Editor,
 ) {
   const cursor = editor.cursorPosition;
   const cursorMoveAmount = 50,
@@ -245,6 +247,12 @@ function helperKeepCursorInViewport(
     updatedEditor = setCursorPosition(editor, { x: cursor.x + cursorMoveAmount, y: cursor.y });
   }
   return updatedEditor;
+}
+
+function toggleHelpMenu(editor: Editor): Editor {
+  return produce(editor, (draft) => {
+    draft.helpMenuOpen = !editor.helpMenuOpen;
+  });
 }
 
 export {
@@ -270,4 +278,5 @@ export {
   setPreviousShapeId,
   helperPanViewportForItem,
   helperKeepCursorInViewport,
+  toggleHelpMenu,
 };
