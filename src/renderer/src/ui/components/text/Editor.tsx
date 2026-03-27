@@ -2,7 +2,7 @@ import { defaultKeymap, indentWithTab } from '@codemirror/commands';
 import { EditorState } from '@codemirror/state';
 import { EditorView, keymap } from '@codemirror/view';
 import { useStore } from '@renderer/ui/Store';
-import { Vim, vim } from '@replit/codemirror-vim';
+import { vim } from '@replit/codemirror-vim';
 import { basicSetup } from 'codemirror';
 import { useEffect, useRef } from 'react';
 
@@ -14,10 +14,10 @@ type EditorProps = {
 };
 //
 // remapping some functions to use system clipboard
-Vim.noremap('yy', '"+yy', 'normal');
-Vim.noremap('dd', '"+dd', 'normal');
-Vim.noremap('p', '"+p', 'normal');
-Vim.noremap('P', '"+P', 'normal');
+// Vim.noremap('yy', '"+yy', 'normal');
+// Vim.noremap('dd', '"+dd', 'normal');
+// Vim.noremap('p', '"+p', 'normal');
+// Vim.noremap('P', '"+P', 'normal');
 
 export const Editor = ({ initialDoc, x, y, setContent }: EditorProps) => {
   const editor = useRef<HTMLDivElement>(null);
