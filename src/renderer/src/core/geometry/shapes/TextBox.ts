@@ -32,10 +32,10 @@ export function generateAnchorCoordinates(textBox: TextBox): Coordinate[] {
     : textBox.height;
 
   return [
-    { x: x + width / 2, y: y }, // top center
-    { x: x + width, y: y + height / 2 }, // middle right
-    { x: x + width / 2, y: y + height }, // bottom center
-    { x: x, y: y + height / 2 }, // middle left
+    { x: x, y: y - height / 2 }, // top center
+    { x: x + width / 2, y: y }, // middle right
+    { x: x, y: y + height / 2 }, // bottom center
+    { x: x - width / 2, y: y }, // middle left
   ];
 }
 

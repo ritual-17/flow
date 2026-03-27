@@ -34,19 +34,21 @@ function toFlattenCircle(circle: Circle): Flatten.Circle {
 }
 
 function toFlattenRectangle(rectangle: Rectangle): Flatten.Polygon {
-  const p1 = new Flatten.Point(rectangle.x, rectangle.y);
-  const p2 = new Flatten.Point(rectangle.x + rectangle.width, rectangle.y);
-  const p3 = new Flatten.Point(rectangle.x + rectangle.width, rectangle.y + rectangle.height);
-  const p4 = new Flatten.Point(rectangle.x, rectangle.y + rectangle.height);
+  const { x, y, width, height } = rectangle;
+  const p1 = new Flatten.Point(x - width / 2, y - height / 2);
+  const p2 = new Flatten.Point(x + width / 2, y - height / 2);
+  const p3 = new Flatten.Point(x + width / 2, y + height / 2);
+  const p4 = new Flatten.Point(x - width / 2, y + height / 2);
 
   return new Flatten.Polygon([p1, p2, p3, p4]);
 }
 
 function toFlattenSquare(square: Square): Flatten.Polygon {
-  const p1 = new Flatten.Point(square.x, square.y);
-  const p2 = new Flatten.Point(square.x + square.width, square.y);
-  const p3 = new Flatten.Point(square.x + square.width, square.y + square.height);
-  const p4 = new Flatten.Point(square.x, square.y + square.height);
+  const { x, y, width, height } = square;
+  const p1 = new Flatten.Point(x - width / 2, y - height / 2);
+  const p2 = new Flatten.Point(x + width / 2, y - height / 2);
+  const p3 = new Flatten.Point(x + width / 2, y + height / 2);
+  const p4 = new Flatten.Point(x - width / 2, y + height / 2);
 
   return new Flatten.Polygon([p1, p2, p3, p4]);
 }
@@ -63,10 +65,10 @@ function toFlattenTextBox(textBox: TextBox): Flatten.Polygon {
     ? textBox.label.compiledImageMeta.height
     : textBox.height;
 
-  const p1 = new Flatten.Point(textBox.x, textBox.y);
-  const p2 = new Flatten.Point(textBox.x + width, textBox.y);
-  const p3 = new Flatten.Point(textBox.x + width, textBox.y + height);
-  const p4 = new Flatten.Point(textBox.x, textBox.y + height);
+  const p1 = new Flatten.Point(textBox.x - width / 2, textBox.y - height / 2);
+  const p2 = new Flatten.Point(textBox.x + width / 2, textBox.y - height / 2);
+  const p3 = new Flatten.Point(textBox.x + width / 2, textBox.y + height / 2);
+  const p4 = new Flatten.Point(textBox.x - width / 2, textBox.y + height / 2);
 
   return new Flatten.Polygon([p1, p2, p3, p4]);
 }
@@ -93,10 +95,11 @@ function toFlattenMultiLine(multiLine: MultiLine): Flatten.Multiline {
 }
 
 function toFlattenImage(pdf: PdfSlide): Flatten.Polygon {
-  const p1 = new Flatten.Point(pdf.x, pdf.y);
-  const p2 = new Flatten.Point(pdf.x + pdf.width, pdf.y);
-  const p3 = new Flatten.Point(pdf.x + pdf.width, pdf.y + pdf.height);
-  const p4 = new Flatten.Point(pdf.x, pdf.y + pdf.height);
+  const { x, y, width, height } = pdf;
+  const p1 = new Flatten.Point(x - width / 2, y - height / 2);
+  const p2 = new Flatten.Point(x + width / 2, y - height / 2);
+  const p3 = new Flatten.Point(x + width / 2, y + height / 2);
+  const p4 = new Flatten.Point(x - width / 2, y + height / 2);
   return new Flatten.Polygon([p1, p2, p3, p4]);
 }
 
@@ -154,8 +157,8 @@ function fromFlattenBox<T extends TextBox | Rectangle | Square>(
 
   return {
     ...original,
-    x: xMin,
-    y: yMin,
+    x: (xMin + xMax) / 2,
+    y: (yMin + yMax) / 2,
     width: xMax - xMin,
     height: yMax - yMin,
   };

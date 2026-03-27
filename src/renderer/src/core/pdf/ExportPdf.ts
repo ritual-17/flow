@@ -27,19 +27,19 @@ function getShapeBounds(shape: Shape): {
     case 'square':
     case 'pdf':
       return {
-        minX: shape.x,
-        minY: shape.y,
-        maxX: shape.x + shape.width,
-        maxY: shape.y + shape.height,
+        minX: shape.x - shape.width / 2,
+        minY: shape.y - shape.height / 2,
+        maxX: shape.x + shape.width / 2,
+        maxY: shape.y + shape.height / 2,
       };
     case 'textBox': {
       const w = shape.label.compiledImageMeta?.width ?? shape.width;
       const h = shape.label.compiledImageMeta?.height ?? shape.height;
       return {
-        minX: shape.x,
-        minY: shape.y,
-        maxX: shape.x + w,
-        maxY: shape.y + h,
+        minX: shape.x - w / 2,
+        minY: shape.y - h / 2,
+        maxX: shape.x + w / 2,
+        maxY: shape.y + h / 2,
       };
     }
     case 'multi-line': {

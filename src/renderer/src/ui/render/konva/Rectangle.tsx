@@ -8,8 +8,8 @@ import { Rect as KonvaRectangle } from 'react-konva';
 const Rectangle: ShapeComponent<DomainRectangle> = ({ shape, stroke }) => {
   return (
     <KonvaRectangle
-      x={shape.x}
-      y={shape.y}
+      x={shape.x - shape.width / 2}
+      y={shape.y - shape.height / 2}
       width={shape.width}
       height={shape.height}
       fill={shape.fillColor}

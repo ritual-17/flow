@@ -114,20 +114,20 @@ describe('createCircle', () => {
 
 describe('createRectangle', () => {
   it('adds a rectangle at the cursor position', () => {
-    const args = makeArgs({ editor: { cursorPosition: { x: 5, y: 15 } } });
+    const args = makeArgs({ editor: { cursorPosition: { x: 200, y: 200 } } });
     const [, doc] = ManipulationCommands.createRectangle(args);
     const shapes = Array.from(doc.shapes.values());
     expect(shapes[0].type).toBe('rectangle');
-    expect(shapes[0].x).toBe(5);
-    expect(shapes[0].y).toBe(15);
+    expect(shapes[0].x).toBe(200);
+    expect(shapes[0].y).toBe(200);
   });
 
   it('clamps rectangle position to prevent negative coordinates', () => {
     const args = makeArgs({ editor: { cursorPosition: { x: -10, y: -20 } } });
     const [, doc] = ManipulationCommands.createRectangle(args);
     const shapes = Array.from(doc.shapes.values());
-    expect(shapes[0].x).toBe(0); // clamped from -10 to 0
-    expect(shapes[0].y).toBe(0); // clamped from -20 to 0
+    expect(shapes[0].x).toBe(100); // clamped from -10 to 100 (half of default width 200)
+    expect(shapes[0].y).toBe(50); // clamped from -20 to 50 (half of default height 100)
   });
 
   it('adds it to the spatial index', () => {
@@ -152,8 +152,8 @@ describe('createSquare', () => {
     const args = makeArgs({ editor: { cursorPosition: { x: -5, y: -15 } } });
     const [, doc] = ManipulationCommands.createSquare(args);
     const shapes = Array.from(doc.shapes.values());
-    expect(shapes[0].x).toBe(0); // clamped from -5 to 0
-    expect(shapes[0].y).toBe(0); // clamped from -15 to 0
+    expect(shapes[0].x).toBe(50); // clamped from -5 to 50 (half of default width 100)
+    expect(shapes[0].y).toBe(50); // clamped from -15 to 50 (half of default height 100)
   });
 });
 

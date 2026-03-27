@@ -8,8 +8,8 @@ import { Rect as KonvaSquare } from 'react-konva';
 const Square: ShapeComponent<DomainSquare> = ({ shape, stroke }) => {
   return (
     <KonvaSquare
-      x={shape.x}
-      y={shape.y}
+      x={shape.x - shape.width / 2}
+      y={shape.y - shape.height / 2}
       width={shape.width}
       height={shape.height}
       fill={shape.fillColor}

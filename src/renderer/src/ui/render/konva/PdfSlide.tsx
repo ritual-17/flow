@@ -17,8 +17,8 @@ const PdfSlideShape: ShapeComponent<PdfSlide> = ({ shape, stroke }) => {
 
   return (
     <KonvaImage
-      x={shape.x}
-      y={shape.y}
+      x={shape.x - shape.width / 2}
+      y={shape.y - shape.height / 2}
       width={shape.width}
       height={shape.height}
       image={image ?? undefined}
