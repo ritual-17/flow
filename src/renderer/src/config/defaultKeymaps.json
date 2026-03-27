@@ -5,12 +5,29 @@
     "<C-Down>": "fastDown",
     "<C-Left>": "fastLeft",
     "<C-Right>": "fastRight",
+    "`": "toggleHelp",
     "<View-Up>": "scrollViewportUp",
     "<View-Down>": "scrollViewportDown",
     "<View-Left>": "scrollViewportLeft",
     "<View-Right>": "scrollViewportRight"
   },
+  "help": {
+    "j": "down",
+    "k": "up",
+    "h": "left",
+    "l": "right",
+    "ArrowUp": "up",
+    "ArrowDown": "down",
+    "ArrowLeft": "left",
+    "ArrowRight": "right"
+  },
   "normal": {
+    "i": "enterInsertMode",
+    "v": "enterVisualMode",
+    "V": "enterVisualBlockMode",
+    "t": "enterTextMode",
+    "T": "enterTextModeForNearestTextBox",
+    "I": "enterAutoLinkInsertMode",
     "j": "down",
     "k": "up",
     "h": "left",
@@ -22,12 +39,6 @@
     "M": "moveCursorToMiddle",
     "zz": "moveScreenToCursor",
     "x": "deleteChar",
-    "i": "enterInsertMode",
-    "v": "enterVisualMode",
-    "V": "enterVisualBlockMode",
-    "t": "enterTextMode",
-    "T": "enterTextModeForNearestTextBox",
-    "I": "enterAutoLinkInsertMode",
     "dd": "deleteLine",
     "yy": "yankLine",
     "p": "pasteAfter",
@@ -148,6 +159,8 @@
     "q!": "forceQuit"
   },
   "line": {
+    "A": "enterAnchorLineMode",
+    "t": "enterTextModeFromLineMode",
     "j": "down",
     "k": "up",
     "h": "left",
@@ -160,13 +173,13 @@
     "s": "squareLine",
     "c": "curvedLine",
     "x": "newLine",
-    "A": "enterAnchorLineMode",
-    "t": "enterTextModeFromLineMode",
     "e": "toggleArrow",
     "n": "selectNextSearchResult",
     "N": "selectPreviousSearchResult"
   },
   "anchor-line": {
+    "a": "enterLineMode",
+    "t": "enterTextModeFromLineMode",
     "j": "downAnchor",
     "k": "upAnchor",
     "h": "leftAnchor",
@@ -177,8 +190,6 @@
     "ArrowRight": "rightAnchor",
     "x": "newLine",
     "<Space>": "addAnchorPointToLine",
-    "a": "enterLineMode",
-    "t": "enterTextModeFromLineMode",
     "e": "toggleArrow"
   }
 }
