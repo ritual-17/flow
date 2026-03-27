@@ -13,7 +13,6 @@ export function HelpMenu() {
     ...(mode_commands || {}),
     ...(all_commands || {}),
   };
-  console.log(open);
   return (
     <div>
       <div

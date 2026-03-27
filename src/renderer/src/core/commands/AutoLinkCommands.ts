@@ -75,7 +75,6 @@ export function autoLinkAddToLine(
       const nextPoint = newShape
         ? getNewShapePoint(args, newShape, lastPoint)
         : updatedEditor.cursorPosition;
-      console.log('Next point for new multi-line:', nextPoint);
 
       newLine = MultiLine.addPoint(previousShape, nextPoint);
       updatedDocument = updateShapeInDocument(
