@@ -6,6 +6,8 @@ import {
   clearBoxSelectAnchor,
   clearSelection,
   Editor,
+  helperKeepCursorInViewport,
+  helperPanViewportForItem,
   setClipboard,
   setCurrentLineId,
   setCurrentTextBox,
@@ -87,33 +89,34 @@ export async function createTextBox(args: CommandArgs): Promise<CommandResult> {
 const TRANSLATE_AMOUNT = 10;
 const FAST_TRANSLATE_AMOUNT = 50;
 export function translateSelectionUp(args: CommandArgs): [Editor, DocumentModel] {
-  return translateSelection(args, { deltaX: 0, deltaY: -TRANSLATE_AMOUNT });
+  return translateSelection(args, { deltaX: 0, deltaY: -TRANSLATE_AMOUNT }, 'up');
 }
 export function translateSelectionDown(args: CommandArgs): [Editor, DocumentModel] {
-  return translateSelection(args, { deltaX: 0, deltaY: TRANSLATE_AMOUNT });
+  return translateSelection(args, { deltaX: 0, deltaY: TRANSLATE_AMOUNT }, 'down');
 }
 export function translateSelectionLeft(args: CommandArgs): [Editor, DocumentModel] {
-  return translateSelection(args, { deltaX: -TRANSLATE_AMOUNT, deltaY: 0 });
+  return translateSelection(args, { deltaX: -TRANSLATE_AMOUNT, deltaY: 0 }, 'left');
 }
 export function translateSelectionRight(args: CommandArgs): [Editor, DocumentModel] {
-  return translateSelection(args, { deltaX: TRANSLATE_AMOUNT, deltaY: 0 });
+  return translateSelection(args, { deltaX: TRANSLATE_AMOUNT, deltaY: 0 }, 'right');
 }
 export function translateFastSelectionUp(args: CommandArgs): [Editor, DocumentModel] {
-  return translateSelection(args, { deltaX: 0, deltaY: -FAST_TRANSLATE_AMOUNT });
+  return translateSelection(args, { deltaX: 0, deltaY: -FAST_TRANSLATE_AMOUNT }, 'up');
 }
 export function translateFastSelectionDown(args: CommandArgs): [Editor, DocumentModel] {
-  return translateSelection(args, { deltaX: 0, deltaY: FAST_TRANSLATE_AMOUNT });
+  return translateSelection(args, { deltaX: 0, deltaY: FAST_TRANSLATE_AMOUNT }, 'down');
 }
 export function translateFastSelectionLeft(args: CommandArgs): [Editor, DocumentModel] {
-  return translateSelection(args, { deltaX: -FAST_TRANSLATE_AMOUNT, deltaY: 0 });
+  return translateSelection(args, { deltaX: -FAST_TRANSLATE_AMOUNT, deltaY: 0 }, 'left');
 }
 export function translateFastSelectionRight(args: CommandArgs): [Editor, DocumentModel] {
-  return translateSelection(args, { deltaX: FAST_TRANSLATE_AMOUNT, deltaY: 0 });
+  return translateSelection(args, { deltaX: FAST_TRANSLATE_AMOUNT, deltaY: 0 }, 'right');
 }
 
 function translateSelection(
   args: CommandArgs,
   { deltaX, deltaY }: { deltaX: number; deltaY: number },
+  transalateDirection: 'up' | 'down' | 'left' | 'right',
 ): [Editor, DocumentModel] {
   const { editor, document } = args;
   const { selectedShapeIds } = editor;
@@ -137,6 +140,8 @@ function translateSelection(
     updatedShapes,
   );
 
+  helperPanViewportForItem(transalateDirection, updatedEditor, updatedShapes);
+  updatedEditor = helperKeepCursorInViewport(transalateDirection, updatedEditor);
   return [updatedEditor, updatedDocument];
 }
 
