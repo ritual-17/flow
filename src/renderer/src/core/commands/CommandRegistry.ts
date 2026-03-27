@@ -30,11 +30,12 @@ import {
   enterVisualBlockMode,
   enterVisualMode,
   moveCursorToMiddle,
-  selectAllShapes,
+  returnToFirstPosition,
   scrollViewportDown,
   scrollViewportLeft,
   scrollViewportRight,
   scrollViewportUp,
+  selectAllShapes,
   selectNextSearchResult,
   selectPreviousSearchResult,
 } from '@renderer/core/commands/EditorCommands';
@@ -138,6 +139,8 @@ function commandFromName(command: string): CommandFunction | null {
       return moveCursorToMiddle;
     case 'moveScreenToCursor':
       return centerViewportOnCursor;
+    case 'goToFirstPosition':
+      return returnToFirstPosition;
     case 'scrollViewportUp':
       return scrollViewportUp;
     case 'scrollViewportDown':
