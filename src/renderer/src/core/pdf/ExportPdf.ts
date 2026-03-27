@@ -88,38 +88,66 @@ export async function exportToPdf(document: DocumentModel): Promise<void> {
 
   const layer = stage.getLayers()[0];
 
-  // Save current state
+  // Save current state including viewport transform
   const origWidth = stage.width();
   const origHeight = stage.height();
-  const origX = layer.x();
-  const origY = layer.y();
+  const origLayerX = layer.x();
+  const origLayerY = layer.y();
+  const origStageX = stage.x();
+  const origStageY = stage.y();
+  const origScaleX = stage.scaleX();
+  const origScaleY = stage.scaleY();
 
-  // Expand stage and shift layer so all content is visible
+  // Reset viewport transform and expand stage to fit all content
+  stage.x(0);
+  stage.y(0);
+  stage.scaleX(1);
+  stage.scaleY(1);
   stage.width(exportWidth);
   stage.height(exportHeight);
   layer.x(-minX + PADDING);
   layer.y(-minY + PADDING);
   stage.batchDraw();
 
-  const dataURL = stage.toDataURL({ pixelRatio: 2 });
+  // Split content into A4-proportioned pages
+  const pageHeight = Math.ceil(exportWidth * (297 / 210));
+  const numPages = Math.ceil(exportHeight / pageHeight);
+
+  const pdf = new jsPDF({
+    orientation: 'portrait',
+    unit: 'px',
+    format: [exportWidth, pageHeight],
+    hotfixes: ['px_scaling'],
+  });
+
+  for (let page = 0; page < numPages; page++) {
+    const sliceY = page * pageHeight;
+    const sliceHeight = Math.min(pageHeight, exportHeight - sliceY);
+
+    const dataURL = stage.toDataURL({
+      x: 0,
+      y: sliceY,
+      width: exportWidth,
+      height: sliceHeight,
+      mimeType: 'image/jpeg',
+      quality: 0.85,
+      pixelRatio: 1,
+    });
+
+    if (page > 0) pdf.addPage([exportWidth, pageHeight], 'portrait');
+    pdf.addImage(dataURL, 'JPEG', 0, 0, exportWidth, sliceHeight);
+  }
 
   // Restore original state
   stage.width(origWidth);
   stage.height(origHeight);
-  layer.x(origX);
-  layer.y(origY);
+  layer.x(origLayerX);
+  layer.y(origLayerY);
+  stage.x(origStageX);
+  stage.y(origStageY);
+  stage.scaleX(origScaleX);
+  stage.scaleY(origScaleY);
   stage.batchDraw();
-
-  // Build PDF sized to the content
-  const orientation = exportWidth >= exportHeight ? 'landscape' : 'portrait';
-  const pdf = new jsPDF({
-    orientation,
-    unit: 'px',
-    format: [exportWidth, exportHeight],
-    hotfixes: ['px_scaling'],
-  });
-
-  pdf.addImage(dataURL, 'PNG', 0, 0, exportWidth, exportHeight);
 
   const pdfBuffer = pdf.output('arraybuffer');
   await window.api.pdf.export(pdfBuffer);
