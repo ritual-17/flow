@@ -503,7 +503,9 @@ export class FlattenSpatialIndex implements SpatialIndex {
     // Lines and points are not included in the ordered cache since they are not selectable by next/previous shape command
     if (isLine(shape) || isPoint(shape)) return;
 
-    this.orderedShapesCache.set(this.getOrderKey(shape), shape.id);
+    if (shape.type !== 'pdf') {
+      this.orderedShapesCache.set(this.getOrderKey(shape), shape.id);
+    }
   }
 
   private removeShapeFromSets(shape: Shape, flat: Flatten.AnyShape): void {
