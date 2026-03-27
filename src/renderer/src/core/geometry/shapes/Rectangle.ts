@@ -14,8 +14,8 @@ export const Rectangle = {
 export function build(attrs: Partial<Rectangle>): Rectangle {
   const rectangle: Rectangle = {
     type: 'rectangle',
-    width: 100,
-    height: 50,
+    width: 200,
+    height: 100,
     ...buildBaseShape(),
     ...attrs,
   };
