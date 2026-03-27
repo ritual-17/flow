@@ -1,6 +1,8 @@
 import Konva from 'konva';
 import { jsPDF } from 'jspdf';
 
+const CANVAS_BACKGROUND = '#1e1f22';
+
 import { DocumentModel } from '@renderer/core/document/Document';
 import { Shape } from '@renderer/core/geometry/Shape';
 import { isAnchorRef } from '@renderer/core/geometry/utils/AnchorPoints';
@@ -109,6 +111,21 @@ export async function exportToPdf(document: DocumentModel): Promise<void> {
   layer.y(-minY + PADDING);
   stage.batchDraw();
 
+  // Add a background layer matching the canvas colour
+  const bgLayer = new Konva.Layer();
+  const bgRect = new Konva.Rect({
+    x: 0,
+    y: 0,
+    width: exportWidth,
+    height: exportHeight,
+    fill: CANVAS_BACKGROUND,
+    listening: false,
+  });
+  bgLayer.add(bgRect);
+  stage.add(bgLayer);
+  bgLayer.moveToBottom();
+  stage.batchDraw();
+
   // Split content into A4-proportioned pages
   const pageHeight = Math.ceil(exportWidth * (297 / 210));
   const numPages = Math.ceil(exportHeight / pageHeight);
@@ -137,6 +154,9 @@ export async function exportToPdf(document: DocumentModel): Promise<void> {
     if (page > 0) pdf.addPage([exportWidth, pageHeight], 'portrait');
     pdf.addImage(dataURL, 'JPEG', 0, 0, exportWidth, sliceHeight);
   }
+
+  // Remove background layer
+  bgLayer.destroy();
 
   // Restore original state
   stage.width(origWidth);
