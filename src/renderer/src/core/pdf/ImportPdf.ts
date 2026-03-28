@@ -50,8 +50,8 @@ export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
     slides.push(
       PDF.build({
         id: generateId(),
-        x: startX,
-        y: currentY,
+        x: startX + slideWidth / 2,
+        y: currentY + slideHeight / 2,
         width: slideWidth,
         height: slideHeight,
         imageDataUrl,
