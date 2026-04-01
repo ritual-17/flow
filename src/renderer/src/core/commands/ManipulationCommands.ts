@@ -7,7 +7,6 @@ import {
   clearSelection,
   Editor,
   helperKeepCursorInViewport,
-  helperPanViewportForItem,
   setClipboard,
   setCurrentLineId,
   setCurrentTextBox,
@@ -140,7 +139,7 @@ function translateSelection(
     updatedShapes,
   );
 
-  helperPanViewportForItem(transalateDirection, updatedEditor, updatedShapes);
+  // helperPanViewportForItem(transalateDirection, updatedEditor, updatedShapes);
   updatedEditor = helperKeepCursorInViewport(transalateDirection, updatedEditor);
   return [updatedEditor, updatedDocument];
 }
