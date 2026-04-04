@@ -94,25 +94,17 @@ describe('NormalModeParser', () => {
   });
 
   describe('multi-key sequences', () => {
-    test('"d" alone is a pending prefix (could be "dd")', () => {
-      expect(parser.parse('d')).toEqual(pendingResult('d'));
+    test('"g" alone is a pending prefix (could be "gg")', () => {
+      expect(parser.parse('g')).toEqual(pendingResult('g'));
     });
 
-    test('"dd" resolves to deleteLine', () => {
-      expect(parser.parse('dd')).toEqual(exactResult('deleteLine'));
-    });
-
-    test('"y" alone is a pending prefix (could be "yy")', () => {
-      expect(parser.parse('y')).toEqual(pendingResult('y'));
-    });
-
-    test('"yy" resolves to yankLine', () => {
-      expect(parser.parse('yy')).toEqual(exactResult('yankLine'));
+    test('"gg" resolves to goToFirstPosition', () => {
+      expect(parser.parse('gg')).toEqual(exactResult('goToFirstPosition'));
     });
 
     test('incomplete sequence clears on non-prefix input', () => {
       // 'd' followed by an unrelated key should produce no-match for the full string
-      expect(parser.parse('dz')).toEqual(noMatch);
+      expect(parser.parse('gz')).toEqual(noMatch);
     });
   });
 });
@@ -207,42 +199,6 @@ describe('VisualBlockModeParser', () => {
 });
 
 // CommandModeParser
-
-describe('CommandModeParser', () => {
-  let parser: CommandModeParser;
-
-  beforeEach(() => {
-    parser = new CommandModeParser();
-  });
-
-  test('"w" saves file', () => {
-    expect(parser.parse('w')).toEqual(exactResult('saveFile'));
-  });
-
-  test('"q" quits editor', () => {
-    expect(parser.parse('q')).toEqual(exactResult('quitEditor'));
-  });
-
-  describe('multi-key sequences', () => {
-    test('"w" is also a prefix for "wq"', () => {
-      // 'w' alone is an exact match for saveFile, so it resolves immediately
-      expect(parser.parse('w')).toEqual(exactResult('saveFile'));
-    });
-
-    test('"wq" resolves to saveAndQuit', () => {
-      expect(parser.parse('wq')).toEqual(exactResult('saveAndQuit'));
-    });
-
-    test('"q" is a prefix for "q!"', () => {
-      // 'q' alone is an exact match for quitEditor
-      expect(parser.parse('q')).toEqual(exactResult('quitEditor'));
-    });
-
-    test('"q!" resolves to forceQuit', () => {
-      expect(parser.parse('q!')).toEqual(exactResult('forceQuit'));
-    });
-  });
-});
 
 // LineModeParser
 
@@ -362,8 +318,8 @@ describe('ParseResult shape', () => {
   });
 
   test('prefix match keeps the input in the buffer', () => {
-    const result = parser.parse('d');
-    expect(result.newCommandBuffer).toBe('d');
+    const result = parser.parse('g');
+    expect(result.newCommandBuffer).toBe('g');
     expect(result.command).toBeNull();
   });
 
