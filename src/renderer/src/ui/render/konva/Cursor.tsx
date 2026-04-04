@@ -72,7 +72,7 @@ function getCursorStyle(mode: string) {
 
     case 'text':
       return {
-        size: 6,
+        size: 0,
         fill: '#2dd4bf',
         stroke: '#000000',
         strokeWidth: 1,

@@ -14,8 +14,8 @@ export const Rectangle = {
 export function build(attrs: Partial<Rectangle>): Rectangle {
   const rectangle: Rectangle = {
     type: 'rectangle',
-    width: 100,
-    height: 50,
+    width: 200,
+    height: 100,
     ...buildBaseShape(),
     ...attrs,
   };
@@ -27,9 +27,9 @@ export function generateAnchorCoordinates(rectangle: Rectangle): Coordinate[] {
   const { x, y, width, height } = rectangle;
 
   return [
-    { x: x + width / 2, y: y }, // top center
-    { x: x + width, y: y + height / 2 }, // middle right
-    { x: x + width / 2, y: y + height }, // bottom center
-    { x: x, y: y + height / 2 }, // middle left
+    { x: x, y: y - height / 2 }, // top center
+    { x: x + width / 2, y: y }, // middle right
+    { x: x, y: y + height / 2 }, // bottom center
+    { x: x - width / 2, y: y }, // middle left
   ];
 }

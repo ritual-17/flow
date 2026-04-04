@@ -199,7 +199,6 @@ function helperPanViewportForItem(
         ? Math.min(...shapes.map((s) => s.y))
         : Math.max(...shapes.map((s) => s.y));
   }
-  console.log(anchorItemX, cursor.x, shapes);
   const { pan } = useStore.getState();
   if (lastMovement === 'up' && anchorItemY < -viewport.y + buffer) {
     pan(0, panAmount);

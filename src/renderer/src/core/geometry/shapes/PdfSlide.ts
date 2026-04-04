@@ -37,9 +37,9 @@ export function generateAnchorCoordinates(pdf: PdfSlide): Coordinate[] {
   const { x, y, width, height } = pdf;
 
   return [
-    { x: x + width / 2, y }, // top
-    { x: x + width, y: y + height / 2 }, // right
-    { x: x + width / 2, y: y + height }, // bottom
-    { x, y: y + height / 2 }, // left
+    { x: x, y: y - height / 2 }, // top
+    { x: x + width / 2, y: y }, // right
+    { x: x, y: y + height / 2 }, // bottom
+    { x: x - width / 2, y: y }, // left
   ];
 }

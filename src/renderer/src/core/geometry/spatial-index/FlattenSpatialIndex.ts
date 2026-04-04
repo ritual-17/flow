@@ -128,7 +128,11 @@ export class FlattenSpatialIndex implements SpatialIndex {
   searchAtPoint(point: Coordinate): Shape[] {
     // First, try exact hit detection
     const hits = this.set.hit(new Flatten.Point(point.x, point.y));
-    const shapes = hits.map((hit) => this.getDomainShape(hit));
+    let shapes = hits.map((hit) => this.getDomainShape(hit));
+    const nonSlides = shapes.filter((shape) => shape.type !== 'pdf');
+    if (nonSlides.length > 0) {
+      shapes = nonSlides;
+    }
 
     // If no shapes found, use tolerance-based search for lines
     // Lines are hard to select with exact hit detection, so we use a small radius
@@ -499,7 +503,9 @@ export class FlattenSpatialIndex implements SpatialIndex {
     // Lines and points are not included in the ordered cache since they are not selectable by next/previous shape command
     if (isLine(shape) || isPoint(shape)) return;
 
-    this.orderedShapesCache.set(this.getOrderKey(shape), shape.id);
+    if (shape.type !== 'pdf') {
+      this.orderedShapesCache.set(this.getOrderKey(shape), shape.id);
+    }
   }
 
   private removeShapeFromSets(shape: Shape, flat: Flatten.AnyShape): void {

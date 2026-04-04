@@ -52,8 +52,9 @@ describe('Shape Components', () => {
       const { getByTestId } = render(<Square shape={shape} stroke='black' />);
 
       const rect = getByTestId('konva-rect');
-      expect(rect).toHaveAttribute('data-x', '10');
-      expect(rect).toHaveAttribute('data-y', '20');
+      // x,y is center; Konva receives top-left = center - width/2, center - height/2
+      expect(rect).toHaveAttribute('data-x', '-40'); // 10 - 100/2
+      expect(rect).toHaveAttribute('data-y', '-30'); // 20 - 100/2
       expect(rect).toHaveAttribute('data-width', '100');
       expect(rect).toHaveAttribute('data-height', '100');
       expect(rect).toHaveAttribute('data-fill', 'blue');
@@ -74,8 +75,9 @@ describe('Shape Components', () => {
       const { getByTestId } = render(<Square shape={shape} stroke='green' />);
 
       const rect = getByTestId('konva-rect');
-      expect(rect).toHaveAttribute('data-x', '5');
-      expect(rect).toHaveAttribute('data-y', '15');
+      // x,y is center; Konva receives top-left = center - width/2, center - height/2
+      expect(rect).toHaveAttribute('data-x', '-20'); // 5 - 50/2
+      expect(rect).toHaveAttribute('data-y', '-10'); // 15 - 50/2
       expect(rect).toHaveAttribute('data-width', '50');
       expect(rect).toHaveAttribute('data-height', '50');
       expect(rect).toHaveAttribute('data-fill', 'red');
@@ -118,10 +120,11 @@ describe('Shape Components', () => {
       const { getByTestId } = render(<Rectangle shape={shape} stroke='orange' />);
 
       const rect = getByTestId('konva-rect');
-      expect(rect).toHaveAttribute('data-x', '25');
-      expect(rect).toHaveAttribute('data-y', '35');
-      expect(rect).toHaveAttribute('data-width', '100');
-      expect(rect).toHaveAttribute('data-height', '50');
+      // x,y is center; Konva receives top-left = center - width/2, center - height/2
+      expect(rect).toHaveAttribute('data-x', '-75'); // 25 - 200/2
+      expect(rect).toHaveAttribute('data-y', '-15'); // 35 - 100/2
+      expect(rect).toHaveAttribute('data-width', '200');
+      expect(rect).toHaveAttribute('data-height', '100');
       expect(rect).toHaveAttribute('data-fill', 'yellow');
       expect(rect).toHaveAttribute('data-stroke', 'orange');
       expect(rect).toHaveAttribute('data-stroke-width', '4');
@@ -140,8 +143,9 @@ describe('Shape Components', () => {
       const { getByTestId } = render(<Rectangle shape={shape} stroke='blue' />);
 
       const rect = getByTestId('konva-rect');
-      expect(rect).toHaveAttribute('data-x', '100');
-      expect(rect).toHaveAttribute('data-y', '200');
+      // x,y is center; Konva receives top-left = center - width/2, center - height/2
+      expect(rect).toHaveAttribute('data-x', '25'); // 100 - 150/2
+      expect(rect).toHaveAttribute('data-y', '162.5'); // 200 - 75/2
       expect(rect).toHaveAttribute('data-width', '150');
       expect(rect).toHaveAttribute('data-height', '75');
       expect(rect).toHaveAttribute('data-fill', 'green');
@@ -162,8 +166,9 @@ describe('Shape Components', () => {
       const { getByTestId } = render(<Rectangle shape={shape} stroke='pink' />);
 
       const rect = getByTestId('konva-rect');
-      expect(rect).toHaveAttribute('data-x', '-10');
-      expect(rect).toHaveAttribute('data-y', '-20');
+      // x,y is center; Konva receives top-left = center - width/2, center - height/2
+      expect(rect).toHaveAttribute('data-x', '-260'); // -10 - 500/2
+      expect(rect).toHaveAttribute('data-y', '-170'); // -20 - 300/2
       expect(rect).toHaveAttribute('data-width', '500');
       expect(rect).toHaveAttribute('data-height', '300');
       expect(rect).toHaveAttribute('data-fill', 'purple');

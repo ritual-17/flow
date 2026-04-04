@@ -55,8 +55,8 @@ const DynamicTextBox: DynamicTextBoxComponent = ({ shape, center }) => {
       <Html>
         <Editor
           setContent={updateCurrentTextBoxContent}
-          x={center?.x || shape.x}
-          y={(center?.y || shape.y) + scaledHeight + 5}
+          x={center?.x ?? x}
+          y={(center?.y ?? y) + scaledHeight + 5}
           initialDoc={shape.label.text}
         />
       </Html>

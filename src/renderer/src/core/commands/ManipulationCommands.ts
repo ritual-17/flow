@@ -7,7 +7,6 @@ import {
   clearSelection,
   Editor,
   helperKeepCursorInViewport,
-  helperPanViewportForItem,
   setClipboard,
   setCurrentLineId,
   setCurrentTextBox,
@@ -46,9 +45,9 @@ export function createCircle(args: CommandArgs): CommandResult {
 
 export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
   let { x, y } = args.editor.cursorPosition;
-  // Clamp position to ensure rectangle doesn't start with negative coordinates
-  x = Math.max(0, x);
-  y = Math.max(0, y);
+  // Clamp so center-based position keeps shape within canvas (default 200x100)
+  x = Math.max(100, x);
+  y = Math.max(50, y);
   const rectangle = Rectangle.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, rectangle);
@@ -58,9 +57,9 @@ export function createRectangle(args: CommandArgs): [Editor, DocumentModel] {
 
 export function createSquare(args: CommandArgs): [Editor, DocumentModel] {
   let { x, y } = args.editor.cursorPosition;
-  // Clamp position to ensure square doesn't start with negative coordinates
-  x = Math.max(0, x);
-  y = Math.max(0, y);
+  // Clamp so center-based position keeps shape within canvas (default 100x100)
+  x = Math.max(50, x);
+  y = Math.max(50, y);
   const square = Square.build({ x, y });
 
   const updatedDocument = addShapeToDocument(args, square);
@@ -140,7 +139,7 @@ function translateSelection(
     updatedShapes,
   );
 
-  helperPanViewportForItem(transalateDirection, updatedEditor, updatedShapes);
+  // helperPanViewportForItem(transalateDirection, updatedEditor, updatedShapes);
   updatedEditor = helperKeepCursorInViewport(transalateDirection, updatedEditor);
   return [updatedEditor, updatedDocument];
 }
@@ -190,7 +189,19 @@ function getShapeMinPoint(shape: Shape, document: DocumentModel): { x: number; y
     return { x: minX, y: minY };
   }
 
-  // For point, rectangle, square, textBox, pdf and others use shape origin.
+  // For rectangle, square, pdf: x,y is center so compute top-left corner
+  if (shape.type === 'rectangle' || shape.type === 'square') {
+    return { x: shape.x - shape.width / 2, y: shape.y - shape.height / 2 };
+  }
+  if (shape.type === 'pdf') {
+    return { x: shape.x - shape.width / 2, y: shape.y - shape.height / 2 };
+  }
+  if (shape.type === 'textBox') {
+    const w = shape.label.compiledImageMeta?.width ?? shape.width;
+    const h = shape.label.compiledImageMeta?.height ?? shape.height;
+    return { x: shape.x - w / 2, y: shape.y - h / 2 };
+  }
+  // For point and others use direct position
   return { x: shape.x, y: shape.y };
 }
 

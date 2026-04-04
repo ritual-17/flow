@@ -10,7 +10,9 @@ export function resolveImagePosition(
   center?: Coordinate,
 ) {
   if (shape.type === 'textBox') {
-    return { x: shape.x, y: shape.y };
+    const dims = imageDimensions ?? shape.label.compiledImageMeta;
+    if (!dims) return { x: shape.x, y: shape.y };
+    return { x: shape.x - dims.width / 2, y: shape.y - dims.height / 2 };
   }
 
   const dimensions = imageDimensions ?? shape.label.compiledImageMeta;
@@ -34,9 +36,9 @@ function getCenterCoordinate(shape: Shape) {
     case 'circle':
       return { x: shape.x, y: shape.y };
     case 'rectangle':
-      return { x: shape.x + shape.width / 2, y: shape.y + shape.height / 2 };
+      return { x: shape.x, y: shape.y };
     case 'square':
-      return { x: shape.x + shape.width / 2, y: shape.y + shape.height / 2 };
+      return { x: shape.x, y: shape.y };
     default:
       return { x: shape.x, y: shape.y };
   }

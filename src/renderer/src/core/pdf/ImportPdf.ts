@@ -21,7 +21,7 @@ export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
 
   // OneNote-style stacking: pages down the canvas
   const startX = viewport.x + 50;
-  let currentY = viewport.y + 50;
+  let currentY = viewport.y + 10;
 
   // Adjust scale here
   const scale = 1.5;
@@ -41,18 +41,24 @@ export async function generatePdfSlides(): Promise<PdfSlide[] | null> {
 
     const imageDataUrl = canvas.toDataURL('image/png');
 
+    // const slideWidth = canvas.width * (2 / 3);
+    // const slideHeight = canvas.height * (2 / 3);
+
+    const slideWidth = canvas.width * 1.2;
+    const slideHeight = canvas.height * 1.2;
+
     slides.push(
       PDF.build({
         id: generateId(),
-        x: startX,
-        y: currentY,
-        width: canvas.width * (1 / 2),
-        height: canvas.height * (1 / 2),
+        x: startX + slideWidth / 2,
+        y: currentY + slideHeight / 2,
+        width: slideWidth,
+        height: slideHeight,
         imageDataUrl,
       }),
     );
 
-    currentY += canvas.height + 20; // spacing
+    currentY += slideHeight + 20;
   }
 
   return slides;

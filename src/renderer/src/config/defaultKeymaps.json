@@ -6,10 +6,10 @@
     "<C-Left>": "fastLeft",
     "<C-Right>": "fastRight",
     "`": "toggleHelp",
-    "<View-Up>": "scrollViewportUp",
-    "<View-Down>": "scrollViewportDown",
-    "<View-Left>": "scrollViewportLeft",
-    "<View-Right>": "scrollViewportRight"
+    "<C-u>": "scrollViewportUp",
+    "<C-d>": "scrollViewportDown",
+    "<C-,>": "scrollViewportLeft",
+    "<C-.>": "scrollViewportRight"
   },
   "help": {
     "j": "down",
@@ -38,13 +38,9 @@
     "ArrowRight": "right",
     "M": "moveCursorToMiddle",
     "zz": "moveScreenToCursor",
-    "x": "deleteChar",
-    "dd": "deleteLine",
-    "yy": "yankLine",
     "p": "pasteAfter",
     "u": "undo",
     "r": "redo",
-    ".": "repeat",
     "n": "selectNextSearchResult",
     "N": "selectPreviousSearchResult",
     "a": "enterLineMode",
@@ -152,12 +148,7 @@
     "gg": "goToFirstPosition"
   },
   "text": {},
-  "command": {
-    "w": "saveFile",
-    "q": "quitEditor",
-    "wq": "saveAndQuit",
-    "q!": "forceQuit"
-  },
+  "command": {},
   "line": {
     "A": "enterAnchorLineMode",
     "t": "enterTextModeFromLineMode",
