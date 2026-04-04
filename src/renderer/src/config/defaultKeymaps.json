@@ -6,10 +6,10 @@
     "<C-Left>": "fastLeft",
     "<C-Right>": "fastRight",
     "`": "toggleHelp",
-    "<View-Up>": "scrollViewportUp",
-    "<View-Down>": "scrollViewportDown",
-    "<View-Left>": "scrollViewportLeft",
-    "<View-Right>": "scrollViewportRight"
+    "<C-u>": "scrollViewportUp",
+    "<C-d>": "scrollViewportDown",
+    "<C-,>": "scrollViewportLeft",
+    "<C-.>": "scrollViewportRight"
   },
   "help": {
     "j": "down",

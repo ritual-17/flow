@@ -153,25 +153,25 @@ export function KeyboardHandler() {
         // Viewport scrolling with Ctrl + (u, d, ,, .)
         if (e.key === 'u') {
           e.preventDefault();
-          updateCommandBuffer('<View-Up>');
+          updateCommandBuffer('<C-u>');
           return;
         }
 
         if (e.key === 'd') {
           e.preventDefault();
-          updateCommandBuffer('<View-Down>');
+          updateCommandBuffer('<C-d>');
           return;
         }
 
         if (e.key === ',') {
           e.preventDefault();
-          updateCommandBuffer('<View-Left>');
+          updateCommandBuffer('<C-,>');
           return;
         }
 
         if (e.key === '.') {
           e.preventDefault();
-          updateCommandBuffer('<View-Right>');
+          updateCommandBuffer('<C-.>');
           return;
         }
       }
