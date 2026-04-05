@@ -305,7 +305,7 @@ It was found to take around 0.1 to 0.2 ms to insert an empty circle and around 3
 
 These numbers did not notably change with 100+ shapes in the document but at 300+ shapes the latency increased by around .2 ms for circles and around 3 ms for text boxes.
 
-\begin{center}
+\begin{table}
 \begin{tabular}{ c c c }
    \# Shapes &Circle & Text Box \\
  0   & 0.1ms & 33.2ms \\
@@ -313,8 +313,8 @@ These numbers did not notably change with 100+ shapes in the document but at 300
  200 & 0.2ms & 32.0ms \\
  300 & 0.3ms & 33.5ms \\
 \end{tabular}
-\captionof{table}{Performance Metrics for Shape Insertion}
-\end{center}
+\caption{Performance Metrics for Shape Insertion}
+\end{table}
 
 \section{Comparison to Existing Implementation}
 \setlength{\parindent}{0pt}
