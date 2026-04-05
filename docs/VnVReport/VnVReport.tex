@@ -381,13 +381,17 @@ diagramming tools.
 \subsection{Mouse-Driven Diagram Editors}
 
 Tools such as Draw.io or OneNote allow diagram creation but rely heavily on mouse-based
-interaction and menu navigation. Creating shapes or connections often requires multiple UI interactions.
+interaction and menu navigation. Creating shapes or connections requires multiple UI interactions.
+To create a simple, 2 shaped flow chart, for example, users must select the shape tool, 
+click to place the shape, select the line tool, click to create a connection, and repeat for 
+the second element.
 
 \vspace{1em}
 
 Flow differs by emphasizing keyboard-driven interaction. The current prototype demonstrates
 Vim-style navigation and keyboard commands that allow users to manipulate shapes, text boxes,
-and diagram elements without relying on extensive mouse interaction.
+and diagram elements without relying on extensive mouse interaction. Creating a 2 piece flow 
+chart can be done with a click of a button.
 
 \subsection{Text-Based Diagram Languages}
 
@@ -403,14 +407,16 @@ the write–compile–preview workflow required by text-based diagram languages.
 \subsection{Document Markup Languages}
 
 Document preparation systems such as \LaTeX{} or Typst support complex document layouts and diagram
-generation. However, these systems rely on writing structured markup code and are typically designed
+generation. However, these systems rely on writing structured markup code and are designed
 for page-based documents rather than an interactive canvas.
 
 \vspace{1em}
 
 Flow instead uses a canvas-based editing environment where diagram elements and text boxes can be
 freely positioned. The prototype supports interactive editing of shapes and text elements, which allows
-users to experiment with diagram layouts more quickly than code-based document systems.
+users to experiment with diagram layouts more quickly than code-based document systems. Flow also
+uses Typst for its text rendering, allowing it to leverage Typst's high-quality typesetting while 
+providing a more interactive editing experience.
 
 \subsection{Summary}
 
