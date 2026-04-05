@@ -302,11 +302,20 @@ further refinement may improve user adoption and long-term usability.
 \end{figure}
 
 \subsection{Performance}
-The performance was determined by using electrons clock to track the time when the program gets the input and the time after then new frame has been drawn.
+The performance was determined by using electrons clock to track the time when 
+the program gets the input and the time after then new frame has been drawn. 
+The insertion time for a circle and a text box were measured in an empty 
+document, and then with 100, 200, and 300 shapes (not including text boxes) in
+the document. These metrics reflect the most common operations that users will 
+be performing, and therefore are the most relevant to the user experience.
+They also align with requirements NF211 and NF218, which specify that the 
+system should provide low-latency input and rendering during editing 
+operations and maintain acceptable performance when handling a large number 
+of shapes or objects. The results are shown in the table below. \\
 
-It was found to take around 0.1 to 0.2 ms to insert an empty circle and around 33 ms to insert a text box into an empty document.
+It was found to take around 0.1 to 0.2 ms to insert an empty circle and around 33 ms to insert a text box into an empty document. \\
 
-These numbers did not notably change with 100+ shapes in the document but at 300+ shapes the latency increased by around .2 ms for circles and around 3 ms for text boxes.
+These numbers did not notably change with 100+ shapes in the document but at 300+ shapes the latency increased by around .2 ms for circles and around 3 ms for text boxes. \\
 
 \begin{table}
 \begin{tabular}{ c c c }
@@ -318,6 +327,14 @@ These numbers did not notably change with 100+ shapes in the document but at 300
 \end{tabular}
 \caption{Performance Metrics for Shape Insertion}
 \end{table}
+
+Overall, the performance evaluation indicates that the system very nearly meets 
+the specified non-functional requirements for low-latency input and rendering. 
+The observed latencies for inserting shapes and text boxes are within 
+acceptable ranges for interactive applications, even as the number of shapes 
+increases. While there is a slight increase in latency at higher shape counts, 
+the performance remains responsive and should not significantly impact the user 
+experience during typical note-taking sessions.
 
 \section{Comparison to Existing Implementation}
 \setlength{\parindent}{0pt}
