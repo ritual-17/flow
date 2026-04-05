@@ -895,13 +895,13 @@ How test will be performed: The tester will open a pre-made note with \textit{SH
 
 Type: Dynamic, Manual.
 
-Initial State: Empty Linux, Windows, Mac computer.
+Initial State: Empty Linux (Ubuntu 22.04), Windows (11), Mac computer (macOS Sonoma).
 
 Input/Condition: Creating and opening note, adding shapes and text.
 
-Output/Result: Shapes or text are shown on screen
+Output/Result: Shapes or text are shown on screen without crashes, missing UI elements, or save/load issues across all three operating systems.
 
-How test will be performed: The tester will open the program on various different operating systems to test if they function on each platform.
+How test will be performed: The tester will create a note, add shapes and text, save, close, and reopen the note on each operating system.
 
 \item{test-NF214}
 
@@ -911,9 +911,9 @@ Initial State: Application launched with an open empty note.
 
 Input/Condition: Adding shapes and text via keyboard short cuts
 
-Output/Result: Shapes or text are shown on screen when short cuts are used.
+Output/Result: Shapes or text are shown on screen when short cuts are used and shortcut produces correct action.
 
-How test will be performed: The tester will open a note and then attempt to add a note and a shape and a text box via the corresponding short cut.
+How test will be performed: The tester will open a note and then attempt to add a note and a shape and a text box via the corresponding short cut. All keyboard shortcuts will be tested once.
 
 \item{test-NF217}
 
@@ -941,13 +941,22 @@ Initial State: Application launched with an open empty note.
 
 Input/Condition: Adding shapes and text via keyboard short cuts
 
-How test will be performed: See (test-F217, F243). We then compare it after opening to the one that was saved to see if there any differences. Additionally, we will attempt to close a note without saving and check it the autosave catches it
+Output/Results: Shapes or text are shown on screen when short cuts are used and shortcut produces correct action.
+
+How test will be performed: See (test-F217, F243). We then compare shape position, size, color, text content, formatting, and overall layout between the saved and reopened note. Additionally, we will attempt to close a note without saving and check it the autosave catches it
 
 \item{test-NF216}
 
-Type: Manual, Static .
+Type: Manual, Static + Dynamic.
 
-How test will be performed: Code review on all parts that may use the network data, making sure each cant run in the background.
+Initial State: Application launched with an open empty note.
+
+Input/Condition: Adding shapes and text via keyboard short cuts
+
+Output/Results: No network traffic is detected during note creation, editing, saving, or closing.
+
+How test will be performed: Code review on all parts that may use the network data, making sure each can't run in the background. This may include modules related to autosave, update checking, or third party libraries. 
+This is preferable to capturing network information during runtime as it is more deterministic and can be done earlier in the development process. However, if there are any doubts about potential network traffic, we can also use a network monitoring tool to verify that no traffic is being sent during typical application usage.
 
 \end{enumerate}
 
