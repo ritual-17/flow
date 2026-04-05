@@ -70,28 +70,49 @@ low.}
 
 \begin{table}[H]
 \centering
-\begin{tabularx}{\textwidth}{l X X}
+\begin{tabularx}{\textwidth}{p{1.3cm} l X X}
 \toprule
-Reviewer & Given Feedback (Summarized) & Change made  \\
+Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
 \midrule
-Peer & "Nonfunctional tests lack measurable criteria" & NF tests list in the 
+228 & Peer & "Nonfunctional tests lack measurable criteria" & NF tests list in the 
 VnV plan were made a bit more specific \\
-TA & list of tables is missing in VnV Plan & list of tables added back to document \\
-TA & NFR testing not specific enough. For example, NF216 is a code review
+231 & Peer & NFR Tests 211 and 218 both measure same performance and latency 
+requirements but only differ in scale & No change made in documentation.
+Difference of scale represents different scenarios, with smaller scale 
+having higher priority as it represents typical usage scenarios \\
+232 &Peer & Usability survey lists questions but doesn't specify concrete success metrics
+& Survey questions have been updated and refined \\
+233 &Peer & Testing tools not specified & No change made in documentation. 
+Jest and Playwright were the mentioned tools in VnV Plan, justification also provided \\
+234 &Peer & Usability survey lacks measurable criteria & survey questions have been 
+updated and refined \\
+\bottomrule
+\end{tabularx}
+\caption{Traceability between feedback and changes for the VnV Plan (Part 1)}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{1.3cm} l X X}
+\toprule
+Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
+\midrule
+529 & TA & list of tables is missing in VnV Plan & list of tables added back to document \\
+529 & TA & NFR testing not specific enough. For example, NF216 is a code review
  on parts that use network data. What kind of code review is expected? & NF tests, 
  including NF216, were made more specific \\
-TA & Redundancy. For example, F213 is a relatively straightforward test to include. 
+529 & TA & Redundancy. For example, F213 is a relatively straightforward test to include. 
 It could feasibly be included into "Area of Testing1". & Added Functional test for
 F213 \\
-TA & Be more specific and intentional about nondynamic testing. Provide 
+529 & TA & Be more specific and intentional about nondynamic testing. Provide 
 justification for inclusion or a brief checklist or plan for nondynamic testing. 
 & Justification for nondynamic testing added to VnV Plan \\
 \bottomrule
 \end{tabularx}
-\caption{Traceability between feedback and changes for the VnV Plan.}
+\caption{Traceability between feedback and changes for the VnV Plan (Part 2)}
 \end{table}
 
-To summarize the table above, the feedback we received on the VnV Plan was primarily 
+To summarize the table(s) above, the feedback we received on the VnV Plan was primarily 
 focused on improving the specificity of our nonfunctional tests, ensuring that we included
 a list of tables in the document, and addressing redundancy in our testing plan. Overall,
 we made changes to our VnV Plan to address each of these points, resulting in a more
