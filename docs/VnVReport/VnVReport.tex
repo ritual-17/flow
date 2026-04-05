@@ -651,10 +651,14 @@ time to create end-to-end tests at this point that may be more brittle than
 unit tests and slow down development speed. Additionally, usage/integration of
 \texttt{Coveralls} was discussed in the plan, but has not been added at this
 point due to time constraints and its relatively low priority. We have been
-able to use Jest to check code coverage.
+able to use Jest to check code coverage.\\
 
 
-Automated tests are run via GitHub Actions and run on every new PR.
+Automated tests and Continuous Integration (CI) pipelines are run via GitHub 
+Actions, and run on every new PR. Whenever a pull request is opened, the CI 
+pipeline automatically installs dependencies, builds the project, and runs all 
+automated unit tests. This helps detect regressions early and ensures that only 
+passing code is merged into the main codebase.
 
 \section{Trace to Requirements}
 
