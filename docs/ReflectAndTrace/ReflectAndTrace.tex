@@ -2,6 +2,7 @@
 
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{float}
 
 \title{Reflection and Traceability Report on \progname}
 
@@ -66,6 +67,35 @@ low.}
 \subsection{Design and Design Documentation}
 
 \subsection{VnV Plan and Report}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{l X X}
+\toprule
+Reviewer & Given Feedback (Summarized) & Change made  \\
+\midrule
+Peer & "Nonfunctional tests lack measurable criteria" & NF tests list in the 
+VnV plan were made a bit more specific \\
+TA & list of tables is missing in VnV Plan & list of tables added back to document \\
+TA & NFR testing not specific enough. For example, NF216 is a code review
+ on parts that use network data. What kind of code review is expected? & NF tests, 
+ including NF216, were made more specific \\
+TA & Redundancy. For example, F213 is a relatively straightforward test to include. 
+It could feasibly be included into "Area of Testing1". & Added Functional test for
+F213 \\
+TA & Be more specific and intentional about nondynamic testing. Provide 
+justification for inclusion or a brief checklist or plan for nondynamic testing. 
+& Justification for nondynamic testing added to VnV Plan \\
+\bottomrule
+\end{tabularx}
+\caption{Traceability between feedback and changes for the VnV Plan.}
+\end{table}
+
+To summarize the table above, the feedback we received on the VnV Plan was primarily 
+focused on improving the specificity of our nonfunctional tests, ensuring that we included
+a list of tables in the document, and addressing redundancy in our testing plan. Overall,
+we made changes to our VnV Plan to address each of these points, resulting in a more
+comprehensive and well-structured testing strategy for our project.
 
 \section{Extras}
 
