@@ -1317,6 +1317,18 @@ Unit test that can be run manually or automatically as part of the CI pipeline.
 
 % \wss{Provide evidence that all of the modules have been considered.}
 
+\subsection{Unit Test Summary}
+
+Unit testing has been used to verify the behavior of individual modules in isolation before integration testing occurs. 
+Automated unit tests are implemented for the Command Parser Module (M6), Geometry State Module (M11), Geometry State 
+Mutator Module (M12), and Undo/Redo Module (M13). These tests validate expected behavior for command parsing, document 
+state changes, object manipulation, and history tracking functionality. Test cases include both the sample cases 
+outlined in the VnV Plan and additional edge cases identified during development.
+
+All implemented unit tests are currently passing and are executed through the project's automated testing framework. 
+Unit test implementations are located within the test/unit directory of the develop branch. The File Interface Module 
+(M3) does not yet have unit tests because its functionality has not yet been implemented
+
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
