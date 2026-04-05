@@ -758,6 +758,23 @@ The expected value is that the object’s final position and dimensions match th
 How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of
 expected versus rendered object placement.
 
+\item{test-F213\\}
+
+Control: Automatic
+
+Initial State: Canvas open with editing mode enabled.
+
+Input: User inserts a text box, enters text, and edits the text content.
+
+Output:
+The text box appears correctly on the canvas, entered text is displayed correctly, and edits are reflected immediately without visual issues or lag.
+
+Test Case Derivation:
+Expected behavior is defined by F213, which requires that users can create text boxes and modify their contents after creation.
+The expected value is that the displayed text exactly matches the user input after each edit operation.
+
+How test will be performed: Automated functional test using simulated keyboard and mouse inputs. The test will insert a text box, enter a predefined string, edit part of the string, and compare the final rendered text against the expected result.
+
 \end{enumerate}
 
 \subsubsection{Area of Testing2 — File Management and Persistence}
