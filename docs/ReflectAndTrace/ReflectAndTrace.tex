@@ -2,6 +2,8 @@
 
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{ltablex}
+\keepXColumns
 
 \title{Reflection and Traceability Report on \progname}
 
@@ -63,10 +65,17 @@ low.}
 
 \subsection{SRS and Hazard Analysis}
 
-\begin{tabularx}{\textwidth}{llX}
+\begin{tabularx}{\textwidth}{>{\hsize=0.4\hsize}X >{\hsize=0.8\hsize}X >{\hsize=1.8\hsize}X}
 \toprule
 \textbf{Source} & \textbf{Feedback Summary} & \textbf{Response / Change Made} \\
 \midrule
+\endfirsthead
+\toprule
+\textbf{Source} & \textbf{Feedback Summary} & \textbf{Response / Change Made} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
 Team 19 (peer review) &
   HA Section 3 excluded cloud storage from the system boundary, but the Roadmap referenced cloud save as a deferred feature, creating an inconsistency. &
   Updated HA Section 3 to state that cloud storage and multi-user access are planned future features outside the current capstone scope. Updated HA Section 7 (Roadmap) to consistently name ACR1 and UR2 as the deferred requirements and to remove the ambiguous ``cloud save is not part of our capstone timeline'' phrasing. \\
@@ -128,9 +137,8 @@ Team 19 (peer review, SRS) &
   NF231 updated to: 60fps for at least 95\% of the time during continuous user interaction (typing, dragging, panning) on a canvas with up to 100 elements. NF242 updated to: a note with up to 1000 words and 10 shapes shall occupy less than 100KB on disk. \\
 \midrule
 Team 2 (peer review, SRS) &
-  In S.5.2 the descriptions for NF211 and NF212 were swapped relative to their S.2.1 definitions: NF211 was labelled ``Low-latency input (≤30ms)'' and NF212 was labelled ``Local data persistence and autosave.'' This introduced a false latency inconsistency (30ms vs 50ms) and misplaced NF212 under save/autosave in S.5.4 and S.5.5. &
+  In S.5.2 the descriptions for NF211 and NF212 were swapped relative to their S.2.1 definitions: NF211 was labelled ``Low-latency input ($\leq$30ms)'' and NF212 was labelled ``Local data persistence and autosave.'' This introduced a false latency inconsistency (30ms vs 50ms) and misplaced NF212 under save/autosave in S.5.4 and S.5.5. &
   Corrected S.5.2 descriptions to match S.2.1: NF211 = usability/clean layout; NF212 = canvas responsiveness $<$50ms. Removed NF212 from the ``Local save/load and autosave'' group in S.5.4. Updated S.5.5 traceability rows for NF211 and NF212 to reflect their correct definitions. The 30ms figure belongs to NF221 (command input) and is a distinct, unrelated requirement. \\
-\bottomrule
 \end{tabularx}
 
 \subsection{Design and Design Documentation}
