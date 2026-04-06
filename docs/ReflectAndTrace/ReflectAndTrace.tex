@@ -75,6 +75,22 @@ Team 19 (peer review) &
   FMEA table contained no security-related failure modes, despite Section~6 including UR1 (restricting malicious file uploads) and ACR1 (unauthorized access). This left a gap between the identified security requirements and the hazard analysis. &
   Added a new FMEA row ``File import / upload'' covering the failure mode of the application accepting a restricted or malicious file type (.exe, .js, .bat, .sh). Includes causes, detection methods, and recommended mitigations (allowlist validation, rejection with error message, test coverage). References (F243); \S6: UR1. ACR1 is already deferred (cloud phase) and addressed by the note added in the earlier fix. \\
 \midrule
+Team 23 (peer review) &
+  Assumption~1 (User Competency, §4) stated users are expected ``not shutting down the application abruptly,'' effectively hand-waving away a predictable user action. Software must be resilient to abrupt termination regardless of user intent. &
+  Removed ``not shutting down abruptly'' from Assumption~1; replaced with an explicit statement that abrupt termination is a predictable action the system must tolerate. Updated the ``Save note'' FMEA mitigation to state autosave and atomic saving are core required features (not optional), and added crash-recovery on next launch and simulated-termination unit tests. \\
+\midrule
+Team 23 (peer review) &
+  Roadmap only stated all requirements would be implemented during the capstone timeline, with no milestones or references to when/where each mitigation would be validated. &
+  Added a paragraph to the Roadmap linking mitigations to project phases: high-risk items (save, load, file import) targeted for Rev~0; medium-risk items (rendering, parsing, keybindings, shape editing) addressed across Rev~0 and verified in VnV; lower-risk items (custom geometry, macros) targeted for Rev~1. All mitigations confirmed through VnV prior to final demo. \\
+\midrule
+Team 23 (peer review) &
+  FMEA table lacked risk ranking (severity, likelihood, detectability), making it impossible to prioritize which hazards must be addressed first. &
+  Added a Risk Level column (High / Medium / Low) to the FMEA table based on combined severity and likelihood. Added a legend above the table defining the rating criteria. Ratings assigned: Save note and Load/Open note --- High; File import/upload --- High; Diagram rendering, Command parsing, Keybinding Commands, Shape interaction, Overall performance --- Medium; Custom Geometry creation and Save custom geometry --- Low. \\
+\midrule
+Team 23 (peer review) &
+  Claimed many FMEA mitigations are reactive rather than preventive. The broad claim is overstated---most rows already contain preventive strategies (atomic saves, schema validation, worker threads, grammar isolation). However, the specific ``Load/Open note'' mitigation ``Save raw text of error log'' was purely reactive detection and not a true mitigation. &
+  Replaced ``Save raw text of error log'' in the ``Load/Open note'' row with: preserve the original file without modification on validation failure; maintain a backup copy of the last known-good save for rollback. The remaining mitigations across other rows were left unchanged as they are already predominantly preventive or corrective. \\
+\midrule
 Team 19 (peer review) &
   Critical Assumption~3 (§4) stated \progname\ runs ``without unexpected interruptions such as forced shutdowns, crashes, or power failures,'' but the FMEA ``Save note'' row explicitly treats power loss mid-save as a real hazard with mitigations. This created a direct contradiction. &
   Updated Assumption~3 to scope OS stability to kernel/driver-level correctness only, and explicitly noted that power failures and forced shutdowns are \emph{not} assumed away---pointing to the FMEA's atomic-save and checksum mitigations as the intended response. \\
