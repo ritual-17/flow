@@ -136,9 +136,11 @@ attributed to the design and implementation of \progname itself.
 visualize text-based diagrams using only keyboard inputs. The boundaries of
 the system include all components directly related to the core functionality of
 the application, including taking user input, rendering diagrams, and file 
-management. The system boundary does not include external dependencies such as 
-the user's operating system, device hardware, or third-party file storage services 
-such as cloud storage providers.
+management. The system boundary does not include external dependencies such as
+the user's operating system or device hardware. Cloud storage and multi-user
+access features are planned for future development but fall outside the current
+capstone scope; they are therefore not part of the system boundary for this
+analysis.
 \\
 \\
 The main components of \progname include:
@@ -370,9 +372,7 @@ against alternative apps in user tests & (NF 211, NF212) \\
 
 \section{Roadmap}
 
-All the safety requirements listed in the FMEA table will be implemented as part of the capstone timeline. Contrarily, in regards to the 
-above section 6. Safety and Security Requirements, all will be implemeneted as part of the capstone timeline with the exception  
-of the Access Requirements as cloud save is not part of our capstone timeline.
+All the safety requirements listed in the FMEA table will be implemented as part of the capstone timeline. Regarding Section 6 (Safety and Security Requirements), all requirements will be implemented within the capstone timeline with the exception of ACR1 and UR2, which relate to multi-user access control and cloud storage. These features are planned for a future development phase beyond the capstone and are therefore outside the current system boundary.
 
 \newpage{}
 
