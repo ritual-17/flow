@@ -72,6 +72,22 @@ Team 19 (peer review) &
   Updated HA Section 3 to state that cloud storage and multi-user access are planned future features outside the current capstone scope. Updated HA Section 7 (Roadmap) to consistently name ACR1 and UR2 as the deferred requirements and to remove the ambiguous ``cloud save is not part of our capstone timeline'' phrasing. \\
 \midrule
 Team 19 (peer review) &
+  FMEA table contained no security-related failure modes, despite Section~6 including UR1 (restricting malicious file uploads) and ACR1 (unauthorized access). This left a gap between the identified security requirements and the hazard analysis. &
+  Added a new FMEA row ``File import / upload'' covering the failure mode of the application accepting a restricted or malicious file type (.exe, .js, .bat, .sh). Includes causes, detection methods, and recommended mitigations (allowlist validation, rejection with error message, test coverage). References (F243); \S6: UR1. ACR1 is already deferred (cloud phase) and addressed by the note added in the earlier fix. \\
+\midrule
+Team 19 (peer review) &
+  Critical Assumption~3 (§4) stated \progname\ runs ``without unexpected interruptions such as forced shutdowns, crashes, or power failures,'' but the FMEA ``Save note'' row explicitly treats power loss mid-save as a real hazard with mitigations. This created a direct contradiction. &
+  Updated Assumption~3 to scope OS stability to kernel/driver-level correctness only, and explicitly noted that power failures and forced shutdowns are \emph{not} assumed away---pointing to the FMEA's atomic-save and checksum mitigations as the intended response. \\
+\midrule
+Team 19 (peer review) &
+  ACR1 in Section 6.1 (``Users will not be able to access documents and notes written by other users'') conflicts with Section 3, which places cloud storage outside the system boundary. ACR1 implies a multi-user/cloud context but appeared as an active requirement with no qualification. &
+  Added a note to ACR1 clarifying it is deferred to the planned cloud save phase and does not apply to the current local-only system. Added a \texttt{\textbackslash label} to the Roadmap section and cross-referenced it from the note. (Related to Issue~1 fix, which updated Sections~3 and~7 but left Section~6.1 unresolved.) \\
+\midrule
+Team 19 (peer review) &
+  F243 (Export/Import to PDF/Markdown) was incorrectly cited in the ``Load/Open note'' and ``Save note'' FMEA rows; those mitigations address data integrity and file system reliability, not export/import compatibility. &
+  Removed F243 from both the ``Load/Open note'' and ``Save note'' Req.\ Refs entries. Remaining references (F241, F244, NF241) correctly cover file operations, version history/rollback, and the data integrity non-functional requirement. \\
+\midrule
+Team 19 (peer review) &
   FMEA table SR column only referenced SRS requirement IDs (F/NF codes); no link to the Section 6 Safety and Security Requirements (ACR1, SR1, IR1, CR1, CR2, etc.), making traceability difficult. &
   Renamed the FMEA column header from ``SR'' to ``Req.\ Refs'' and appended the relevant Section 6 safety/security requirement IDs (prefixed ``\S6:'') to each row. Mapping: Diagram rendering~--- CR1; Command parsing~--- IR1, CR2; Load/Open note~--- SR1, IR1, CR2; Save note~--- SR1, IR1; Keybinding Commands~--- IR1; Shape interaction~--- IR1; Custom Geometry~--- IR1, CR1; Custom commands~--- IR1, CR2; Overall performance~--- CR1. \\
 \bottomrule

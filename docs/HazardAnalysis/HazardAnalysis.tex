@@ -213,9 +213,13 @@ during the development and use of \progname. These assumptions include:
     Users are expected to have sufficient permissions to read/write files in
     the designated storage locations.
     \item \textbf{Operating Environment:} It is assumed that \progname will be
-    run on a supported operating system without unexpected interruptions such
-    as forced shutdowns, crashes, or power failures. The system is expected to
-    have adequate disk space and memory to run the application smoothly.
+    run on a supported operating system that functions correctly at the kernel
+    and hardware abstraction level (i.e., no OS-level bugs or driver failures).
+    The system is expected to have adequate disk space and memory to run the
+    application smoothly. Note that unexpected interruptions such as forced
+    shutdowns or power failures are \emph{not} assumed away; the FMEA
+    explicitly considers these as causes of save failures and prescribes
+    mitigations (atomic saves, checksums) accordingly.
     \item \textbf{Software Dependencies:} It is assumed that any third-party
     libraries or frameworks used by \progname are stable, compatible, and
     function as intended on the target operating systems. 
@@ -280,7 +284,7 @@ wrong rendering & User cannot access previous work, user confusion/frustration,
 loss of user trust & Incompatible or invalid file format, deserialization
 error & Load exceptions, visual regression tests, user reports & File format
 version tag with schema validation during load; Save raw text of error log,
-tests for loading after saving & (F241, F243, F244, NF241); \S6: SR1, IR1, CR2 \\ \midrule
+tests for loading after saving & (F241, F244, NF241); \S6: SR1, IR1, CR2 \\ \midrule
 Save note & File not saved, save interrupted & File missing or corrupted,
 Loss of notes or diagrams, decrease in user productivity, loss of user trust
 in application & Power loss mid-save, app crash during write, full file
@@ -288,7 +292,7 @@ storage & Exceptions logged, file hash value (or checksum) mismatch,
 unexpected file size, user reported missing file & Implement autosaving or
 atomic saving (save to temp file and rename it); Verify with checksumes on
 save and load; Inform user of insufficient disk space before save; Unit
-tests for save routines & (F241, F243, F244, NF241); \S6: SR1, IR1 \\ \midrule
+tests for save routines & (F241, F244, NF241); \S6: SR1, IR1 \\ \midrule
 Keybinding Commands & Key conflicts, lost keystrokes (commands done
 unexpectedly) & Inability to create note, user frustration, potential data
 loss from unintended commands done (e.g. Alt+F4) & Global shortcut
@@ -331,7 +335,21 @@ User performance testing, user feedback, collecting performance metrics &
 Incrementally render (diagram first, then text); If document becomes large,
 only render visible portion; Use worker threads for rendering; Performance
 budgets for each operation (e.g. <100ms for rendering update); Measure
-against alternative apps in user tests & (NF 211, NF212); \S6: CR1 \\
+against alternative apps in user tests & (NF 211, NF212); \S6: CR1 \\ \midrule
+File import / upload & Application accepts a restricted or malicious file type
+(e.g., .exe, .js, .bat, .sh) during an import or open operation &
+Execution of malicious code, system compromise, unintended side-effects,
+loss of user trust and application integrity &
+Missing or incomplete file-type validation; reliance on file extension alone
+without content inspection &
+Automated tests asserting restricted file types are rejected; integration
+tests attempting to import each blocked extension; security review of import
+code path &
+Validate imported files against an explicit allowlist of supported formats
+before processing; reject and display a clear error message for restricted
+types; never execute or shell-invoke imported file content;
+unit and integration tests covering each blocked file type &
+(F243); \S6: UR1 \\
 \bottomrule
 \end{tabularx}
 
@@ -345,6 +363,7 @@ against alternative apps in user tests & (NF 211, NF212); \S6: CR1 \\
 \subsection{Access Requirements}
 \begin{list}{}{\leftmargin=3em}
     \item \textbf{ACR1. Users will not be able to access documents and notes written by other users.}
+    \textit{Note: This requirement is deferred to the planned cloud save phase of development, which falls outside the current capstone scope (see Section~\ref{sec:roadmap}). In the current local-only system, all notes are stored on the user's own device and there is no multi-user access mechanism.}
 \end{list}
 
 \subsection{Storage Requirements}
@@ -370,7 +389,7 @@ against alternative apps in user tests & (NF 211, NF212); \S6: CR1 \\
 \end{list}
 
 
-\section{Roadmap}
+\section{Roadmap}\label{sec:roadmap}
 
 All the safety requirements listed in the FMEA table will be implemented as part of the capstone timeline. Regarding Section 6 (Safety and Security Requirements), all requirements will be implemented within the capstone timeline with the exception of ACR1 and UR2, which relate to multi-user access control and cloud storage. These features are planned for a future development phase beyond the capstone and are therefore outside the current system boundary.
 
