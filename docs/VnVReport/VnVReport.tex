@@ -69,10 +69,15 @@
 \subsection{Functional User Testing}
 User testing was conducted to evaluate whether the implemented editing and
 canvas manipulation functionality satisfies the functional requirements
-specified in the SRS. Participants were asked to perform a series of diagram
+specified in the SRS, including F211, F213, and F214. These tests follow 
+what was outlined in the VnV Plan 
+in section 4.1.1, outlining tests that had to do with note creation, editing
+and canvas operations. Participants were asked to perform a series of diagram
 creation tasks using Flow for the first time. These tasks involved inserting
 shapes, connecting elements with lines, and positioning objects on the
-canvas using the keyboard-driven interaction model.
+canvas using the keyboard-driven interaction model. As file management and
+persistence features were not implemented at the time of testing, the test 
+outlined in VnV Plan 4.1.2 was not conducted. 
 
 \vspace{1em}
 
@@ -208,14 +213,16 @@ improvements.
 \subsection{Usability}
 
 NF217 was the primary requirement evaluated in this section, focusing on 
-visual consistency and an intuitive UI layout. To evaluate this, a usability 
-study was done where participants interacted with Flow while completing 
-diagram creation tasks. After completing the tasks, participants 
-filled out a questionnaire evaluating aspects of the interface such as mode
-clarity, intuitiveness, and perceived ease of learning. Participants also 
-provided background information about their existing note-taking workflows 
-to contextualize their responses. The study involved two participants, 
-both of whom were familiar with digital note-taking tools and regularly 
+visual consistency and an intuitive UI layout. This, along with NF211, NF213, 
+NF214 and NF218, were all evaluated in tests similar to what was outlined in 
+the VnVPlan section 4.2. A usability study was done where participants 
+interacted with Flow while completing diagram creation tasks. After 
+completing the tasks, participants filled out a questionnaire evaluating 
+aspects of the interface such as mode clarity, intuitiveness, accessibility, 
+and perceived ease of learning. Participants also provided background 
+information about their existing note-taking workflows to contextualize 
+their responses. The study involved two participants (a notably small sample 
+size), both of whom were familiar with digital note-taking tools and regularly 
 take notes on tablets or other digital platforms.
 
 \vspace{1em}
@@ -262,7 +269,9 @@ requirement. Participants were able to understand the system's structure
 and reported that the interaction model felt intuitive once commands were 
 learned. However, the results also highlighted areas for improvement, 
 including reducing the perceived learning barrier and expanding 
-functionality. Based on these observations, the requirement for visual 
+functionality. It should be noted that these findings are based on a small 
+sample of two participants and should be validated with a larger, more 
+diverse group in future studies. Based on these observations, the requirement for visual 
 consistency and intuitive UI layout is considered largely satisfied, though 
 further refinement may improve user adoption and long-term usability.
 
@@ -293,13 +302,22 @@ further refinement may improve user adoption and long-term usability.
 \end{figure}
 
 \subsection{Performance}
-The performance was determined by using electrons clock to track the time when the program gets the input and the time after then new frame has been drawn.
+The performance was determined by using electrons clock to track the time when 
+the program gets the input and the time after then new frame has been drawn. 
+The insertion time for a circle and a text box were measured in an empty 
+document, and then with 100, 200, and 300 shapes (not including text boxes) in
+the document. These metrics reflect the most common operations that users will 
+be performing, and therefore are the most relevant to the user experience.
+They also align with requirements NF211 and NF218, which specify that the 
+system should provide low-latency input and rendering during editing 
+operations and maintain acceptable performance when handling a large number 
+of shapes or objects. The results are shown in the table below. \\
 
-It was found to take around 0.1 to 0.2 ms to insert an empty circle and around 33 ms to insert a text box into an empty document.
+It was found to take around 0.1 to 0.2 ms to insert an empty circle and around 33 ms to insert a text box into an empty document. \\
 
-These numbers did not notably change with 100+ shapes in the document but at 300+ shapes the latency increased by around .2 ms for circles and around 3 ms for text boxes.
+These numbers did not notably change with 100+ shapes in the document but at 300+ shapes the latency increased by around .2 ms for circles and around 3 ms for text boxes. \\
 
-\begin{center}
+\begin{table}
 \begin{tabular}{ c c c }
    \# Shapes &Circle & Text Box \\
  0   & 0.1ms & 33.2ms \\
@@ -307,7 +325,16 @@ These numbers did not notably change with 100+ shapes in the document but at 300
  200 & 0.2ms & 32.0ms \\
  300 & 0.3ms & 33.5ms \\
 \end{tabular}
-\end{center}
+\caption{Performance Metrics for Shape Insertion}
+\end{table}
+
+Overall, the performance evaluation indicates that the system very nearly meets 
+the specified non-functional requirements for low-latency input and rendering. 
+The observed latencies for inserting shapes and text boxes are within 
+acceptable ranges for interactive applications, even as the number of shapes 
+increases. While there is a slight increase in latency at higher shape counts, 
+the performance remains responsive and should not significantly impact the user 
+experience during typical note-taking sessions.
 
 \section{Comparison to Existing Implementation}
 \setlength{\parindent}{0pt}
@@ -354,13 +381,17 @@ diagramming tools.
 \subsection{Mouse-Driven Diagram Editors}
 
 Tools such as Draw.io or OneNote allow diagram creation but rely heavily on mouse-based
-interaction and menu navigation. Creating shapes or connections often requires multiple UI interactions.
+interaction and menu navigation. Creating shapes or connections requires multiple UI interactions.
+To create a simple, 2 shaped flow chart, for example, users must select the shape tool, 
+click to place the shape, select the line tool, click to create a connection, and repeat for 
+the second element.
 
 \vspace{1em}
 
 Flow differs by emphasizing keyboard-driven interaction. The current prototype demonstrates
 Vim-style navigation and keyboard commands that allow users to manipulate shapes, text boxes,
-and diagram elements without relying on extensive mouse interaction.
+and diagram elements without relying on extensive mouse interaction. Creating a 2 piece flow 
+chart can be done with a click of a button.
 
 \subsection{Text-Based Diagram Languages}
 
@@ -376,14 +407,16 @@ the write–compile–preview workflow required by text-based diagram languages.
 \subsection{Document Markup Languages}
 
 Document preparation systems such as \LaTeX{} or Typst support complex document layouts and diagram
-generation. However, these systems rely on writing structured markup code and are typically designed
+generation. However, these systems rely on writing structured markup code and are designed
 for page-based documents rather than an interactive canvas.
 
 \vspace{1em}
 
 Flow instead uses a canvas-based editing environment where diagram elements and text boxes can be
 freely positioned. The prototype supports interactive editing of shapes and text elements, which allows
-users to experiment with diagram layouts more quickly than code-based document systems.
+users to experiment with diagram layouts more quickly than code-based document systems. Flow also
+uses Typst for its text rendering, allowing it to leverage Typst's high-quality typesetting while 
+providing a more interactive editing experience.
 
 \subsection{Summary}
 
@@ -405,7 +438,8 @@ over several existing approaches.
 \section{Unit Testing}
 
 \subsection{File Interface Module (M3)}
-\textbf{This functionality is not implemented yet and therefore not tested yet.}
+\textbf{This functionality is not implemented yet and therefore not tested yet. It is prioritized for 
+after the Final Demo as it is not critical for the core functionality of the app.}
 
 \subsection{Command Parser Module (M6)}
 All tests passing. Sample test cases outlined in the VnV plan were implemented,
@@ -437,9 +471,10 @@ Following the Rev 0 demonstration, comprehensive feedback was received
 from both the course professor and teaching assistant. This feedback
 directly influenced the project's direction and implementation
 priorities, resulting in significant improvements to the system's
-design, usability planning, and development approach. Additionally,
-usability tests were conducted with outside users to gather real-world
-insights and further improve the product based on actual user interactions.
+design, usability planning, and development approach. Additionally, the
+usability tests as outlined in the VnV plan were conducted with outside users 
+to gather real-world insights and further improve the product based on actual 
+user interactions.
 
 \subsection{Feedback Summary}
 
@@ -643,10 +678,14 @@ time to create end-to-end tests at this point that may be more brittle than
 unit tests and slow down development speed. Additionally, usage/integration of
 \texttt{Coveralls} was discussed in the plan, but has not been added at this
 point due to time constraints and its relatively low priority. We have been
-able to use Jest to check code coverage.
+able to use Jest to check code coverage.\\
 
 
-Automated tests are run via GitHub Actions and run on every new PR.
+Automated tests and Continuous Integration (CI) pipelines are run via GitHub 
+Actions, and run on every new PR. Whenever a pull request is opened, the CI 
+pipeline automatically installs dependencies, builds the project, and runs all 
+automated unit tests. This helps detect regressions early and ensures that only 
+passing code is merged into the main codebase.
 
 \section{Trace to Requirements}
 
@@ -868,6 +907,12 @@ test-NF216 & The system shall not perform background network communication.
 
 Line coverage: 41.98\% \\
 Branch coverage: 29.54\% \\
+
+Although a coverage of 70\% was desired, the current coverage is around 40\% 
+and 30\%. This is due to the fact that we have not yet implemented tests for 
+all of our modules, and we have not yet implemented tests for all of the features 
+that we have implemented. We plan to increase our test coverage in the future 
+as we continue to develop the project and implement more features.
 
 \bibliographystyle{plainnat}
 \bibliography{../../refs/References}

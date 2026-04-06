@@ -2,6 +2,7 @@
 
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{float}
 
 \title{Reflection and Traceability Report on \progname}
 
@@ -66,6 +67,43 @@ low.}
 \subsection{Design and Design Documentation}
 
 \subsection{VnV Plan and Report}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{1.3cm} l X X}
+\toprule
+Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
+\midrule
+\href{https://github.com/ritual-17/flow/issues/477}{477} & Peer & No discussion of timeline to implement M3 & Added description of timeline 
+for M3 implementation \\
+\href{https://github.com/ritual-17/flow/issues/473}{473} & Peer & Code coverage short of planned target, with no explanation & Added 
+explanation addressing the low code coverage \\
+\href{https://github.com/ritual-17/flow/issues/475}{475} & Peer & Unit test section has no reults summary & No changes made to the 
+documentation. Tests were described in the VnV Plan \\
+\href{https://github.com/ritual-17/flow/issues/476}{476} & Peer & Only two usability test participants, with no justification & This has been
+addressed. A plan and desire for an increase in sample size was mentioned  \\
+\href{https://github.com/ritual-17/flow/issues/474}{474} & Peer & Inconsistent usability conclusions & No changes made to the documentation.
+An explanation to the peer on the consistency of our conclusions was provided \\
+\href{https://github.com/ritual-17/flow/issues/478}{478} & Peer & Flow's comparison to existing implementation lacked support & The validity
+of Flow over other solutions was emphasized with more detailed justifications. \\
+\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Section 3 and 4 does not mention what requirements are involved in the tests 
+& explicitly mentioned which requirements involved in tests  \\
+\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Usability description lacked explanation and/or acknowledgement of small 
+sample size & This has been addressed. A plan and desire for an increase in sample
+size was mentioned  \\
+\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Performance data could be presented better & improved presentation of 
+performance data. Provided further explaination and justification of test. \\
+\bottomrule
+\end{tabularx}
+\caption{Traceability between feedback and changes for the VnV Report.}
+\end{table}
+
+In summary, we received feedback from our peers and TA regarding the VnV Report. 
+The feedback from our peers had to do with the lack of explanation for our code 
+coverage, and the consistency of our conclusions. The feedback from our TA 
+related more to the lack of mention of requirements in our tests, and the 
+explanations of some data items. We have addressed all of this feedback in our 
+VnV Report, and we have provided explanations and justifications where necessary.
 
 \section{Extras}
 
