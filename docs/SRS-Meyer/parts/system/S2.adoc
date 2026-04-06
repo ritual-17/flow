@@ -56,10 +56,10 @@ endif::[]
 
 ===== Non-Functional Requirements
 
-. [[NF231]] **Performance**: Rendering shall maintain a minimum of 60 frames per second for at least 95% of the time during continuous user interaction (e.g., typing, dragging, or panning) on a canvas containing up to 100 elements. (NF231)
+. [[NF231]] **Performance**: Rendering shall maintain a minimum of 60 frames per second for at least 95% of the active usage time under typical workloads. (60fps is targeted because it is the baseline for smooth animation in web and multimedia applications) (NF231)
 . [[NF232]] **Consistency**: Shapes and text shall retain consistent proportions and alignment across devices. (NF232)
-. [[NF233]] **Scalability**: Rendering shall handle up to 500 on-canvas elements without major performance degradation. (NF233)
-. [[NF218]] **Large-document responsiveness**: The application (input handling, command processing, and rendering) shall remain responsive with documents containing more than 500 on-canvas elements. (NF218)
+. [[NF233]] **Scalability**: Rendering shall handle up to 500 on-canvas elements without major performance degradation. (500 elements 
+was chosen due to typical usage scenarios) (NF233)
 
 ---
 
@@ -68,7 +68,8 @@ endif::[]
 ===== Functional Requirements
 
 . [[F241]] **File operations**: The system shall allow users to save, open, rename, and delete notes. (F241)
-. [[F242]] **Autosave**: The system shall autosave changes at regular intervals (≤60 seconds). (F242)
+. [[F242]] **Autosave**: The system shall autosave changes at regular intervals (≤60 seconds as that is 
+the typical interval for most applications) (F242)
 . [[F243]] **Export/Import**: The system shall support exporting notes to standard formats (e.g., PDF, Markdown) and importing from compatible sources. (F243)
 . [[F244]] **Version history**: The system shall maintain previous versions of a note for rollback. (F244)
 . [[F245]] **Folder synchronization**: The system shall maintain logical consistency between folder hierarchies and saved note structures. (F245)
