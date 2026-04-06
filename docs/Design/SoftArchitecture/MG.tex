@@ -361,8 +361,8 @@ to be implemented.
 \subsubsection{Mode Commands Module (\mref{mMC})}
 
 \begin{description}
-\item[Secrets:]Mapping between active mode and available commands.
-\item[Services:]Provides the set of available commands based on the current mode.
+\item[Secrets:]Mapping between active mode and available commands ensuring all commands are in one place.
+\item[Services:]Provides the set of available commands that will be called by  based on the current mode.
 \item[Implemented By:] [\progname{}]
 \item[Type of Module:] [Record]
 \end{description}
@@ -442,28 +442,58 @@ requirements and between the modules and the anticipated changes.
 % like fref
 \begin{table}[H]
 \centering
-\begin{tabular}{p{0.2\textwidth} p{0.6\textwidth}}
+\begin{tabular}{p{0.1\textwidth}p{0.4\textwidth} p{0.4\textwidth}}
 \toprule
-\textbf{Req.} & \textbf{Modules}\\
+\textbf{Req.} &\textbf{Desc.}& \textbf{Modules}\\
 \midrule
-F211 & \mref{mDI}, \mref{mII}, \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mGSM}, \mref{mUPer}\\
-F212 & \mref{mDI}, \mref{mFI}, \mref{mUPer}\\
-F213 & \mref{mDI}, \mref{mII}, \mref{mTB}\\
-F214 & \mref{mDI}, \mref{mII}, \mref{mSI}, \mref{mGS}, \mref{mGSM}\\
-F215 & \mref{mSI}, \mref{mGS}, \mref{mGSM}\\
-F216 & \mref{mDI}, \mref{mMC}, \mref{mGS}\\
-F217 & \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mUPer}\\
-F218 & \mref{mFI}, \mref{mDI}, \mref{mGS}\\
-F219 & \mref{mUR}, \mref{mTB}, \mref{mGS}, \mref{mGSM}\\
-F220 & \mref{mUPer}\\
-NF211 & \mref{mDI}, \mref{mII}, \mref{mSI}, \mref{mTB}, \mref{mGS}, \mref{mGSM}\\
-NF212 & \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mUPer}, \mref{mUR}\\
-NF213 & \mref{mDI}, \mref{mII}, \mref{mFI}\\
-NF214 & \mref{mCP}, \mref{mMC}, \mref{mII}\\
-NF215 & \mref{mFI}, \mref{mUPer}\\
-NF216 & \mref{mFI}, \mref{mUPer}, \mref{mUPref}\\
-NF217 & \mref{mDI}, \mref{mSI}\\
-NF218 & \mref{mDI}, \mref{mGS}, \mref{mGSM}, \mref{mUR}\\
+F211 & Create, open, edit, and
+delete notes &\mref{mDI}, \mref{mII}, \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mGSM}, \mref{mUPer}\\
+F212 & Organize notes into
+folders and subfolders
+& \mref{mDI}, \mref{mFI}, \mref{mUPer}\\
+F213 & Insert text boxes and edit
+content& \mref{mDI}, \mref{mII}, \mref{mTB}\\
+F214 & Insert predefined
+geometric shapes (circle,
+rectangle, etc.)&\mref{mDI}, \mref{mII}, \mref{mSI}, \mref{mGS}, \mref{mGSM}\\
+F215 & Move, resize, and
+position text boxes or
+shapes & \mref{mSI}, \mref{mGS}, \mref{mGSM}\\
+F216 & Pan and zoom canvas &\mref{mDI}, \mref{mMC}, \mref{mGS}\\
+F217 & Save and load notes from
+local storage & \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mUPer}\\
+F218 & Export notes (PDF, PNG,
+Markdown) & \mref{mFI}, \mref{mDI}, \mref{mGS}\\
+F219 & Undo/redo editing
+actions
+ &\mref{mUR}, \mref{mTB}, \mref{mGS}, \mref{mGSM}\\
+F220 & Sync or backup
+to cloud &\mref{mUPer}\\
+NF211 & Low-latency input and
+rendering (less than 30ms
+response) &\mref{mDI}, \mref{mII}, \mref{mSI}, \mref{mTB}, \mref{mGS}, \mref{mGSM}\\
+NF212 & Local data persistence
+and autosave
+ & \mref{mFI}, \mref{mTB}, \mref{mGS}, \mref{mUPer}, \mref{mUR}\\
+NF213 & Cross-platform support
+(Windows/macOS/Linux)
+ & \mref{mDI}, \mref{mII}, \mref{mFI}\\
+NF214 & Accessible keyboard
+shortcuts and
+discoverable command
+palette & \mref{mCP}, \mref{mMC}, \mref{mII}\\
+NF215 & File integrity during
+save/export (atomic
+operations)
+ & \mref{mFI}, \mref{mUPer}\\
+NF216 & Security of local data (no
+background network
+traffic) & \mref{mFI}, \mref{mUPer}, \mref{mUPref}\\
+NF217 & Visual consistency and
+intuitive UI layout & \mref{mDI}, \mref{mSI}\\
+NF218 & Performance at scale
+(500+ elements)
+ & \mref{mDI}, \mref{mGS}, \mref{mGSM}, \mref{mUR}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
