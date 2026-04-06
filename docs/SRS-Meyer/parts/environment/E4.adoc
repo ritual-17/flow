@@ -6,7 +6,7 @@ TIP: _Properties of the environment that may be assumed, with the goal of facili
 endif::[]
 
 
-*	*User is understanding of how to download/install basic windows programs.*:	As we cannot be there to install this program on every computer it will run on, we assume that the user is able to install it by themselves provided they are provided an installer program file. 
+*	*User is able to download and install applications on their operating system.*:	As we cannot be there to install this program on every computer it will run on, we assume that the user is able to install it by themselves on their supported operating system (Windows, macOS, or Linux) provided they are given an installer or package file.
 
 *	*User understands basic computer I/O (Keyboard, mouse, screen).*: To properly intact with the program users would be expected to know how to use their keyboard and mouse to navigate the program. This would include keyboard shortcuts. 
 

@@ -22,6 +22,8 @@ endif::[]
 . [[NF211]] **Usability**: The Editor shall maintain a clean and intuitive layout to minimize user confusion. (NF211)
 . [[NF212]] **Responsiveness**: Canvas interactions (e.g., drag, resize, type) shall respond with less than 50ms latency. (NF212)
 . [[NF213]] **Accessibility**: The interface shall comply with WCAG accessibility standards, including keyboard-only navigation. (NF213)
+. [[NF214]] **Discoverability**: The editor shall provide a discoverable command palette and keyboard shortcut reference accessible from within the editor at any time. (NF214)
+. [[NF217]] **Visual consistency**: The visual appearance of UI elements (shapes, text, canvas layout) shall remain consistent across sessions and screen sizes. (NF217)
 
 ---
 
@@ -54,9 +56,10 @@ endif::[]
 
 ===== Non-Functional Requirements
 
-. [[NF231]] **Performance**: Rendering shall maintain a minimum of 60 frames per second for at least 95% of the active usage time under typical workloads. (NF231)
+. [[NF231]] **Performance**: Rendering shall maintain a minimum of 60 frames per second for at least 95% of the time during continuous user interaction (e.g., typing, dragging, or panning) on a canvas containing up to 100 elements. (NF231)
 . [[NF232]] **Consistency**: Shapes and text shall retain consistent proportions and alignment across devices. (NF232)
 . [[NF233]] **Scalability**: Rendering shall handle up to 500 on-canvas elements without major performance degradation. (NF233)
+. [[NF218]] **Large-document responsiveness**: The application (input handling, command processing, and rendering) shall remain responsive with documents containing more than 500 on-canvas elements. (NF218)
 
 ---
 
@@ -73,8 +76,9 @@ endif::[]
 ===== Non-Functional Requirements
 
 . [[NF241]] **Data integrity**: Files shall be protected from corruption or loss during save operations. (NF241)
-. [[NF242]] **Storage efficiency**: Notes shall use minimal disk space through compression and text-based storage. (NF242)
+. [[NF242]] **Storage efficiency**: A note containing up to 1000 words of text and 10 shapes shall occupy less than 100KB on disk. (NF242)
 . [[NF243]] **Compatibility**: Exported documents shall remain visually consistent across standard PDF viewers. (NF243)
+. [[NF215]] **File integrity**: Save and export operations shall be atomic; a failed or interrupted operation shall not result in a partially written or corrupted file. (NF215)
 
 ---
 
@@ -90,6 +94,7 @@ endif::[]
 
 . [[NF251]] **Security**: Preference data shall be stored locally and securely. (NF251)
 . [[NF252]] **Consistency**: Preferences shall be consistently applied across all sessions. (NF252)
+. [[NF216]] **Privacy**: The application shall not initiate any background network traffic; all user data shall remain on the local device. (NF216)
 
 ---
 

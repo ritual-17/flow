@@ -106,6 +106,30 @@ Team 19 (peer review) &
 Team 19 (peer review) &
   FMEA table SR column only referenced SRS requirement IDs (F/NF codes); no link to the Section 6 Safety and Security Requirements (ACR1, SR1, IR1, CR1, CR2, etc.), making traceability difficult. &
   Renamed the FMEA column header from ``SR'' to ``Req.\ Refs'' and appended the relevant Section 6 safety/security requirement IDs (prefixed ``\S6:'') to each row. Mapping: Diagram rendering~--- CR1; Command parsing~--- IR1, CR2; Load/Open note~--- SR1, IR1, CR2; Save note~--- SR1, IR1; Keybinding Commands~--- IR1; Shape interaction~--- IR1; Custom Geometry~--- IR1, CR1; Custom commands~--- IR1, CR2; Overall performance~--- CR1. \\
+\midrule
+Team 19 (peer review, SRS) &
+  S.7 security requirements were a bare list with no attack scenarios, handling strategies, or boundary conditions, making the coverage difficult to evaluate. &
+  Rewrote S.7 based on actual implementation: added threat model intro; annotated each requirement with Threat and Handling based on verified code behaviour (no outbound network confirmed in main/index.ts; OS dialog extension filter for UR1; console-only stack traces for CR2). Honestly noted current limitations: no magic-byte checking (UR1), atomic writes not yet implemented (IR1), no CI dependency audit (CR1). \\
+\midrule
+Team 19 (peer review, SRS) &
+  S.6 acceptance criteria used vague language (``responds within acceptable delay,'' ``runs smoothly'') with no measurable thresholds, making formal verification impractical. &
+  Rewrote the S.6 acceptance criteria table with concrete, testable thresholds referencing existing NF requirements: 50ms canvas response (NF212), 30ms command execution (NF221), 60fps on 100-element canvas (NF231), 500+ element responsiveness (NF218), $<$100KB storage (NF242), WCAG keyboard navigation (NF213), and atomic save/export (NF215, NF241). Added a Reference column linking each criterion to its NF requirement. \\
+\midrule
+Team 2 (peer review, SRS) &
+  E.4 assumption stated ``User is understanding of how to download/install basic windows programs,'' implying Windows-only support, but G.6 contains no such OS limitation and NF213 explicitly targets Windows, macOS, and Linux. &
+  Reworded the E.4 assumption to ``User is able to download and install applications on their operating system,'' generalising it to all supported OSes (Windows, macOS, Linux). \\
+\midrule
+Team 19 (peer review, SRS) &
+  NF214, NF215, NF216, NF217, NF218 were referenced in S.5.2 and S.5.4 but never defined in any S.2.x section, making it impossible to find their full description. &
+  Added definitions for all five requirements in their most appropriate S.2.x sections: NF214 (discoverability) and NF217 (visual consistency) added to S.2.1; NF215 (atomic file integrity) added to S.2.4; NF216 (no background network traffic) added to S.2.5; NF218 (large-document responsiveness) added to S.2.3. IDs for NF215, NF216, and NF218 do not follow the section-numbering convention (they start with ``21'' or ``21''/``21''); they were kept as-is to avoid cascading changes to the VnV plan which already references them. \\
+\midrule
+Team 19 (peer review, SRS) &
+  NF231 used unmeasurable terms ``active usage time'' and ``typical workloads,'' making the 60fps requirement untestable. NF242 required ``minimal disk space'' with no quantitative threshold. &
+  NF231 updated to: 60fps for at least 95\% of the time during continuous user interaction (typing, dragging, panning) on a canvas with up to 100 elements. NF242 updated to: a note with up to 1000 words and 10 shapes shall occupy less than 100KB on disk. \\
+\midrule
+Team 2 (peer review, SRS) &
+  In S.5.2 the descriptions for NF211 and NF212 were swapped relative to their S.2.1 definitions: NF211 was labelled ``Low-latency input (≤30ms)'' and NF212 was labelled ``Local data persistence and autosave.'' This introduced a false latency inconsistency (30ms vs 50ms) and misplaced NF212 under save/autosave in S.5.4 and S.5.5. &
+  Corrected S.5.2 descriptions to match S.2.1: NF211 = usability/clean layout; NF212 = canvas responsiveness $<$50ms. Removed NF212 from the ``Local save/load and autosave'' group in S.5.4. Updated S.5.5 traceability rows for NF211 and NF212 to reflect their correct definitions. The 30ms figure belongs to NF221 (command input) and is a distinct, unrelated requirement. \\
 \bottomrule
 \end{tabularx}
 

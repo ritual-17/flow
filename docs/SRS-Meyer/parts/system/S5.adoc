@@ -27,8 +27,8 @@ endif::[]
 |===
 | Requirement ID | Description | Priority | Rationale
 
-| NF211 | Low-latency input and rendering (≤30ms response) | **High** | Critical for responsiveness and user satisfaction.  
-| NF212 | Local data persistence and autosave | **High** | Prevents data loss; essential for reliability.  
+| NF211 | Usability: clean and intuitive editor layout to minimize user confusion | **High** | Critical for learnability and user satisfaction.
+| NF212 | Responsiveness: canvas interactions (e.g., drag, resize, type) shall respond with less than 50ms latency | **High** | Essential for a fluid editing experience.  
 | NF213 | Cross-platform support (Windows/macOS/Linux) | **Medium** | Important for accessibility, can be phased after MVP.  
 | NF214 | Accessible keyboard shortcuts and discoverable command palette | **High** | Core to product identity and usability.  
 | NF215 | File integrity during save/export (atomic operations) | **High** | Ensures stability and prevents corruption.  
@@ -55,7 +55,7 @@ endif::[]
 Core functionality necessary and critical for the system to meet its primary goals:
 
 * Text and diagram creation/editing — F211–F215, NF211–NF214
-* Local save/load and autosave — F217, NF212, NF215
+* Local save/load and autosave — F217, NF215
 * Command interface and discoverability - NF217
 
 ===== Medium Priority
@@ -91,8 +91,8 @@ The following table summarizes cross-references between functional (F) and non-f
 | F219 | NF211, NF215 | Undo/redo relies on efficient rendering and reliable state management.
 | F220 | NF216 | Cloud sync depends on secure and private local data handling.
 
-| NF211 | F213–F219 | Input latency affects all core editing functions.
-| NF212 | F217 | Autosave directly supports data persistence.
+| NF211 | F211–F216 | A clean and intuitive layout underpins all editing interactions.
+| NF212 | F213–F216 | Canvas responsiveness (≤50ms) is required for smooth text entry, shape manipulation, and navigation.
 | NF214 | F211, F213 | Keyboard accessibility enhances main editing workflow.
 | NF215 | F217–F219 | File integrity underpins all save/export functions.
 | NF217 | F212, F214, F216 | UI layout consistency supports organizational and diagramming tasks.
