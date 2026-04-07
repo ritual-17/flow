@@ -66,6 +66,61 @@ low.}
 
 \subsection{Design and Design Documentation}
 
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{1.3cm} l X X}
+\toprule
+Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
+\midrule
+\href{https://github.com/ritual-17/flow/issues/282}{282} & Peer &  Missing Module Secrets for Several Modules & Added to the MG to make it clearer why some modules have secrets\\
+
+\href{https://github.com/ritual-17/flow/issues/283}{283} & Peer & Too low level implementation details & Removed mentions to specific technologies over more general ideas
+.\\
+
+\href{https://github.com/ritual-17/flow/issues/284}{284} & Peer & M14 modify() Has No Parameters
+& Reworked the modify function to have an input to be less confusing \\
+
+\href{https://github.com/ritual-17/flow/issues/285}{285} & Peer & Missing Relationship Between Modules and SRS & Added a description of the requirements to better explain how modules satisfy requirements.\\
+
+\href{https://github.com/ritual-17/flow/issues/286}{286} & Peer & Inconsistent Terminology Across Modules & Changed some of the terminology in the MIS to better match the MG. \\
+
+\href{https://github.com/ritual-17/flow/issues/287}{287} & Peer & Overlapping Module Responsibilities & Clarified many of the modules by adding inputs and expanding outputs, making it less confusing what responsibilities each modules has.\\
+
+\bottomrule
+\end{tabularx}
+\caption{Traceability between feedback and changes for the Design Docs (Part 1)}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{1.3cm} l X X}
+\toprule
+Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
+\midrule
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & Some missing information on types of inputs/outputs. Examples:
+In Section 8 for the save function, is success a Boolean or something else? Don't leave it to someone else to assume it's a boolean.
+ & Added data type to outputs. \\
+
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & 
+More complicated data structures such as Sets and Stacks are used but are not described in Section 4
+ & Added sets and Stacks to Section 4 \\
+ 
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & Some functions do not have output and do not modify any observable state, but they seem like they should, such as shape-moving functions.
+ & mentioned if changes could be observable via other modules due to display.
+F213 \\
+
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & Some functions have underspecified inputs, such as Section 17's resize function which only takes a GeometryID but not the resize factor. 
+& Specified all inputs \\
+
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & How are inverses defined with respect to commands in the undo-redo module? 
+& Defined how the inverses of commands would work. \\
+
+\bottomrule
+\end{tabularx}
+\caption{Traceability between feedback and changes for the Design Docs Plan (Part 2)}
+\end{table}
+
+
 \subsection{VnV Plan and Report}
 
 \begin{table}[H]
