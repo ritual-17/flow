@@ -114,9 +114,11 @@ found at \url{https://github.com/ritual-17/flow}.
 
 \noindent
 The specification of \progname\ uses several derived data types, including
-sequences, strings, and tuples. Sequences are ordered lists containing elements
-of the same data type. Strings are sequences of characters. Tuples represent a
-finite collection of values, potentially of different types. Functions are
+sequences, strings, sets, stacks and tuples. Sequences are ordered lists containing elements
+of the same data type. Strings are sequences of characters. 
+Sets represent a finite collection of values, all of the same type with access to all values.
+Stacks represent a finite collection of values, all of the same type with only the most recently added value being accessible.
+Tuples represent a finite collection of values, potentially of different types. Functions are
 described by specifying the data types of their inputs and outputs, and local
 functions are documented using their type signatures followed by their
 behavioural descriptions.
@@ -892,7 +894,7 @@ Theme preferences: user theme prefrences
 
 \noindent {modify}(changes):
 \begin{itemize}
-\item transition: Has the user input their preferences where the moudles saves it to a file.
+\item transition: Takes the changes to the preferences and the module uses and saves it to a file.
 \end{itemize}
 
 \noindent {get\_theme\_prefrences}():
