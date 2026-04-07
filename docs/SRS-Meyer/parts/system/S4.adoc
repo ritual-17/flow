@@ -3,24 +3,24 @@
 
 {project-title} follows a modular, layered architecture that separates user interaction, core logic, and data management to support extensibility, maintainability, and responsive performance. The system consists entirely of software components, and all user operations occur within the text-based diagramming interface.
 
-The architecture can be divided into three main layers:
+The system is divided into separate components responsible for user interaction, document processing, and storage. This separation supports maintainability, extensibility, and future enhancements.
 
-* **Frontend Layer**  
-  This layer manages all user interactions. It includes:
-  - *Editor Interface*: Displays the workspace where users type, draw, and manipulate diagrams.  
-  - *Canvas Manager*: Handles graphical positioning, panning, and zooming of text and shapes.  
-  - *Shortcut Processor*: Captures keyboard input, interprets commands, and routes them to the correct subsystems.
+// * **Frontend Layer**  
+//   This layer manages all user interactions. It includes:
+//   - *Editor Interface*: Displays the workspace where users type, draw, and manipulate diagrams.  
+//   - *Canvas Manager*: Handles graphical positioning, panning, and zooming of text and shapes.  
+//   - *Shortcut Processor*: Captures keyboard input, interprets commands, and routes them to the correct subsystems.
 
-* **Core Processing Layer**  
-  The middle layer contains the system logic that manages document data and rendering. It includes:
-  - *Rendering Engine*: Converts text and geometric descriptions into visible diagrams on the canvas.  
-  - *Data Manager*: Handles creation, update, deletion, and organization of notes, shapes, and folders.  
-  - *Configuration Manager*: Stores user preferences, key bindings, and editor layout settings.
+// * **Core Processing Layer**  
+//   The middle layer contains the system logic that manages document data and rendering. It includes:
+//   - *Rendering Engine*: Converts text and geometric descriptions into visible diagrams on the canvas.  
+//   - *Data Manager*: Handles creation, update, deletion, and organization of notes, shapes, and folders.  
+//   - *Configuration Manager*: Stores user preferences, key bindings, and editor layout settings.
 
-* **Storage and Integration Layer**  
-  This layer manages persistence and external communication:
-  - *Local File System*: Responsible for reading/writing files (e.g., saving and loading notes).  
-  - *Cloud Sync* (future extension): Allows sharing and synchronization of documents across devices.
+// * **Storage and Integration Layer**  
+//   This layer manages persistence and external communication:
+//   - *Local File System*: Responsible for reading/writing files (e.g., saving and loading notes).  
+//   - *Cloud Sync* (future extension): Allows sharing and synchronization of documents across devices.
 
 Together, these components ensure that user inputs are processed efficiently, documents are rendered accurately, and all data is persistently stored.
 
