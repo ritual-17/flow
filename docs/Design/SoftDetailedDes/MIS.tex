@@ -244,13 +244,13 @@ N/A
 
 \noindent {display}(Shapes):
 \begin{itemize}
-
-\item output: Outputs Shapes visually on the screen
+\item input: Shapes Data structure containing all Shapes.
+\item output: Outputs Shapes visually on the screen.
 \end{itemize}
 
 \noindent {resize}(length,width):
 \begin{itemize}
-
+\item item: Length,width numbers representing the resize scale
 \item output: Outputs resized version of the current screen
 \end{itemize}
 
@@ -415,13 +415,16 @@ N/A
 
 \noindent {open}(file\_path):
 \begin{itemize}
+\item input: file\_path The file path
 \item output: The opened file
 \item exception: Invalid File if file is missing or of an incorrect type.
 \end{itemize}
 \noindent {save}(file\_path, opened\_note):
 
 \begin{itemize}
-\item output: If the Module was successful in saving opened\_note to file\_path
+\item input: file\_path The file path
+\item input: opened\_note The currently opened note
+\item output: Boolean showing if the Module was successful in saving opened\_note to file\_path
 \item exception: No Space if there is not enough space to save the file.
 
 \end{itemize}
@@ -494,6 +497,7 @@ N/A
 
 \noindent {parse}(opened\_file):
 \begin{itemize}
+\item input: opened\_note The currently opened note
 \item output: Data structure containing all shapes from the given file.
 \item exception: Invalid File: if the file given is able to be parsed.
 \end{itemize}
@@ -571,6 +575,8 @@ Legal file types
 
 \noindent {convert}(opened\_note, file\_type):
 \begin{itemize}
+\item input: opened\_note The currently opened note
+\item input: file\_type Requested type of file to be converted to 
 \item output: file that is ready to be saved on the computer.
 \item exception: Invalid file\_type if the given file type is not compatable with the ones implemented
 \end{itemize}
@@ -647,6 +653,7 @@ Inputs have been already cleaned by the other modules.
 
 \noindent {parse\_commands}(keyboard\_inputs, mouse\_inputs):
 \begin{itemize}
+\item input: keyboard\_inputs, mouse\_inputs keyboard inputs as shown above, mouse\_inputs as location on the canvas
 \item output: commands, which would be used by the Geometry State Mutator Module \ref{Geometry State Mutator Module}
 \end{itemize}
 
@@ -728,6 +735,7 @@ Mode given will always be a valid mode.
 
 \noindent {get\_commands}(mode):
 \begin{itemize}
+\item input: mode, string containing the mode
 \item output: commands that can be run in the given mode
 \end{itemize}
 %
@@ -806,13 +814,17 @@ N/A
 
 \noindent {create\_shape}(shape\_type, points ):
 \begin{itemize}
+\item input: shape\_type string containing type of shape
+\item input: points set of points used for creating the shape
 \item output: Shape with type shape\_type using points for location and size.
 \item exception: Invalid points if the points are not possible for the type of shape.
 \end{itemize}
 
 \noindent {move\_shape}():
 \begin{itemize}
-\item transition: changes the points of the shape to the new points
+\item input: shape\_type string containing type of shape
+\item input: new_points set of points used for creating the shape
+\item transition: changes the points of the shape to the new points 
 \item exception: Invalid points if the points are not possible for the type of shape.
 \end{itemize}
 
@@ -889,11 +901,13 @@ Theme preferences: user theme prefrences
 
 \noindent {get\_command\_prefrences}(mode):
 \begin{itemize}
+\item input: mode, string containing mode
 \item output: Any user defined preferences for the current mode
 \end{itemize}
 
 \noindent {modify}(changes):
 \begin{itemize}
+\item input: changes, set of changes to the preferences
 \item transition: Takes the changes to the preferences and the module uses and saves it to a file.
 \end{itemize}
 
@@ -985,6 +999,9 @@ TextIDs are unique and immutable.
 
 \noindent {createText}(location, text, formatting):
 \begin{itemize}
+\item input: location, x,y where the text box is created
+\item input: text, text in the textbox
+\item input: formatting, formatting for the text
 \item transition: Text box at location with text and formatting
 \item output: TextID of the created text box
 \item exception: Invalid Location
@@ -992,17 +1009,21 @@ TextIDs are unique and immutable.
 
 \noindent {modifyText}(TextID, text):
 \begin{itemize}
+\item input: TextID of the created text box
+\item input: text, text in the textbox
 \item transition: Text in text box is modified to now contain text with formatting
 \item exception: Text Not Found
 \end{itemize}
 
 \noindent {moveText}(TextID, newLocation):
 \begin{itemize}
+\item input: TextID of the created text box
 \item transition: text box is moved to location.
 \item exception: Text Not Found
 \end{itemize}
 \noindent {deleteText}(TextID):
 \begin{itemize}
+\item input: TextID of the created text box
 \item transition: text box is removed from the text buffer
 \item exception: Text Not Found
 \end{itemize}
@@ -1148,7 +1169,7 @@ N/A
 \hline
 {delete} & GeometryID & - & Not Found \\
 \hline
-{resize} & GeometryID & - & Not Found \\
+{resize} & GeometryID, factor & - & Not Found \\
 \hline
 {move} & GeometryID, location & - & Not Found, Invalid Transform \\
 \hline
@@ -1177,6 +1198,7 @@ Mutations must be recorded by Undo Redo Module.
 
 \noindent {addShape}(shapeSpec):
 \begin{itemize}
+\item input: shapeSpec tuple containing data on the shape to be added
 \item transition: Adds the shape to the canvas
 \item output: GeometryID of the added shape
 \item exception: Invalid Spec if the shapeSpec is invalid
@@ -1184,6 +1206,7 @@ Mutations must be recorded by Undo Redo Module.
 
 \noindent {addLine}(lineSpec):
 \begin{itemize}
+\item input: lineSpec tuple containing data on the line to be added
 \item transition: Adds the line to the canvas
 \item output: GeometryID of the added line
 \item exception: Invalid Spec if the lineSpec is invalid
@@ -1191,18 +1214,23 @@ Mutations must be recorded by Undo Redo Module.
 
 \noindent {delete}(GeometryID):
 \begin{itemize}
+\item input: GeometryID, ID # of the thing to be deleted
 \item transition: Deletes the shape/line/textbox with the given GeometryID
 \item exception: Not Found if the GeometryID does not exist
 \end{itemize}
 
-\noindent {resize}(GeometryID):
+\noindent {resize}(GeometryID,factor):
 \begin{itemize}
+\item input: GeometryID, ID # of the thing to be resized
+\item input: factor, factor for the geometry to be resized by
 \item transition: Resizes the shape/line/textbox with the given GeometryID
 \item exception: Not Found if the GeometryID does not exist
 \end{itemize}
 
 \noindent {move}(GeometryID, location):
 \begin{itemize}
+\item input: GeometryID, ID # of the thing to be resized
+\item input: location, new location of the aforementioned Geometry
 \item transition: Moves the shape/line/textbox with the given GeometryID to location
 \item exception: Not Found if the GeometryID does not exist
 \item exception: Invalid Transform if the location is invalid
@@ -1283,7 +1311,7 @@ Commands fully capture inverse operations.
 
 \noindent {undo}():
 \begin{itemize}
-\item transition: Pops command from undoStack, executes its inverse, and pushes it onto redoStack
+\item transition: Pops command from undoStack, executes it, and pushes it onto redoStack
 \item exception: Cant Undo if undoStack is empty
 \end{itemize}
 
@@ -1295,7 +1323,7 @@ Commands fully capture inverse operations.
 
 \noindent {addCommand}(command):
 \begin{itemize}
-\item transition: Pushes command onto undoStack and clears redoStack
+\item transition: Pushes the inverse of a command onto undoStack and clears redoStack. ex creating a command to move a shape with the old points of the shape. 
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
