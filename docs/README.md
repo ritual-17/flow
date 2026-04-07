@@ -1,50 +1,18 @@
-<Please keep the folder structure as given in the template repo.  We will
-discuss each artifact as we get to it in the course.  In some cases, like for
-the SRS, you should have a file of the same name.  For other cases, like the
-design documentation, you are required to document your design, but it may not
-be via a module guide and module interface specification documents.>
-
-<The files and folders have been set-up with tex files that have external links
-so that cross-referencing is possible between documents.>
-
-<The tex files Common.tex so that they can share definitions.>
-
-<The files use Comments.tex so that the comments package can be used to embed
-comments into the generated pdf.  Comments can be set to false so that they do
-not appear.>
-
-<None of the files are complete templates.  You will need to add extra
-information.  They are just intended to be a starting point.>
-
-<You should select an SRS template.  Three options are available in the repo, or
-you can introduce another template. You should delete any SRS options that you do
-not need. The folder SRS holds a template for Scientific Computing software;
-the folder SRS-Volere holds the Volere template in LaTeX; the folder SRS-Meyer holds
-the template that Dr. Mosser now uses in the third year requirements course.>
-
-<The Makefile assumes the SRS will be in a folder called SRS.  If you use the Makefile
-with a template other than the Scientific Computing template, you will have to delete
-the unnecessary folders and rename your folder to SRS.>
 # Documentation folders
 
 The folders and files for this folder are as follows:
 
-This directory contains:
-- .gitignore
-- Checklists/
-- Comments.tex
-- Common.tex
-- Design/
-- DevelopmentPlan/
-- Extras/
-- HazardAnalysis/
-- Makefile
-- Presentations/
-- ProblemStatementAndGoals/
-- ReflectAndTrace/
-- Reflection.tex
-- SRS-Meyer/
-- SRS_Reflection.tex
-- VnVPlan/
-- VnVReport/
-- projMngmnt/
+- Checklists: Checklists for project deliverables.
+- Design: Design documents for the project, including design decisions and diagrams.
+- Developmen Plan: Development plan for the project, including milestones and timelines.
+- Extras: Extra deliverables for the project, including user testing and a user manual.
+- Hazard Analysis: Hazard analysis for the project, including potential hazards and mitigation strategies.
+- Presentations: Info and files related to presentations for the project, including presentation slides and notes.
+- ProblemStatementAndGoals: Problem statement and goals for the project.
+- ReflectAndTrace: Reflection and traceability for the project.
+- SRS-Meyer: Software Requirements Specification for the project, including functional and non-functional requirements.
+- UserGuide: User guide for Flow.
+- VnVPlan: Verification and Validation plan for the project.
+- VnVReport: Verification and Validation report for the project.
+- projMngmnt: Productivity reports for the project.
+
