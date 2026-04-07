@@ -23,4 +23,37 @@ endif::[]
 *   *V&V*: Verification and validation. Testing that will be done to check if the project fulfills the requiremnts. 
 
 [[SRS]]
-*   *SRS* Software Requirements Specification. Document that contains requirements that will be used for the develoment of the project.
+*   *SRS*: Software Requirements Specification. Document that contains requirements that will be used for the development of the project.
+
+[[API]]
+*   *API*: Application Programming Interface. A defined set of functions or protocols through which software components communicate.
+
+[[CI]]
+*   *CI*: Continuous Integration. A development practice in which code changes are automatically built and tested whenever they are merged into a shared repository.
+
+[[UI]]
+*   *UI*: User Interface. The visual and interactive layer of an application through which users interact with the system. See also UI/UX above.
+
+[[MVP]]
+*   *MVP*: Minimum Viable Product. The earliest release of a product that delivers enough core value to be usable and testable.
+
+[[UAT]]
+*   *UAT*: User Acceptance Testing. A validation phase in which end users confirm that the system meets their requirements before formal release.
+
+[[WCAG]]
+*   *WCAG*: Web Content Accessibility Guidelines. A set of internationally recognised standards published by the W3C for making web and application content accessible to users with disabilities.
+
+[[OS]]
+*   *OS*: Operating System. System software that manages hardware resources and provides common services for application programs (e.g., Windows, macOS, Linux).
+
+[[PDF]]
+*   *PDF*: Portable Document Format. A file format that presents documents in a manner independent of application software, hardware, and operating systems.
+
+[[PNG]]
+*   *PNG*: Portable Network Graphics. A lossless raster image format commonly used for screenshots and exported diagrams.
+
+[[GPU]]
+*   *GPU*: Graphics Processing Unit. A specialised processor designed to accelerate rendering of images and graphical output.
+
+[[RAM]]
+*   *RAM*: Random Access Memory. Volatile hardware memory used by the operating system and applications for temporary data storage during execution.

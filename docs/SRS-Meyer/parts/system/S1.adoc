@@ -7,14 +7,16 @@ endif::[]
 
 The {project-title} system relies on the following software components, each of which has a corresponding section in <<s2>>:
 
-* **Editor** (<<s2,S.2.1>>) – Provides an interactive canvas-based workspace where users can create, edit, and navigate notes. Supports text formatting, folder organization, and insertion and repositioning of geometric shapes.
+* **Editor** (<<s2,S.2.1>>) – Provides an interactive canvas-based workspace where users can create, edit, and navigate notes. Supports text formatting, folder organization, and insertion of geometric shapes.
 
-* **Shortcut Command Processor** (<<s2,S.2.2>>) – Interprets keyboard inputs to trigger editing, navigation, and formatting actions. Supports customizable keybindings, macros, and command conflict detection.
+* **Canvas Manager** (<<s2,S.2.2>>) – Handles spatial organization and user interaction for note elements. Supports panning, positioning, resizing, and movement of text boxes and shapes on the canvas.
 
-* **Rendering Engine** (<<s2,S.2.3>>) – Renders text and geometric shapes in real time, maintaining visual accuracy during edits, movements, and scaling. Ensures smooth visual updates and consistent element alignment.
+* **Shortcut Command Processor** (<<s2,S.2.3>>) – Interprets keyboard inputs to trigger editing, navigation, and formatting actions. Supports customizable keybindings, macros, and command conflict detection.
 
-* **Document Management** (<<s2,S.2.4>>) – Manages creation, retrieval, autosave, export, and deletion of notes. Maintains version history and folder hierarchies while ensuring data integrity.
+* **Rendering Engine** (<<s2,S.2.4>>) – Renders text and geometric shapes in real time, maintaining visual accuracy during edits, movements, and scaling. Ensures smooth visual updates and consistent element alignment.
 
-* **Configuration and Customization** (<<s2,S.2.5>>) – Stores and applies user preferences such as layout, theme, and shortcut mappings. Provides mechanisms to reset or restore default settings.
+* **Document Management** (<<s2,S.2.5>>) – Manages creation, retrieval, autosave, export, and deletion of notes. Maintains version history and folder hierarchies while ensuring data integrity.
 
-* **Collaboration and Export** (<<s2,S.2.6>>) – Handles sharing of notes via file export and supports standard clipboard operations for text and shapes.
+* **Configuration and Customization** (<<s2,S.2.6>>) – Stores and applies user preferences such as layout, theme, and shortcut mappings. Provides mechanisms to reset or restore default settings.
+
+* **Collaboration and Export** (<<s2,S.2.7>>) – Handles sharing of notes via file export and supports standard clipboard operations for text and shapes.
