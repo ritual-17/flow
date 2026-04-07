@@ -113,7 +113,7 @@ the typical interval for most applications) (F242)
 
 ==== (S.2.7) Basis for Design and Requirements Stability
 
-This section makes inputs/outputs explicit and classifies requirements by likelihood of change so an external team could design, build, and test from this document.
+_Note: This section is informational and does not correspond to a system component. It supplements sections S.2.1–S.2.6 by making component inputs/outputs explicit and classifying requirements by likelihood of change, so an external team could design, build, and test from this document._
 
 ===== Inputs and Outputs (Overview)
 

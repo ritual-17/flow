@@ -125,6 +125,14 @@ Team 19 (peer review, SRS) &
   Rewrote the S.6 acceptance criteria table with concrete, testable thresholds referencing existing NF requirements: 50ms canvas response (NF212), 30ms command execution (NF221), 60fps on 100-element canvas (NF231), 500+ element responsiveness (NF218), $<$100KB storage (NF242), WCAG keyboard navigation (NF213), and atomic save/export (NF215, NF241). Added a Reference column linking each criterion to its NF requirement. \\
 \midrule
 Team 2 (peer review, SRS) &
+  S.1 defined components (Frontend User Interface, Canvas Manager, Backend Logic and API Layer) that had no corresponding S.2 sections, while S.2 had sections (Editor, Collaboration and Export) not present in S.1. S.2.7 ``Basis for Design'' was also numbered as a component section despite not being a component. &
+  Updated S.1 to list exactly the six components covered by S.2.1--S.2.6 (Editor, Shortcut Command Processor, Rendering Engine, Document Management, Configuration and Customization, Collaboration and Export), with cross-references to the corresponding S.2 section. Added a note to S.2.7 clarifying it is an informational supplement, not a component section. S.2 section names and requirement IDs were left unchanged to avoid cascading updates to the HA and VnV plan. \\
+\midrule
+Team 23 (peer review, HA) &
+  HA revision history table contained placeholder entries (``Date1,'' ``Name(s),'' ``Description of changes'') with no actual version tracking. &
+  Replaced placeholders with a single final-revision entry dated Apr.\ 6, 2026, listing all team members (Ethan Patterson, Hussain Muhammed, Jeffrey Doan, Kevin Zhu, Chengze Zhao). SRS control table updated similarly with V2 dated Apr.\ 6, 2026. \\
+\midrule
+Team 2 (peer review, SRS) &
   First-person language (``we,'' ``our,'' ``us'') was used throughout the SRS, making it unsuitable for use by an external team. &
   Replaced all first-person language across: intro.adoc, G3.adoc, P2.adoc, P4.adoc, P6.adoc, E3.adoc, E4.adoc. The academic integrity statement (integrity.adoc) was left unchanged as it is a first-person pledge by convention. \\
 \midrule
