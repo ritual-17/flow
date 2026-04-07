@@ -332,6 +332,36 @@ the design evolve from the first version to the final version?}
 client should be part of the explanation.  For example, if you made changes in
 response to usability testing, explain what the testing found and what changes
 it led to.}
+% \plt{Explain how you arrived at your final design and implementation.  How did
+% the design evolve from the first version to the final version?}
+%
+% \plt{Don't just say what you changed, say why you changed it.  The needs of the
+% client should be part of the explanation.  For example, if you made changes in
+% response to usability testing, explain what the testing found and what changes
+% it led to.}
+
+Many things changed in the final design compared to the initial design. One
+original requirement we had was to have no text to visual based rendering
+system. We wanted Flow to be fully canvas-based, meaning that there was no
+underlying text the user would modify to change what is displayed on the screen
+(like UML for example). This requirement held for shapes, but it was clear for
+text-based notes involving complex math notation, existing solutions just made
+more sense. We wanted to balance speed with intuitiveness for the user. This is
+where we introduced Typst integration, which does have a render step, but
+fits well alongside the flow of the rest of the app.
+
+We also made changes based on user testing. Testing made it clear that although
+the system makes sense, it has quite a steep learning curve. To address this,
+we added a help menu that users can access from any mode to display the
+available commands for that mode. We also kept the mode transition keybinds at
+the top as that was a common area of friction during user testing.
+
+Overall, the approach to the development of Flow was very incremental. Through
+test usage in our own lectures this term, we identified areas of improvement
+and implemented solutions for them. This included but was not limited to bug
+fixes, intuitive transitions between modes (e.g. line to anchor line mode),
+shape position on insertions, allowing multiple ways to pan the infinite
+canvas, and various quality of life improvements.
 
 \section{Design Decisions (LO12)}
 
@@ -379,7 +409,6 @@ users currently exist?}
 
 \section{Reflection on Project Management (LO24)}
 
-\plt{This question focuses on processes and tools used for project management.}
 
 \subsection{How Does Your Project Management Compare to Your Development Plan}
 
@@ -391,31 +420,44 @@ technology you planned on using?}
 
 \plt{What went well for your project management in terms of processes and
 technology?}
+For the most part the team stuck to the plan. The milestone structure held up well --- each deliverable (SRS, HA, VnV Plan, Design Doc, Rev 0 demo) landed close to the scheduled date, and the defined roles (team lead, meeting chair, keynoter, liaison, lead reviewer) were respected throughout. GitHub was used for all code changes via pull requests and issue tracking, which matched the planned workflow. Communication happened primarily over Discord with occasional Microsoft Teams calls for longer planning sessions, also consistent with the plan.
+
+The main deviation was in feature scope. The development plan assumed authentication and cloud sync would be tackled in Milestone 6, but those were dropped early once it became clear the core Vim-modal canvas interaction was more complex than estimated. The final product stayed local-only, which is reflected in the SRS but was not the original intent.
+
+\subsection{What Went Well?}
+
+The GitHub workflow was probably the strongest part of the process. Having every change go through a pull request, with at least one review before merge, caught a fair number of bugs and kept the codebase reasonably consistent. The issue tracker also doubled as a log of decisions and feedback responses, which made preparing the traceability document much easier than it would have been otherwise.
+
+Role clarity helped too. Knowing who was the primary contact for TAs, who chaired meetings, and who owned the final review pass meant those things actually happened instead of falling through the cracks in a five-person team.
 
 \subsection{What Went Wrong?}
 
-\plt{What went wrong in terms of processes and technology?}
+Time estimation for the keyboard interaction layer was consistently off. Implementing Vim-style modal editing on a canvas is not the same as implementing it in a text editor, and the team underestimated how much of the codebase that would touch. As a result, document persistence features (save, load, version history) were not implemented by Rev 0 --- they were specced out in the SRS but the system ran entirely in memory for the demo.
+
+Documentation consistency was also a recurring issue. Because multiple people were writing different sections independently, terminology and requirement IDs drifted across documents. This created a non-trivial cleanup effort during the Rev 1 pass, particularly around the SRS and Hazard Analysis.
 
 \subsection{What Would you Do Differently Next Time?}
 
-\plt{What will you do differently for your next project?}
+Start integration earlier. The team worked on components fairly independently and only put them together properly close to demo time. Earlier integration would have surfaced the harder cross-component problems (e.g., how the shortcut processor interacts with the canvas model) before they became blocking issues.
+
+On the documentation side, a shared glossary and requirement ID convention agreed on at the start would have saved time. A lot of the Rev 1 SRS work was fixing inconsistencies that would not have existed if there had been a brief alignment session before writing began.
 
 \section{Ethics and Equity (LO18)}
 
-\plt{Describe how your team applied the principle of equity and universal design
-to ensure equitable treatment of all stakeholders.}
+ % \plt{Describe how your team applied the principle of equity and universal         design
+ % to ensure equitable treatment of all stakeholders.}
+
+Our team applied the principle of equity and universal design in many ways throughout the project. Our project originally stared as an way to ensure that people who don't have a touch screen can still take notes in class, even if there is not enough space for a full keyboard and mouse. To this end our project focuses much more on keyboard inputs as there are other options for touch-screen and mouse. Our group also did usability testing to ensure that we have good universal design. This is so the main stakeholder group(people who want to take notes in class with keyboard) are able to use Flow  regardless of needs/experience. This led to us adding things like the status bar to show users their current mode & position and the command menu to list commands so the user can always know what they need to press. We also considered some other ways of making Flow more accessible such as supporting voice commands and allowing custom keybinds/themes. As we wanted to get the main functionality of the program first, these are currently extras. But we  considered them along with other accessibly options that would help everyone like the command menu. 
 
 \section{Reflection on Capstone}
 
-\plt{This question focuses on what you learned during the course of the capstone project.}
 
 \subsection{Which Courses Were Relevant}
 
-\plt{Which of the courses you have taken were relevant for the capstone project?}
+SFWRENG 3RA3 (Software Requirements and Security Considerations) was the most directly applicable --- the SRS process, hazard analysis, security requirements, and traceability all came directly from that course. SFWRENG 3A04 (Software Design III: Large System Design) was relevant for thinking about component architecture, architectural styles, and interface design between subsystems. On the systems side, SFWRENG 3SH3 (Operating Systems) gave useful background for understanding file I/O, process lifecycle, and the implications of Electron running a Node.js main process alongside a renderer process. SFWRENG 4HC3 (Human-Computer Interfaces) informed decisions around keyboard-first interaction design and usability evaluation.
 
 \subsection{Knowledge/Skills Outside of Courses}
 
-\plt{What skills/knowledge did you need to acquire for your capstone project
-that was outside of the courses you took?}
+Electron and its main/renderer process architecture was not covered in any course and required learning from scratch. The team also had to get familiar with TypeScript at a practical level beyond what was taught, particularly around type-safe event handling between processes. The biggest skill gap was Vim's modal editing model --- understanding how to implement mode transitions, command composition, and a proper operator-motion grammar took significant self-directed learning before any code could be written for it.
 
 \end{document}
