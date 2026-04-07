@@ -1,3 +1,7 @@
-# Module Guide
+# SoftArchitecture
 
-The folders and files for the module guide.
+This directory contains:
+- MG.log
+- MG.pdf
+- MG.tex
+- Makefile

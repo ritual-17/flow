@@ -15,10 +15,10 @@ endif::[]
 | F213 | Insert text boxes and edit content | **High** | Enables primary user interaction for note-taking.  
 | F214 | Insert predefined geometric shapes (circle, rectangle, etc.) | **High** | Core to diagramming capability and differentiates the app from plain text editors.  
 | F215 | Move, resize, and position text boxes or shapes | **High** | Essential for flexible diagram creation.  
-| F216 | Pan and zoom canvas | **Medium** | Important for large diagrams but not critical to minimal function.  
+| F216 | Pan and zoom canvas | **High** | G.4 explicitly names panning as a core feature; for a keyboard-driven infinite canvas, navigation is essential to basic use.
 | F217 | Save and load notes from local storage | **High** | Data persistence and continuity.  
 | F243 | Export notes (PDF, PNG, Markdown) | **Medium** | Important for sharing, but not needed for MVP.  
-| F219 | Undo/redo editing actions | **Medium** | Improves usability; can be implemented incrementally.  
+| F219 | Undo/redo editing actions | **High** | In a modal keyboard-driven editor where actions are rapid and irreversible, undo/redo is critical for preventing data loss and user frustration.
 | F220 | Optional: sync or backup to cloud | **Low** | Value-add feature, non-critical for core offline operation.  
 |===
 
@@ -27,8 +27,8 @@ endif::[]
 |===
 | Requirement ID | Description | Priority | Rationale
 
-| NF211 | Low-latency input and rendering (≤30ms response) | **High** | Critical for responsiveness and user satisfaction.  
-| NF212 | Local data persistence and autosave | **High** | Prevents data loss; essential for reliability.  
+| NF211 | Usability: clean and intuitive editor layout to minimize user confusion | **High** | Critical for learnability and user satisfaction.
+| NF212 | Responsiveness: canvas interactions (e.g., drag, resize, type) shall respond with less than 50ms latency | **High** | Essential for a fluid editing experience.  
 | NF213 | Cross-platform support (Windows/macOS/Linux) | **Medium** | Important for accessibility, can be phased after MVP.  
 | NF214 | Accessible keyboard shortcuts and discoverable command palette | **High** | Core to product identity and usability.  
 | NF215 | File integrity during save/export (atomic operations) | **High** | Ensures stability and prevents corruption.  
@@ -54,14 +54,14 @@ endif::[]
 ===== High Priority
 Core functionality necessary and critical for the system to meet its primary goals:
 
-* Text and diagram creation/editing — F211–F215, NF211–NF214
-* Local save/load and autosave — F217, NF212, NF215
-* Command interface and discoverability - NF217
+* Text and diagram creation/editing — F211–F216, NF211–NF214
+* Local save/load, autosave, and undo/redo — F217, F219, NF215
+* Command interface and discoverability — NF217
 
 ===== Medium Priority
 Enhancements that improve usability and reach:
 
-* Canvas navigation and export features — F216, F243
+* Export features — F243
 * Cross-platform compatibility — NF213
 
 ===== Low Priority
@@ -91,8 +91,8 @@ The following table summarizes cross-references between functional (F) and non-f
 | F219 | NF211, NF215 | Undo/redo relies on efficient rendering and reliable state management.
 | F220 | NF216 | Cloud sync depends on secure and private local data handling.
 
-| NF211 | F213–F219 | Input latency affects all core editing functions.
-| NF212 | F217 | Autosave directly supports data persistence.
+| NF211 | F211–F216 | A clean and intuitive layout underpins all editing interactions.
+| NF212 | F213–F216 | Canvas responsiveness (≤50ms) is required for smooth text entry, shape manipulation, and navigation.
 | NF214 | F211, F213 | Keyboard accessibility enhances main editing workflow.
 | NF215 | F217–F219 | File integrity underpins all save/export functions.
 | NF217 | F212, F214, F216 | UI layout consistency supports organizational and diagramming tasks.

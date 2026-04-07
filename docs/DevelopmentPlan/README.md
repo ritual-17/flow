@@ -1,5 +1,10 @@
-# Development Plan
+# DevelopmentPlan
 
-The folders and files for this folder are as follows:
-
-Describe ...
+This directory contains:
+- DevelopmentPlan.aux
+- DevelopmentPlan.log
+- DevelopmentPlan.out
+- DevelopmentPlan.pdf
+- DevelopmentPlan.tex
+- Makefile
+- texput.log

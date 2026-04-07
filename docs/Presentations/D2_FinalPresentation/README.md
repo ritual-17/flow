@@ -1,7 +1,5 @@
-# Final Presentation
+# D2_FinalPresentation
 
-The folders and files for this folder are as follows:
+This directory contains:
 
-Describe ...
-
-This folder will typically contain a slideshow.  The file format for the slideshow is not prescribed.
+- The final presentation slideshow

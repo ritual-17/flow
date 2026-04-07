@@ -1,24 +1,73 @@
 [#s7,reftext=S.7]
 === (S.7) Security and Safety Requirements
 
+{project-title} is a local-only desktop application with no server-side component.
+Its primary attack surface consists of imported files (malicious content or
+restricted file types), unintended data modification, and vulnerabilities
+introduced through third-party dependencies.
+The requirements below address these threats; each entry describes the attack
+scenario targeted, the current handling strategy, and any known limitations or
+planned improvements.
+
 ==== 7.1 Access Requirements
 
-*ACR1.* *Users will not be able to access documents and notes written by other users.*
+*ACR1.* *Users will not be able to access documents and notes written by other users.* +
+_Threat:_ Unauthorized cross-user data access. +
+_Handling:_ In the current local-only system, notes are stored in the user's OS
+home directory and access is governed by OS filesystem permissions.
+No application-level access control is required at this stage.
+Full multi-user isolation is deferred to the planned cloud-save phase (see HA §7).
 
 ==== 7.2 Storage Requirements
 
-*SR1.* *Users’ notes will be stored locally on their devices.*
+*SR1.* *Users' notes will be stored locally on their devices.* +
+_Threat:_ Unintended remote transmission of user data. +
+_Handling:_ The application makes no outbound network connections.
+External URL navigation is explicitly blocked at the Electron level.
+All IPC communication is local-only between the renderer and main process.
 
 ==== 7.3 Upload Requirements
 
-*UR1.* *Users will not be able to upload specific file types (i.e., .exe, .js, .bat, .sh) to prevent malicious file uploads.*  
-*UR2.* *Uploads will be stored in a secure directory that is not publicly accessible.*
+*UR1.* *Users will not be able to upload specific file types (i.e., .exe, .js,
+.bat, .sh) to prevent malicious file uploads.* +
+_Threat:_ Code execution through import of executable or script files. +
+_Handling:_ File import is gated through the OS file picker dialog, which is
+configured with an explicit extension filter (currently PDF only).
+Files outside the permitted extensions are not selectable.
+Path traversal is mitigated by the OS dialog: file paths originate from the
+dialog and are not accepted as raw user-typed strings. +
+_Limitation:_ Magic-byte (MIME signature) verification is not currently
+implemented; the extension filter is the primary control.
+
+*UR2.* *Uploads will be stored in a secure directory that is not publicly accessible.* +
+_Note:_ Deferred to the planned cloud-save phase; not applicable in the current
+local-only system (see HA §7).
 
 ==== 7.4 Integrity Requirements
 
-*IR1.* *The application will not modify any user-written data unnecessarily.*
+*IR1.* *The application will not modify any user-written data unnecessarily.* +
+_Threat:_ Silent data corruption or unintended overwrite of note content by the
+application. +
+_Handling:_ The application does not open files in write mode during read
+operations.
+File export currently uses direct synchronous writes (`writeFileSync`).
+Atomic writes (write to a temporary file then rename) are planned as part of
+the document persistence implementation to prevent partial writes from corrupting
+files on crash or interruption.
 
 ==== 7.5 Code Requirements
 
-*CR1.* *Code dependencies will be kept up to date.*  
-*CR2.* *Debug logs and stack traces will not be exposed and will produce generic error messages instead.*
+*CR1.* *Code dependencies will be kept up to date.* +
+_Threat:_ Known CVEs in outdated third-party libraries. +
+_Handling:_ The lockfile (`pnpm-lock.yaml`) pins all dependency versions.
+Automated vulnerability scanning (`npm audit` or equivalent) in the CI pipeline
+is a planned addition; currently dependency updates are managed manually.
+
+*CR2.* *Debug logs and stack traces will not be exposed and will produce generic
+error messages instead.* +
+_Threat:_ Information disclosure through error messages revealing internal paths
+or application logic. +
+_Handling:_ Stack traces and detailed error information are written to the
+developer console only and are not surfaced in the user interface.
+User-facing error messages are generic (e.g., ``Failed to compile text box
+content'').

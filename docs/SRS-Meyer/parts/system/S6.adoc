@@ -15,12 +15,15 @@ Verification ensures that {project-title} meets the requirements defined in <<s2
 ==== Acceptance Criteria
 
 |===
-| Category | Criteria
+| Category | Criteria | Reference
 
-| Functional Requirements | All listed functionalities in <<s2>> perform correctly without errors or data loss.  
-| Non-Functional Requirements | Application runs smoothly, responds within acceptable delay, and maintains usability.  
-| Interfaces | User interface is consistent with design and intuitive to operate.  
-| Reliability | The system preserves data correctly between sessions.  
+| Functional Requirements | All functionalities listed in <<s2>> execute correctly without errors or data loss under normal use. |
+| Responsiveness | Canvas interactions (drag, resize, type) respond within 50ms; keyboard commands execute within 30ms of keypress. | <<NF212>>, <<NF221>>
+| Rendering performance | The application maintains at least 60 fps for 95% of the time during continuous interaction on a canvas with up to 100 elements. | <<NF231>>
+| Scalability | The application remains responsive with documents containing more than 500 on-canvas elements. | <<NF218>>
+| Storage efficiency | A note with up to 1000 words and 10 shapes occupies less than 100KB on disk. | <<NF242>>
+| Interfaces | The user interface is consistent with the design specification and supports keyboard-only navigation meeting WCAG standards. | <<NF213>>, <<NF217>>
+| Reliability | Save and export operations are atomic; no data loss or file corruption occurs across sessions. | <<NF215>>, <<NF241>>
 |===
 
-The project will be considered accepted when all core functions operate without critical issues, usability testing is satisfactory, and the implemented features align with user expectations and requirements.
+The project will be considered accepted when all core functions operate without critical issues, all quantitative thresholds above are met, and usability testing confirms the system aligns with user expectations.

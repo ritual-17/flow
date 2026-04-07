@@ -6,7 +6,7 @@
 | _Deadline_ | _Delivered_ | Developers | Change
 
 | **V1** | Oct 10, 2025 | Oct 10, 2025 | Hussain, Oliver, Jeff, Kevin, Ethan | Initial release
-| **V2** | | | |
+| **V2** | Apr 6, 2026 | Apr 6, 2026 | Hussain, Oliver, Jeff, Kevin, Ethan, Chengze | Final revision
 | **V3** | | | |
 |===
 

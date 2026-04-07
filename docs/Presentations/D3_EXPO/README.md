@@ -1,5 +1,4 @@
-# EXPO Poster
+# D3_EXPO
 
-The folders and files for this folder are as follows:
-
-expo.pdf - the poster as printed for the expo event
+This directory contains:
+- expo.pdf

@@ -1,0 +1,86 @@
+  body {
+    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 0;
+  }
+  .page {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 2.5cm 3cm;
+  }
+  h1 {
+    font-size: 20pt;
+    color: #1F3864;
+    margin: 28pt 0 6pt 0;
+    padding-bottom: 4pt;
+    border-bottom: 2px solid #1F3864;
+  }
+  h2 {
+    font-size: 13pt;
+    color: #2E4E8F;
+    margin: 18pt 0 4pt 0;
+  }
+  h3 {
+    font-size: 11pt;
+    color: #2E4E8F;
+    margin: 12pt 0 2pt 0;
+    font-style: italic;
+  }
+  p  { margin: 5pt 0 8pt 0; }
+  ul, ol { margin: 4pt 0 10pt 0; padding-left: 22pt; }
+  li { margin: 3pt 0; }
+  kbd {
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 9.5pt;
+    background: #f0f0f0;
+    border: 1px solid #bbb;
+    border-radius: 3px;
+    padding: 1pt 4pt;
+    white-space: nowrap;
+  }
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 8pt 0 14pt 0;
+    font-size: 10pt;
+  }
+  th {
+    background: #1F3864;
+    color: #fff;
+    text-align: left;
+    padding: 5pt 8pt;
+    font-weight: bold;
+  }
+  td {
+    border: 1px solid #C5CFE0;
+    padding: 4pt 8pt;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #EEF2F8; }
+  .callout {
+    border-left: 4px solid;
+    padding: 7pt 12pt;
+    margin: 10pt 0;
+    font-size: 10pt;
+  }
+  .callout strong { display: block; margin-bottom: 2pt; }
+  .note      { border-color: #2E4E8F; background: #EEF2F8; }
+  .tip       { border-color: #2E75B6; background: #E8F4FD; }
+  .important { border-color: #7030A0; background: #F3EBF9; }
+  .warning   { border-color: #C55A11; background: #FDF2E9; }
+  .title-page {
+    text-align: center;
+    padding: 80pt 0 60pt 0;
+    page-break-after: always;
+  }
+  .title-page h1 { font-size: 36pt; border: none; letter-spacing: 3pt; margin-bottom: 8pt; }
+  .title-page .sub  { font-size: 14pt; color: #555; margin-bottom: 4pt; }
+  .title-page .ver  { font-size: 10pt; color: #888; }
+  .toc { page-break-after: always; }
+  .toc ol { list-style: none; padding: 0; }
+  .toc li { padding: 3pt 0; border-bottom: 1px dotted #ccc; }
+  .toc a  { color: #1F3864; text-decoration: none; font-size: 11pt; }
+  .page-break { page-break-after: always; height: 0; }

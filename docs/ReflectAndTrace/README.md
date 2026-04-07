@@ -1,5 +1,6 @@
-# Development Plan
+# ReflectAndTrace
 
-The folders and files for this folder are as follows:
-
-Describe ...
+This directory contains:
+- Makefile
+- ReflectAndTrace.pdf
+- ReflectAndTrace.tex
