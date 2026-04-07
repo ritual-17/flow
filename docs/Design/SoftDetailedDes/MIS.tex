@@ -54,7 +54,7 @@ urlcolor=cyan          % color of external links
 \midrule
 10/11/25 & Rev -1 & \\
 21/01/26 & Rev 0 & \\
-06/04/26 & Final & \\
+06/04/26 & Final & Feedback\\
 \bottomrule
 \end{tabularx}
 
@@ -245,13 +245,13 @@ N/A
 \noindent {display}(Shapes):
 \begin{itemize}
 \item input: Shapes Data structure containing all Shapes.
-\item output: Outputs Shapes visually on the screen.
+\item output: Renders graphics visually on the screen with API
 \end{itemize}
 
 \noindent {resize}(length,width):
 \begin{itemize}
 \item item: Length,width numbers representing the resize scale
-\item output: Outputs resized version of the current screen
+\item output: Outputs resized rendered graphics visually on the screen with API
 \end{itemize}
 
 \noindent {status}():
@@ -286,7 +286,7 @@ N/A
 
 \subsection{Module}
 
-Input Module. Deals with User inputs and passes them on to the \ref{Mode Commands Module} {Mode Commands Module}
+Input Module. Deals with User input events and passes them on to the \ref{Mode Commands Module} {Mode Commands Module}
 
 \subsection{Uses}
 \ref{Mode Commands Module} {Mode Commands Module}
@@ -415,14 +415,14 @@ N/A
 
 \noindent {open}(file\_path):
 \begin{itemize}
-\item input: file\_path The file path
+\item input: file\_path The file path to the file to be read
 \item output: The raw opened file
 \item exception: Invalid File if file is missing or of an incorrect type.
 \end{itemize}
 \noindent {save}(file\_path, opened\_note):
 
 \begin{itemize}
-\item input: file\_path The file path
+\item input: file\_path The file path to be written to 
 \item input: opened\_note The currently opened note
 \item output: Boolean showing if the Module was successful in saving opened\_note to file\_path
 \item exception: No Space if there is not enough space to save the file.
@@ -608,7 +608,7 @@ convert\_*(opened\_note) functions that do the converting once the file type has
 \subsection{Module}
 
 %\wss{Short name for the module}
-Command Parser, converts keyboard inputs into commands and passes them onto the shape mutator.
+Command Parser, mapping between keyboard inputs into commands and passes them onto the shape mutator.
 
 \subsection{Uses}
 \ref{Geometry State Mutator Module} {Geometry State Mutator Module}
@@ -654,7 +654,7 @@ Inputs have been already cleaned by the other modules.
 \noindent {parse\_commands}(keyboard\_inputs, mouse\_inputs):
 \begin{itemize}
 \item input: keyboard\_inputs, mouse\_inputs keyboard inputs as shown above, mouse\_inputs as location on the canvas
-\item output: parded_input, tuple of command which would be used by the Geometry State Mutator Module \ref{Geometry State Mutator Module}
+\item output: parsed_input, tuple of command which would be used by the Geometry State Mutator Module \ref{Geometry State Mutator Module}
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -762,7 +762,7 @@ N/A
 %\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
 
 \subsection{Module}
-Module that contains information about shapes.
+Module that contains information about shapes. Additively, provides an interface for creating and manipulating shapes.
 
 \subsection{Uses}
 
@@ -824,7 +824,7 @@ N/A
 \begin{itemize}
 \item input: shape\_type string containing type of shape
 \item input: new_points set of points used for creating the shape
-\item transition: changes the points of the shape to the new points 
+\item transition: changes the points of the shape to the new points which will be rerendered
 \item exception: Invalid points if the points are not possible for the type of shape.
 \end{itemize}
 
@@ -882,7 +882,7 @@ N/A
 
 \subsubsection{State Variables}
 Command preferences: users defined commands
-Theme preferences: user theme prefrences
+Theme preferences: user theme preferences
 %\wss{Not all modules will have state variables.  State variables give the module
 %  a memory.}
 
