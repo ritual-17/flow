@@ -36,6 +36,7 @@
 \midrule
 22/09/2025 & Hussain, Oliver, Jeff, Kevin, Ethan & Initial Release\\
 09/03/2026 & Hussain, Ethan & Update Unit Testing\\
+03/04/2026 & Hussain & Final Review and Edits\\
 \bottomrule
 \end{tabularx}
 
@@ -58,7 +59,7 @@
 
 \tableofcontents
 
-% \listoftables
+\listoftables
 % \wss{Remove this section if it isn't needed}
 
 
@@ -696,9 +697,9 @@ user-facing behaviors and ensuring that the system performs as expected under no
 % \wss{Include a blurb here to explain why the subsections below
 %   cover the requirements.  References to the SRS would be good here.}
 
-The following subsections group tests into functional areas that align with the SRS:
-1. **Editing and Canvas Operations** – covering note creation, editing, and manipulation (SRS F211–F216).
-2. **File Management and Persistence** – covering saving, loading, and export functions (SRS F217–F243).
+The following subsections group tests into functional areas that align with the SRS: \\
+1. \textbf{Editing and Canvas Operations} – covering note creation, editing, and manipulation (SRS F211–F216). \\
+2. \textbf{File Management and Persistence} – covering saving, loading, and export functions (SRS F217–F243).
 
 \subsubsection{Area of Testing1 — Editing and Canvas Operations}
 
@@ -757,6 +758,23 @@ The expected value is that the object’s final position and dimensions match th
 
 How test will be performed: Automated functional test using simulated mouse actions and coordinate comparison of
 expected versus rendered object placement.
+
+\item{test-F213\\}
+
+Control: Automatic
+
+Initial State: Canvas open with editing mode enabled.
+
+Input: User inserts a text box, enters text, and edits the text content.
+
+Output:
+The text box appears correctly on the canvas, entered text is displayed correctly, and edits are reflected immediately without visual issues or lag.
+
+Test Case Derivation:
+Expected behavior is defined by F213, which requires that users can create text boxes and modify their contents after creation.
+The expected value is that the displayed text exactly matches the user input after each edit operation.
+
+How test will be performed: Automated functional test using simulated keyboard and mouse inputs. The test will insert a text box, enter a predefined string, edit part of the string, and compare the final rendered text against the expected result.
 
 \end{enumerate}
 
@@ -878,13 +896,13 @@ How test will be performed: The tester will open a pre-made note with \textit{SH
 
 Type: Dynamic, Manual.
 
-Initial State: Empty Linux, Windows, Mac computer.
+Initial State: Empty Linux (Ubuntu 22.04), Windows (11), Mac computer (macOS Sonoma).
 
 Input/Condition: Creating and opening note, adding shapes and text.
 
-Output/Result: Shapes or text are shown on screen
+Output/Result: Shapes or text are shown on screen without crashes, missing UI elements, or save/load issues across all three operating systems.
 
-How test will be performed: The tester will open the program on various different operating systems to test if they function on each platform.
+How test will be performed: The tester will create a note, add shapes and text, save, close, and reopen the note on each operating system.
 
 \item{test-NF214}
 
@@ -894,9 +912,9 @@ Initial State: Application launched with an open empty note.
 
 Input/Condition: Adding shapes and text via keyboard short cuts
 
-Output/Result: Shapes or text are shown on screen when short cuts are used.
+Output/Result: Shapes or text are shown on screen when short cuts are used and shortcut produces correct action.
 
-How test will be performed: The tester will open a note and then attempt to add a note and a shape and a text box via the corresponding short cut.
+How test will be performed: The tester will open a note and then attempt to add a note and a shape and a text box via the corresponding short cut. All keyboard shortcuts will be tested once.
 
 \item{test-NF217}
 
@@ -924,13 +942,22 @@ Initial State: Application launched with an open empty note.
 
 Input/Condition: Adding shapes and text via keyboard short cuts
 
-How test will be performed: See (test-F217, F243). We then compare it after opening to the one that was saved to see if there any differences. Additionally, we will attempt to close a note without saving and check it the autosave catches it
+Output/Results: Shapes or text are shown on screen when short cuts are used and shortcut produces correct action.
+
+How test will be performed: See (test-F217, F243). We then compare shape position, size, color, text content, formatting, and overall layout between the saved and reopened note. Additionally, we will attempt to close a note without saving and check it the autosave catches it
 
 \item{test-NF216}
 
-Type: Manual, Static .
+Type: Manual, Static + Dynamic.
 
-How test will be performed: Code review on all parts that may use the network data, making sure each cant run in the background.
+Initial State: Application launched with an open empty note.
+
+Input/Condition: Adding shapes and text via keyboard short cuts
+
+Output/Results: No network traffic is detected during note creation, editing, saving, or closing.
+
+How test will be performed: Code review on all parts that may use the network data, making sure each can't run in the background. This may include modules related to autosave, update checking, or third party libraries. 
+This is preferable to capturing network information during runtime as it is more deterministic and can be done earlier in the development process. However, if there are any doubts about potential network traffic, we can also use a network monitoring tool to verify that no traffic is being sent during typical application usage.
 
 \end{enumerate}
 
@@ -1061,7 +1088,8 @@ behavior.
 
 \item{test-id1\\}
 
-\textbf{This functionality is not implemented yet and therefore not tested yet.}
+\textbf{This functionality is not implemented yet and therefore not tested yet. It is 
+prioritized for after the Final Demo as it is not critical for the core functionality of the app.}
 
 Type:
 
@@ -1291,6 +1319,18 @@ Unit test that can be run manually or automatically as part of the CI pipeline.
 
 % \wss{Provide evidence that all of the modules have been considered.}
 
+\subsection{Unit Test Summary}
+
+Unit testing has been used to verify the behavior of individual modules in isolation before integration testing occurs. 
+Automated unit tests are implemented for the Command Parser Module (M6), Geometry State Module (M11), Geometry State 
+Mutator Module (M12), and Undo/Redo Module (M13). These tests validate expected behavior for command parsing, document 
+state changes, object manipulation, and history tracking functionality. Test cases include both the sample cases 
+outlined in the VnV Plan and additional edge cases identified during development.
+
+All implemented unit tests are currently passing and are executed through the project's automated testing framework. 
+Unit test implementations are located within the test/unit directory of the develop branch. The File Interface Module 
+(M3) does not yet have unit tests because its functionality has not yet been implemented
+
 \bibliographystyle{plainnat}
 
 \bibliography{../../refs/References}
@@ -1319,23 +1359,69 @@ The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.\\
 
 
-\subsection{Usability Survey Questions?}
+\subsection{Usability Survey Questions}
 
 % \wss{This is a section that would be appropriate for some projects.}
 
-1. How difficult was it to find the short-cuts you needed?
+1. Do you use any of the following in your day-to-day work flows? (Click all that apply) \\
+- Vim/Emacs \\
+- A window manager \\
+- Some reliance on keyboard shortcuts (e.g. Ctrl-c, Ctrl-z, Ctrl-v) \\
+- Heavy reliance on keyboard shortcuts (i.e. beyond simple shortcuts such as Ctrl-c, Ctrl-z) \\
+- Some other keyboard driven tool (fill in below) \\
+- Other: 
 
-2. What short-cuts felt the least intuitive?
+2. Do you have experience writing notes involving mathematical equations with any of the following tools? 
+(Click all that apply) \\
+- Typst \\
+- LaTeX \\
+- Google Docs \\
+- OneNote \\
+- Some other tool (fill in below) \\
 
-3. What short-cuts felt the most intuitive?
+3. What is/has been your method for taking notes involving diagrams and/or math equations? 
+(e.g. pen and paper, Google docs, OneNote)
 
-4. Are their any missing short-cuts that you would want to have?
+4. On a scale of 1-5, how well does the interface communicate which "Mode" (e.g., Insert, Normal, Visual) 
+you are currently in?
 
-5. Are their any short-cuts that feel to burdensome or require too many inputs to execute?
+5. Which statement best describes your feelings towards learning Flow \\
+- I intend to learn to use it upon its release \\
+- I could see myself learning it \\
+- I probably wouldn't want to learn it \\
+- I wouldn't learn it \\
 
-6. Are any short-cuts that you accidentally pressed when you didn't want them?
+6. How much do you agree with the following statement? \\
+If I used Flow every day for a week, I feel I could take notes faster here than with my current solution.
 
-7. How would you compare this to other note taking methods?
+7. How much do you agree with the following statement? \\
+If I used Flow every day for a month, I feel I could take notes faster here than with my current solution.
+
+8. Which statement best described your feelings when using Flow \\
+- The system was extremely intuitive. I was able to predict some keybinds before using them. \\
+- The system was intuitive. Once I learned the commands, most of them made sense and stuck with me. \\
+- The system was somewhat intuitive. Some commands made sense when I learned them, but they didn't stick with me. \\
+- The system was not intuitive. It was difficult to memorize commands and overall usage was confusing. \\
+
+9. How likely would you be to use Flow over the following tool for taking notes? \\
+Pen and Paper
+
+10. How likely would you be to use Flow over the following tool for taking notes? \\
+Tablet
+
+11. How likely would you be to use Flow over the following tool for taking notes? \\
+Online docs (e.g. Google Docs, Word, Obsidian)
+
+12. How likely would you be to use Flow over the following tool for taking notes? \\
+Online notes (e.g. OneNote, Notability)
+
+13. How likely would you be to use Flow over the following tool for taking notes? \\
+Online drawing (e.g. draw.io, Google drawing)
+
+14. What is the biggest 'deal-breaker' currently preventing you from switching to this full-time? \\
+- Lack of features/maturity \\
+- Too difficult to learn \\
+- Other:  \\
 
 \newpage{}
 \section*{Appendix --- Reflection}
