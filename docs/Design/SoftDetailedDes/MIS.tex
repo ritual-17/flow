@@ -537,6 +537,7 @@ Note converter that converts notes to files of different file types, sending it 
 
 \subsubsection{Exported Constants}
 Set of Legal file types
+
 \subsubsection{Exported Access Programs}
 
 \begin{center}
@@ -650,7 +651,7 @@ Inputs have been already cleaned by the other modules.
 \noindent {parse\_commands}(keyboard\_inputs, mouse\_inputs):
 \begin{itemize}
 \item input: keyboard\_inputs, mouse\_inputs keyboard inputs as shown above, mouse\_inputs as location on the canvas
-\item output: parsed_input, tuple of command which would be used by the Geometry State Mutator Module \ref{Geometry State Mutator Module}
+\item output: parsed\_input, tuple of command which would be used by the Geometry State Mutator Module \ref{Geometry State Mutator Module}
 \end{itemize}
 
 %\wss{A module without environment variables or state variables is unlikely to
@@ -819,7 +820,7 @@ N/A
 \noindent {move\_shape}():
 \begin{itemize}
 \item input: shape\_type string containing type of shape
-\item input: new_points set of points used for creating the shape
+\item input: new\_points set of points used for creating the shape
 \item transition: changes the points of the shape to the new points which will be rerendered
 \item exception: Invalid points if the points are not possible for the type of shape.
 \end{itemize}
@@ -1210,14 +1211,14 @@ Mutations must be recorded by Undo Redo Module.
 
 \noindent {delete}(GeometryID):
 \begin{itemize}
-\item input: GeometryID, ID # of the thing to be deleted
+\item input: GeometryID, ID \# of the thing to be deleted
 \item transition: Deletes the shape/line/textbox with the given GeometryID
 \item exception: Not Found if the GeometryID does not exist
 \end{itemize}
 
 \noindent {resize}(GeometryID,factor):
 \begin{itemize}
-\item input: GeometryID, ID # of the thing to be resized
+\item input: GeometryID, ID \# of the thing to be resized
 \item input: factor, factor for the geometry to be resized by
 \item transition: Resizes the shape/line/textbox with the given GeometryID
 \item exception: Not Found if the GeometryID does not exist
@@ -1225,7 +1226,7 @@ Mutations must be recorded by Undo Redo Module.
 
 \noindent {move}(GeometryID, location):
 \begin{itemize}
-\item input: GeometryID, ID # of the thing to be resized
+\item input: GeometryID, ID \# of the thing to be resized
 \item input: location, new location of the aforementioned Geometry
 \item transition: Moves the shape/line/textbox with the given GeometryID to location
 \item exception: Not Found if the GeometryID does not exist
