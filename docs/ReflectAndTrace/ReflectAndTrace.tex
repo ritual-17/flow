@@ -376,9 +376,38 @@ canvas, and various quality of life improvements.
 
 \section{Design Decisions (LO12)}
 
-\plt{Reflect and justify your design decisions.  How did limitations,
- assumptions, and constraints influence your decisions?  Discuss each of these
- separately.}
+\begin{itemize}
+  \item Our design choices were driven by the need to support math-related note-taking
+    with a fast, responsive authoring experience. Using Typst allowed us to support
+    structured mathematical typesetting directly in the editor while still keeping the
+    application lightweight. The app compiles Typst content locally through the Electron
+    main process, producing SVG output in real time so students can see rendered math
+    immediately without waiting on a remote service.
+
+  \item Limitations influenced the architecture in several ways. Because students use
+    different devices and situations, we chose Electron to deliver a cross-platform
+    desktop app that works on Windows, macOS, and Linux. Electron also gives us direct
+    access to the local file system for import/export and PDF handling, which is important
+    for an academic note-taking tool. A local desktop app avoids browser permission and
+    network dependency issues of a web app, supports offline use, and reduces unnecessary
+    complexity when the goal is reliable note capture rather than cloud collaboration.
+
+  \item We assumed users would want a fast, keyboard-driven interface and that the main
+    value of the application would be quick note creation rather than graphical menu
+    navigation. That assumption drove the modal design: the app uses distinct modes such as
+    normal, insert, visual, text, line, and anchor-line to keep the command space manageable.
+    This lets the editor support a rich feature set — shape creation, line editing, text box
+    insertion, PDF slide import/export, and Typst rendering — without overwhelming the user
+    with too many simultaneous shortcuts.
+
+  \item Constraints such as limited physical keys and the need for advanced diagram editing
+    shaped our keybinding strategy. The diagram editing tool requires many discrete actions,
+    so we did not try to cram everything into a single flat shortcut layer. Instead, we
+    grouped actions into mode-specific contexts and reused familiar navigation keys like hjkl
+    and arrow keys. This keeps interactions intuitive and reduces the mental load of
+    remembering commands while still allowing powerful editing workflows for geometric shapes,
+    auto-linking, and line-based diagram construction.
+\end{itemize}
 
 \section{Economic Considerations (LO23)}
 
