@@ -1,5 +1,9 @@
-# Problem Statement
+# ProblemStatementAndGoals
 
-The folders and files for this folder are as follows:
-
-Describe ...
+This directory contains:
+- Makefile
+- ProblemStatement.aux
+- ProblemStatement.log
+- ProblemStatement.out
+- ProblemStatement.pdf
+- ProblemStatement.tex

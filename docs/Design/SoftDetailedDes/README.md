@@ -1,2 +1,6 @@
-# Module Interface Specification #
+# SoftDetailedDes
 
+This directory contains:
+- MIS.pdf
+- MIS.tex
+- Makefile

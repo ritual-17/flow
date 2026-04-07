@@ -1,5 +1,13 @@
-# Test Report
+# VnVReport
 
-The folders and files for this folder are as follows:
-
-Describe ...
+This directory contains:
+- Images/
+- Makefile
+- VnVReport.aux
+- VnVReport.lof
+- VnVReport.log
+- VnVReport.lot
+- VnVReport.out
+- VnVReport.pdf
+- VnVReport.tex
+- VnVReport.toc
