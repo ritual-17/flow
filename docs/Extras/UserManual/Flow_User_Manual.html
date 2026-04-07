@@ -125,7 +125,9 @@
     <ol>
       <li>Press <kbd>v</kbd> to enter Visual mode.</li>
       <li>For individual selection: Move the cursor over a shape and press <kbd>Space</kbd> to select it.</li>
-      <li>For box select (select all): Press <kbd>Ctrl</kbd>+<kbd>A</kbd> to select all shapes at once.</li>
+      <li>For box select (select all): Press <kbd>V</kbd> (capital V) to enter <strong>Visual-Block mode</strong> and
+        use the movement keys to draw a selection box around multiple shapes. Press <kbd>Space</kbd> to remove and start
+        a new selection if needed.
       <li>Use <kbd>Shift</kbd>+<kbd>h/j/k/l</kbd> or <kbd>Shift</kbd>+<kbd>↑/↓/←/→</kbd> to move the selected shapes.
       </li>
       <li>Press <kbd>Esc</kbd> to deselect and return to Normal mode.</li>
@@ -160,7 +162,7 @@
       <tr>
         <td><strong>Normal</strong></td>
         <td><kbd>Esc</kbd> from any mode</td>
-        <td>Move the cursor, navigate shapes, issue commands</td>
+        <td>Move the cursor, navigate through shapes, issue commands</td>
       </tr>
       <tr>
         <td><strong>Insert</strong></td>
@@ -169,17 +171,22 @@
       </tr>
       <tr>
         <td><strong>Visual</strong></td>
-        <td><kbd>v</kbd> in Normal</td>
+        <td><kbd>v</kbd> in Normal or Visual-Block</td>
         <td>Select shapes to move, copy, or delete</td>
       </tr>
       <tr>
+        <td><strong>Visual-Block</strong></td>
+        <td><kbd>V</kbd> in Normal or Visual</td>
+        <td>Select multiple shapes with a selection box</td>
+      </tr>
+      <tr>
         <td><strong>Line</strong></td>
-        <td><kbd>a</kbd> in Normal</td>
+        <td><kbd>a</kbd> in Normal or Anchor-Line</td>
         <td>Draw a free multi-point line</td>
       </tr>
       <tr>
         <td><strong>Anchor-Line</strong></td>
-        <td><kbd>A</kbd> in Normal</td>
+        <td><kbd>A</kbd> in Normal or Line</td>
         <td>Draw a line anchored to shape connection points</td>
       </tr>
       <tr>
@@ -197,7 +204,8 @@
     <div class="callout note">
       <strong>Note</strong>
       The mode name in the status bar changes every time you switch modes. If a key does not behave as expected, check
-      the status bar to confirm your current mode.
+      the status bar to confirm your current mode. A help menu listing all key bindings within a mode is also available
+      at any time by pressing <kbd>`</kbd>.
     </div>
 
     <div class="page-break"></div>
