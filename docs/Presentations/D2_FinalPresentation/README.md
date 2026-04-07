@@ -1,4 +1,5 @@
 # D2_FinalPresentation
 
 This directory contains:
-- (empty)
+
+- The final presentation slideshow

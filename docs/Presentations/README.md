@@ -2,5 +2,5 @@
 
 This directory contains:
 
-- D2_FinalPresentation/
-- D3_EXPO/
+- D2_FinalPresentation: Final presentation files
+- D3_EXPO: Expo files
