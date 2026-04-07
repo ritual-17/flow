@@ -318,10 +318,28 @@ VnV Report, and we have provided explanations and justifications where necessary
 
 \section{Extras}
 
-\plt{Summarize the extras that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.}
+% \plt{Summarize the extras that were tackled by this project.  Extras
+% can include usability testing, code walkthroughs, user documentation, formal
+% proof, GenderMag personas, Design Thinking, etc.  Extras should have already
+% been approved by the course instructor as included in your problem statement.}
+
+\begin{itemize}
+\item \textbf{Usability Testing:} An informal yet structured usability test was 
+conducted with students representing the target user demographic. The test aimed 
+to assess the intuitiveness and efficiency of Flow's user interface and 
+workflows. To ensure systematic and objective evaluation, participants performed 
+predefined tasks, such as creating and organizing notes, and inserting and 
+editing diagrams. Performance metrics, including task completion times, were 
+recorded. Following the test, participants provided feedback on their experience, 
+highlighting any difficulties and suggesting improvements.
+
+\item \textbf{User Manual:} A comprehensive user manual was developed to assist 
+new users in navigating Flow's features and functionalities. The manual provides 
+step-by-step instructions for creating, editing, and managing notes and diagrams,
+along with explanations of the various tools and keyboard shortcuts. It functions 
+as both a user support resource and a validation tool to confirm that all 
+features are accessible and understandable.
+\end{itemize}
 
 \section{Design Iteration (LO11 (PrototypeIterate))}
 
@@ -364,12 +382,90 @@ canvas, and various quality of life improvements.
 
 \section{Economic Considerations (LO23)}
 
-\plt{Is there a market for your product? What would be involved in marketing your
-product? What is your estimate of the cost to produce a version that you could
-sell?  What would you charge for your product?  How many units would you have to
-sell to make money? If your product isn't something that would be sold, like an
-open source project, how would you go about attracting users?  How many potential
-users currently exist?}
+% \plt{Is there a market for your product? What would be involved in marketing your 
+% product? What is your estimate of the cost to produce a version that you could 
+% sell?  What would you charge for your product?  How many units would you have to 
+% sell to make money? If your product isn't something that would be sold, like an 
+% open source project, how would you go about attracting users?  How many potential 
+% users currently exist?}
+
+There is likely a market for Flow, especially among engineering  and computer 
+science students, and technical professionals who regularly create diagrams, 
+structured notes, circuits, flowcharts, or annotated lecture content. Current 
+note-taking tools often force users to choose between strong text editing, 
+strong handwriting support, or strong diagramming support. Flow aims to combine 
+structured text input, diagramming, keyboard-driven workflows, and flexible 
+positioning into one application. It would compete with tools such as Microsoft 
+OneNote, GoodNotes, Typst, Google Docs, and more. 
+
+Our usability testing suggests that Flow is strongest for diagram-heavy 
+workflows, circuit design, structured layouts, and keyboard-driven note-taking 
+rather than purely handwritten or text-heavy notes. Therefore, our marketing efforts
+would likely focus on engineering and technical students and professionals.
+
+\vspace{0.5em}
+
+Marketing Flow would likely involve:
+\begin{itemize}
+\item Demonstrations targeted toward engineering and STEM students
+\item Short tutorial videos showing keyboard-based workflows
+\item Comparisons against existing tools for diagrams and note-taking
+\item University club partnerships and campus ambassadors
+\item Social media content showing real use cases such as lecture notes, circuits,
+ flowcharts, and annotated PDFs
+\end{itemize}
+
+\vspace{0.5em}
+
+If Flow were developed into a commercial product, an early version could likely 
+be built and maintained by a small team of 3-5 developers. Estimated costs for a 
+polished sellable version could include:
+\begin{itemize}
+\item Development costs: approximately \$50,000-\$150,000
+\item Hosting and cloud infrastructure: approximately \$500-\$2,000 per month
+\item Marketing costs: approximately \$5,000-\$20,000 initially
+\item Ongoing maintenance and feature development costs
+\end{itemize}
+
+\vspace{0.5em}
+
+These estimates are rough. They are based on typical salaries for software 
+developers, costs for cloud services, and marketing expenses for a small software 
+product.
+
+\vspace{0.5em}
+
+A reasonable pricing model for Flow would likely be:
+\begin{itemize}
+\item Free version with basic note-taking and diagramming
+\item Student plan around \$3-\$5 per month
+\item Professional plan around \$8-\$12 per month
+\item One-time educational license for universities or departments
+\end{itemize}
+This pricing model is based on the value provided by Flow, the competitive 
+landscape, and typical pricing for productivity software. If the average user 
+paid approximately \$5 per month, and the product cost roughly \$100,000 to build, 
+then Flow would need approximately 1,700 annual subscribers to recover its 
+initial development costs within one year. 
+
+At this point, Flow is more likely to be an open-source project than a commercial
+product. To attract users to an open-source project, we would likely focus on:
+\begin{itemize}
+\item GitHub visibility
+\item Strong documentation and tutorials
+\item Student communities
+\item Technical blogs and YouTube demonstrations
+\item Contributions from users who want new features or integrations
+\end{itemize}
+
+\vspace{0.5em}
+
+Overall, There are potentially millions of users who could benefit from a tool 
+like Flow, including university students, engineers, developers, technical writers,
+and more. The success of other note-taking and diagramming products shows there is 
+already a large audience looking for better workflows and more flexible tools. With 
+the right marketing and continued development, Flow could attract a significant 
+user base over time.
 
 \section{Reflection on Project Management (LO24)}
 
@@ -403,7 +499,21 @@ On the documentation side, a shared glossary and requirement ID convention agree
  % \plt{Describe how your team applied the principle of equity and universal         design
  % to ensure equitable treatment of all stakeholders.}
 
-Our team applied the principle of equity and universal design in many ways throughout the project. Our project originally stared as an way to ensure that people who don't have a touch screen can still take notes in class, even if there is not enough space for a full keyboard and mouse. To this end our project focuses much more on keyboard inputs as there are other options for touch-screen and mouse. Our group also did usability testing to ensure that we have good universal design. This is so the main stakeholder group(people who want to take notes in class with keyboard) are able to use Flow  regardless of needs/experience. This led to us adding things like the status bar to show users their current mode & position and the command menu to list commands so the user can always know what they need to press. We also considered some other ways of making Flow more accessible such as supporting voice commands and allowing custom keybinds/themes. As we wanted to get the main functionality of the program first, these are currently extras. But we  considered them along with other accessibly options that would help everyone like the command menu. 
+Our team applied the principle of equity and universal design in many ways throughout 
+the project. Our project originally stared as an way to ensure that people who don't have 
+a touch screen can still take notes in class, even if there is not enough space for a full 
+keyboard and mouse. To this end our project focuses much more on keyboard inputs as there 
+are other options for touch-screen and mouse. Our group also did usability testing to 
+ensure that we have good universal design. This is so the main stakeholder group(people 
+who want to take notes in class with keyboard) are able to use Flow  regardless of 
+needs/experience. This led to us adding things like the status bar to show users their 
+current mode \& position and the command menu to list commands so the user can always know 
+what they need to press. We also considered some other ways of making Flow more accessible 
+such as supporting voice commands and allowing custom keybinds/themes. As we wanted to get 
+the main functionality of the program first, these are currently extras. But we 
+considered them along with other accessibly options that would help everyone like the 
+command menu. 
+
 
 \section{Reflection on Capstone}
 
