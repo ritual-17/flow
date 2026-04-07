@@ -1,5 +1,14 @@
-# Verification and Validation Plan
+# VnVPlan
 
-The folders and files for this folder are as follows:
-
-Describe ...
+This directory contains:
+- Makefile
+- VnVPlan.aux
+- VnVPlan.bbl
+- VnVPlan.blg
+- VnVPlan.lof
+- VnVPlan.log
+- VnVPlan.lot
+- VnVPlan.out
+- VnVPlan.pdf
+- VnVPlan.tex
+- VnVPlan.toc
