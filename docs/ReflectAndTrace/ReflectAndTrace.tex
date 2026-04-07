@@ -33,8 +33,8 @@ on your reflections.}
 feedback from TAs, the instructor, teammates, other teams, the project
 supervisor (if present), and from user testers.}
 
-\plt{For those teams with an external supervisor, please highlight how the feedback 
-from the supervisor shaped your project.  In particular, you should highlight the 
+\plt{For those teams with an external supervisor, please highlight how the feedback
+from the supervisor shaped your project.  In particular, you should highlight the
 supervisor's response to your Rev 0 demonstration to them.}
 
 \plt{Version control can make the summary relatively easy, if you used issues
@@ -62,7 +62,7 @@ response separately for each deliverable in the sections that follow.}
 \plt{If the feedback is general or incomplete, the TA (or instructor) will not
 be able to grade your response to feedback.  In that case your grade on this
 document, and likely the Revision 1 versions of the other documents will be
-low.} 
+low.}
 
 \subsection{SRS and Hazard Analysis}
 
@@ -207,18 +207,18 @@ Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
 In Section 8 for the save function, is success a Boolean or something else? Don't leave it to someone else to assume it's a boolean.
  & Added data type to outputs. \\
 
-\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & 
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA &
 More complicated data structures such as Sets and Stacks are used but are not described in Section 4
  & Added sets and Stacks to Section 4 \\
- 
+
 \href{https://github.com/ritual-17/flow/issues/525}{525} & TA & Some functions do not have output and do not modify any observable state, but they seem like they should, such as shape-moving functions.
  & mentioned if changes could be observable via other modules due to display.
 F213 \\
 
-\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & Some functions have underspecified inputs, such as Section 17's resize function which only takes a GeometryID but not the resize factor. 
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & Some functions have underspecified inputs, such as Section 17's resize function which only takes a GeometryID but not the resize factor.
 & Specified all inputs \\
 
-\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & How are inverses defined with respect to commands in the undo-redo module? 
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & How are inverses defined with respect to commands in the undo-redo module?
 & Defined how the inverses of commands would work. \\
 
 \bottomrule
@@ -235,17 +235,17 @@ F213 \\
 \toprule
 Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
 \midrule
-\href{https://github.com/ritual-17/flow/issues/228}{228} & Peer & "Nonfunctional tests lack measurable criteria" & NF tests list in the 
+\href{https://github.com/ritual-17/flow/issues/228}{228} & Peer & "Nonfunctional tests lack measurable criteria" & NF tests list in the
 VnV plan were made a bit more specific \\
-\href{https://github.com/ritual-17/flow/issues/231}{231} & Peer & NFR Tests 211 and 218 both measure same performance and latency 
+\href{https://github.com/ritual-17/flow/issues/231}{231} & Peer & NFR Tests 211 and 218 both measure same performance and latency
 requirements but only differ in scale & No change made in documentation.
-Difference of scale represents different scenarios, with smaller scale 
+Difference of scale represents different scenarios, with smaller scale
 having higher priority as it represents typical usage scenarios \\
 \href{https://github.com/ritual-17/flow/issues/232}{232} & Peer & Usability survey lists questions but doesn't specify concrete success metrics
 & Survey questions have been updated and refined \\
-\href{https://github.com/ritual-17/flow/issues/233}{233} & Peer & Testing tools not specified & No change made in documentation. 
+\href{https://github.com/ritual-17/flow/issues/233}{233} & Peer & Testing tools not specified & No change made in documentation.
 Jest and Playwright were the mentioned tools in VnV Plan, justification also provided \\
-\href{https://github.com/ritual-17/flow/issues/234}{234} & Peer & Usability survey lacks measurable criteria & survey questions have been 
+\href{https://github.com/ritual-17/flow/issues/234}{234} & Peer & Usability survey lacks measurable criteria & survey questions have been
 updated and refined \\
 \bottomrule
 \end{tabularx}
@@ -260,20 +260,20 @@ Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
 \midrule
 \href{https://github.com/ritual-17/flow/issues/529}{529} & TA & list of tables is missing in VnV Plan & list of tables added back to document \\
 \href{https://github.com/ritual-17/flow/issues/529}{529} & TA & NFR testing not specific enough. For example, NF216 is a code review
- on parts that use network data. What kind of code review is expected? & NF tests, 
+ on parts that use network data. What kind of code review is expected? & NF tests,
  including NF216, were made more specific \\
-\href{https://github.com/ritual-17/flow/issues/529}{529} & TA & Redundancy. For example, F213 is a relatively straightforward test to include. 
+\href{https://github.com/ritual-17/flow/issues/529}{529} & TA & Redundancy. For example, F213 is a relatively straightforward test to include.
 It could feasibly be included into "Area of Testing1". & Added Functional test for
 F213 \\
-\href{https://github.com/ritual-17/flow/issues/529}{529} & TA & Be more specific and intentional about nondynamic testing. Provide 
-justification for inclusion or a brief checklist or plan for nondynamic testing. 
+\href{https://github.com/ritual-17/flow/issues/529}{529} & TA & Be more specific and intentional about nondynamic testing. Provide
+justification for inclusion or a brief checklist or plan for nondynamic testing.
 & Justification for nondynamic testing added to VnV Plan \\
 \bottomrule
 \end{tabularx}
 \caption{Traceability between feedback and changes for the VnV Plan (Part 2)}
 \end{table}
 
-To summarize the table(s) above, the feedback we received on the VnV Plan was primarily 
+To summarize the table(s) above, the feedback we received on the VnV Plan was primarily
 focused on improving the specificity of our nonfunctional tests, ensuring that we included
 a list of tables in the document, and addressing redundancy in our testing plan. Overall,
 we made changes to our VnV Plan to address each of these points, resulting in a more
@@ -285,11 +285,11 @@ comprehensive and well-structured testing strategy for our project.
 \toprule
 Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
 \midrule
-\href{https://github.com/ritual-17/flow/issues/477}{477} & Peer & No discussion of timeline to implement M3 & Added description of timeline 
+\href{https://github.com/ritual-17/flow/issues/477}{477} & Peer & No discussion of timeline to implement M3 & Added description of timeline
 for M3 implementation \\
-\href{https://github.com/ritual-17/flow/issues/473}{473} & Peer & Code coverage short of planned target, with no explanation & Added 
+\href{https://github.com/ritual-17/flow/issues/473}{473} & Peer & Code coverage short of planned target, with no explanation & Added
 explanation addressing the low code coverage \\
-\href{https://github.com/ritual-17/flow/issues/475}{475} & Peer & Unit test section has no reults summary & No changes made to the 
+\href{https://github.com/ritual-17/flow/issues/475}{475} & Peer & Unit test section has no reults summary & No changes made to the
 documentation. Tests were described in the VnV Plan \\
 \href{https://github.com/ritual-17/flow/issues/476}{476} & Peer & Only two usability test participants, with no justification & This has been
 addressed. A plan and desire for an increase in sample size was mentioned  \\
@@ -297,23 +297,23 @@ addressed. A plan and desire for an increase in sample size was mentioned  \\
 An explanation to the peer on the consistency of our conclusions was provided \\
 \href{https://github.com/ritual-17/flow/issues/478}{478} & Peer & Flow's comparison to existing implementation lacked support & The validity
 of Flow over other solutions was emphasized with more detailed justifications. \\
-\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Section 3 and 4 does not mention what requirements are involved in the tests 
+\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Section 3 and 4 does not mention what requirements are involved in the tests
 & explicitly mentioned which requirements involved in tests  \\
-\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Usability description lacked explanation and/or acknowledgement of small 
+\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Usability description lacked explanation and/or acknowledgement of small
 sample size & This has been addressed. A plan and desire for an increase in sample
 size was mentioned  \\
-\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Performance data could be presented better & improved presentation of 
+\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Performance data could be presented better & improved presentation of
 performance data. Provided further explaination and justification of test. \\
 \bottomrule
 \end{tabularx}
 \caption{Traceability between feedback and changes for the VnV Report.}
 \end{table}
 
-In summary, we received feedback from our peers and TA regarding the VnV Report. 
-The feedback from our peers had to do with the lack of explanation for our code 
-coverage, and the consistency of our conclusions. The feedback from our TA 
-related more to the lack of mention of requirements in our tests, and the 
-explanations of some data items. We have addressed all of this feedback in our 
+In summary, we received feedback from our peers and TA regarding the VnV Report.
+The feedback from our peers had to do with the lack of explanation for our code
+coverage, and the consistency of our conclusions. The feedback from our TA
+related more to the lack of mention of requirements in our tests, and the
+explanations of some data items. We have addressed all of this feedback in our
 VnV Report, and we have provided explanations and justifications where necessary.
 
 \section{Extras}
@@ -325,13 +325,36 @@ been approved by the course instructor as included in your problem statement.}
 
 \section{Design Iteration (LO11 (PrototypeIterate))}
 
-\plt{Explain how you arrived at your final design and implementation.  How did
-the design evolve from the first version to the final version?} 
+% \plt{Explain how you arrived at your final design and implementation.  How did
+% the design evolve from the first version to the final version?}
+%
+% \plt{Don't just say what you changed, say why you changed it.  The needs of the
+% client should be part of the explanation.  For example, if you made changes in
+% response to usability testing, explain what the testing found and what changes
+% it led to.}
 
-\plt{Don't just say what you changed, say why you changed it.  The needs of the
-client should be part of the explanation.  For example, if you made changes in
-response to usability testing, explain what the testing found and what changes
-it led to.}
+Many things changed in the final design compared to the initial design. One
+original requirement we had was to have no text to visual based rendering
+system. We wanted Flow to be fully canvas-based, meaning that there was no
+underlying text the user would modify to change what is displayed on the screen
+(like UML for example). This requirement held for shapes, but it was clear for
+text-based notes involving complex math notation, existing solutions just made
+more sense. We wanted to balance speed with intuitiveness for the user. This is
+where we introduced Typst integration, which does have a render step, but
+fits well alongside the flow of the rest of the app.
+
+We also made changes based on user testing. Testing made it clear that although
+the system makes sense, it has quite a steep learning curve. To address this,
+we added a help menu that users can access from any mode to display the
+available commands for that mode. We also kept the mode transition keybinds at
+the top as that was a common area of friction during user testing.
+
+Overall, the approach to the development of Flow was very incremental. Through
+test usage in our own lectures this term, we identified areas of improvement
+and implemented solutions for them. This included but was not limited to bug
+fixes, intuitive transitions between modes (e.g. line to anchor line mode),
+shape position on insertions, allowing multiple ways to pan the infinite
+canvas, and various quality of life improvements.
 
 \section{Design Decisions (LO12)}
 
@@ -341,11 +364,11 @@ it led to.}
 
 \section{Economic Considerations (LO23)}
 
-\plt{Is there a market for your product? What would be involved in marketing your 
-product? What is your estimate of the cost to produce a version that you could 
-sell?  What would you charge for your product?  How many units would you have to 
-sell to make money? If your product isn't something that would be sold, like an 
-open source project, how would you go about attracting users?  How many potential 
+\plt{Is there a market for your product? What would be involved in marketing your
+product? What is your estimate of the cost to produce a version that you could
+sell?  What would you charge for your product?  How many units would you have to
+sell to make money? If your product isn't something that would be sold, like an
+open source project, how would you go about attracting users?  How many potential
 users currently exist?}
 
 \section{Reflection on Project Management (LO24)}
@@ -354,13 +377,13 @@ users currently exist?}
 
 \subsection{How Does Your Project Management Compare to Your Development Plan}
 
-\plt{Did you follow your Development plan, with respect to the team meeting plan, 
-team communication plan, team member roles and workflow plan.  Did you use the 
+\plt{Did you follow your Development plan, with respect to the team meeting plan,
+team communication plan, team member roles and workflow plan.  Did you use the
 technology you planned on using?}
 
 \subsection{What Went Well?}
 
-\plt{What went well for your project management in terms of processes and 
+\plt{What went well for your project management in terms of processes and
 technology?}
 
 \subsection{What Went Wrong?}
