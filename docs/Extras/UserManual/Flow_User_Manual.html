@@ -63,14 +63,19 @@
     <ol>
       <li>Open Flow. You start in <strong>Normal mode</strong>.</li>
       <li>Press <kbd>i</kbd> to enter <strong>Insert mode</strong>.</li>
-      <li>Press <kbd>r</kbd>, then click the canvas to place a rectangle.</li>
-      <li>Press <kbd>r</kbd> again and click a different location to place a second rectangle.</li>
+      <li>Press <kbd>c</kbd>, to place a circle.</li>
+      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> /
+        <kbd>→</kbd> to move the cursor to a different location on the canvas. Flow centres the next shape on the cursor
+        when you place it.
+      </li>
+      <li>Press <kbd>c</kbd> again to place a second circle.</li>
       <li>Press <kbd>Esc</kbd> to return to Normal mode.</li>
     </ol>
 
     <h2>Step 2 — Label the first shape</h2>
     <ol>
-      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> to move the cursor over the first rectangle.
+      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> /
+        <kbd>→</kbd> to move the cursor over the first circle.
       </li>
       <li>Press <kbd>t</kbd> to open the label editor.</li>
       <li>Press <kbd>i</kbd> inside the editor to start typing, then type your label (for example: <em>Start</em>).</li>
@@ -86,14 +91,16 @@
     <h2>Step 3 — Connect the shapes with an arrow</h2>
     <ol>
       <li>Move the cursor near the first rectangle in Normal mode.</li>
-      <li>Press <kbd>A</kbd> (capital A) to enter <strong>Anchor-Line mode</strong>. Anchor dots appear on nearby
+      <li>Press <kbd>A</kbd> (capital A) to enter <strong>Anchor-Line mode</strong>. Anchor dots appear on all
         shapes.</li>
-      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> to navigate to the anchor dot on the right side
-        of the first rectangle.</li>
+      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> /
+        <kbd>→</kbd> to navigate to the anchor dot on the right side
+        of the first circle.
+      </li>
       <li>Press <kbd>Space</kbd> to attach the line to that anchor.</li>
-      <li>Move the cursor toward the second rectangle. Press <kbd>e</kbd> to add an arrowhead at the end.</li>
-      <li>Navigate to the anchor dot on the left side of the second rectangle and press <kbd>Space</kbd> to finish the
+      <li>Navigate to the anchor dot on the left side of the second circle and press <kbd>Space</kbd> to finish the
         line.</li>
+      <li>Press <kbd>e</kbd> to add an arrowhead at the end.</li>
       <li>Press <kbd>Esc</kbd> to return to Normal mode.</li>
     </ol>
 
@@ -102,9 +109,38 @@
       When you move a shape that has an anchored line attached, the line updates automatically to follow the shape.
     </div>
 
-    <h2>Step 4 — Save</h2>
+    <h2>Step 4 — Add a title below the diagram</h2>
     <ol>
-      <li>Press <kbd>Ctrl</kbd>+<kbd>S</kbd> to save your diagram.</li>
+      <li>Press <kbd>i</kbd> to enter Insert mode.</li>
+      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> /
+        <kbd>→</kbd> to move the cursor below the diagram.
+      </li>
+      <li>Press <kbd>t</kbd> to place a text box.</li>
+      <li>Type "Simple Flowchart" or your desired title.</li>
+      <li>Press <kbd>Esc</kbd> twice — once to leave insert mode in the editor, and again to compile the label and close
+        the editor.</li>
+    </ol>
+
+    <h2>Step 5 — Move shapes in Visual mode</h2>
+    <ol>
+      <li>Press <kbd>v</kbd> to enter Visual mode.</li>
+      <li>For individual selection: Move the cursor over a shape and press <kbd>Space</kbd> to select it.</li>
+      <li>For box select (select all): Press <kbd>Ctrl</kbd>+<kbd>A</kbd> to select all shapes at once.</li>
+      <li>Use <kbd>Shift</kbd>+<kbd>h/j/k/l</kbd> or <kbd>Shift</kbd>+<kbd>↑/↓/←/→</kbd> to move the selected shapes.
+      </li>
+      <li>Press <kbd>Esc</kbd> to deselect and return to Normal mode.</li>
+    </ol>
+
+    <div class="callout tip">
+      <strong>Tip</strong>
+      You can also use <kbd>Ctrl</kbd>+<kbd>a</kbd> to select all shapes at once, then move them together. Selected
+      shapes can also be deleted with <kbd>d</kbd> or copied with <kbd>y</kbd> (then pasted in normal mode with
+      <kbd>p</kbd>).
+    </div>
+
+    <h2>Step 6 — Save</h2>
+    <ol>
+      <li>Press <kbd>Ctrl</kbd>+<kbd>e</kbd> to export and save your diagram.</li>
     </ol>
 
     <div class="page-break"></div>
