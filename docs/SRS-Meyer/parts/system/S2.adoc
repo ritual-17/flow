@@ -14,18 +14,34 @@ endif::[]
 . [[F213]] **Format text**: The Editor shall support text formatting (bold, italics, underline) and list creation (bulleted and numbered). (F213)
 . [[F214]] **Insert text boxes**: The Editor shall allow users to create and move text boxes within the canvas. (F214)
 . [[F215]] **Insert shapes**: The Editor shall allow users to insert predefined geometric shapes (circle, rectangle, triangle, hexagon, octagon, star, arrow). (F215)
-. [[F216]] **Reposition and resize elements**: The Editor shall allow text boxes and shapes to be freely moved and resized within the canvas. (F216)
-. [[F217]] **Canvas navigation**: The Editor shall allow users to pan across the workspace in all directions. (F217)
 
 ===== Non-Functional Requirements
 
 . [[NF211]] **Usability**: The Editor shall maintain a clean and intuitive layout to minimize user confusion. (NF211)
-. [[NF212]] **Responsiveness**: Canvas interactions (e.g., drag, resize, type) shall respond with less than 50ms latency. (NF212)
 . [[NF213]] **Accessibility**: The interface shall comply with WCAG accessibility standards, including keyboard-only navigation. (NF213)
+. [[NF214]] **Discoverability**: The editor shall provide a discoverable command palette and keyboard shortcut reference accessible from within the editor at any time. (NF214)
+. [[NF217]] **Visual consistency**: The visual appearance of UI elements (shapes, text, canvas layout) shall remain consistent across sessions and screen sizes. (NF217)
 
 ---
 
-==== (S.2.2) Shortcut Command Processor
+==== (S.2.2) Canvas Manager
+
+===== Functional Requirements
+
+. [[F216]] **Reposition and resize elements**: The Canvas Manager shall allow text boxes and shapes to be freely moved and resized within the canvas. (F216)
+. [[F217]] **Canvas navigation**: The Canvas Manager shall allow users to pan across the workspace in all directions. (F217)
+
+_Note: IDs F216 and F217 retain their original numbering to avoid cascading changes to the Hazard Analysis and VnV Plan, which already reference these IDs._
+
+===== Non-Functional Requirements
+
+. [[NF212]] **Responsiveness**: Canvas interactions (e.g., drag, resize, pan) shall respond with less than 50ms latency. (NF212)
+
+_Note: NF212 retains its original ID for the same reason._
+
+---
+
+==== (S.2.3) Shortcut Command Processor
 
 ===== Functional Requirements
 
@@ -36,13 +52,13 @@ endif::[]
 
 ===== Non-Functional Requirements
 
-. [[NF221]] **Low latency**: Command input shall execute within 30ms of user keypress. (NF221)
+. [[NF221]] **Low latency**: Command input shall be interpreted and dispatched within 30ms of user keypress. This measures command execution time only; for commands that also trigger a canvas update, the end-to-end input-to-visual-feedback latency is governed by <<NF212>> (≤50ms), which is the binding constraint. (NF221)
 . [[NF222]] **Determinism**: Shortcut actions shall always yield consistent results. (NF222)
 . [[NF223]] **Discoverability**: The system shall provide a reference menu or help overlay for all available shortcuts. (NF223)
 
 ---
 
-==== (S.2.3) Rendering Engine
+==== (S.2.4) Rendering Engine
 
 ===== Functional Requirements
 
@@ -54,18 +70,20 @@ endif::[]
 
 ===== Non-Functional Requirements
 
-. [[NF231]] **Performance**: Rendering shall maintain a minimum of 60 frames per second for at least 95% of the active usage time under typical workloads. (NF231)
+. [[NF231]] **Performance**: Rendering shall maintain a minimum of 60 frames per second for at least 95% of the time during continuous user interaction (typing, dragging, panning) on a canvas containing up to 100 mixed elements (text and shapes). (60fps is targeted because it is the baseline for smooth animation in web and multimedia applications) (NF231)
 . [[NF232]] **Consistency**: Shapes and text shall retain consistent proportions and alignment across devices. (NF232)
-. [[NF233]] **Scalability**: Rendering shall handle up to 500 on-canvas elements without major performance degradation. (NF233)
+. [[NF233]] **Scalability**: Rendering shall handle up to 500 on-canvas elements without major performance degradation. (500 elements 
+was chosen due to typical usage scenarios) (NF233)
 
 ---
 
-==== (S.2.4) Document Management
+==== (S.2.5) Document Management
 
 ===== Functional Requirements
 
 . [[F241]] **File operations**: The system shall allow users to save, open, rename, and delete notes. (F241)
-. [[F242]] **Autosave**: The system shall autosave changes at regular intervals (≤60 seconds). (F242)
+. [[F242]] **Autosave**: The system shall autosave changes at regular intervals (≤60 seconds as that is 
+the typical interval for most applications) (F242)
 . [[F243]] **Export/Import**: The system shall support exporting notes to standard formats (e.g., PDF, Markdown) and importing from compatible sources. (F243)
 . [[F244]] **Version history**: The system shall maintain previous versions of a note for rollback. (F244)
 . [[F245]] **Folder synchronization**: The system shall maintain logical consistency between folder hierarchies and saved note structures. (F245)
@@ -73,12 +91,13 @@ endif::[]
 ===== Non-Functional Requirements
 
 . [[NF241]] **Data integrity**: Files shall be protected from corruption or loss during save operations. (NF241)
-. [[NF242]] **Storage efficiency**: Notes shall use minimal disk space through compression and text-based storage. (NF242)
+. [[NF242]] **Storage efficiency**: A note containing up to 1000 words of text and 10 shapes shall occupy less than 100KB on disk. (NF242)
 . [[NF243]] **Compatibility**: Exported documents shall remain visually consistent across standard PDF viewers. (NF243)
+. [[NF215]] **File integrity**: Save and export operations shall be atomic; a failed or interrupted operation shall not result in a partially written or corrupted file. (NF215)
 
 ---
 
-==== (S.2.5) Configuration and Customization
+==== (S.2.6) Configuration and Customization
 
 ===== Functional Requirements
 
@@ -90,10 +109,11 @@ endif::[]
 
 . [[NF251]] **Security**: Preference data shall be stored locally and securely. (NF251)
 . [[NF252]] **Consistency**: Preferences shall be consistently applied across all sessions. (NF252)
+. [[NF216]] **Privacy**: The application shall not initiate any background network traffic; all user data shall remain on the local device. (NF216)
 
 ---
 
-==== (S.2.6) Collaboration and Export
+==== (S.2.7) Collaboration and Export
 
 ===== Functional Requirements
 
@@ -105,9 +125,9 @@ endif::[]
 . [[NF261]] **Fidelity**: Exported and shared notes shall retain accurate formatting and positioning. (NF261)
 . [[NF262]] **Portability**: Shared files shall be viewable on other supported devices without requiring modification. (NF262)
 
-==== (S.2.7) Basis for Design and Requirements Stability
+==== (S.2.8) Basis for Design and Requirements Stability
 
-This section makes inputs/outputs explicit and classifies requirements by likelihood of change so an external team could design, build, and test from this document.
+_Note: This section is informational and does not correspond to a system component. It supplements sections S.2.1–S.2.7 by making component inputs/outputs explicit and classifying requirements by likelihood of change, so an external team could design, build, and test from this document._
 
 ===== Inputs and Outputs (Overview)
 
@@ -115,6 +135,7 @@ This section makes inputs/outputs explicit and classifies requirements by likeli
 | Component | Inputs | Outputs
 
 | Editor | Keyboard shortcuts, text entry, pointer events | Updated canvas model (text blocks, shapes), selection state, feedback messages
+| Canvas Manager | Pointer events (drag, resize, pan), canvas model | Repositioned/resized element states, updated viewport position
 | Shortcut Command Processor | Key events, user keybinding config | Dispatched editor actions, conflict warnings/help overlay
 | Rendering Engine | Canvas model, viewport (pan/zoom), style/theme | On-screen frames, redraw events
 | Document Management | File paths, save/load/export/version requests | Persisted files, autosave snapshots, exported PDFs/PNGs/Markdown, version IDs

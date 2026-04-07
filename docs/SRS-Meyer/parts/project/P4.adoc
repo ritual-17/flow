@@ -6,7 +6,7 @@ TIP: _**This is the core of the Project book**. It details the individual tasks 
 endif::[]
 
 Note: The tasks listed under each milestone are listed in order of importance/priority.
-These tasks also include their key dates, which is an important factor we considered when figuring out priority.
+These tasks also include their key dates, which is an important factor in determining priority.
 Additionally, the requirements associated with specific tasks are also listed as a sub-bullet and are linked to the respective requirement.
 
 ==== Milestone 1: Project Proposal & Team Formation (Week 1-4)

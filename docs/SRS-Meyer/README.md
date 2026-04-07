@@ -112,3 +112,17 @@ The stylesheet is defined in the file named `_style/puml.style`. It refers to cl
 
 PlantUML documentation is now really helpful to define theme, so it was defined in a _"monkey see, monkey do"_ way based on examples available in PlantMUL source code repository: https://github.com/plantuml/plantuml/blob/master/themes/
 
+This directory contains:
+- .github/
+- .gitignore
+- LICENSE
+- Makefile
+- SRS.pdf
+- _style/
+- appendix/
+- index.adoc
+- metadata.adoc
+- mockups/
+- models/
+- parts/
+- texput.log

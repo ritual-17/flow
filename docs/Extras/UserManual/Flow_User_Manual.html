@@ -1,548 +1,1085 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Flow – User Manual</title>
-<style>
-  body {
-    font-family: Calibri, 'Segoe UI', Arial, sans-serif;
-    font-size: 11pt;
-    line-height: 1.55;
-    color: #1a1a1a;
-    margin: 0;
-    padding: 0;
-  }
-  .page {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 2.5cm 3cm;
-  }
-  h1 {
-    font-size: 20pt;
-    color: #1F3864;
-    margin: 28pt 0 6pt 0;
-    padding-bottom: 4pt;
-    border-bottom: 2px solid #1F3864;
-  }
-  h2 {
-    font-size: 13pt;
-    color: #2E4E8F;
-    margin: 18pt 0 4pt 0;
-  }
-  h3 {
-    font-size: 11pt;
-    color: #2E4E8F;
-    margin: 12pt 0 2pt 0;
-    font-style: italic;
-  }
-  p  { margin: 5pt 0 8pt 0; }
-  ul, ol { margin: 4pt 0 10pt 0; padding-left: 22pt; }
-  li { margin: 3pt 0; }
-  kbd {
-    font-family: Consolas, 'Courier New', monospace;
-    font-size: 9.5pt;
-    background: #f0f0f0;
-    border: 1px solid #bbb;
-    border-radius: 3px;
-    padding: 1pt 4pt;
-    white-space: nowrap;
-  }
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 8pt 0 14pt 0;
-    font-size: 10pt;
-  }
-  th {
-    background: #1F3864;
-    color: #fff;
-    text-align: left;
-    padding: 5pt 8pt;
-    font-weight: bold;
-  }
-  td {
-    border: 1px solid #C5CFE0;
-    padding: 4pt 8pt;
-    vertical-align: top;
-  }
-  tr:nth-child(even) td { background: #EEF2F8; }
-  .callout {
-    border-left: 4px solid;
-    padding: 7pt 12pt;
-    margin: 10pt 0;
-    font-size: 10pt;
-  }
-  .callout strong { display: block; margin-bottom: 2pt; }
-  .note      { border-color: #2E4E8F; background: #EEF2F8; }
-  .tip       { border-color: #2E75B6; background: #E8F4FD; }
-  .important { border-color: #7030A0; background: #F3EBF9; }
-  .warning   { border-color: #C55A11; background: #FDF2E9; }
-  .title-page {
-    text-align: center;
-    padding: 80pt 0 60pt 0;
-    page-break-after: always;
-  }
-  .title-page h1 { font-size: 36pt; border: none; letter-spacing: 3pt; margin-bottom: 8pt; }
-  .title-page .sub  { font-size: 14pt; color: #555; margin-bottom: 4pt; }
-  .title-page .ver  { font-size: 10pt; color: #888; }
-  .toc { page-break-after: always; }
-  .toc ol { list-style: none; padding: 0; }
-  .toc li { padding: 3pt 0; border-bottom: 1px dotted #ccc; }
-  .toc a  { color: #1F3864; text-decoration: none; font-size: 11pt; }
-  .page-break { page-break-after: always; height: 0; }
-</style>
+  <meta charset="UTF-8">
+  <title>Flow – User Manual</title>
+  <!-- <link rel="stylesheet" href="Flow_User_Manual.css"> -->
+  <style>
+    body {
+      font-family: Calibri, 'Segoe UI', Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.55;
+      color: #1a1a1a;
+      margin: 0;
+      padding: 0;
+    }
+
+    .page {
+      max-width: 740px;
+      margin: auto auto;
+      padding: 2.5cm 3cm;
+    }
+
+    @page {
+      /* Top & Bottom: 0.5in | Left & Right: 0 */
+      margin: 0.5in 0;
+    }
+
+    h1 {
+      font-size: 20pt;
+      color: #1F3864;
+      margin: 28pt 0 6pt 0;
+      padding-bottom: 4pt;
+      border-bottom: 2px solid #1F3864;
+    }
+
+    h2 {
+      font-size: 13pt;
+      color: #2E4E8F;
+      margin: 18pt 0 4pt 0;
+    }
+
+    h3 {
+      font-size: 11pt;
+      color: #2E4E8F;
+      margin: 12pt 0 2pt 0;
+      font-style: italic;
+    }
+
+    p {
+      margin: 5pt 0 8pt 0;
+    }
+
+    ul,
+    ol {
+      margin: 4pt 0 10pt 0;
+      padding-left: 22pt;
+    }
+
+    li {
+      margin: 3pt 0;
+    }
+
+    kbd {
+      font-family: Consolas, 'Courier New', monospace;
+      font-size: 9.5pt;
+      background: #f0f0f0;
+      border: 1px solid #bbb;
+      border-radius: 3px;
+      padding: 1pt 4pt;
+      white-space: nowrap;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 8pt 0 14pt 0;
+      font-size: 10pt;
+    }
+
+    th {
+      background: #1F3864;
+      color: #fff;
+      text-align: left;
+      padding: 5pt 8pt;
+      font-weight: bold;
+    }
+
+    td {
+      border: 1px solid #C5CFE0;
+      padding: 4pt 8pt;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: #EEF2F8;
+    }
+
+    .callout {
+      border-left: 4px solid;
+      padding: 7pt 12pt;
+      margin: 10pt 0;
+      font-size: 10pt;
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 2pt;
+    }
+
+    .note {
+      border-color: #2E4E8F;
+      background: #EEF2F8;
+    }
+
+    .tip {
+      border-color: #2E75B6;
+      background: #E8F4FD;
+    }
+
+    .important {
+      border-color: #7030A0;
+      background: #F3EBF9;
+    }
+
+    .warning {
+      border-color: #C55A11;
+      background: #FDF2E9;
+    }
+
+    .title-page {
+      text-align: center;
+      padding: 80pt 0 60pt 0;
+      page-break-after: always;
+    }
+
+    .title-page h1 {
+      font-size: 36pt;
+      border: none;
+      letter-spacing: 3pt;
+      margin-bottom: 8pt;
+    }
+
+    .title-page .sub {
+      font-size: 14pt;
+      color: #555;
+      margin-bottom: 4pt;
+    }
+
+    .title-page .ver {
+      font-size: 10pt;
+      color: #888;
+    }
+
+    .toc {
+      page-break-after: always;
+    }
+
+    .toc ol {
+      list-style: none;
+      padding: 0;
+    }
+
+    .toc li {
+      padding: 3pt 0;
+      border-bottom: 1px dotted #ccc;
+    }
+
+    .toc a {
+      color: #1F3864;
+      text-decoration: none;
+      font-size: 11pt;
+    }
+
+    .page-break {
+      /* break-before: page; */
+      break-after: page;
+    }
+  </style>
 </head>
+
 <body>
-<div class="page">
-
-<!-- TITLE -->
-<div class="title-page">
-  <h1>Flow</h1>
-  <div class="sub">User Manual</div>
-  <div class="ver">Version 1.0 &nbsp;·&nbsp; 2026</div>
-</div>
-
-<!-- CONTENTS -->
-<div class="toc">
-  <h1>Contents</h1>
-  <ol>
-    <li><a href="#overview">1. What is Flow?</a></li>
-    <li><a href="#quickstart">2. Your First Diagram — Quick Start</a></li>
-    <li><a href="#modes">3. Understanding Modes</a></li>
-    <li><a href="#navigate">4. Navigate the Canvas</a></li>
-    <li><a href="#shapes">5. Place and Move Shapes</a></li>
-    <li><a href="#labels">6. Add Text to a Shape</a></li>
-    <li><a href="#lines">7. Draw Lines</a></li>
-    <li><a href="#connect">8. Connect Shapes with Anchored Lines</a></li>
-    <li><a href="#select">9. Select, Copy, and Delete</a></li>
-    <li><a href="#save">10. Save and Export</a></li>
-    <li><a href="#ref">11. Quick Reference</a></li>
-  </ol>
-</div>
-
-<!-- 1 -->
-<h1 id="overview">1. What is Flow?</h1>
-
-<p>Flow is a keyboard-driven diagramming application. You create shapes, connect them with lines, and add rich text labels — all without leaving the keyboard.</p>
-<p>Flow is inspired by Vim. Like Vim, it uses <strong>modes</strong>: the action a key performs depends on the mode you are currently in. Once you learn the modes, you can build complex diagrams quickly and precisely.</p>
-<p>Flow renders text labels using <strong>Typst</strong>, a markup language that supports maths, symbols, and styled text. Completed diagrams export to PDF.</p>
-
-<div class="callout note">
-  <strong>Note</strong>
-  The status bar at the bottom of the window always shows your current mode and the next available actions. Check it whenever you are unsure what to do.
-</div>
-
-<div class="page-break"></div>
-
-<!-- 2 -->
-<h1 id="quickstart">2. Your First Diagram — Quick Start</h1>
-
-<p>Follow these steps to build a simple two-shape diagram connected by an arrow. This covers the primary workflow.</p>
-
-<h2>Step 1 — Place two shapes</h2>
-<ol>
-  <li>Open Flow. You start in <strong>Normal mode</strong>.</li>
-  <li>Press <kbd>i</kbd> to enter <strong>Insert mode</strong>.</li>
-  <li>Press <kbd>r</kbd>, then click the canvas to place a rectangle.</li>
-  <li>Press <kbd>r</kbd> again and click a different location to place a second rectangle.</li>
-  <li>Press <kbd>Esc</kbd> to return to Normal mode.</li>
-</ol>
-
-<h2>Step 2 — Label the first shape</h2>
-<ol>
-  <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> to move the cursor over the first rectangle.</li>
-  <li>Press <kbd>t</kbd> to open the label editor.</li>
-  <li>Press <kbd>i</kbd> inside the editor to start typing, then type your label (for example: <em>Start</em>).</li>
-  <li>Press <kbd>Esc</kbd> twice — once to leave insert mode in the editor, and again to compile the label and close the editor.</li>
-</ol>
-
-<div class="callout tip">
-  <strong>Tip</strong>
-  Repeat Step 2 for the second shape and label it <em>End</em>.
-</div>
-
-<h2>Step 3 — Connect the shapes with an arrow</h2>
-<ol>
-  <li>Move the cursor near the first rectangle in Normal mode.</li>
-  <li>Press <kbd>A</kbd> (capital A) to enter <strong>Anchor-Line mode</strong>. Anchor dots appear on nearby shapes.</li>
-  <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> to navigate to the anchor dot on the right side of the first rectangle.</li>
-  <li>Press <kbd>Space</kbd> to attach the line to that anchor.</li>
-  <li>Move the cursor toward the second rectangle. Press <kbd>e</kbd> to add an arrowhead at the end.</li>
-  <li>Navigate to the anchor dot on the left side of the second rectangle and press <kbd>Space</kbd> to finish the line.</li>
-  <li>Press <kbd>Esc</kbd> to return to Normal mode.</li>
-</ol>
-
-<div class="callout important">
-  <strong>Important</strong>
-  When you move a shape that has an anchored line attached, the line updates automatically to follow the shape.
-</div>
-
-<h2>Step 4 — Save</h2>
-<ol>
-  <li>Press <kbd>Ctrl</kbd>+<kbd>S</kbd> to save your diagram.</li>
-</ol>
-
-<div class="page-break"></div>
-
-<!-- 3 -->
-<h1 id="modes">3. Understanding Modes</h1>
-
-<p>Every key in Flow behaves differently depending on the active mode. Press <kbd>Esc</kbd> at any time to return to Normal mode and cancel the current action.</p>
-
-<table>
-  <tr><th>Mode</th><th>How to enter</th><th>What you can do</th></tr>
-  <tr><td><strong>Normal</strong></td><td><kbd>Esc</kbd> from any mode</td><td>Move the cursor, navigate shapes, issue commands</td></tr>
-  <tr><td><strong>Insert</strong></td><td><kbd>i</kbd> in Normal</td><td>Place new shapes on the canvas</td></tr>
-  <tr><td><strong>Visual</strong></td><td><kbd>v</kbd> in Normal</td><td>Select shapes to move, copy, or delete</td></tr>
-  <tr><td><strong>Line</strong></td><td><kbd>a</kbd> in Normal</td><td>Draw a free multi-point line</td></tr>
-  <tr><td><strong>Anchor-Line</strong></td><td><kbd>A</kbd> in Normal</td><td>Draw a line anchored to shape connection points</td></tr>
-  <tr><td><strong>Text</strong></td><td><kbd>t</kbd> near a shape</td><td>Edit the shape's label in the Typst editor</td></tr>
-  <tr><td><strong>Auto-Link Insert</strong></td><td><kbd>I</kbd> in Normal</td><td>Place a new shape and auto-connect it to the previous shape</td></tr>
-</table>
-
-<div class="callout note">
-  <strong>Note</strong>
-  The mode name in the status bar changes every time you switch modes. If a key does not behave as expected, check the status bar to confirm your current mode.
-</div>
-
-<div class="page-break"></div>
-
-<!-- 4 -->
-<h1 id="navigate">4. Navigate the Canvas</h1>
-
-<h2>Move the cursor</h2>
-<p>In Normal mode, a cursor marks your current position on the canvas. Use these keys to move it.</p>
-
-<table>
-  <tr><th>Key</th><th>Action</th></tr>
-  <tr><td><kbd>h</kbd></td><td>Move cursor left (10 px)</td></tr>
-  <tr><td><kbd>j</kbd></td><td>Move cursor down (10 px)</td></tr>
-  <tr><td><kbd>k</kbd></td><td>Move cursor up (10 px)</td></tr>
-  <tr><td><kbd>l</kbd></td><td>Move cursor right (10 px)</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>h/j/k/l</kbd></td><td>Move cursor fast (50 px)</td></tr>
-</table>
-
-<h2>Cycle through shapes</h2>
-<table>
-  <tr><th>Key</th><th>Action</th></tr>
-  <tr><td><kbd>n</kbd></td><td>Jump to the next shape</td></tr>
-  <tr><td><kbd>N</kbd></td><td>Jump to the previous shape</td></tr>
-  <tr><td><kbd>M</kbd></td><td>Move cursor to the centre of the screen</td></tr>
-  <tr><td><kbd>z</kbd><kbd>z</kbd></td><td>Scroll the viewport to centre on the cursor</td></tr>
-</table>
-
-<h2>Pan the viewport</h2>
-<table>
-  <tr><th>Key</th><th>Action</th></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>u</kbd></td><td>Scroll viewport up</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>d</kbd></td><td>Scroll viewport down</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>,</kbd></td><td>Scroll viewport left</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>.</kbd></td><td>Scroll viewport right</td></tr>
-</table>
-
-<div class="page-break"></div>
-
-<!-- 5 -->
-<h1 id="shapes">5. Place and Move Shapes</h1>
-
-<h2>Place a shape</h2>
-<ol>
-  <li>Press <kbd>i</kbd> to enter Insert mode.</li>
-  <li>Press the key for the shape you want.</li>
-  <li>Click on the canvas where you want to place it. Flow centres the shape on the click point and returns to Insert mode.</li>
-  <li>Press <kbd>Esc</kbd> when you are done placing shapes.</li>
-</ol>
-
-<table>
-  <tr><th>Key</th><th>Shape</th></tr>
-  <tr><td><kbd>r</kbd></td><td>Rectangle</td></tr>
-  <tr><td><kbd>s</kbd></td><td>Square</td></tr>
-  <tr><td><kbd>c</kbd></td><td>Circle</td></tr>
-  <tr><td><kbd>t</kbd></td><td>Text box</td></tr>
-</table>
-
-<h2>Move a shape</h2>
-<ol>
-  <li>Press <kbd>v</kbd> to enter Visual mode.</li>
-  <li>Move the cursor over the shape and press <kbd>Space</kbd> to select it.</li>
-  <li>Use <kbd>Shift</kbd>+<kbd>h/j/k/l</kbd> to nudge the shape (10 px per press).</li>
-  <li>Use <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>h/j/k/l</kbd> for larger moves (50 px per press).</li>
-  <li>Press <kbd>Esc</kbd> to deselect and return to Normal mode.</li>
-</ol>
-
-<h2>Delete a shape</h2>
-<ol>
-  <li>Press <kbd>v</kbd> to enter Visual mode.</li>
-  <li>Move the cursor over the shape and press <kbd>Space</kbd> to select it.</li>
-  <li>Press <kbd>d</kbd> to delete the selection.</li>
-</ol>
-
-<div class="callout warning">
-  <strong>Warning</strong>
-  Deleting a shape also removes all lines connected to it. Press <kbd>u</kbd> immediately to undo if this was not intended.
-</div>
-
-<div class="page-break"></div>
-
-<!-- 6 -->
-<h1 id="labels">6. Add Text to a Shape</h1>
-
-<p>Every shape can carry a label. Labels are written in <strong>Typst</strong> markup and rendered as an image on the canvas. You do not need to know Typst to write plain text — type normally and Flow renders it as-is.</p>
-
-<h2>Edit a label</h2>
-<ol>
-  <li>Move the cursor near the shape in Normal mode.</li>
-  <li>Press <kbd>t</kbd>. A text editor opens on the nearest shape.</li>
-  <li>Press <kbd>i</kbd> to start typing.</li>
-  <li>Type your text.</li>
-  <li>Press <kbd>Esc</kbd> to stop typing, then press <kbd>Esc</kbd> again to compile and close the editor.</li>
-</ol>
-
-<div class="callout note">
-  <strong>Note</strong>
-  The label editor uses Vim key bindings. Press <kbd>i</kbd> before you begin typing — you start in the editor's Normal mode, not Insert mode.
-</div>
-
-<h2>Typst markup — common formatting</h2>
-
-<table>
-  <tr><th>Markup you type</th><th>Result on canvas</th></tr>
-  <tr><td><kbd>*bold text*</kbd></td><td>Bold text</td></tr>
-  <tr><td><kbd>_italic text_</kbd></td><td>Italic text</td></tr>
-  <tr><td><kbd>$ x^2 + y^2 $</kbd></td><td>Inline maths: x² + y²</td></tr>
-  <tr><td><kbd>#sym.arrow.r</kbd></td><td>Right arrow symbol →</td></tr>
-  <tr><td>(blank line between paragraphs)</td><td>New paragraph</td></tr>
-</table>
-
-<div class="callout tip">
-  <strong>Tip</strong>
-  If you only need plain text with no special formatting, simply type your text. No markup is required.
-</div>
-
-<div class="page-break"></div>
-
-<!-- 7 -->
-<h1 id="lines">7. Draw Lines</h1>
-
-<p>A line in Flow is a polyline: a series of straight segments connected at vertices. You place each vertex with <kbd>Space</kbd>.</p>
-
-<h2>Draw a free line</h2>
-<ol>
-  <li>Press <kbd>a</kbd> in Normal mode to enter Line mode.</li>
-  <li>Move the cursor to where you want the first vertex.</li>
-  <li>Press <kbd>Space</kbd> to place the vertex.</li>
-  <li>Move the cursor and press <kbd>Space</kbd> again to add more vertices.</li>
-  <li>Press <kbd>Esc</kbd> to finish the line and return to Normal mode.</li>
-</ol>
-
-<h2>Add arrowheads</h2>
-<p>While drawing — at any point before pressing <kbd>Esc</kbd> — press <kbd>e</kbd> to cycle through arrowhead states:</p>
-
-<table>
-  <tr><th>State</th><th>Description</th></tr>
-  <tr><td>No arrowheads</td><td>Plain line (default)</td></tr>
-  <tr><td>End arrowhead</td><td>Arrow at the last point</td></tr>
-  <tr><td>Both arrowheads</td><td>Arrows at both ends</td></tr>
-  <tr><td>Start arrowhead</td><td>Arrow at the first point only</td></tr>
-</table>
-
-<p>Press <kbd>e</kbd> again to cycle back to no arrowheads.</p>
-
-<h2>Line vertex dots</h2>
-<p>After you finish a line, each vertex appears as a small semi-transparent dot. These dots are snap points — you can connect other lines to them in Anchor-Line mode (see Section 8).</p>
-
-<div class="page-break"></div>
-
-<!-- 8 -->
-<h1 id="connect">8. Connect Shapes with Anchored Lines</h1>
-
-<p>An anchored line is attached to a specific connection point (anchor) on a shape. When you move the shape, the line follows it automatically.</p>
-
-<h2>Anchor points</h2>
-<p>Each shape displays its anchor points as small dots when you are in Anchor-Line mode. Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> to navigate between them.</p>
-
-<h2>Draw an anchored line between two shapes</h2>
-<ol>
-  <li>In Normal mode, press <kbd>A</kbd> to enter <strong>Anchor-Line mode</strong>.</li>
-  <li>Move the cursor near the source shape. Its anchor dots appear.</li>
-  <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> to move to the anchor where you want the line to start.</li>
-  <li>Press <kbd>Space</kbd> to attach the line start to that anchor.</li>
-  <li>Move the cursor toward the target shape. Its anchor dots appear.</li>
-  <li>Navigate to the desired anchor on the target shape.</li>
-  <li>Press <kbd>Space</kbd> to attach the line end and complete the connection.</li>
-  <li>Press <kbd>Esc</kbd> to return to Normal mode.</li>
-</ol>
-
-<div class="callout tip">
-  <strong>Tip</strong>
-  Press <kbd>e</kbd> at any point while drawing to cycle arrowhead states on the line.
-</div>
-
-<h2>Connect a line to a vertex on another line</h2>
-<p>You can also snap to vertices on existing lines:</p>
-<ol>
-  <li>Enter Anchor-Line mode (<kbd>A</kbd>).</li>
-  <li>Move the cursor near the target line. Its vertex dots become snap targets.</li>
-  <li>Navigate to the desired vertex and press <kbd>Space</kbd> to attach.</li>
-</ol>
-
-<h2>Auto-Link Insert mode</h2>
-<p>Auto-Link Insert mode places a new shape and connects it to the previous shape automatically:</p>
-<ol>
-  <li>In Normal mode, press <kbd>I</kbd> (capital I) to enter Auto-Link Insert mode.</li>
-  <li>Press a shape key (<kbd>r</kbd>, <kbd>s</kbd>, <kbd>c</kbd>, or <kbd>t</kbd>).</li>
-  <li>Click on the canvas. Flow places the shape and draws a connecting line from the previous shape.</li>
-  <li>Each subsequent shape you place connects to the one before it, forming a chain.</li>
-  <li>Press <kbd>Esc</kbd> to finish.</li>
-</ol>
-
-<div class="page-break"></div>
-
-<!-- 9 -->
-<h1 id="select">9. Select, Copy, and Delete</h1>
-
-<h2>Select shapes</h2>
-<ol>
-  <li>Press <kbd>v</kbd> in Normal mode to enter Visual mode.</li>
-  <li>Move the cursor over a shape and press <kbd>Space</kbd> to toggle its selection.</li>
-  <li>To select all shapes at once, press <kbd>Ctrl</kbd>+<kbd>A</kbd>.</li>
-  <li>Press <kbd>Esc</kbd> to deselect and return to Normal mode.</li>
-</ol>
-
-<h2>Copy and paste</h2>
-<table>
-  <tr><th>Keys</th><th>Action</th></tr>
-  <tr><td><kbd>y</kbd> (in Visual mode)</td><td>Copy (yank) the selected shapes</td></tr>
-  <tr><td><kbd>p</kbd> (in Normal mode)</td><td>Paste copied shapes at the cursor position</td></tr>
-</table>
-
-<h2>Delete</h2>
-<table>
-  <tr><th>Keys</th><th>Action</th></tr>
-  <tr><td><kbd>d</kbd> (in Visual mode)</td><td>Delete all selected shapes</td></tr>
-</table>
-
-<h2>Undo and redo</h2>
-<table>
-  <tr><th>Keys</th><th>Action</th></tr>
-  <tr><td><kbd>u</kbd></td><td>Undo the last action</td></tr>
-  <tr><td><kbd>r</kbd></td><td>Redo</td></tr>
-</table>
-
-<div class="page-break"></div>
-
-<!-- 10 -->
-<h1 id="save">10. Save and Export</h1>
-
-<h2>Save your diagram</h2>
-<table>
-  <tr><th>Keys</th><th>Action</th></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Save the current file</td></tr>
-</table>
-
-<h2>Export to PDF</h2>
-<ol>
-  <li>Press <kbd>Ctrl</kbd>+<kbd>E</kbd> to export to PDF.</li>
-  <li>Choose a destination in the save dialog.</li>
-</ol>
-
-<p>Flow renders all shapes and labels — including Typst maths and symbols — into the PDF.</p>
-
-<div class="callout important">
-  <strong>Important</strong>
-  All labels must be compiled (you must have pressed <kbd>Esc</kbd> to close the editor at least once) before you export. Uncompiled labels do not appear in the PDF.
-</div>
-
-<h2>Import a PDF slide</h2>
-<ol>
-  <li>In Normal mode, press <kbd>f</kbd> to import a PDF file as a slide placeholder on the canvas.</li>
-</ol>
-
-<div class="page-break"></div>
-
-<!-- 11 -->
-<h1 id="ref">11. Quick Reference</h1>
-
-<h2>Normal mode</h2>
-<table>
-  <tr><th>Keys</th><th>Action</th></tr>
-  <tr><td><kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd></td><td>Move cursor left / down / up / right (10 px)</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>h/j/k/l</kbd></td><td>Move cursor fast (50 px)</td></tr>
-  <tr><td><kbd>n</kbd> / <kbd>N</kbd></td><td>Jump to next / previous shape</td></tr>
-  <tr><td><kbd>i</kbd></td><td>Enter Insert mode (place shapes)</td></tr>
-  <tr><td><kbd>v</kbd></td><td>Enter Visual mode (select shapes)</td></tr>
-  <tr><td><kbd>a</kbd></td><td>Enter Line mode (free line)</td></tr>
-  <tr><td><kbd>A</kbd></td><td>Enter Anchor-Line mode</td></tr>
-  <tr><td><kbd>I</kbd></td><td>Enter Auto-Link Insert mode</td></tr>
-  <tr><td><kbd>t</kbd></td><td>Open label editor on nearest shape</td></tr>
-  <tr><td><kbd>p</kbd></td><td>Paste</td></tr>
-  <tr><td><kbd>u</kbd></td><td>Undo</td></tr>
-  <tr><td><kbd>r</kbd></td><td>Redo</td></tr>
-  <tr><td><kbd>f</kbd></td><td>Import PDF</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Save</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>E</kbd></td><td>Export to PDF</td></tr>
-  <tr><td><kbd>Esc</kbd></td><td>Return to Normal mode from any other mode</td></tr>
-</table>
-
-<h2>Insert mode</h2>
-<table>
-  <tr><th>Keys</th><th>Action</th></tr>
-  <tr><td><kbd>r</kbd></td><td>Place rectangle</td></tr>
-  <tr><td><kbd>s</kbd></td><td>Place square</td></tr>
-  <tr><td><kbd>c</kbd></td><td>Place circle</td></tr>
-  <tr><td><kbd>t</kbd></td><td>Place text box</td></tr>
-  <tr><td><kbd>Esc</kbd></td><td>Return to Normal mode</td></tr>
-</table>
-
-<h2>Visual mode</h2>
-<table>
-  <tr><th>Keys</th><th>Action</th></tr>
-  <tr><td><kbd>Space</kbd></td><td>Toggle selection on shape at cursor</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>A</kbd></td><td>Select all shapes</td></tr>
-  <tr><td><kbd>Shift</kbd>+<kbd>h/j/k/l</kbd></td><td>Move selected shapes (10 px)</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>h/j/k/l</kbd></td><td>Move selected shapes (50 px)</td></tr>
-  <tr><td><kbd>y</kbd></td><td>Copy (yank) selection</td></tr>
-  <tr><td><kbd>d</kbd></td><td>Delete selection</td></tr>
-  <tr><td><kbd>Esc</kbd></td><td>Deselect and return to Normal mode</td></tr>
-</table>
-
-<h2>Line mode</h2>
-<table>
-  <tr><th>Keys / Action</th><th>Effect</th></tr>
-  <tr><td><kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd></td><td>Move cursor</td></tr>
-  <tr><td><kbd>Space</kbd></td><td>Place vertex at cursor position</td></tr>
-  <tr><td><kbd>e</kbd></td><td>Cycle arrowhead state (none → end → both → start)</td></tr>
-  <tr><td><kbd>Esc</kbd></td><td>Finish line and return to Normal mode</td></tr>
-</table>
-
-<h2>Anchor-Line mode</h2>
-<table>
-  <tr><th>Keys / Action</th><th>Effect</th></tr>
-  <tr><td><kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd></td><td>Navigate between anchor points</td></tr>
-  <tr><td><kbd>Space</kbd></td><td>Attach line to current anchor point</td></tr>
-  <tr><td><kbd>e</kbd></td><td>Cycle arrowhead state</td></tr>
-  <tr><td><kbd>Esc</kbd></td><td>Finish line and return to Normal mode</td></tr>
-</table>
-
-<h2>Text mode (label editor)</h2>
-<table>
-  <tr><th>Keys</th><th>Action</th></tr>
-  <tr><td><kbd>i</kbd></td><td>Start typing (enter editor Insert mode)</td></tr>
-  <tr><td><kbd>Esc</kbd></td><td>Stop typing (return to editor Normal mode)</td></tr>
-  <tr><td><kbd>Esc</kbd> (from editor Normal)</td><td>Compile label and close editor</td></tr>
-</table>
-
-<h2>Viewport</h2>
-<table>
-  <tr><th>Keys</th><th>Action</th></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>u</kbd></td><td>Scroll viewport up</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>d</kbd></td><td>Scroll viewport down</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>,</kbd></td><td>Scroll viewport left</td></tr>
-  <tr><td><kbd>Ctrl</kbd>+<kbd>.</kbd></td><td>Scroll viewport right</td></tr>
-  <tr><td><kbd>M</kbd></td><td>Move cursor to screen centre</td></tr>
-  <tr><td><kbd>z</kbd><kbd>z</kbd></td><td>Centre viewport on cursor</td></tr>
-</table>
-
-</div>
+  <div class="page">
+
+    <!-- TITLE -->
+    <div class="title-page">
+      <h1>Flow</h1>
+      <div class="sub">User Manual</div>
+      <div class="ver">Version 1.0 &nbsp;·&nbsp; 2026</div>
+    </div>
+
+    <!-- CONTENTS -->
+    <div class="toc">
+      <h1>Contents</h1>
+      <ol>
+        <li><a href="#overview">1. What is Flow?</a></li>
+        <li><a href="#quickstart">2. Your First Diagram — Quick Start</a></li>
+        <li><a href="#modes">3. Understanding Modes</a></li>
+        <li><a href="#navigate">4. Navigate the Canvas</a></li>
+        <li><a href="#shapes">5. Place and Move Shapes</a></li>
+        <li><a href="#labels">6. Add Text to a Shape</a></li>
+        <li><a href="#lines">7. Draw Lines</a></li>
+        <li><a href="#connect">8. Connect Shapes with Anchored Lines</a></li>
+        <li><a href="#select">9. Select, Copy, and Delete</a></li>
+        <li><a href="#save">10. Save and Export</a></li>
+        <li><a href="#ref">11. Quick Reference</a></li>
+      </ol>
+    </div>
+
+    <!-- 1 -->
+    <h1 id="overview">1. What is Flow?</h1>
+
+    <p>Flow is a keyboard-driven diagramming application designed for efficient note-taking that seamlessly integrates
+      text and diagrams. Inspired by Vim, it uses <strong>modes</strong>: the action a key performs depends on the mode
+      you are currently in. Once you learn the modes, you can build complex diagrams quickly and precisely.</p>
+    <p>Flow renders text labels using <strong>Typst</strong>, a markup language that supports maths, symbols, and styled
+      text. Completed diagrams can be exported to PDF.</p>
+
+    <div class="callout note">
+      <strong>Note</strong>
+      The status bar at the bottom of the window always shows your current mode and other useful information. If a key
+      does not behave as expected, check the status bar to confirm your current mode. A help menu listing all key
+      within a mode is also available at any time by pressing <kbd>`</kbd>.
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- 2 -->
+    <h1 id="quickstart">2. Your First Diagram — Quick Start</h1>
+
+    <p>Follow these steps to build a simple two-shape diagram connected by an arrow. This covers the primary workflow.
+    </p>
+
+    <h2>Step 1 — Place two shapes</h2>
+    <ol>
+      <li>Open Flow. You start in <strong>Normal mode</strong>.</li>
+      <li>Press <kbd>i</kbd> to enter <strong>Insert mode</strong>.</li>
+      <li>Press <kbd>c</kbd>, to place a circle.</li>
+      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> /
+        <kbd>→</kbd> to move the cursor to a different location on the canvas. Flow centres the next shape on the cursor
+        when you place it.
+      </li>
+      <li>Press <kbd>c</kbd> again to place a second circle.</li>
+      <li>Press <kbd>Esc</kbd> to return to Normal mode.</li>
+    </ol>
+
+    <h2>Step 2 — Label the first shape</h2>
+    <ol>
+      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> /
+        <kbd>→</kbd> to move the cursor over the first circle.
+      </li>
+      <li>Press <kbd>t</kbd> to open the label editor.</li>
+      <li>Press <kbd>i</kbd> inside the editor to start typing, then type your label (for example: <em>Start</em>).</li>
+      <li>Press <kbd>Esc</kbd> twice — once to leave insert mode in the editor, and again to compile the label and close
+        the editor.</li>
+    </ol>
+
+    <div class="callout tip">
+      <strong>Tip</strong>
+      Repeat Step 2 for the second shape and label it <em>End</em>.
+    </div>
+
+    <h2>Step 3 — Connect the shapes with an arrow</h2>
+    <ol>
+      <li>Move the cursor near the first rectangle in Normal mode.</li>
+      <li>Press <kbd>A</kbd> (capital A) to enter <strong>Anchor-Line mode</strong>. Anchor dots appear on all
+        shapes.</li>
+      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> /
+        <kbd>→</kbd> to navigate to the anchor dot on the right side
+        of the first circle.
+      </li>
+      <li>Press <kbd>Space</kbd> to attach the line to that anchor.</li>
+      <li>Navigate to the anchor dot on the left side of the second circle and press <kbd>Space</kbd> to finish the
+        line.</li>
+      <li>Press <kbd>e</kbd> to add an arrowhead at the end.</li>
+      <li>Press <kbd>Esc</kbd> to return to Normal mode.</li>
+    </ol>
+
+    <div class="callout important">
+      <strong>Important</strong>
+      When you move a shape that has an anchored line attached, the line updates automatically to follow the shape.
+    </div>
+
+    <h2>Step 4 — Add a title below the diagram</h2>
+    <ol>
+      <li>Press <kbd>i</kbd> to enter Insert mode.</li>
+      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> /
+        <kbd>→</kbd> to move the cursor below the diagram.
+      </li>
+      <li>Press <kbd>t</kbd> to place a text box.</li>
+      <li>Type "Simple Flowchart" or your desired title.</li>
+      <li>Press <kbd>Esc</kbd> twice — once to leave insert mode in the editor, and again to compile the label and close
+        the editor.</li>
+    </ol>
+
+    <h2>Step 5 — Move shapes in Visual mode</h2>
+    <ol>
+      <li>Press <kbd>v</kbd> to enter Visual mode.</li>
+      <li>For individual selection: Move the cursor over a shape and press <kbd>Space</kbd> to select it.</li>
+      <li>For box select (select all): Press <kbd>V</kbd> (capital V) to enter <strong>Visual-Block mode</strong> and
+        use the movement keys to draw a selection box around multiple shapes. Press <kbd>Space</kbd> to remove and start
+        a new selection if needed.
+      <li>Use <kbd>Shift</kbd>+<kbd>h/j/k/l</kbd> or <kbd>Shift</kbd>+<kbd>↑/↓/←/→</kbd> to move the selected shapes.
+      </li>
+      <li>Press <kbd>Esc</kbd> to deselect and return to Normal mode.</li>
+    </ol>
+
+    <div class="callout tip">
+      <strong>Tip</strong>
+      You can also use <kbd>Ctrl</kbd>+<kbd>a</kbd> to select all shapes at once, then move them together. Selected
+      shapes can also be deleted with <kbd>d</kbd> or copied with <kbd>y</kbd> (then pasted in normal mode with
+      <kbd>p</kbd>).
+    </div>
+
+    <h2>Step 6 — Save</h2>
+    <ol>
+      <li>Press <kbd>Ctrl</kbd>+<kbd>e</kbd> to export and save your diagram.</li>
+    </ol>
+
+    <div class="page-break"></div>
+
+    <!-- 3 -->
+    <h1 id="modes">3. Understanding Modes</h1>
+
+    <p>Every key in Flow behaves differently depending on the active mode. Press <kbd>Esc</kbd> at any time to return to
+      Normal mode and cancel the current action.</p>
+
+    <table>
+      <tr>
+        <th>Mode</th>
+        <th>How to enter</th>
+        <th>What you can do</th>
+      </tr>
+      <tr>
+        <td><strong>Normal</strong></td>
+        <td><kbd>Esc</kbd> from any mode</td>
+        <td>Move the cursor, navigate through shapes, issue commands</td>
+      </tr>
+      <tr>
+        <td><strong>Insert</strong></td>
+        <td><kbd>i</kbd> in Normal</td>
+        <td>Place new shapes on the canvas</td>
+      </tr>
+      <tr>
+        <td><strong>Visual</strong></td>
+        <td><kbd>v</kbd> in Normal or Visual-Block</td>
+        <td>Select shapes to move, copy, or delete</td>
+      </tr>
+      <tr>
+        <td><strong>Visual-Block</strong></td>
+        <td><kbd>V</kbd> in Normal or Visual</td>
+        <td>Select multiple shapes with a selection box</td>
+      </tr>
+      <tr>
+        <td><strong>Line</strong></td>
+        <td><kbd>a</kbd> in Normal or Anchor-Line</td>
+        <td>Draw a free multi-point line</td>
+      </tr>
+      <tr>
+        <td><strong>Anchor-Line</strong></td>
+        <td><kbd>A</kbd> in Normal or Line</td>
+        <td>Draw a line anchored to shape connection points</td>
+      </tr>
+      <tr>
+        <td><strong>Text</strong></td>
+        <td><kbd>t</kbd> near a shape</td>
+        <td>Edit the shape's label in the Typst editor</td>
+      </tr>
+      <tr>
+        <td><strong>Auto-Link Insert</strong></td>
+        <td><kbd>I</kbd> in Normal</td>
+        <td>Place a new shape and auto-connect it to the previous shape</td>
+      </tr>
+    </table>
+
+    <div class="callout note">
+      <strong>Note</strong>
+      The mode name in the status bar changes every time you switch modes. If a key does not behave as expected, check
+      the status bar to confirm your current mode. A help menu listing all key bindings within a mode is also available
+      at any time by pressing <kbd>`</kbd>.
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- 4 -->
+    <h1 id="navigate">4. Navigate the Canvas</h1>
+
+    <h2>Move the cursor</h2>
+    <p>In Normal mode, a cursor marks your current position on the canvas. Use these keys to move it.</p>
+
+    <table>
+      <tr>
+        <th>Key</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>h</kbd>, <kbd>←</kbd></td>
+        <td>Move cursor left (10 px)</td>
+      </tr>
+      <tr>
+        <td><kbd>j</kbd>, <kbd>↓</kbd></td>
+        <td>Move cursor down (10 px)</td>
+      </tr>
+      <tr>
+        <td><kbd>k</kbd>, <kbd>↑</kbd></td>
+        <td>Move cursor up (10 px)</td>
+      </tr>
+      <tr>
+        <td><kbd>l</kbd>, <kbd>→</kbd></td>
+        <td>Move cursor right (10 px)</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>h/j/k/l</kbd> or <kbd>Ctrl</kbd>+<kbd>←/↓/↑/→</kbd></td>
+        <td>Move cursor fast (50 px)</td>
+      </tr>
+    </table>
+
+    <h2>Cycle through shapes</h2>
+    <table>
+      <tr>
+        <th>Key</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>n</kbd></td>
+        <td>Jump to the next shape</td>
+      </tr>
+      <tr>
+        <td><kbd>N</kbd></td>
+        <td>Jump to the previous shape</td>
+      </tr>
+      <tr>
+        <td><kbd>M</kbd></td>
+        <td>Move cursor to the centre of the screen</td>
+      </tr>
+      <tr>
+        <td><kbd>z</kbd><kbd>z</kbd></td>
+        <td>Scroll the viewport to centre on the cursor</td>
+      </tr>
+      <tr>
+        <td><kbd>g</kbd><kbd>g</kbd></td>
+        <td>Move cursor and viewport to centre of the initial screen</td>
+      </tr>
+    </table>
+
+    <h2>Pan the viewport</h2>
+    <table>
+      <tr>
+        <th>Key</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>u</kbd></td>
+        <td>Scroll viewport up</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>d</kbd></td>
+        <td>Scroll viewport down</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>,</kbd></td>
+        <td>Scroll viewport left</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>.</kbd></td>
+        <td>Scroll viewport right</td>
+      </tr>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 5 -->
+    <h1 id="shapes">5. Place and Move Shapes</h1>
+
+    <h2>Place a shape</h2>
+    <ol>
+      <li>Press <kbd>i</kbd> to enter Insert mode.</li>
+      <li>Press the key for the shape you want (<kbd>c</kbd> for circle, <kbd>r</kbd> for rectangle, etc).</li>
+      <li>Move the cursor to where you want to place it. Flow centres the shape on the cursor when it is placed.</li>
+      <li>Press <kbd>Esc</kbd> when you are done placing shapes.</li>
+    </ol>
+
+    <table>
+      <tr>
+        <th>Key</th>
+        <th>Shape</th>
+      </tr>
+      <tr>
+        <td><kbd>r</kbd></td>
+        <td>Rectangle</td>
+      </tr>
+      <tr>
+        <td><kbd>s</kbd></td>
+        <td>Square</td>
+      </tr>
+      <tr>
+        <td><kbd>c</kbd></td>
+        <td>Circle</td>
+      </tr>
+      <tr>
+        <td><kbd>t</kbd></td>
+        <td>Text box</td>
+      </tr>
+    </table>
+
+    <h2>Move a shape</h2>
+    <ol>
+      <li>Press <kbd>v</kbd> to enter Visual mode.</li>
+      <li>Move the cursor over the shape and press <kbd>Space</kbd> to select it.</li>
+      <li>Use <kbd>Shift</kbd>+<kbd>h/j/k/l</kbd> or <kbd>Shift</kbd>+<kbd>←/↓/↑/→</kbd> to nudge the shape (10 px per
+        press).</li>
+      <li>Use <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>h/j/k/l</kbd> or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>←/↓/↑/→</kbd>
+        for larger moves (50 px per press).</li>
+      <li>Press <kbd>Esc</kbd> to deselect and return to Normal mode.</li>
+    </ol>
+
+    <h2>Delete a shape</h2>
+    <ol>
+      <li>Press <kbd>v</kbd> to enter Visual mode.</li>
+      <li>Move the cursor over the shape and press <kbd>Space</kbd> to select it.</li>
+      <li>Press <kbd>d</kbd> to delete the selection.</li>
+    </ol>
+
+    <div class="callout warning">
+      <strong>Warning</strong>
+      Deleting a shape also removes all lines connected to it. Press <kbd>u</kbd> immediately to undo if this was not
+      intended.
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- 6 -->
+    <h1 id="labels">6. Add Text to a Shape</h1>
+
+    <p>Every shape can carry a label. Labels are written in <strong>Typst</strong> markup and rendered as an image on
+      the canvas. You do not need to know Typst to write plain text — type normally and Flow renders it as-is.</p>
+
+    <h2>Edit a label</h2>
+    <ol>
+      <li>Move the cursor near the shape in Normal mode.</li>
+      <li>Press <kbd>t</kbd>. A text editor opens on the nearest shape.</li>
+      <li>Press <kbd>i</kbd> to start typing.</li>
+      <li>Type your text.</li>
+      <li>Press <kbd>Esc</kbd> to stop typing, then press <kbd>Esc</kbd> again to compile and close the editor.</li>
+    </ol>
+
+    <div class="callout note">
+      <strong>Note</strong>
+      The label editor uses Vim key bindings. Press <kbd>i</kbd> before you begin typing — you start in the editor's
+      Normal mode, not Insert mode.
+    </div>
+
+    <h2>Typst markup — common formatting</h2>
+
+    <table>
+      <tr>
+        <th>Markup you type</th>
+        <th>Result on canvas</th>
+      </tr>
+      <tr>
+        <td><kbd>*bold text*</kbd></td>
+        <td>Bold text</td>
+      </tr>
+      <tr>
+        <td><kbd>_italic text_</kbd></td>
+        <td>Italic text</td>
+      </tr>
+      <tr>
+        <td><kbd>$ x^2 + y^2 $</kbd></td>
+        <td>Inline maths: x² + y²</td>
+      </tr>
+      <tr>
+        <td><kbd>#sym.arrow.r</kbd></td>
+        <td>Right arrow symbol →</td>
+      </tr>
+      <tr>
+        <td>(blank line between paragraphs)</td>
+        <td>New paragraph</td>
+      </tr>
+    </table>
+
+    <div class="callout tip">
+      <strong>Tip</strong>
+      If you only need plain text with no special formatting, simply type your text. No markup is required.
+    </div>
+
+    <div class="page-break"></div>
+
+    <!-- 7 -->
+    <h1 id="lines">7. Draw Lines</h1>
+
+    <p>A line in Flow is a polyline: a series of straight segments connected at vertices. You place each vertex with
+      <kbd>Space</kbd>.
+    </p>
+
+    <h2>Draw a free line</h2>
+    <ol>
+      <li>Press <kbd>a</kbd> in Normal mode to enter Line mode.</li>
+      <li>Move the cursor to where you want the first vertex.</li>
+      <li>Press <kbd>Space</kbd> to place the vertex.</li>
+      <li>Move the cursor and press <kbd>Space</kbd> again to add more vertices.</li>
+      <li>Press <kbd>Esc</kbd> to finish the line and return to Normal mode.</li>
+    </ol>
+
+    <h2>Add arrowheads</h2>
+    <p>While drawing — at any point before pressing <kbd>Esc</kbd> — press <kbd>e</kbd> to cycle through arrowhead
+      states:</p>
+
+    <table>
+      <tr>
+        <th>State</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>No arrowheads</td>
+        <td>Plain line (default)</td>
+      </tr>
+      <tr>
+        <td>End arrowhead</td>
+        <td>Arrow at the last point</td>
+      </tr>
+      <tr>
+        <td>Both arrowheads</td>
+        <td>Arrows at both ends</td>
+      </tr>
+      <tr>
+        <td>Start arrowhead</td>
+        <td>Arrow at the first point only</td>
+      </tr>
+    </table>
+
+    <p>Press <kbd>e</kbd> again to cycle back to no arrowheads.</p>
+
+    <div class="page-break"></div>
+
+    <!-- 8 -->
+    <h1 id="connect">8. Connect Shapes with Anchored Lines</h1>
+
+    <p>An anchored line is attached to a specific connection point (anchor) on a shape. When you move the shape, the
+      line follows it automatically.</p>
+
+    <h2>Anchor points</h2>
+    <p>Each shape displays its anchor points as small dots when you are in Anchor-Line mode. Use <kbd>h</kbd> /
+      <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> to navigate between them.
+    </p>
+
+    <h2>Draw an anchored line between two shapes</h2>
+    <ol>
+      <li>In Normal mode, press <kbd>A</kbd> to enter <strong>Anchor-Line mode</strong>. All anchor dots of each shape
+        appear.</li>
+      <li>Use <kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>←</kbd> / <kbd>↓</kbd> / <kbd>↑</kbd> /
+        <kbd>→</kbd> to move to the anchor where you want the line to
+        start.
+      </li>
+      <li>Press <kbd>Space</kbd> to attach the line start to that anchor.</li>
+      <li>Navigate to the desired anchor on the target shape.</li>
+      <li>Press <kbd>Space</kbd> to attach the line end and complete the connection.</li>
+      <li>Press <kbd>Esc</kbd> to return to Normal mode.</li>
+    </ol>
+
+    <div class="callout tip">
+      <strong>Tip</strong>
+      Press <kbd>e</kbd> at any point while drawing to cycle arrowhead states on the line.
+    </div>
+
+    <h2>Auto-Link Insert mode</h2>
+    <p>Auto-Link Insert mode places a new shape and connects it to the previous shape automatically:</p>
+    <ol>
+      <li>In Normal mode, press <kbd>I</kbd> (capital I) to enter Auto-Link Insert mode.</li>
+      <li>Press a shape key to insert a desired shape (<kbd>r</kbd>, <kbd>s</kbd>, <kbd>c</kbd>, or <kbd>t</kbd>).</li>
+      <li>Move the cursor to the desired location on the canvas.</li>
+      <li>Press a shape key to insert another shape. Flow places the shape and draws a connecting line from the previous
+        shape.</li>
+      <li>Each subsequent shape you place connects to the one before it, forming a chain.</li>
+      <li>Press <kbd>Esc</kbd> to finish.</li>
+    </ol>
+
+    <div class="page-break"></div>
+
+    <!-- 9 -->
+    <h1 id="select">9. Select, Copy, and Delete</h1>
+
+    <h2>Select shapes</h2>
+    <ol>
+      <li>Press <kbd>v</kbd> in Normal mode to enter Visual mode.</li>
+      <li>Move the cursor over a shape and press <kbd>Space</kbd> to toggle its selection.</li>
+      <li>To select all shapes at once, press <kbd>Ctrl</kbd>+<kbd>a</kbd>.</li>
+      <li>Press <kbd>Esc</kbd> to deselect and return to Normal mode.</li>
+    </ol>
+
+    <h2>Copy and paste</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>y</kbd> (in Visual mode)</td>
+        <td>Copy (yank) the selected shapes</td>
+      </tr>
+      <tr>
+        <td><kbd>p</kbd> (in Normal mode)</td>
+        <td>Paste copied shapes at the cursor position</td>
+      </tr>
+    </table>
+
+    <h2>Delete</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>d</kbd> (in Visual mode)</td>
+        <td>Delete all selected shapes</td>
+      </tr>
+    </table>
+
+    <h2>Undo and redo</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>u</kbd></td>
+        <td>Undo the last action</td>
+      </tr>
+      <tr>
+        <td><kbd>r</kbd></td>
+        <td>Redo</td>
+      </tr>
+    </table>
+
+    <div class="page-break"></div>
+
+    <!-- 10 -->
+    <h1 id="save">10. Export</h1>
+
+    <h2>Export to PDF</h2>
+    <ol>
+      <li>Press <kbd>Ctrl</kbd>+<kbd>e</kbd> to export to PDF.</li>
+      <li>Choose a destination in the save dialog.</li>
+    </ol>
+
+    <p>Flow renders all shapes and labels — including Typst maths and symbols — into the PDF.</p>
+
+    <h2>Import a PDF slide</h2>
+    <ol>
+      <li>In Normal mode, press <kbd>f</kbd> to import a PDF file as a slide placeholder on the canvas.</li>
+    </ol>
+
+    <div class="page-break"></div>
+
+    <!-- 11 -->
+    <h1 id="ref">11. Quick Reference</h1>
+
+    <h2>All modes</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>Arrow Keys</kbd></td>
+        <td>Move cursor left / down / up / right (10 px)</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>h/j/k/l</kbd> or <kbd>Ctrl</kbd>+<kbd>Arrow Keys</kbd></td>
+        <td>Move cursor fast (50 px)</td>
+      </tr>
+      <tr>
+        <td><kbd>`</kbd></td>
+        <td>Open the help menu for the current mode, listing all key bindings</td>
+      </tr>
+    </table>
+
+    <h2>Normal mode</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>n</kbd> / <kbd>N</kbd></td>
+        <td>Jump to next / previous shape</td>
+      </tr>
+      <tr>
+        <td><kbd>i</kbd></td>
+        <td>Enter Insert mode (place shapes)</td>
+      </tr>
+      <tr>
+        <td><kbd>v</kbd></td>
+        <td>Enter Visual mode (select shapes)</td>
+      </tr>
+      <tr>
+        <td><kbd>a</kbd></td>
+        <td>Enter Line mode (free line)</td>
+      </tr>
+      <tr>
+        <td><kbd>A</kbd></td>
+        <td>Enter Anchor-Line mode</td>
+      </tr>
+      <tr>
+        <td><kbd>I</kbd></td>
+        <td>Enter Auto-Link Insert mode</td>
+      </tr>
+      <tr>
+        <td><kbd>t</kbd></td>
+        <td>Open label editor on nearest shape</td>
+      </tr>
+      <tr>
+        <td><kbd>p</kbd></td>
+        <td>Paste</td>
+      </tr>
+      <tr>
+        <td><kbd>u</kbd></td>
+        <td>Undo</td>
+      </tr>
+      <tr>
+        <td><kbd>r</kbd></td>
+        <td>Redo</td>
+      </tr>
+      <tr>
+        <td><kbd>f</kbd></td>
+        <td>Import PDF</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>e</kbd></td>
+        <td>Export to PDF</td>
+      </tr>
+      <tr>
+        <td><kbd>Esc</kbd></td>
+        <td>Return to Normal mode from any other mode</td>
+      </tr>
+    </table>
+
+    <h2>Insert mode</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>r</kbd></td>
+        <td>Place rectangle</td>
+      </tr>
+      <tr>
+        <td><kbd>s</kbd></td>
+        <td>Place square</td>
+      </tr>
+      <tr>
+        <td><kbd>c</kbd></td>
+        <td>Place circle</td>
+      </tr>
+      <tr>
+        <td><kbd>t</kbd></td>
+        <td>Place text box</td>
+      </tr>
+      <tr>
+        <td><kbd>Esc</kbd></td>
+        <td>Return to Normal mode</td>
+      </tr>
+    </table>
+
+    <h2>Visual mode</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>Space</kbd></td>
+        <td>Toggle selection on shape at cursor</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>a</kbd></td>
+        <td>Select all shapes</td>
+      </tr>
+      <tr>
+        <td><kbd>Shift</kbd>+<kbd>h/j/k/l</kbd> or <kbd>Shift</kbd>+<kbd>Arrow Keys</kbd></td>
+        <td>Move selected shapes (10 px)</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>h/j/k/l</kbd> or <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Arrow
+            Keys</kbd></td>
+        <td>Move selected shapes (50 px)</td>
+      </tr>
+      <tr>
+        <td><kbd>y</kbd></td>
+        <td>Copy (yank) selection</td>
+      </tr>
+      <tr>
+        <td><kbd>d</kbd></td>
+        <td>Delete selection</td>
+      </tr>
+      <tr>
+        <td><kbd>p</kbd></td>
+        <td>Paste copied shapes at cursor position</td>
+      </tr>
+      <tr>
+        <td><kbd>V</kbd></td>
+        <td>Enter Visual-Block mode (box select)</td>
+      </tr>
+      <tr>
+        <td><kbd>Esc</kbd></td>
+        <td>Deselect and return to Normal mode</td>
+      </tr>
+    </table>
+
+    <h2>Visual-Block mode</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>h/j/k/l</kbd> or <kbd>Arrow Keys</kbd></td>
+        <td>Expand selection box left / down / up / right</td>
+      </tr>
+      <tr>
+        <td><kbd>Space</kbd></td>
+        <td>Toggle selection box</td>
+      </tr>
+      <tr>
+        <td><kbd>y</kbd></td>
+        <td>Copy (yank) selection</td>
+      </tr>
+      <tr>
+        <td><kbd>d</kbd></td>
+        <td>Delete selection</td>
+      </tr>
+      <tr>
+        <td><kbd>p</kbd></td>
+        <td>Paste copied shapes at cursor position</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>a</kbd></td>
+        <td>Select all shapes</td>
+      </tr>
+      <tr>
+        <td><kbd>v</kbd></td>
+        <td>Enter Visual mode (select shapes individually)</td>
+      </tr>
+      <tr>
+        <td><kbd>Esc</kbd></td>
+        <td>Deselect and return to Normal mode</td>
+      </tr>
+    </table>
+
+    <h2>Line mode</h2>
+    <table>
+      <tr>
+        <th>Keys / Action</th>
+        <th>Effect</th>
+      </tr>
+      <tr>
+        <td><kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd></td>
+        <td>Move cursor</td>
+      </tr>
+      <tr>
+        <td><kbd>Space</kbd></td>
+        <td>Place vertex at cursor position</td>
+      </tr>
+      <tr>
+        <td><kbd>e</kbd></td>
+        <td>Cycle arrowhead state (none → end → both → start)</td>
+      </tr>
+      <tr>
+        <td><kbd>Esc</kbd></td>
+        <td>Finish line and return to Normal mode</td>
+      </tr>
+    </table>
+
+    <h2>Anchor-Line mode</h2>
+    <table>
+      <tr>
+        <th>Keys / Action</th>
+        <th>Effect</th>
+      </tr>
+      <tr>
+        <td><kbd>h</kbd> / <kbd>j</kbd> / <kbd>k</kbd> / <kbd>l</kbd> or <kbd>Arrow Keys</kbd></td>
+        <td>Navigate between anchor points</td>
+      </tr>
+      <tr>
+        <td><kbd>Space</kbd></td>
+        <td>Attach line to current anchor point</td>
+      </tr>
+      <tr>
+        <td><kbd>e</kbd></td>
+        <td>Cycle arrowhead state</td>
+      </tr>
+      <tr>
+        <td><kbd>Esc</kbd></td>
+        <td>Finish line and return to Normal mode</td>
+      </tr>
+    </table>
+
+    <h2>Text mode (label editor)</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>i</kbd></td>
+        <td>Start typing (enter editor Insert mode)</td>
+      </tr>
+      <tr>
+        <td><kbd>Esc</kbd></td>
+        <td>Stop typing (return to editor Normal mode)</td>
+      </tr>
+      <tr>
+        <td><kbd>Esc</kbd> (from editor Normal)</td>
+        <td>Compile label and close editor</td>
+      </tr>
+    </table>
+
+    <h2>Auto-Link Insert mode</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>r</kbd></td>
+        <td>Place rectangle and connect to previous shape</td>
+      </tr>
+      <tr>
+        <td><kbd>s</kbd></td>
+        <td>Place square and connect to previous shape</td>
+      </tr>
+      <tr>
+        <td><kbd>c</kbd></td>
+        <td>Place circle and connect to previous shape</td>
+      </tr>
+      <tr>
+        <td><kbd>t</kbd></td>
+        <td>Place text box and connect to previous shape</td>
+      </tr>
+      <tr>
+        <td><kbd>Esc</kbd></td>
+        <td>Finish and return to Normal mode</td>
+      </tr>
+    </table>
+
+    <h2>Viewport</h2>
+    <table>
+      <tr>
+        <th>Keys</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>u</kbd></td>
+        <td>Scroll viewport up</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>d</kbd></td>
+        <td>Scroll viewport down</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>,</kbd></td>
+        <td>Scroll viewport left</td>
+      </tr>
+      <tr>
+        <td><kbd>Ctrl</kbd>+<kbd>.</kbd></td>
+        <td>Scroll viewport right</td>
+      </tr>
+      <tr>
+        <td><kbd>M</kbd></td>
+        <td>Move cursor to screen centre</td>
+      </tr>
+      <tr>
+        <td><kbd>z</kbd><kbd>z</kbd></td>
+        <td>Centre viewport on cursor</td>
+      </tr>
+      <tr>
+        <td><kbd>g</kbd><kbd>g</kbd></td>
+        <td>Move cursor and viewport to initial screen centre</td>
+    </table>
+
+  </div>
 </body>
+
 </html>

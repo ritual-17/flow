@@ -1,5 +1,6 @@
-# Design Documentation
+# Design
 
-The folders and files for this folder are as follows:
-
-Describe ...
+This directory contains:
+- DesignAssets/
+- SoftArchitecture/
+- SoftDetailedDes/

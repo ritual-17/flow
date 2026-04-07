@@ -2,6 +2,8 @@
 
 \usepackage{tabularx}
 \usepackage{booktabs}
+\usepackage{ltablex}
+\keepXColumns
 \usepackage{float}
 
 \title{Reflection and Traceability Report on \progname}
@@ -31,8 +33,8 @@ on your reflections.}
 feedback from TAs, the instructor, teammates, other teams, the project
 supervisor (if present), and from user testers.}
 
-\plt{For those teams with an external supervisor, please highlight how the feedback 
-from the supervisor shaped your project.  In particular, you should highlight the 
+\plt{For those teams with an external supervisor, please highlight how the feedback
+from the supervisor shaped your project.  In particular, you should highlight the
 supervisor's response to your Rev 0 demonstration to them.}
 
 \plt{Version control can make the summary relatively easy, if you used issues
@@ -60,11 +62,170 @@ response separately for each deliverable in the sections that follow.}
 \plt{If the feedback is general or incomplete, the TA (or instructor) will not
 be able to grade your response to feedback.  In that case your grade on this
 document, and likely the Revision 1 versions of the other documents will be
-low.} 
+low.}
 
 \subsection{SRS and Hazard Analysis}
 
+\begin{tabularx}{\textwidth}{>{\hsize=0.4\hsize}X >{\hsize=0.8\hsize}X >{\hsize=1.8\hsize}X}
+\toprule
+\textbf{Source} & \textbf{Feedback Summary} & \textbf{Response / Change Made} \\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Source} & \textbf{Feedback Summary} & \textbf{Response / Change Made} \\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+Team 19 (peer review) &
+  HA Section 3 excluded cloud storage from the system boundary, but the Roadmap referenced cloud save as a deferred feature, creating an inconsistency. &
+  Updated HA Section 3 to state that cloud storage and multi-user access are planned future features outside the current capstone scope. Updated HA Section 7 (Roadmap) to consistently name ACR1 and UR2 as the deferred requirements and to remove the ambiguous ``cloud save is not part of our capstone timeline'' phrasing. \\
+\midrule
+Team 19 (peer review) &
+  FMEA table contained no security-related failure modes, despite Section~6 including UR1 (restricting malicious file uploads) and ACR1 (unauthorized access). This left a gap between the identified security requirements and the hazard analysis. &
+  Added a new FMEA row ``File import / upload'' covering the failure mode of the application accepting a restricted or malicious file type (.exe, .js, .bat, .sh). Includes causes, detection methods, and recommended mitigations (allowlist validation, rejection with error message, test coverage). References (F243); \S6: UR1. ACR1 is already deferred (cloud phase) and addressed by the note added in the earlier fix. \\
+\midrule
+Team 23 (peer review) &
+  Assumption~1 (User Competency, §4) stated users are expected ``not shutting down the application abruptly,'' effectively hand-waving away a predictable user action. Software must be resilient to abrupt termination regardless of user intent. &
+  Removed ``not shutting down abruptly'' from Assumption~1; replaced with an explicit statement that abrupt termination is a predictable action the system must tolerate. Updated the ``Save note'' FMEA mitigation to state autosave and atomic saving are core required features (not optional), and added crash-recovery on next launch and simulated-termination unit tests. \\
+\midrule
+Team 23 (peer review) &
+  Roadmap only stated all requirements would be implemented during the capstone timeline, with no milestones or references to when/where each mitigation would be validated. &
+  Added a paragraph to the Roadmap linking mitigations to project phases: high-risk items (save, load, file import) targeted for Rev~0; medium-risk items (rendering, parsing, keybindings, shape editing) addressed across Rev~0 and verified in VnV; lower-risk items (custom geometry, macros) targeted for Rev~1. All mitigations confirmed through VnV prior to final demo. \\
+\midrule
+Team 23 (peer review) &
+  FMEA table lacked risk ranking (severity, likelihood, detectability), making it impossible to prioritize which hazards must be addressed first. &
+  Added a Risk Level column (High / Medium / Low) to the FMEA table based on combined severity and likelihood. Added a legend above the table defining the rating criteria. Ratings assigned: Save note and Load/Open note --- High; File import/upload --- High; Diagram rendering, Command parsing, Keybinding Commands, Shape interaction, Overall performance --- Medium; Custom Geometry creation and Save custom geometry --- Low. \\
+\midrule
+Team 23 (peer review) &
+  Claimed many FMEA mitigations are reactive rather than preventive. The broad claim is overstated---most rows already contain preventive strategies (atomic saves, schema validation, worker threads, grammar isolation). However, the specific ``Load/Open note'' mitigation ``Save raw text of error log'' was purely reactive detection and not a true mitigation. &
+  Replaced ``Save raw text of error log'' in the ``Load/Open note'' row with: preserve the original file without modification on validation failure; maintain a backup copy of the last known-good save for rollback. The remaining mitigations across other rows were left unchanged as they are already predominantly preventive or corrective. \\
+\midrule
+Team 19 (peer review) &
+  Critical Assumption~3 (§4) stated \progname\ runs ``without unexpected interruptions such as forced shutdowns, crashes, or power failures,'' but the FMEA ``Save note'' row explicitly treats power loss mid-save as a real hazard with mitigations. This created a direct contradiction. &
+  Updated Assumption~3 to scope OS stability to kernel/driver-level correctness only, and explicitly noted that power failures and forced shutdowns are \emph{not} assumed away---pointing to the FMEA's atomic-save and checksum mitigations as the intended response. \\
+\midrule
+Team 19 (peer review) &
+  ACR1 in Section 6.1 (``Users will not be able to access documents and notes written by other users'') conflicts with Section 3, which places cloud storage outside the system boundary. ACR1 implies a multi-user/cloud context but appeared as an active requirement with no qualification. &
+  Added a note to ACR1 clarifying it is deferred to the planned cloud save phase and does not apply to the current local-only system. Added a \texttt{\textbackslash label} to the Roadmap section and cross-referenced it from the note. (Related to Issue~1 fix, which updated Sections~3 and~7 but left Section~6.1 unresolved.) \\
+\midrule
+Team 19 (peer review) &
+  F243 (Export/Import to PDF/Markdown) was incorrectly cited in the ``Load/Open note'' and ``Save note'' FMEA rows; those mitigations address data integrity and file system reliability, not export/import compatibility. &
+  Removed F243 from both the ``Load/Open note'' and ``Save note'' Req.\ Refs entries. Remaining references (F241, F244, NF241) correctly cover file operations, version history/rollback, and the data integrity non-functional requirement. \\
+\midrule
+Team 19 (peer review) &
+  FMEA table SR column only referenced SRS requirement IDs (F/NF codes); no link to the Section 6 Safety and Security Requirements (ACR1, SR1, IR1, CR1, CR2, etc.), making traceability difficult. &
+  Renamed the FMEA column header from ``SR'' to ``Req.\ Refs'' and appended the relevant Section 6 safety/security requirement IDs (prefixed ``\S6:'') to each row. Mapping: Diagram rendering~--- CR1; Command parsing~--- IR1, CR2; Load/Open note~--- SR1, IR1, CR2; Save note~--- SR1, IR1; Keybinding Commands~--- IR1; Shape interaction~--- IR1; Custom Geometry~--- IR1, CR1; Custom commands~--- IR1, CR2; Overall performance~--- CR1. \\
+\midrule
+Team 19 (peer review, SRS) &
+  S.7 security requirements were a bare list with no attack scenarios, handling strategies, or boundary conditions, making the coverage difficult to evaluate. &
+  Rewrote S.7 based on actual implementation: added threat model intro; annotated each requirement with Threat and Handling based on verified code behaviour (no outbound network confirmed in main/index.ts; OS dialog extension filter for UR1; console-only stack traces for CR2). Honestly noted current limitations: no magic-byte checking (UR1), atomic writes not yet implemented (IR1), no CI dependency audit (CR1). \\
+\midrule
+Team 19 (peer review, SRS) &
+  S.6 acceptance criteria used vague language (``responds within acceptable delay,'' ``runs smoothly'') with no measurable thresholds, making formal verification impractical. &
+  Rewrote the S.6 acceptance criteria table with concrete, testable thresholds referencing existing NF requirements: 50ms canvas response (NF212), 30ms command execution (NF221), 60fps on 100-element canvas (NF231), 500+ element responsiveness (NF218), $<$100KB storage (NF242), WCAG keyboard navigation (NF213), and atomic save/export (NF215, NF241). Added a Reference column linking each criterion to its NF requirement. \\
+\midrule
+Team 2 (peer review, SRS) &
+  S.1 defined components (Frontend User Interface, Canvas Manager, Backend Logic and API Layer) that had no corresponding S.2 sections, while S.2 had sections (Editor, Collaboration and Export) not present in S.1. S.2.7 ``Basis for Design'' was also numbered as a component section despite not being a component. &
+  Updated S.1 to list exactly the six components covered by S.2.1--S.2.6 (Editor, Shortcut Command Processor, Rendering Engine, Document Management, Configuration and Customization, Collaboration and Export), with cross-references to the corresponding S.2 section. Added a note to S.2.7 clarifying it is an informational supplement, not a component section. S.2 section names and requirement IDs were left unchanged to avoid cascading updates to the HA and VnV plan. \\
+\midrule
+Team 23 (peer review, HA) &
+  HA revision history table contained placeholder entries (``Date1,'' ``Name(s),'' ``Description of changes'') with no actual version tracking. &
+  Replaced placeholders with a single final-revision entry dated Apr.\ 6, 2026, listing all team members (Ethan Patterson, Hussain Muhammed, Jeffrey Doan, Kevin Zhu, Chengze Zhao). SRS control table updated similarly with V2 dated Apr.\ 6, 2026. \\
+\midrule
+Team 2 (peer review, SRS) &
+  First-person language (``we,'' ``our,'' ``us'') was used throughout the SRS, making it unsuitable for use by an external team. &
+  Replaced all first-person language across: intro.adoc, G3.adoc, P2.adoc, P4.adoc, P6.adoc, E3.adoc, E4.adoc. The academic integrity statement (integrity.adoc) was left unchanged as it is a first-person pledge by convention. \\
+\midrule
+Team 2 (peer review, SRS) &
+  E.4 assumption stated ``User is understanding of how to download/install basic windows programs,'' implying Windows-only support, but G.6 contains no such OS limitation and NF213 explicitly targets Windows, macOS, and Linux. &
+  Reworded the E.4 assumption to ``User is able to download and install applications on their operating system,'' generalising it to all supported OSes (Windows, macOS, Linux). \\
+\midrule
+Team 19 (peer review, SRS) &
+  NF214, NF215, NF216, NF217, NF218 were referenced in S.5.2 and S.5.4 but never defined in any S.2.x section, making it impossible to find their full description. &
+  Added definitions for all five requirements in their most appropriate S.2.x sections: NF214 (discoverability) and NF217 (visual consistency) added to S.2.1; NF215 (atomic file integrity) added to S.2.4; NF216 (no background network traffic) added to S.2.5; NF218 (large-document responsiveness) added to S.2.3. IDs for NF215, NF216, and NF218 do not follow the section-numbering convention (they start with ``21'' or ``21''/``21''); they were kept as-is to avoid cascading changes to the VnV plan which already references them. \\
+\midrule
+Team 19 (peer review, SRS) &
+  NF231 used unmeasurable terms ``active usage time'' and ``typical workloads,'' making the 60fps requirement untestable. NF242 required ``minimal disk space'' with no quantitative threshold. &
+  NF231 updated to: 60fps for at least 95\% of the time during continuous user interaction (typing, dragging, panning) on a canvas with up to 100 elements. NF242 updated to: a note with up to 1000 words and 10 shapes shall occupy less than 100KB on disk. \\
+\midrule
+Team 2 (peer review, SRS) &
+  In S.5.2 the descriptions for NF211 and NF212 were swapped relative to their S.2.1 definitions: NF211 was labelled ``Low-latency input ($\leq$30ms)'' and NF212 was labelled ``Local data persistence and autosave.'' This introduced a false latency inconsistency (30ms vs 50ms) and misplaced NF212 under save/autosave in S.5.4 and S.5.5. &
+  Corrected S.5.2 descriptions to match S.2.1: NF211 = usability/clean layout; NF212 = canvas responsiveness $<$50ms. Removed NF212 from the ``Local save/load and autosave'' group in S.5.4. Updated S.5.5 traceability rows for NF211 and NF212 to reflect their correct definitions. The 30ms figure belongs to NF221 (command input) and is a distinct, unrelated requirement. \\
+\midrule
+Team 23 (peer review, SRS) &
+  Acronyms API, CI, UI, MVP, UAT, WCAG, OS, PDF, PNG, GPU, and RAM were used throughout the SRS without being defined in the E.1 Glossary. The existing glossary covered only Vim, UI/UX, PoC, UML, V\&V, and SRS. &
+  Added definitions for all missing acronyms to E.1: API (Application Programming Interface), CI (Continuous Integration), UI (User Interface), MVP (Minimum Viable Product), UAT (User Acceptance Testing), WCAG (Web Content Accessibility Guidelines), OS (Operating System), PDF (Portable Document Format), PNG (Portable Network Graphics), GPU (Graphics Processing Unit), RAM (Random Access Memory). Also corrected a typo in the SRS entry (``develoment'' $\to$ ``development''). \\
+\midrule
+Team 23 (peer review, SRS) &
+  NF221 ($\leq$30ms command dispatch) and NF212 ($\leq$50ms canvas response) appeared to conflict for commands that both execute a shortcut and update the canvas (e.g., move shape). Additionally, NF231 still used unmeasurable terms ``active usage time'' and ``typical workloads.'' &
+  Clarified NF221 to state it measures command interpretation and dispatch only; added an explicit note that for commands triggering a canvas update, NF212 ($\leq$50ms) is the binding end-to-end input-to-visual-feedback constraint. Updated NF231 to replace ``active usage time under typical workloads'' with ``continuous user interaction (typing, dragging, panning) on a canvas containing up to 100 mixed elements (text and shapes).'' \\
+\midrule
+Team 23 (peer review, SRS) &
+  S.5.1 prioritization table listed F216 (pan and zoom canvas) as ``Medium'' despite G.4 naming panning as a core project goal, and listed F219 (undo/redo) as ``Medium'' despite undo/redo being critical for a modal keyboard-driven editor where actions are rapid. &
+  Raised F216 priority to High with rationale referencing G.4. Raised F219 priority to High with rationale that rapid, irreversible keyboard actions make undo/redo essential for preventing data loss and user frustration. Updated S.5.4 summary: moved F216 into the High group alongside F211--F215, and moved F219 into the High group alongside F217 and NF215. Removed F216 from the Medium group. \\
+\midrule
+Team 19 (peer review, SRS) &
+  S.3 contained a full ``Canvas Manager Interface'' section (S.3.4) with detailed inter-component communication specifications, but Canvas Manager was absent from both S.1 (component list) and S.2 (functionality), creating an inconsistency between the environment/context view and the system specification. &
+  Added S.2.2 (Canvas Manager) to S.2 with functional requirements F216 (reposition and resize elements) and F217 (canvas navigation), and non-functional requirement NF212 (canvas responsiveness $<$50ms), relocated from S.2.1 Editor where they were misattributed. Requirement IDs F216, F217, and NF212 were retained unchanged to avoid cascading updates to the HA and VnV plan. S.1 component list updated to include Canvas Manager with a cross-reference to S.2.2. Subsequent S.2 section numbers shifted by one: Shortcut Command Processor S.2.2$\to$S.2.3, Rendering Engine S.2.3$\to$S.2.4, Document Management S.2.4$\to$S.2.5, Configuration and Customization S.2.5$\to$S.2.6, Collaboration and Export S.2.6$\to$S.2.7, and Basis for Design S.2.7$\to$S.2.8. \\
+\end{tabularx}
+
 \subsection{Design and Design Documentation}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{1.3cm} l X X}
+\toprule
+Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
+\midrule
+\href{https://github.com/ritual-17/flow/issues/282}{282} & Peer &  Missing Module Secrets for Several Modules & Added to the MG to make it clearer why some modules have secrets\\
+
+\href{https://github.com/ritual-17/flow/issues/283}{283} & Peer & Too low level implementation details & Removed mentions to specific technologies over more general ideas
+.\\
+
+\href{https://github.com/ritual-17/flow/issues/284}{284} & Peer & M14 modify() Has No Parameters
+& Reworked the modify function to have an input to be less confusing \\
+
+\href{https://github.com/ritual-17/flow/issues/285}{285} & Peer & Missing Relationship Between Modules and SRS & Added a description of the requirements to better explain how modules satisfy requirements.\\
+
+\href{https://github.com/ritual-17/flow/issues/286}{286} & Peer & Inconsistent Terminology Across Modules & Changed some of the terminology in the MIS to better match the MG. \\
+
+\href{https://github.com/ritual-17/flow/issues/287}{287} & Peer & Overlapping Module Responsibilities & Clarified many of the modules by adding inputs and expanding outputs, making it less confusing what responsibilities each modules has.\\
+
+\bottomrule
+\end{tabularx}
+\caption{Traceability between feedback and changes for the Design Docs (Part 1)}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabularx}{\textwidth}{p{1.3cm} l X X}
+\toprule
+Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
+\midrule
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & Some missing information on types of inputs/outputs. Examples:
+In Section 8 for the save function, is success a Boolean or something else? Don't leave it to someone else to assume it's a boolean.
+ & Added data type to outputs. \\
+
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA &
+More complicated data structures such as Sets and Stacks are used but are not described in Section 4
+ & Added sets and Stacks to Section 4 \\
+
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & Some functions do not have output and do not modify any observable state, but they seem like they should, such as shape-moving functions.
+ & mentioned if changes could be observable via other modules due to display.
+F213 \\
+
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & Some functions have underspecified inputs, such as Section 17's resize function which only takes a GeometryID but not the resize factor.
+& Specified all inputs \\
+
+\href{https://github.com/ritual-17/flow/issues/525}{525} & TA & How are inverses defined with respect to commands in the undo-redo module?
+& Defined how the inverses of commands would work. \\
+
+\bottomrule
+\end{tabularx}
+\caption{Traceability between feedback and changes for the Design Docs Plan (Part 2)}
+\end{table}
+
 
 \subsection{VnV Plan and Report}
 
@@ -74,17 +235,17 @@ low.}
 \toprule
 Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
 \midrule
-\href{https://github.com/ritual-17/flow/issues/228}{228} & Peer & "Nonfunctional tests lack measurable criteria" & NF tests list in the 
+\href{https://github.com/ritual-17/flow/issues/228}{228} & Peer & "Nonfunctional tests lack measurable criteria" & NF tests list in the
 VnV plan were made a bit more specific \\
-\href{https://github.com/ritual-17/flow/issues/231}{231} & Peer & NFR Tests 211 and 218 both measure same performance and latency 
+\href{https://github.com/ritual-17/flow/issues/231}{231} & Peer & NFR Tests 211 and 218 both measure same performance and latency
 requirements but only differ in scale & No change made in documentation.
-Difference of scale represents different scenarios, with smaller scale 
+Difference of scale represents different scenarios, with smaller scale
 having higher priority as it represents typical usage scenarios \\
 \href{https://github.com/ritual-17/flow/issues/232}{232} & Peer & Usability survey lists questions but doesn't specify concrete success metrics
 & Survey questions have been updated and refined \\
-\href{https://github.com/ritual-17/flow/issues/233}{233} & Peer & Testing tools not specified & No change made in documentation. 
+\href{https://github.com/ritual-17/flow/issues/233}{233} & Peer & Testing tools not specified & No change made in documentation.
 Jest and Playwright were the mentioned tools in VnV Plan, justification also provided \\
-\href{https://github.com/ritual-17/flow/issues/234}{234} & Peer & Usability survey lacks measurable criteria & survey questions have been 
+\href{https://github.com/ritual-17/flow/issues/234}{234} & Peer & Usability survey lacks measurable criteria & survey questions have been
 updated and refined \\
 \bottomrule
 \end{tabularx}
@@ -99,20 +260,20 @@ Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
 \midrule
 \href{https://github.com/ritual-17/flow/issues/529}{529} & TA & list of tables is missing in VnV Plan & list of tables added back to document \\
 \href{https://github.com/ritual-17/flow/issues/529}{529} & TA & NFR testing not specific enough. For example, NF216 is a code review
- on parts that use network data. What kind of code review is expected? & NF tests, 
+ on parts that use network data. What kind of code review is expected? & NF tests,
  including NF216, were made more specific \\
-\href{https://github.com/ritual-17/flow/issues/529}{529} & TA & Redundancy. For example, F213 is a relatively straightforward test to include. 
+\href{https://github.com/ritual-17/flow/issues/529}{529} & TA & Redundancy. For example, F213 is a relatively straightforward test to include.
 It could feasibly be included into "Area of Testing1". & Added Functional test for
 F213 \\
-\href{https://github.com/ritual-17/flow/issues/529}{529} & TA & Be more specific and intentional about nondynamic testing. Provide 
-justification for inclusion or a brief checklist or plan for nondynamic testing. 
+\href{https://github.com/ritual-17/flow/issues/529}{529} & TA & Be more specific and intentional about nondynamic testing. Provide
+justification for inclusion or a brief checklist or plan for nondynamic testing.
 & Justification for nondynamic testing added to VnV Plan \\
 \bottomrule
 \end{tabularx}
 \caption{Traceability between feedback and changes for the VnV Plan (Part 2)}
 \end{table}
 
-To summarize the table(s) above, the feedback we received on the VnV Plan was primarily 
+To summarize the table(s) above, the feedback we received on the VnV Plan was primarily
 focused on improving the specificity of our nonfunctional tests, ensuring that we included
 a list of tables in the document, and addressing redundancy in our testing plan. Overall,
 we made changes to our VnV Plan to address each of these points, resulting in a more
@@ -124,11 +285,11 @@ comprehensive and well-structured testing strategy for our project.
 \toprule
 Issue Number & Reviewer & Given Feedback (Summarized) & Change made  \\
 \midrule
-\href{https://github.com/ritual-17/flow/issues/477}{477} & Peer & No discussion of timeline to implement M3 & Added description of timeline 
+\href{https://github.com/ritual-17/flow/issues/477}{477} & Peer & No discussion of timeline to implement M3 & Added description of timeline
 for M3 implementation \\
-\href{https://github.com/ritual-17/flow/issues/473}{473} & Peer & Code coverage short of planned target, with no explanation & Added 
+\href{https://github.com/ritual-17/flow/issues/473}{473} & Peer & Code coverage short of planned target, with no explanation & Added
 explanation addressing the low code coverage \\
-\href{https://github.com/ritual-17/flow/issues/475}{475} & Peer & Unit test section has no reults summary & No changes made to the 
+\href{https://github.com/ritual-17/flow/issues/475}{475} & Peer & Unit test section has no reults summary & No changes made to the
 documentation. Tests were described in the VnV Plan \\
 \href{https://github.com/ritual-17/flow/issues/476}{476} & Peer & Only two usability test participants, with no justification & This has been
 addressed. A plan and desire for an increase in sample size was mentioned  \\
@@ -136,23 +297,23 @@ addressed. A plan and desire for an increase in sample size was mentioned  \\
 An explanation to the peer on the consistency of our conclusions was provided \\
 \href{https://github.com/ritual-17/flow/issues/478}{478} & Peer & Flow's comparison to existing implementation lacked support & The validity
 of Flow over other solutions was emphasized with more detailed justifications. \\
-\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Section 3 and 4 does not mention what requirements are involved in the tests 
+\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Section 3 and 4 does not mention what requirements are involved in the tests
 & explicitly mentioned which requirements involved in tests  \\
-\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Usability description lacked explanation and/or acknowledgement of small 
+\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Usability description lacked explanation and/or acknowledgement of small
 sample size & This has been addressed. A plan and desire for an increase in sample
 size was mentioned  \\
-\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Performance data could be presented better & improved presentation of 
+\href{https://github.com/ritual-17/flow/issues/532}{532} & TA & Performance data could be presented better & improved presentation of
 performance data. Provided further explaination and justification of test. \\
 \bottomrule
 \end{tabularx}
 \caption{Traceability between feedback and changes for the VnV Report.}
 \end{table}
 
-In summary, we received feedback from our peers and TA regarding the VnV Report. 
-The feedback from our peers had to do with the lack of explanation for our code 
-coverage, and the consistency of our conclusions. The feedback from our TA 
-related more to the lack of mention of requirements in our tests, and the 
-explanations of some data items. We have addressed all of this feedback in our 
+In summary, we received feedback from our peers and TA regarding the VnV Report.
+The feedback from our peers had to do with the lack of explanation for our code
+coverage, and the consistency of our conclusions. The feedback from our TA
+related more to the lack of mention of requirements in our tests, and the
+explanations of some data items. We have addressed all of this feedback in our
 VnV Report, and we have provided explanations and justifications where necessary.
 
 \section{Extras}
@@ -182,13 +343,36 @@ features are accessible and understandable.
 
 \section{Design Iteration (LO11 (PrototypeIterate))}
 
-\plt{Explain how you arrived at your final design and implementation.  How did
-the design evolve from the first version to the final version?} 
+% \plt{Explain how you arrived at your final design and implementation.  How did
+% the design evolve from the first version to the final version?}
+%
+% \plt{Don't just say what you changed, say why you changed it.  The needs of the
+% client should be part of the explanation.  For example, if you made changes in
+% response to usability testing, explain what the testing found and what changes
+% it led to.}
 
-\plt{Don't just say what you changed, say why you changed it.  The needs of the
-client should be part of the explanation.  For example, if you made changes in
-response to usability testing, explain what the testing found and what changes
-it led to.}
+Many things changed in the final design compared to the initial design. One
+original requirement we had was to have no text to visual based rendering
+system. We wanted Flow to be fully canvas-based, meaning that there was no
+underlying text the user would modify to change what is displayed on the screen
+(like UML for example). This requirement held for shapes, but it was clear for
+text-based notes involving complex math notation, existing solutions just made
+more sense. We wanted to balance speed with intuitiveness for the user. This is
+where we introduced Typst integration, which does have a render step, but
+fits well alongside the flow of the rest of the app.
+
+We also made changes based on user testing. Testing made it clear that although
+the system makes sense, it has quite a steep learning curve. To address this,
+we added a help menu that users can access from any mode to display the
+available commands for that mode. We also kept the mode transition keybinds at
+the top as that was a common area of friction during user testing.
+
+Overall, the approach to the development of Flow was very incremental. Through
+test usage in our own lectures this term, we identified areas of improvement
+and implemented solutions for them. This included but was not limited to bug
+fixes, intuitive transitions between modes (e.g. line to anchor line mode),
+shape position on insertions, allowing multiple ways to pan the infinite
+canvas, and various quality of life improvements.
 
 \section{Design Decisions (LO12)}
 
@@ -289,13 +473,13 @@ user base over time.
 
 \subsection{How Does Your Project Management Compare to Your Development Plan}
 
-\plt{Did you follow your Development plan, with respect to the team meeting plan, 
-team communication plan, team member roles and workflow plan.  Did you use the 
+\plt{Did you follow your Development plan, with respect to the team meeting plan,
+team communication plan, team member roles and workflow plan.  Did you use the
 technology you planned on using?}
 
 \subsection{What Went Well?}
 
-\plt{What went well for your project management in terms of processes and 
+\plt{What went well for your project management in terms of processes and
 technology?}
 
 \subsection{What Went Wrong?}
@@ -308,8 +492,10 @@ technology?}
 
 \section{Ethics and Equity (LO18)}
 
-\plt{Describe how your team applied the principle of equity and universal design
-to ensure equitable treatment of all stakeholders.}
+ % \plt{Describe how your team applied the principle of equity and universal         design
+ % to ensure equitable treatment of all stakeholders.}
+
+Our team applied the principle of equity and universal design in many ways throughout the project. Our project originally stared as an way to ensure that people who don't have a touch screen can still take notes in class, even if there is not enough space for a full keyboard and mouse. To this end our project focuses much more on keyboard inputs as there are other options for touch-screen and mouse. Our group also did usability testing to ensure that we have good universal design. This is so the main stakeholder group(people who want to take notes in class with keyboard) are able to use Flow  regardless of needs/experience. This led to us adding things like the status bar to show users their current mode & position and the command menu to list commands so the user can always know what they need to press. We also considered some other ways of making Flow more accessible such as supporting voice commands and allowing custom keybinds/themes. As we wanted to get the main functionality of the program first, these are currently extras. But we  considered them along with other accessibly options that would help everyone like the command menu. 
 
 \section{Reflection on Capstone}
 

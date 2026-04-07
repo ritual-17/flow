@@ -35,6 +35,6 @@ a note-taking application which allows students to easily take notes and constru
 - Having a standalone application and not an extension is an imposed technical choice as it contributes to the
 capstone's requirement of meeting a set complexity level.
 - This technical choice also aligns with the group's goal of having more freedom in the software's 
-UI and keybindings. Being an extension restricts the available bindings accessible to our program.
+UI and keybindings. Being an extension restricts the available bindings accessible to the application.
 - Having the software run on multiple operating systems aligns with the company's goal of reaching
 a wider audience of students and making the application more accessible.
