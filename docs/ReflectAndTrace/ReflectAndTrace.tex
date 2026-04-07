@@ -193,22 +193,27 @@ users currently exist?}
 
 \subsection{How Does Your Project Management Compare to Your Development Plan}
 
-\plt{Did you follow your Development plan, with respect to the team meeting plan, 
-team communication plan, team member roles and workflow plan.  Did you use the 
-technology you planned on using?}
+For the most part the team stuck to the plan. The milestone structure held up well --- each deliverable (SRS, HA, VnV Plan, Design Doc, Rev 0 demo) landed close to the scheduled date, and the defined roles (team lead, meeting chair, keynoter, liaison, lead reviewer) were respected throughout. GitHub was used for all code changes via pull requests and issue tracking, which matched the planned workflow. Communication happened primarily over Discord with occasional Microsoft Teams calls for longer planning sessions, also consistent with the plan.
+
+The main deviation was in feature scope. The development plan assumed authentication and cloud sync would be tackled in Milestone 6, but those were dropped early once it became clear the core Vim-modal canvas interaction was more complex than estimated. The final product stayed local-only, which is reflected in the SRS but was not the original intent.
 
 \subsection{What Went Well?}
 
-\plt{What went well for your project management in terms of processes and 
-technology?}
+The GitHub workflow was probably the strongest part of the process. Having every change go through a pull request, with at least one review before merge, caught a fair number of bugs and kept the codebase reasonably consistent. The issue tracker also doubled as a log of decisions and feedback responses, which made preparing the traceability document much easier than it would have been otherwise.
+
+Role clarity helped too. Knowing who was the primary contact for TAs, who chaired meetings, and who owned the final review pass meant those things actually happened instead of falling through the cracks in a five-person team.
 
 \subsection{What Went Wrong?}
 
-\plt{What went wrong in terms of processes and technology?}
+Time estimation for the keyboard interaction layer was consistently off. Implementing Vim-style modal editing on a canvas is not the same as implementing it in a text editor, and the team underestimated how much of the codebase that would touch. As a result, document persistence features (save, load, version history) were not implemented by Rev 0 --- they were specced out in the SRS but the system ran entirely in memory for the demo.
+
+Documentation consistency was also a recurring issue. Because multiple people were writing different sections independently, terminology and requirement IDs drifted across documents. This created a non-trivial cleanup effort during the Rev 1 pass, particularly around the SRS and Hazard Analysis.
 
 \subsection{What Would you Do Differently Next Time?}
 
-\plt{What will you do differently for your next project?}
+Start integration earlier. The team worked on components fairly independently and only put them together properly close to demo time. Earlier integration would have surfaced the harder cross-component problems (e.g., how the shortcut processor interacts with the canvas model) before they became blocking issues.
+
+On the documentation side, a shared glossary and requirement ID convention agreed on at the start would have saved time. A lot of the Rev 1 SRS work was fixing inconsistencies that would not have existed if there had been a brief alignment session before writing began.
 
 \section{Ethics and Equity (LO18)}
 
